@@ -101,9 +101,15 @@ asserts the installed binary reports the pinned tag + commit. Use
 
 ### 5. Tool versions in CI are pinned too
 
-`APKO_VERSION` and `COSIGN_VERSION` env vars at the top of the workflows are
-passed as `apko-version` / `cosign-release` inputs to the installer actions.
-Bump both together and update the flake.
+`APKO_VERSION` at the top of the workflows is passed as `version` to the
+local setup-apko action. Cosign is pinned transitively via the SHA of
+`sigstore/cosign-installer` — do **not** add a `cosign-release:` input.
+Since cosign 3.x the installer maintainers explicitly discourage
+version-override there, and you must be on `cosign-installer v4+` to
+install any `cosign v3.x` (v3.x of the installer downloads a `.sig` asset
+that no longer exists in cosign v3 releases; you'll see HTTP 22/404 in
+`Install cosign`). Bump the installer SHA + apko version together and
+update the flake so `nix develop` matches.
 
 ### 6. Badges are in-repo, not on a gist
 
