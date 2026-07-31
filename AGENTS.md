@@ -34,6 +34,7 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 ├── .github/
 │   ├── workflows/nightly.yml    # 04:00 UTC cron; publish + sign + attest + scan + refresh badges
 │   ├── workflows/pr.yml         # build-only + scan on PRs; blocks CRITICAL findings
+│   ├── actions/setup-apko/      # local composite action: verified apko install (Sigstore-checked)
 │   ├── badges/*.json            # nightly-refreshed shields.io endpoint JSON (auto-committed by CI)
 │   ├── dependabot.yml           # weekly bumps for GHA SHA pins
 │   └── CODEOWNERS               # @conduktor/platform
@@ -89,6 +90,14 @@ action, resolve the SHA with:
 ```sh
 gh api repos/<owner>/<repo>/git/refs/tags/<tag> -q .object.sha
 ```
+
+Note: `chainguard-dev/actions/setup-apko` does **not** exist upstream (that
+path 404s). We ship our own port at
+[`./.github/actions/setup-apko`](.github/actions/setup-apko/action.yml)
+that resolves the release tag, verifies the archive's SHA-256 checksum,
+verifies the checksums file's Sigstore signature (cosign keyless), and
+asserts the installed binary reports the pinned tag + commit. Use
+`uses: ./.github/actions/setup-apko` — do not add a third-party setup-apko.
 
 ### 5. Tool versions in CI are pinned too
 

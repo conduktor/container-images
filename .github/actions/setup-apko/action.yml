@@ -1,0 +1,111 @@
+name: "Setup apko"
+description: >
+  Install the Chainguard apko CLI on a linux/amd64 runner.
+  Resolves the requested version (or the latest release) to an immutable
+  release tag + commit sha1, verifies the downloaded archive against the
+  release SHA-256 checksums and their Sigstore (cosign keyless) signature,
+  then verifies the installed binary reports the expected tag and commit.
+
+# This action is the public-repo port of conduktor/conduktor-actions/setup-apko.
+# There is no `chainguard-dev/actions/setup-apko` upstream (that path 404s),
+# so we ship our own hardened installer instead of shelling out to `apt` or
+# `curl | sh`. See the accompanying README for the trust model.
+
+inputs:
+  version:
+    required: false
+    default: "latest"
+    description: (string) apko version to install, e.g. 1.2.30 or v1.2.30. Use "latest" to resolve the latest GitHub release.
+  repository:
+    required: false
+    default: "chainguard-dev/apko"
+    description: (string) GitHub repository to download apko releases from.
+  github-token:
+    required: false
+    default: ${{ github.token }}
+    description: (string) Token used by the GitHub CLI to resolve and download the release.
+  expected-commit-sha:
+    required: false
+    default: ""
+    description: (string) If set, fail unless the resolved release tag points at this commit sha1 (full or abbreviated).
+  expected-sha256:
+    required: false
+    default: ""
+    description: (string) If set, fail unless the downloaded archive matches this SHA-256 checksum.
+  verify-signature:
+    required: false
+    default: "true"
+    description: (bool) Verify the Sigstore (cosign keyless) signature of the release checksums.txt.
+  cosign-certificate-identity-regexp:
+    required: false
+    default: "^https://github\\.com/chainguard-dev/apko/\\.github/workflows/.+$"
+    description: (string) Expected cosign certificate identity (regexp) of the release signing workflow.
+  cosign-oidc-issuer:
+    required: false
+    default: "https://token.actions.githubusercontent.com"
+    description: (string) Expected cosign certificate OIDC issuer.
+  install-dir:
+    required: false
+    default: ""
+    description: (string) Directory to install the apko binary into (defaults to a versioned directory in the runner tool cache).
+
+outputs:
+  version:
+    description: Installed apko version without the leading v, e.g. 1.2.30.
+    value: ${{ steps.resolve.outputs.version }}
+  tag:
+    description: Release tag the installation is pinned to, e.g. v1.2.30.
+    value: ${{ steps.resolve.outputs.tag }}
+  commit-sha:
+    description: Commit sha1 the release tag points at, also verified against the installed binary.
+    value: ${{ steps.resolve.outputs.commit-sha }}
+  sha256:
+    description: SHA-256 checksum of the downloaded release archive.
+    value: ${{ steps.install.outputs.sha256 }}
+  path:
+    description: Full path to the installed apko binary.
+    value: ${{ steps.install.outputs.path }}
+  install-dir:
+    description: Directory added to PATH that contains the apko binary.
+    value: ${{ steps.resolve.outputs.install-dir }}
+
+runs:
+  using: composite
+  steps:
+    - name: Resolve apko release tag and commit sha1
+      id: resolve
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        REPOSITORY: ${{ inputs.repository }}
+        VERSION: ${{ inputs.version }}
+        EXPECTED_COMMIT_SHA: ${{ inputs.expected-commit-sha }}
+        INSTALL_DIR_INPUT: ${{ inputs.install-dir }}
+      run: "${{ github.action_path }}/scripts/resolve-release.sh"
+
+    - name: Install cosign
+      if: inputs.verify-signature == 'true'
+      uses: sigstore/cosign-installer@d7543c93d881b35a8faa02e8e3605f69b7a1ce62 # v3.10.0
+
+    - name: Download and verify apko
+      id: install
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        REPOSITORY: ${{ inputs.repository }}
+        TAG: ${{ steps.resolve.outputs.tag }}
+        ARCHIVE: ${{ steps.resolve.outputs.archive }}
+        INSTALL_DIR: ${{ steps.resolve.outputs.install-dir }}
+        EXPECTED_SHA256: ${{ inputs.expected-sha256 }}
+        VERIFY_SIGNATURE: ${{ inputs.verify-signature }}
+        CERTIFICATE_IDENTITY_REGEXP: ${{ inputs.cosign-certificate-identity-regexp }}
+        OIDC_ISSUER: ${{ inputs.cosign-oidc-issuer }}
+      run: "${{ github.action_path }}/scripts/download-and-verify.sh"
+
+    - name: Verify installed apko binary
+      shell: bash
+      env:
+        EXPECTED_PATH: ${{ steps.install.outputs.path }}
+        EXPECTED_TAG: ${{ steps.resolve.outputs.tag }}
+        EXPECTED_COMMIT_SHA: ${{ steps.resolve.outputs.commit-sha }}
+      run: "${{ github.action_path }}/scripts/verify-binary.sh"

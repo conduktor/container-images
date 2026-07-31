@@ -78,9 +78,9 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Install apko
-        uses: chainguard-dev/actions/setup-apko@9d631658f55713e5f63ca0cc21ee168f81301fd9 # main @ 2026-07-31
+        uses: ./.github/actions/setup-apko
         with:
-          apko-version: ${{ env.APKO_VERSION }}
+          version: ${{ env.APKO_VERSION }}
 
       - name: Validate apko.yaml parses
         working-directory: images/${{ matrix.image }}
