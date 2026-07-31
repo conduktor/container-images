@@ -271,10 +271,13 @@ jobs:
           GIT_COMMITTER_NAME: "github-actions[bot]"
           GIT_COMMITTER_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
         run: |
-          if git diff --quiet .github/badges/; then
+          # Stage first so `git diff --cached` sees untracked files too
+          # (plain `git diff` ignores untracked, which silently no-ops the
+          # very first badge publish when .github/badges/ doesn't yet exist).
+          git add .github/badges/
+          if git diff --cached --quiet -- .github/badges/; then
             echo "No badge changes — nothing to commit."
             exit 0
           fi
-          git add .github/badges/
           git commit -m "ci: refresh CVE badges [skip ci]"
           git push
