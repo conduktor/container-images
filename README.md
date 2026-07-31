@@ -1,2 +1,181 @@
-# container-images
-Conduktor base and public container images
+# Conduktor container images
+
+Public [apko](https://github.com/chainguard-dev/apko)-built base and debug
+container images for [Conduktor](https://conduktor.io) products, published
+nightly with fresh Wolfi package updates. Every image is signed keyless
+with [cosign](https://github.com/sigstore/cosign), ships with an SPDX SBOM
+attached as a Sigstore attestation, and carries a
+[SLSA build-provenance](https://slsa.dev) attestation.
+
+| Image | Purpose | Reference |
+|-------|---------|-----------|
+| [`base-os`](images/base-os/apko.yaml) | Minimal Wolfi (glibc) OS layer + `conduktor-platform` UID/GID 10001 account. No language runtime. | `ghcr.io/conduktor/base-os:latest` |
+| [`base-jre-25`](images/base-jre-25/apko.yaml) | `base-os` + OpenJDK 25 JRE + GNU userland. FROM base for Conduktor Console and Gateway. | `ghcr.io/conduktor/base-jre-25:latest` |
+| [`conduktor-debug`](images/debug/apko.yaml) | Sidecar debug toolkit: network / TLS / LDAP / Kafka / JVM tools. Deploy alongside a running Conduktor pod. | `ghcr.io/conduktor/conduktor-debug:latest` |
+
+Multi-arch: `linux/amd64` + `linux/arm64` in a single OCI index per tag.
+
+## Vulnerability status
+
+Nightly scans of each `:latest` image, refreshed on every push.
+
+<!--
+Each badge is a shields.io endpoint pointing at a JSON file the nightly
+workflow refreshes under `.github/badges/`. No external gist / PAT needed.
+-->
+
+| Image | Trivy | Grype |
+|-------|-------|-------|
+| `base-os` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-os-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-os-grype.json) |
+| `base-jre-25` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-jre-25-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-jre-25-grype.json) |
+| `conduktor-debug` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/conduktor-debug-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/conduktor-debug-grype.json) |
+
+The raw scan JSON and SBOMs are attached as workflow artifacts on each
+[nightly run](../../actions/workflows/nightly.yml) (30-day retention).
+
+## Pull
+
+```sh
+docker pull ghcr.io/conduktor/base-jre-25:latest
+# pin to an immutable tag in production:
+docker pull ghcr.io/conduktor/base-jre-25:2026.07.31
+docker pull ghcr.io/conduktor/base-jre-25:git-2f3fd50
+```
+
+Available tag streams per image:
+
+| Tag | Meaning |
+|-----|---------|
+| `latest` | Most recent successful nightly. Moves. |
+| `nightly` | Alias of `latest`. Moves. |
+| `YYYY.MM.DD` | Immutable build for that UTC date. |
+| `git-<short-sha>` | Immutable build from that commit. |
+
+## Verify signature + SBOM + provenance
+
+All three attestations are keyless — they are bound to the GitHub Actions
+workflow that produced the image, not to a private key. To trust an image
+you assert *who* built it, not that a secret was known.
+
+```sh
+IMAGE=ghcr.io/conduktor/base-jre-25:latest
+
+# 1. Signature (cosign keyless, Fulcio issuer)
+cosign verify \
+  --certificate-identity-regexp='^https://github\.com/conduktor/container-images/\.github/workflows/nightly\.yml@refs/heads/.+$' \
+  --certificate-oidc-issuer='https://token.actions.githubusercontent.com' \
+  "${IMAGE}"
+
+# 2. SPDX SBOM attestation
+cosign verify-attestation \
+  --type=spdxjson \
+  --certificate-identity-regexp='^https://github\.com/conduktor/container-images/\.github/workflows/nightly\.yml@refs/heads/.+$' \
+  --certificate-oidc-issuer='https://token.actions.githubusercontent.com' \
+  "${IMAGE}" \
+  | jq -r '.payload' | base64 -d | jq '.predicate' > sbom.spdx.json
+
+# 3. SLSA build-provenance (verifiable with gh CLI too)
+gh attestation verify "oci://${IMAGE}" --repo conduktor/container-images
+```
+
+Scan the extracted SBOM against your own policy:
+
+```sh
+grype sbom:./sbom.spdx.json
+trivy sbom ./sbom.spdx.json
+```
+
+## Use as a base image
+
+```dockerfile
+# Console / Gateway
+FROM ghcr.io/conduktor/base-jre-25:latest
+COPY --chown=10001:10001 --chmod=0755 ./bin /opt/conduktor/bin
+USER 10001
+CMD ["/opt/conduktor/bin/run.sh"]
+```
+
+The image default user stays `root` so downstream `RUN` steps can
+`chown`/`chmod` freely; switch to `USER 10001` in your final layer.
+
+## Deploy the debug image as a sidecar
+
+`conduktor-debug` is meant to run next to a live Conduktor JVM pod, sharing
+its process namespace so the JDK tools can attach to the target process.
+Sketch for a Helm values override:
+
+```yaml
+podSpec:
+  shareProcessNamespace: true
+  containers:
+    - name: debug
+      image: ghcr.io/conduktor/conduktor-debug:latest
+      command: ["sleep", "infinity"]
+      securityContext:
+        capabilities:
+          add: ["SYS_PTRACE"]   # required for jcmd/jmap/jstack / strace
+```
+
+Then `kubectl exec -it <pod> -c debug -- bash` and run `jcmd <pid>
+GC.heap_info`, `jstack <pid>`, `tcpdump -i any port 9092`, `openssl
+s_client -connect kafka:9093`, `ldapsearch -H ldaps://ldap:636`, `kafkacat
+-b kafka:9092 -L`, …
+
+## Build locally
+
+Requires Docker (for the apko container fallback and to `docker load` the
+result). A native `apko` binary is used if it's on `PATH`.
+
+```sh
+./build.sh base-os
+./build.sh base-jre-25
+./build.sh debug
+# or via Make:
+make build IMAGE=base-jre-25
+make build-all
+```
+
+Then `docker run --rm conduktor/base-jre-25:local java -version`.
+
+### Dev environment
+
+The repo ships a Nix [`flake.nix`](flake.nix) that pins every tool the
+Makefile and CI call — `apko`, `cosign`, `trivy`, `grype`, `syft`, `crane`,
+`yamllint`, `actionlint`, `shellcheck`, `gitleaks`, `pre-commit`, `jq`, `yq`.
+
+```sh
+nix develop           # drop into the dev shell
+make help             # list every dev target
+make precommit-install  # install the git hooks
+```
+
+Non-Nix users can install the same tools via their OS package manager; the
+Makefile only cares that they're on `PATH`.
+
+## Contributing
+
+Pull requests are welcome. The [PR workflow](.github/workflows/pr.yml)
+builds every affected image on `amd64` and runs Trivy + Grype against the
+tarball. A `CRITICAL` finding blocks the merge; `HIGH` and `MEDIUM` are
+reported but non-fatal. Before pushing, run `make lint` and
+`make precommit-run` — the same checks run in CI, and `gitleaks` will catch
+accidentally-staged secrets.
+
+- Package additions or removals go in `images/<image>/apko.yaml`. Explain
+  *why* the package is needed in a trailing comment — the config is the
+  contract with downstream product Dockerfiles.
+- Wolfi package names sometimes differ from Debian/Ubuntu (`openldap-clients`
+  vs `ldap-utils`, `nmap-ncat` vs `netcat-openbsd`, etc.). Search
+  [packages.wolfi.dev](https://packages.wolfi.dev/os/) before adding.
+- The nightly workflow assumes GHCR pushes are enabled via the built-in
+  `GITHUB_TOKEN` (`packages: write`). No extra secrets are required for
+  signing, provenance, or the CVE badges — the badges are plain JSON files
+  under `.github/badges/` that the `publish-badges` job commits back to
+  `main` after every nightly.
+- Every third-party GitHub Action is pinned to a commit SHA; Dependabot
+  ([`.github/dependabot.yml`](.github/dependabot.yml)) opens PRs to bump
+  them weekly.
+
+## License
+
+[Apache-2.0](LICENSE).

@@ -1,0 +1,112 @@
+# conduktor/conduktor-debug
+#
+# Public debug sidecar image for Conduktor Console and Gateway. Deploy
+# alongside a running JVM pod (same PID/network namespace) to inspect
+# network, TLS, LDAP, Kafka and JVM state without shelling into the
+# production container or installing tooling on the host.
+#
+# Typical Helm sidecar usage:
+#   - shareProcessNamespace: true       # so jcmd/jstack can see the target JVM
+#   - securityContext.capabilities.add: [SYS_PTRACE]  # for jcmd/jmap/strace
+#     (only add when you actually need to attach — the image runs as root
+#     by default so debug tools work out of the box)
+#
+# We ship the full OpenJDK 25 JDK (jstack/jmap/jcmd/jhsdb/jfr) rather than
+# the JRE + `jattach`, because Wolfi does not currently package jattach.
+# The debug image is size-tolerant (it's a sidecar, not a hot path), so
+# the ~150MB delta over the JRE is acceptable.
+contents:
+  repositories:
+    - https://packages.wolfi.dev/os
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+  packages:
+    # --- OS baseline (same as base-jre-25) ---
+    - wolfi-baselayout
+    - glibc
+    - ca-certificates-bundle
+    - tzdata
+    - busybox
+    - bash
+    - coreutils
+    - sed
+    - gawk
+    - findutils
+    - grep
+    - procps # ps, top, pgrep, pkill, uptime, free
+    - sysstat # iostat, pidstat, mpstat (per-process I/O — iotop isn't in Wolfi)
+
+    # --- JVM diagnostics ---
+    - openjdk-25 # full JDK: jstack, jmap, jcmd, jhsdb, jfr, keytool
+    - java-cacerts
+    - async-profiler # low-overhead CPU/alloc/lock/wall-clock profiler
+
+    # --- Network debugging ---
+    - iproute2 # ip, ss, tc
+    - iputils # ping, tracepath
+    - bind-tools # dig, nslookup, host
+    - tcpdump
+    - nmap # nmap
+    - netcat-openbsd # nc (Wolfi ships the OpenBSD flavour, not nmap-ncat)
+    - socat
+    - mtr
+    - iftop # interface bandwidth
+    - htop
+    - lsof
+    - strace
+
+    # --- TLS / SSL debugging ---
+    - openssl # s_client, x509, verify, ...
+    - libnss-tools # certutil / pk12util (NSS PKI tooling)
+
+    # --- LDAP debugging ---
+    - openldap-2.6-clients # ldapsearch / ldapwhoami (a.k.a. ldap-utils)
+
+    # --- Kafka debugging ---
+    - kafkacat # produce/consume/metadata CLI (kcat's Wolfi name)
+
+    # --- HTTP + JSON/YAML ergonomics ---
+    - curl
+    - wget
+    - jq
+    - yq
+
+    # --- Editor for on-the-fly config tweaks ---
+    - vim
+
+accounts:
+  groups:
+    - groupname: conduktor
+      gid: 10001
+    - groupname: gateway # Legacy group for Conduktor Gateway
+      gid: 1001
+  users:
+    - username: conduktor
+      uid: 10001
+      gid: 10001
+    - username: gateway # Legacy user for Conduktor Gateway
+      uid: 1001
+      gid: 1001
+
+environment:
+  JAVA_HOME: /usr/lib/jvm/java-25-openjdk
+  PATH: /usr/lib/jvm/java-25-openjdk/bin:/usr/sbin:/sbin:/usr/bin:/bin
+  LANG: C.UTF-8
+  TZ: UTC
+
+# Debug sidecar defaults to root so jcmd / strace / tcpdump work without
+# extra runtime privilege beyond the SYS_PTRACE capability where required.
+# The conduktor-platform account is still available for `su - conduktor-platform`.
+cmd: /bin/bash
+
+archs:
+  - x86_64
+  - aarch64
+
+annotations:
+  org.opencontainers.image.title: "Conduktor debug sidecar (Wolfi/apko)"
+  org.opencontainers.image.description: "Network / TLS / LDAP / Kafka / JVM debugging toolkit as a sidecar image for Conduktor products."
+  org.opencontainers.image.vendor: "Conduktor"
+  org.opencontainers.image.authors: "Conduktor <support@conduktor.io>"
+  org.opencontainers.image.source: "https://github.com/conduktor/container-images"
+  org.opencontainers.image.licenses: "Apache-2.0"

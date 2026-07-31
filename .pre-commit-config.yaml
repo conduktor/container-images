@@ -1,0 +1,59 @@
+# Install:  pre-commit install --install-hooks    (or `make precommit-install`)
+# Run all:  pre-commit run --all-files             (or `make precommit-run`)
+#
+# The dev shell (`nix develop`) ships every tool these hooks call, so hooks
+# stay fast (no `language: system` shell-outs to Python venvs on first run).
+repos:
+  # Core hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]
+      - id: check-merge-conflict
+      - id: check-yaml
+        args: ["--allow-multiple-documents"]
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+
+  # Secret scanning
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.29.0
+    hooks:
+      - id: gitleaks
+
+  # YAML lint (apko configs + workflows)
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        args: ["--strict"]
+        files: ^(images/.*\.ya?ml|\.github/workflows/.*\.ya?ml|\.pre-commit-config\.yaml|\.yamllint(\.ya?ml)?)$
+
+  # GitHub Actions workflow linter
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.7
+    hooks:
+      - id: actionlint
+
+  # Shell script linter
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        files: \.(sh|bash)$
+
+  # apko config validation via a local hook (uses whatever apko is on PATH,
+  # e.g. from `nix develop`). apko has no dedicated `lint` subcommand;
+  # `show-config` parses + normalizes the YAML and fails on invalid schema,
+  # which functionally lints. Keeps the config in sync with what CI runs.
+  - repo: local
+    hooks:
+      - id: apko-show-config
+        name: apko show-config (validate)
+        entry: bash -c 'for d in images/*/; do (cd "$d" && apko show-config apko.yaml > /dev/null) || exit 1; done'
+        language: system
+        files: ^images/.*/apko\.yaml$
+        pass_filenames: false

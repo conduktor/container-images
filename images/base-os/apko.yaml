@@ -1,0 +1,51 @@
+# conduktor/base-os
+#
+# Minimal Wolfi (glibc) base image with just the OS layer, a working DNS/NSS
+# resolver, a system trust store, and the non-root `conduktor-platform`
+# account (UID/GID 10001). No language runtime, no package manager left in
+# the image (apko does not lay one down).
+#
+# Intended as the FROM for Conduktor images that don't need a JVM, and as a
+# tiny debuggable baseline for `distroless`-style Go / Rust builds. Not a
+# hard requirement to `USER 10001` at runtime — the account exists but the
+# default user stays root so downstream builds can chown/chmod their layers;
+# they should set `USER 10001` themselves.
+contents:
+  repositories:
+    - https://packages.wolfi.dev/os
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+  packages:
+    - wolfi-baselayout # /etc/{passwd,group,nsswitch.conf}, os-release
+    - glibc # glibc + NSS resolver modules -> DNS works
+    - ca-certificates-bundle # system trust store
+    - tzdata # zoneinfo (TZ)
+    - busybox # /bin/sh + core busybox utilities
+
+accounts:
+  groups:
+    - groupname: conduktor
+      gid: 10001
+  users:
+    - username: conduktor
+      uid: 10001
+      gid: 10001
+
+environment:
+  PATH: /usr/sbin:/sbin:/usr/bin:/bin
+  LANG: C.UTF-8
+  TZ: UTC
+
+cmd: /bin/sh
+
+archs:
+  - x86_64
+  - aarch64
+
+annotations:
+  org.opencontainers.image.title: "Conduktor OS base image (Wolfi/apko)"
+  org.opencontainers.image.description: "Minimal glibc/Wolfi base image with the conduktor-platform account. No JVM, no package manager."
+  org.opencontainers.image.vendor: "Conduktor"
+  org.opencontainers.image.authors: "Conduktor <support@conduktor.io>"
+  org.opencontainers.image.source: "https://github.com/conduktor/container-images"
+  org.opencontainers.image.licenses: "Apache-2.0"

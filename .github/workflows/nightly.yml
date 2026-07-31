@@ -1,0 +1,281 @@
+name: nightly
+
+# Nightly rebuild of every image so Wolfi package updates land in a fresh
+# image within 24h of upstream. Publishes multi-arch to GHCR, signs each
+# image keyless with cosign, attaches the SPDX SBOM apko emits as a Sigstore
+# attestation, generates a SLSA build-provenance attestation, scans the
+# result with Trivy + Grype, and refreshes the CVE badge JSON in
+# `.github/badges/` (committed back to main so the README badges stay live
+# without any external gist/PAT).
+#
+# Trigger manually with the "Run workflow" button on the Actions page to
+# rebuild off-schedule.
+#
+# NOTE ON PINNING: every third-party action is pinned to a full commit SHA
+# with the human-readable tag in a trailing comment. Dependabot
+# (.github/dependabot.yml) opens PRs to bump the pins weekly.
+on:
+  schedule:
+    - cron: "0 4 * * *" # 04:00 UTC daily
+  workflow_dispatch:
+    inputs:
+      images:
+        description: "Comma-separated subset to build (default: all). Values: base-os, base-jre-25, debug"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+  packages: write # push to GHCR
+  id-token: write # cosign keyless OIDC + SLSA provenance
+  attestations: write # actions/attest-build-provenance
+
+concurrency:
+  group: nightly-publish
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io
+  REGISTRY_NAMESPACE: ${{ github.repository_owner }}
+  APKO_VERSION: v1.2.30
+  COSIGN_VERSION: v3.1.2
+
+jobs:
+  publish:
+    name: publish-${{ matrix.image.dir }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - dir: base-os
+            name: base-os
+          - dir: base-jre-25
+            name: base-jre-25
+          - dir: debug
+            name: conduktor-debug
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Skip if not in manual subset
+        id: gate
+        env:
+          SUBSET: ${{ github.event.inputs.images }}
+          DIR: ${{ matrix.image.dir }}
+        run: |
+          if [ -z "${SUBSET}" ] || echo ",${SUBSET}," | grep -q ",${DIR},"; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping ${DIR}: not in requested subset (${SUBSET})"
+          fi
+
+      - name: Compute tags
+        if: steps.gate.outputs.run == 'true'
+        id: tags
+        run: |
+          DATE=$(date -u +%Y.%m.%d)
+          SHA=$(git rev-parse --short HEAD)
+          REF="${REGISTRY}/${REGISTRY_NAMESPACE}/${{ matrix.image.name }}"
+          {
+            echo "date=${DATE}"
+            echo "sha=${SHA}"
+            echo "ref=${REF}"
+            echo "refs=${REF}:latest ${REF}:nightly ${REF}:${DATE} ${REF}:git-${SHA}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install apko
+        if: steps.gate.outputs.run == 'true'
+        uses: chainguard-dev/actions/setup-apko@9d631658f55713e5f63ca0cc21ee168f81301fd9 # main @ 2026-07-31
+        with:
+          apko-version: ${{ env.APKO_VERSION }}
+
+      - name: Install cosign
+        if: steps.gate.outputs.run == 'true'
+        uses: sigstore/cosign-installer@d7543c93d881b35a8faa02e8e3605f69b7a1ce62 # v3.10.0
+        with:
+          cosign-release: ${{ env.COSIGN_VERSION }}
+
+      - name: Login to GHCR
+        if: steps.gate.outputs.run == 'true'
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish with apko (multi-arch, SBOM per arch + index)
+        if: steps.gate.outputs.run == 'true'
+        id: apko
+        working-directory: images/${{ matrix.image.dir }}
+        run: |
+          # apko publish prints one `<ref>@sha256:...` line per pushed tag; they
+          # all resolve to the same OCI index digest — take the last line.
+          out=$(apko publish \
+            --arch amd64,arm64 \
+            --sbom-path . \
+            apko.yaml \
+            ${{ steps.tags.outputs.refs }})
+          echo "${out}"
+          last=$(printf '%s\n' "${out}" | tail -n1)
+          digest="${last##*@}"
+          {
+            echo "digest=${digest}"
+            echo "image=${{ steps.tags.outputs.ref }}@${digest}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Sign image (cosign keyless)
+        if: steps.gate.outputs.run == 'true'
+        env:
+          COSIGN_YES: "true"
+        run: cosign sign "${{ steps.apko.outputs.image }}"
+
+      - name: Attest apko-emitted SPDX SBOMs
+        if: steps.gate.outputs.run == 'true'
+        env:
+          COSIGN_YES: "true"
+        run: |
+          shopt -s nullglob
+          for f in images/${{ matrix.image.dir }}/*.spdx.json; do
+            echo "attesting ${f}"
+            cosign attest --predicate "${f}" --type spdxjson "${{ steps.apko.outputs.image }}"
+          done
+
+      - name: Generate SLSA build-provenance attestation
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        with:
+          subject-name: ${{ steps.tags.outputs.ref }}
+          subject-digest: ${{ steps.apko.outputs.digest }}
+          push-to-registry: true
+
+      - name: Trivy scan
+        if: steps.gate.outputs.run == 'true'
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
+        with:
+          image-ref: ${{ steps.apko.outputs.image }}
+          format: json
+          output: trivy.json
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH,MEDIUM,LOW
+          exit-code: "0"
+
+      - name: Grype scan
+        if: steps.gate.outputs.run == 'true'
+        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
+        id: grype
+        with:
+          image: ${{ steps.apko.outputs.image }}
+          fail-build: false
+          output-format: json
+          only-fixed: false
+          severity-cutoff: negligible
+
+      - name: Copy Grype JSON to a stable path
+        if: steps.gate.outputs.run == 'true'
+        run: cp "${{ steps.grype.outputs.json }}" grype.json
+
+      - name: Upload scan artifacts
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: scans-${{ matrix.image.dir }}
+          path: |
+            trivy.json
+            grype.json
+            images/${{ matrix.image.dir }}/*.spdx.json
+          retention-days: 30
+
+      - name: Compute CVE counts + build badge JSON
+        if: steps.gate.outputs.run == 'true'
+        env:
+          IMAGE_NAME: ${{ matrix.image.name }}
+        run: |
+          trivy_total=$(jq '[.Results[]?.Vulnerabilities // [] | length] | add // 0' trivy.json)
+          trivy_high=$(jq '
+            [.Results[]?.Vulnerabilities // []
+             | map(select(.Severity == "CRITICAL" or .Severity == "HIGH"))
+             | length] | add // 0
+          ' trivy.json)
+          grype_total=$(jq '.matches | length' grype.json)
+          grype_high=$(jq '
+            [.matches[]
+             | select(.vulnerability.severity == "Critical" or .vulnerability.severity == "High")]
+            | length
+          ' grype.json)
+          # Badge color: green if 0 high/critical, else orange
+          [ "${trivy_high}" = "0" ] && trivy_color="brightgreen" || trivy_color="orange"
+          [ "${grype_high}" = "0" ] && grype_color="brightgreen" || grype_color="orange"
+
+          mkdir -p badges
+          jq -n \
+            --arg label "trivy CVEs" \
+            --arg msg "${trivy_high} high / ${trivy_total} total" \
+            --arg color "${trivy_color}" \
+            --arg logo "aquasec" \
+            '{schemaVersion:1, label:$label, message:$msg, color:$color, namedLogo:$logo}' \
+            > "badges/${IMAGE_NAME}-trivy.json"
+          jq -n \
+            --arg label "grype CVEs" \
+            --arg msg "${grype_high} high / ${grype_total} total" \
+            --arg color "${grype_color}" \
+            --arg logo "anchore" \
+            '{schemaVersion:1, label:$label, message:$msg, color:$color, namedLogo:$logo}' \
+            > "badges/${IMAGE_NAME}-grype.json"
+
+          echo "--- generated badge JSON ---"
+          cat "badges/${IMAGE_NAME}-trivy.json"
+          echo
+          cat "badges/${IMAGE_NAME}-grype.json"
+
+      - name: Upload badge JSON
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: badges-${{ matrix.image.dir }}
+          path: badges/
+          retention-days: 30
+
+  publish-badges:
+    name: refresh README badges
+    runs-on: ubuntu-latest
+    needs: publish
+    if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+    permissions:
+      contents: write # commit refreshed badge JSON back to main
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Download all badge artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: badges-*
+          path: badges-raw/
+          merge-multiple: true
+
+      - name: Copy into .github/badges/
+        run: |
+          mkdir -p .github/badges
+          find badges-raw -maxdepth 1 -type f -name '*.json' -exec cp {} .github/badges/ \;
+          ls -la .github/badges/
+
+      - name: Commit + push if changed
+        env:
+          GIT_AUTHOR_NAME: "github-actions[bot]"
+          GIT_AUTHOR_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+          GIT_COMMITTER_NAME: "github-actions[bot]"
+          GIT_COMMITTER_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+        run: |
+          if git diff --quiet .github/badges/; then
+            echo "No badge changes — nothing to commit."
+            exit 0
+          fi
+          git add .github/badges/
+          git commit -m "ci: refresh CVE badges [skip ci]"
+          git push

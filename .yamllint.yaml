@@ -1,0 +1,19 @@
+# Rules tuned for apko configs + GitHub Actions workflows.
+extends: default
+
+rules:
+  line-length:
+    max: 140
+    level: warning
+  # apko / actions configs both leave `on:` as a top-level key; truthy warns.
+  truthy:
+    check-keys: false
+  # Comments in apko.yaml intentionally align with values.
+  comments:
+    require-starting-space: true
+    min-spaces-from-content: 1
+  comments-indentation: disable
+  document-start: disable
+  indentation:
+    spaces: 2
+    indent-sequences: consistent

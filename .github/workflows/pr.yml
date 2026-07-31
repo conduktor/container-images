@@ -1,0 +1,136 @@
+name: pr
+
+# On every PR that touches an image config or the build/CI plumbing, build
+# each affected image locally with apko (no push, no signing) and scan the
+# resulting tar with Trivy + Grype. Fails the PR if a CRITICAL vuln shows
+# up in the built image.
+on:
+  pull_request:
+    paths:
+      - "images/**"
+      - "build.sh"
+      - ".github/workflows/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: write # allow the Trivy/Grype actions to comment on the PR
+
+concurrency:
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  APKO_VERSION: v1.2.30
+
+jobs:
+  detect-changes:
+    name: detect changed images
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.build.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Compute changed image matrix
+        id: build
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Any change under images/**, plus any change to build.sh or workflows,
+          # triggers *all* images so cross-cutting refactors get exercised.
+          set -euo pipefail
+          all='["base-os","base-jre-25","debug"]'
+          if [ -z "${BASE_SHA:-}" ] || [ -z "${HEAD_SHA:-}" ]; then
+            # workflow_dispatch or first-run: build everything
+            echo "matrix=${all}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          changed_files=$(git diff --name-only "${BASE_SHA}" "${HEAD_SHA}")
+          echo "changed:"; echo "${changed_files}"
+          if echo "${changed_files}" | grep -Eq '^(build\.sh|\.github/)'; then
+            echo "matrix=${all}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          set +e
+          dirs=$(echo "${changed_files}" | awk -F/ '/^images\// {print $2}' | sort -u)
+          set -e
+          if [ -z "${dirs}" ]; then
+            echo "matrix=[]" >> "$GITHUB_OUTPUT"
+          else
+            json=$(printf '%s\n' "${dirs}" | jq -R . | jq -s -c .)
+            echo "matrix=${json}" >> "$GITHUB_OUTPUT"
+          fi
+
+  build-and-scan:
+    name: build+scan ${{ matrix.image }}
+    needs: detect-changes
+    if: needs.detect-changes.outputs.matrix != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Install apko
+        uses: chainguard-dev/actions/setup-apko@9d631658f55713e5f63ca0cc21ee168f81301fd9 # main @ 2026-07-31
+        with:
+          apko-version: ${{ env.APKO_VERSION }}
+
+      - name: Validate apko.yaml parses
+        working-directory: images/${{ matrix.image }}
+        # apko has no dedicated `lint` subcommand; show-config parses + normalizes
+        # the YAML and fails on invalid schema/refs, which is functionally a lint.
+        run: apko show-config apko.yaml > /dev/null
+
+      - name: Build image tar (amd64) with SBOM
+        working-directory: images/${{ matrix.image }}
+        run: |
+          apko build \
+            --arch amd64 \
+            --sbom-path . \
+            apko.yaml \
+            "pr-${{ github.event.pull_request.number || 'manual' }}/${{ matrix.image }}:${{ github.sha }}" \
+            image.tar
+
+      - name: Load into Docker (for scanners that want a daemon ref)
+        id: load
+        working-directory: images/${{ matrix.image }}
+        run: |
+          out=$(docker load -i image.tar)
+          echo "${out}"
+          ref=$(echo "${out}" | sed -n 's/^Loaded image: //p' | head -n1)
+          echo "ref=${ref}" >> "$GITHUB_OUTPUT"
+
+      - name: Trivy scan (fail on CRITICAL)
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
+        with:
+          input: images/${{ matrix.image }}/image.tar
+          format: table
+          severity: CRITICAL,HIGH,MEDIUM
+          ignore-unfixed: true
+          exit-code: "1"
+          # HIGH & MEDIUM are printed but non-fatal — only CRITICAL blocks.
+          vuln-type: os,library
+
+      - name: Grype scan (report-only)
+        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
+        with:
+          image: ${{ steps.load.outputs.ref }}
+          fail-build: false
+          severity-cutoff: high
+          only-fixed: false
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: pr-${{ matrix.image }}
+          path: |
+            images/${{ matrix.image }}/image.tar
+            images/${{ matrix.image }}/*.spdx.json
+          retention-days: 7

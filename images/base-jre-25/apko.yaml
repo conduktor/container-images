@@ -1,0 +1,68 @@
+# conduktor/base-jre-25
+#
+# Minimal, glibc-based JRE-25 image for the Conduktor Console and Gateway
+# JVM services. Built declaratively with apko on Wolfi so the final image
+# has no package manager and ships with an SPDX SBOM emitted by apko.
+#
+# Contract with the downstream Console / Gateway Dockerfiles (which do
+# `FROM <this>`, lay down the app with `COPY --chown/--chmod`, then set
+# `USER 10001` themselves):
+#   - glibc + headless OpenJDK 25 JRE, CA trust wired into the JVM truststore
+#   - bash + GNU userland (coreutils/sed/gawk/findutils/grep) for the
+#     product startup scripts
+#   - /bin/sh (busybox) so `RUN` steps work when this is used as a build base
+#   - curl (healthchecks), openssl (TLS tooling), tzdata, working NSS/DNS
+#   - the `conduktor-platform` UID/GID 10001 account EXISTS but the image
+#     default user stays root: downstream builds chown/chmod their layers
+#     and switch to `USER 10001` themselves.
+contents:
+  repositories:
+    - https://packages.wolfi.dev/os
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+  packages:
+    - wolfi-baselayout # /etc/{passwd,group,nsswitch.conf}, os-release
+    - glibc # glibc + NSS resolver modules -> DNS works
+    - ca-certificates-bundle # system trust store
+    - tzdata # zoneinfo (CDK_LOG_TIMEZONE / TZ)
+    - openjdk-25-jre # headless OpenJDK 25 JRE (glibc)
+    - java-cacerts # wire the system trust bundle into the JVM truststore
+    - busybox # /bin/sh for downstream RUN steps
+    - bash # product scripts use bash-only features
+    - coreutils # GNU id/tr/cat/tee/chmod/... (busybox subtly differs)
+    - sed # GNU sed
+    - gawk # GNU awk
+    - findutils # GNU find
+    - grep # GNU grep
+    - curl # healthcheck.sh
+    - openssl # TLS tooling parity
+
+accounts:
+  groups:
+    - groupname: conduktor
+      gid: 10001
+  users:
+    - username: conduktor
+      uid: 10001
+      gid: 10001
+
+environment:
+  # Verify on first build: `docker run --rm <img> ls -d /usr/lib/jvm/*`
+  JAVA_HOME: /usr/lib/jvm/java-25-openjdk
+  PATH: /usr/lib/jvm/java-25-openjdk/bin:/usr/sbin:/sbin:/usr/bin:/bin
+  LANG: C.UTF-8
+  TZ: UTC
+
+cmd: /bin/bash
+
+archs:
+  - x86_64
+  - aarch64
+
+annotations:
+  org.opencontainers.image.title: "Conduktor JRE-25 base image (Wolfi/apko)"
+  org.opencontainers.image.description: "Minimal glibc/Wolfi base image with OpenJDK 25 JRE for Conduktor Console and Gateway."
+  org.opencontainers.image.vendor: "Conduktor"
+  org.opencontainers.image.authors: "Conduktor <support@conduktor.io>"
+  org.opencontainers.image.source: "https://github.com/conduktor/container-images"
+  org.opencontainers.image.licenses: "Apache-2.0"
