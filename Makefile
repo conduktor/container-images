@@ -17,11 +17,15 @@ SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := help
 
-IMAGES        := base-os base-jre-25 debug
+# Image inventory — also read by build.sh and both workflows.
+MANIFEST      := images/images.json
+IMAGES        := $(shell jq -r '[.[].dir] | join(" ")' $(MANIFEST) 2>/dev/null)
 IMAGE         ?=
 IMAGE_REF     ?=
 REPO_ROOT     := $(shell git rev-parse --show-toplevel 2>/dev/null || pwd)
 WORKFLOWS_DIR := .github/workflows
+SHELL_FILES   := $(shell find . -name '*.sh' -not -path './.git/*' 2>/dev/null)
+TESTS         := $(wildcard scripts/tests/test-*.sh)
 
 .PHONY: help
 help: ## Show this help
@@ -62,8 +66,14 @@ lint-apko: ## Validate every apko.yaml parses (apko has no `lint`; show-config d
 	done
 
 .PHONY: lint-shell
-lint-shell: ## shellcheck on build.sh
-	shellcheck build.sh
+lint-shell: ## shellcheck every *.sh in the repo (build.sh + scripts/ + tests)
+	shellcheck $(SHELL_FILES)
+
+# --- test ------------------------------------------------------------------
+
+.PHONY: test
+test: ## Run the script unit tests (fixture-based, no network)
+	@for t in $(TESTS); do echo ">> $$t"; bash $$t; done
 
 # --- scan ------------------------------------------------------------------
 

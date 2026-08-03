@@ -1,26 +1,20 @@
 name: nightly
 
-# Nightly rebuild of every image so Wolfi package updates land in a fresh
-# image within 24h of upstream. Publishes multi-arch to GHCR, signs each
-# image keyless with cosign, attaches the SPDX SBOM apko emits as a Sigstore
-# attestation, generates a SLSA build-provenance attestation, scans the
-# result with Trivy + Grype, and refreshes the CVE badge JSON in
-# `.github/badges/` (committed back to main so the README badges stay live
-# without any external gist/PAT).
+# Nightly rebuild of every image so Wolfi package updates land within 24h of
+# upstream: publish multi-arch, sign + attest (SBOM and SLSA provenance), scan,
+# then commit refreshed CVE badge JSON back to main.
 #
-# Trigger manually with the "Run workflow" button on the Actions page to
-# rebuild off-schedule.
+# The image inventory comes from images/images.json, not from this file.
 #
-# NOTE ON PINNING: every third-party action is pinned to a full commit SHA
-# with the human-readable tag in a trailing comment. Dependabot
-# (.github/dependabot.yml) opens PRs to bump the pins weekly.
+# Every third-party action is pinned to a full commit SHA with the tag in a
+# trailing comment; Dependabot bumps them weekly.
 on:
   schedule:
     - cron: "0 4 * * *" # 04:00 UTC daily
   workflow_dispatch:
     inputs:
       images:
-        description: "Comma-separated subset to build (default: all). Values: base-os, base-jre-25, debug"
+        description: "Comma-separated subset to build (default: all). Values must match images/images.json"
         required: false
         default: ""
 
@@ -42,115 +36,170 @@ env:
   # The v4 installer explicitly discourages `cosign-release` overrides.
 
 jobs:
-  publish:
-    name: publish-${{ matrix.image.dir }}
+  prepare:
+    name: resolve image matrix
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        image:
-          - dir: base-os
-            name: base-os
-          - dir: base-jre-25
-            name: base-jre-25
-          - dir: debug
-            name: conduktor-debug
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+      count: ${{ steps.matrix.outputs.count }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Skip if not in manual subset
-        id: gate
+      # Filtering here rather than per-step in `publish` means a skipped image
+      # produces no job at all.
+      - name: Resolve matrix from images/images.json
+        id: matrix
         env:
           SUBSET: ${{ github.event.inputs.images }}
-          DIR: ${{ matrix.image.dir }}
         run: |
-          if [ -z "${SUBSET}" ] || echo ",${SUBSET}," | grep -q ",${DIR},"; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping ${DIR}: not in requested subset (${SUBSET})"
-          fi
+          set -euo pipefail
+          matrix="$(./scripts/image-matrix.sh "${SUBSET}")"
+          {
+            echo "matrix=${matrix}"
+            echo "count=$(jq 'length' <<<"${matrix}")"
+          } >> "$GITHUB_OUTPUT"
+          jq -rj '"building: " + ([.[].dir] | join(", ")) + "\n"' <<<"${matrix}"
+
+  publish:
+    name: publish-${{ matrix.image.dir }}
+    runs-on: ubuntu-latest
+    needs: prepare
+    if: needs.prepare.outputs.count != '0'
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Compute tags
-        if: steps.gate.outputs.run == 'true'
         id: tags
+        env:
+          IMAGE_NAME: ${{ matrix.image.name }}
+          # Empty for GHCR-only images; unquoted expansion below drops it.
+          DOCKERHUB_REPO: ${{ matrix.image.dockerhub }}
         run: |
-          DATE=$(date -u +%Y.%m.%d)
-          SHA=$(git rev-parse --short HEAD)
-          REF="${REGISTRY}/${REGISTRY_NAMESPACE}/${{ matrix.image.name }}"
+          set -euo pipefail
+          GHCR_REPO="${REGISTRY}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}"
+          # Kept orthogonal: consumers below build the cross-product they need.
           {
-            echo "date=${DATE}"
-            echo "sha=${SHA}"
-            echo "ref=${REF}"
-            echo "refs=${REF}:latest ${REF}:nightly ${REF}:${DATE} ${REF}:git-${SHA}"
+            echo "ref=${GHCR_REPO}"
+            echo "repos=${GHCR_REPO}${DOCKERHUB_REPO:+ ${DOCKERHUB_REPO}}"
+            echo "tags=latest nightly $(date -u +%Y.%m.%d) git-$(git rev-parse --short HEAD)"
           } >> "$GITHUB_OUTPUT"
 
       - name: Install apko
-        if: steps.gate.outputs.run == 'true'
         uses: ./.github/actions/setup-apko
         with:
           version: ${{ env.APKO_VERSION }}
 
       - name: Install cosign
-        if: steps.gate.outputs.run == 'true'
         uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
 
       - name: Login to GHCR
-        if: steps.gate.outputs.run == 'true'
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Org access token scoped to write on this one Docker Hub repository — the
+      # only registry credential in this public repo. Never widen it; private
+      # registries pull from GHCR rather than being pushed to. See AGENTS.md rule 8.
+      - name: Login to Docker Hub
+        if: matrix.image.dockerhub != ''
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: docker.io
+          username: ${{ secrets.CONDUKTORBOT_DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.CONDUKTORBOT_DOCKER_HUB_PAT }}
+
       - name: Publish with apko (multi-arch, SBOM per arch + index)
-        if: steps.gate.outputs.run == 'true'
         id: apko
         working-directory: images/${{ matrix.image.dir }}
+        env:
+          REPOS: ${{ steps.tags.outputs.repos }}
+          TAGS: ${{ steps.tags.outputs.tags }}
+          GHCR_REPO: ${{ steps.tags.outputs.ref }}
         run: |
-          # apko publish prints one `<ref>@sha256:...` line per pushed tag; they
-          # all resolve to the same OCI index digest — take the last line.
+          set -euo pipefail
+          # repos × tags into "$@" so the refs stay properly quoted.
+          set --
+          for repo in ${REPOS}; do
+            for tag in ${TAGS}; do
+              set -- "$@" "${repo}:${tag}"
+            done
+          done
+
+          # apko prints one `<ref>@sha256:...` line per pushed tag, all resolving
+          # to the same OCI index digest — across registries too, since the
+          # content is byte-identical. Take the last line.
           out=$(apko publish \
             --arch amd64,arm64 \
             --sbom-path . \
             apko.yaml \
-            ${{ steps.tags.outputs.refs }})
+            "$@")
           echo "${out}"
           last=$(printf '%s\n' "${out}" | tail -n1)
           digest="${last##*@}"
+
+          images=""
+          for repo in ${REPOS}; do
+            images="${images}${images:+ }${repo}@${digest}"
+          done
+
           {
             echo "digest=${digest}"
-            echo "image=${{ steps.tags.outputs.ref }}@${digest}"
+            echo "image=${GHCR_REPO}@${digest}"
+            echo "images=${images}"
           } >> "$GITHUB_OUTPUT"
 
+      # Signed per registry rather than copied from GHCR: a native signature
+      # embeds the registry's own ref, so the README `cosign verify` snippet is
+      # identical for docker.io and ghcr.io pulls.
       - name: Sign image (cosign keyless)
-        if: steps.gate.outputs.run == 'true'
         env:
           COSIGN_YES: "true"
-        run: cosign sign "${{ steps.apko.outputs.image }}"
+          IMAGES: ${{ steps.apko.outputs.images }}
+        run: |
+          set -euo pipefail
+          for image in ${IMAGES}; do
+            cosign sign "${image}"
+          done
 
       - name: Attest apko-emitted SPDX SBOMs
-        if: steps.gate.outputs.run == 'true'
         env:
           COSIGN_YES: "true"
+          IMAGES: ${{ steps.apko.outputs.images }}
+          IMAGE_DIR: ${{ matrix.image.dir }}
         run: |
+          set -euo pipefail
           shopt -s nullglob
-          for f in images/${{ matrix.image.dir }}/*.spdx.json; do
-            echo "attesting ${f}"
-            cosign attest --predicate "${f}" --type spdxjson "${{ steps.apko.outputs.image }}"
+          for image in ${IMAGES}; do
+            for f in "images/${IMAGE_DIR}"/*.spdx.json; do
+              cosign attest --predicate "${f}" --type spdxjson "${image}"
+            done
           done
 
       - name: Generate SLSA build-provenance attestation
-        if: steps.gate.outputs.run == 'true'
         uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
         with:
           subject-name: ${{ steps.tags.outputs.ref }}
           subject-digest: ${{ steps.apko.outputs.digest }}
           push-to-registry: true
 
+      # The action takes a single subject-name, so the mirror needs its own step.
+      - name: Generate SLSA build-provenance attestation (Docker Hub)
+        if: matrix.image.dockerhub != ''
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        with:
+          subject-name: ${{ matrix.image.dockerhub }}
+          subject-digest: ${{ steps.apko.outputs.digest }}
+          push-to-registry: true
+
       - name: Trivy scan
-        if: steps.gate.outputs.run == 'true'
         uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
         with:
           image-ref: ${{ steps.apko.outputs.image }}
@@ -161,7 +210,6 @@ jobs:
           exit-code: "0"
 
       - name: Grype scan
-        if: steps.gate.outputs.run == 'true'
         uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
         id: grype
         with:
@@ -172,11 +220,9 @@ jobs:
           severity-cutoff: negligible
 
       - name: Copy Grype JSON to a stable path
-        if: steps.gate.outputs.run == 'true'
         run: cp "${{ steps.grype.outputs.json }}" grype.json
 
       - name: Upload scan artifacts
-        if: steps.gate.outputs.run == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: scans-${{ matrix.image.dir }}
@@ -186,50 +232,12 @@ jobs:
             images/${{ matrix.image.dir }}/*.spdx.json
           retention-days: 30
 
-      - name: Compute CVE counts + build badge JSON
-        if: steps.gate.outputs.run == 'true'
+      - name: Build CVE badge JSON
         env:
           IMAGE_NAME: ${{ matrix.image.name }}
-        run: |
-          trivy_total=$(jq '[.Results[]?.Vulnerabilities // [] | length] | add // 0' trivy.json)
-          trivy_high=$(jq '
-            [.Results[]?.Vulnerabilities // []
-             | map(select(.Severity == "CRITICAL" or .Severity == "HIGH"))
-             | length] | add // 0
-          ' trivy.json)
-          grype_total=$(jq '.matches | length' grype.json)
-          grype_high=$(jq '
-            [.matches[]
-             | select(.vulnerability.severity == "Critical" or .vulnerability.severity == "High")]
-            | length
-          ' grype.json)
-          # Badge color: green if 0 high/critical, else orange
-          [ "${trivy_high}" = "0" ] && trivy_color="brightgreen" || trivy_color="orange"
-          [ "${grype_high}" = "0" ] && grype_color="brightgreen" || grype_color="orange"
-
-          mkdir -p badges
-          jq -n \
-            --arg label "trivy CVEs" \
-            --arg msg "${trivy_high} high / ${trivy_total} total" \
-            --arg color "${trivy_color}" \
-            --arg logo "aquasec" \
-            '{schemaVersion:1, label:$label, message:$msg, color:$color, namedLogo:$logo}' \
-            > "badges/${IMAGE_NAME}-trivy.json"
-          jq -n \
-            --arg label "grype CVEs" \
-            --arg msg "${grype_high} high / ${grype_total} total" \
-            --arg color "${grype_color}" \
-            --arg logo "anchore" \
-            '{schemaVersion:1, label:$label, message:$msg, color:$color, namedLogo:$logo}' \
-            > "badges/${IMAGE_NAME}-grype.json"
-
-          echo "--- generated badge JSON ---"
-          cat "badges/${IMAGE_NAME}-trivy.json"
-          echo
-          cat "badges/${IMAGE_NAME}-grype.json"
+        run: ./scripts/cve-badge.sh trivy.json grype.json "${IMAGE_NAME}" badges
 
       - name: Upload badge JSON
-        if: steps.gate.outputs.run == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: badges-${{ matrix.image.dir }}
@@ -239,8 +247,8 @@ jobs:
   publish-badges:
     name: refresh README badges
     runs-on: ubuntu-latest
-    needs: publish
-    if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+    needs: [prepare, publish]
+    if: ${{ !cancelled() && needs.prepare.outputs.count != '0' }}
     permissions:
       contents: write # commit refreshed badge JSON back to main
     steps:
@@ -262,7 +270,6 @@ jobs:
         run: |
           mkdir -p .github/badges
           find badges-raw -maxdepth 1 -type f -name '*.json' -exec cp {} .github/badges/ \;
-          ls -la .github/badges/
 
       - name: Commit + push if changed
         env:
@@ -271,9 +278,8 @@ jobs:
           GIT_COMMITTER_NAME: "github-actions[bot]"
           GIT_COMMITTER_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
         run: |
-          # Stage first so `git diff --cached` sees untracked files too
-          # (plain `git diff` ignores untracked, which silently no-ops the
-          # very first badge publish when .github/badges/ doesn't yet exist).
+          # Stage first: plain `git diff` ignores untracked files, which would
+          # silently no-op the very first badge publish.
           git add .github/badges/
           if git diff --cached --quiet -- .github/badges/; then
             echo "No badge changes — nothing to commit."

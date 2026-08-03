@@ -13,7 +13,7 @@ images ship from here:
 |-----------|---------------|---------|
 | `images/base-os/` | `ghcr.io/conduktor/base-os` | Minimal Wolfi OS + `conduktor` UID 10001 account. No language runtime. |
 | `images/base-jre-25/` | `ghcr.io/conduktor/base-jre-25` | OpenJDK 25 JRE base for Console + Gateway. |
-| `images/debug/` | `ghcr.io/conduktor/conduktor-debug` | Debug sidecar (JDK-25 + network/TLS/LDAP/Kafka/JVM tooling). |
+| `images/debug/` | `ghcr.io/conduktor/conduktor-debug` + `docker.io/conduktor/conduktor-debug` | Debug sidecar (JDK-25 + network/TLS/LDAP/Kafka/JVM tooling). Customer-facing, so it is also on Docker Hub — see rule 8. |
 
 Every image is signed keyless with cosign, ships an SPDX SBOM (apko-emitted,
 attested with cosign), and carries a SLSA build-provenance attestation.
@@ -23,11 +23,16 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 ```
 .
 ├── images/
+│   ├── images.json              # image inventory — single source of truth (rule 9)
 │   ├── base-os/apko.yaml        # source of truth per image
 │   ├── base-jre-25/apko.yaml
 │   └── debug/apko.yaml
+├── scripts/
+│   ├── image-matrix.sh          # manifest -> CI build matrix (validates the dispatch subset)
+│   ├── cve-badge.sh             # trivy/grype JSON -> shields.io endpoint JSON
+│   └── tests/test-*.sh          # fixture tests for the above; `make test`
 ├── build.sh                     # local `apko build` wrapper (uses cgr.dev/chainguard/apko fallback)
-├── Makefile                     # dev targets: build / lint / scan / sbom / precommit-*
+├── Makefile                     # dev targets: build / lint / test / scan / sbom / precommit-*
 ├── flake.nix                    # nix devShell with every tool pinned
 ├── .pre-commit-config.yaml
 ├── .yamllint.yaml
@@ -127,6 +132,64 @@ files that the `publish-badges` job of the nightly workflow commits back to
   layers; downstream Dockerfiles must set `USER 10001` themselves. Do not
   add `run-as` at the base layer.
 
+### 8. Registry topology — this repo pushes *out* only
+
+This repo is public. It publishes to public registries and holds no
+credential for any Conduktor-internal system. Trust flows inbound only.
+
+| Target | Which images | Auth |
+|--------|--------------|------|
+| `ghcr.io/conduktor/*` | all three (canonical) | ephemeral `GITHUB_TOKEN` |
+| `docker.io/conduktor/conduktor-debug` | debug only | `DOCKERHUB_USERNAME` + `DOCKERHUB_TOKEN` |
+
+- **Never add a cloud-credential or private-registry login step to a workflow
+  here** — no secret-manager fetch, no internal registry push. That would
+  materialize a long-lived credential for internal infrastructure onto a
+  runner in a publicly forkable repo, and it would make the daily base-image
+  rebuild depend on that infrastructure being up. Internal mirrors consume
+  these images by *pulling* from `ghcr.io`; they are never pushed to from
+  here. Internal consumers should pin the immutable `YYYY.MM.DD` /
+  `git-<sha>` tags rather than `latest`.
+- The Docker Hub token is the only registry secret in the repo. It is an org
+  access token scoped to **write on `conduktor/conduktor-debug` only**. Do
+  not widen its scope and do not reuse it for other repositories.
+- Mirroring happens *inside the single `apko publish` call* (both refs passed
+  as arguments), not via a later `cosign copy` or registry-replication hop.
+  One build, one digest in both registries, and `cosign sign`/`cosign attest`
+  then run once per registry so each copy carries a natively-created
+  signature. A replication hop instead risks dropping the cosign accessories
+  (`sha256-<digest>.sig` / `.att`), which silently breaks the `cosign verify`
+  snippet in the README for customers.
+- `pr.yml` must stay push-free and signing-free. Fork PRs never get secrets,
+  and nothing here may use `pull_request_target`.
+
+### 9. `images/images.json` is the image inventory; logic lives in `scripts/`
+
+The image list used to be duplicated in the `Makefile`, `build.sh`, the
+nightly matrix and the `pr.yml` `all` JSON. It now lives once in
+[`images/images.json`](images/images.json):
+
+```json
+{ "dir": "debug", "name": "conduktor-debug", "dockerhub": "docker.io/conduktor/conduktor-debug" }
+```
+
+`dir` is the directory under `images/`, `name` is the published image name,
+`dockerhub` is optional. Do not re-hardcode the list anywhere.
+
+- The nightly's `prepare` job resolves the matrix with
+  `scripts/image-matrix.sh`. **Do not add per-step `if:` guards to filter
+  images** — that was the old pattern and it needed the same condition on 16
+  steps. Filter by emitting a narrower matrix instead.
+- `scripts/image-matrix.sh` exits non-zero on an unknown name, so a typo'd
+  `workflow_dispatch` input fails the run instead of quietly building nothing.
+- Non-trivial `run:` logic belongs in `scripts/` with a test in
+  `scripts/tests/`, not inline in YAML — inline shell is invisible to
+  shellcheck beyond actionlint's basic pass and cannot be unit-tested. The jq
+  that computes CVE badge counts is the worked example (`scripts/cve-badge.sh`).
+- `make lint-shell` shellchecks every `*.sh` found in the repo, so new scripts
+  are covered without registering them anywhere. `make test` runs every
+  `scripts/tests/test-*.sh`. The `scripts` job in `pr.yml` runs both.
+
 ## Common tasks
 
 ### Add a package to an image
@@ -138,12 +201,15 @@ files that the `publish-badges` job of the nightly workflow commits back to
 5. `make lint && make precommit-run` before pushing.
 
 ### Add a new image
-1. Create `images/<name>/apko.yaml` (copy the closest existing one).
-2. `IMAGES := base-os base-jre-25 debug` in the `Makefile` — extend.
-3. `matrix.image` list in `.github/workflows/nightly.yml` and the `all` JSON
-   in `.github/workflows/pr.yml` — extend both.
-4. `case "${IMAGE_DIR}"` in `build.sh` — add a branch.
-5. Add a row to the README's images + badges tables.
+1. Create `images/<dir>/apko.yaml` (copy the closest existing one).
+2. Add one entry to [`images/images.json`](images/images.json) — `dir`, `name`,
+   and `dockerhub` only if it must also ship to Docker Hub (see rule 8).
+3. Add a row to the README's images + badges tables.
+
+That's it — the Makefile, `build.sh` and both workflows all derive the image
+list from the manifest (rule 9). `make test` asserts the manifest and
+`images/*/` stay in sync, so a directory added without a manifest entry fails
+the PR rather than silently never being built.
 
 ### Bump apko / cosign in CI
 1. Update `APKO_VERSION` / `COSIGN_VERSION` env in `.github/workflows/*.yml`.
@@ -165,6 +231,7 @@ files that the `publish-badges` job of the nightly workflow commits back to
 
 ```sh
 make lint            # yamllint + actionlint + apko show-config + shellcheck
+make test            # fixture tests for scripts/ (also asserts images.json is in sync)
 make precommit-run   # all 12 pre-commit hooks
 make build IMAGE=<changed image>   # for any apko.yaml change
 ```

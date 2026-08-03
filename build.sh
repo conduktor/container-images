@@ -8,30 +8,37 @@
 # `docker load` understands). CI publishes multi-arch via `apko publish` —
 # see .github/workflows/nightly.yml.
 #
+# The set of images and their published names comes from images/images.json.
+#
 # Usage:
 #   ./build.sh base-os                       # -> conduktor/base-os:local
 #   ./build.sh base-jre-25                   # -> conduktor/base-jre-25:local
 #   ./build.sh debug                         # -> conduktor/conduktor-debug:local
 #   ./build.sh base-jre-25 myrepo/base:tag   # custom image ref
+#
+# Requires: docker, jq (apko optional — falls back to the apko container).
 set -euo pipefail
 
 if [ $# -lt 1 ]; then
-  echo "Usage: $0 <base-os|base-jre-25|debug> [image-ref]" >&2
+  echo "Usage: $0 <image-dir> [image-ref]" >&2
   exit 2
 fi
 
 IMAGE_DIR="$1"
-case "${IMAGE_DIR}" in
-  base-os)      DEFAULT_REF="conduktor/base-os:local" ;;
-  base-jre-25)  DEFAULT_REF="conduktor/base-jre-25:local" ;;
-  debug)        DEFAULT_REF="conduktor/conduktor-debug:local" ;;
-  *) echo "Unknown image '${IMAGE_DIR}'. Expected: base-os | base-jre-25 | debug" >&2; exit 2 ;;
-esac
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MANIFEST="${REPO_ROOT}/images/images.json"
 
-IMAGE_REF="${2:-${DEFAULT_REF}}"
+IMAGE_NAME="$(jq -r --arg dir "${IMAGE_DIR}" \
+  'map(select(.dir == $dir)) | .[0].name // empty' "${MANIFEST}")"
+if [ -z "${IMAGE_NAME}" ]; then
+  echo "Unknown image '${IMAGE_DIR}'. Expected one of:" \
+    "$(jq -r '[.[].dir] | join(" | ")' "${MANIFEST}")" >&2
+  exit 2
+fi
+
+IMAGE_REF="${2:-conduktor/${IMAGE_NAME}:local}"
 APKO_IMAGE="${APKO_IMAGE:-cgr.dev/chainguard/apko:latest}"
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORK_DIR="${REPO_ROOT}/images/${IMAGE_DIR}"
 TAR_NAME="${IMAGE_DIR}.tar"
 

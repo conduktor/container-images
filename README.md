@@ -1,19 +1,23 @@
 # Conduktor container images
 
-Public [apko](https://github.com/chainguard-dev/apko)-built base and debug
-container images for [Conduktor](https://conduktor.io) products, published
-nightly with fresh Wolfi package updates. Every image is signed keyless
-with [cosign](https://github.com/sigstore/cosign), ships with an SPDX SBOM
-attached as a Sigstore attestation, and carries a
-[SLSA build-provenance](https://slsa.dev) attestation.
+Public base and debug container images for [Conduktor](https://conduktor.io) products, published nightly with fresh packages updates.
+Every image use [apko](https://github.com/chainguard-dev/apko) builds,
+is signed keyless with [cosign](https://github.com/sigstore/cosign),
+ships with an SPDX SBOM attached as a Sigstore attestation,
+and carries a [SLSA build-provenance](https://slsa.dev) attestation.
 
 | Image | Purpose | Reference |
 |-------|---------|-----------|
 | [`base-os`](images/base-os/apko.yaml) | Minimal Wolfi (glibc) OS layer + `conduktor-platform` UID/GID 10001 account. No language runtime. | `ghcr.io/conduktor/base-os:latest` |
-| [`base-jre-25`](images/base-jre-25/apko.yaml) | `base-os` + OpenJDK 25 JRE + GNU userland. FROM base for Conduktor Console and Gateway. | `ghcr.io/conduktor/base-jre-25:latest` |
-| [`conduktor-debug`](images/debug/apko.yaml) | Sidecar debug toolkit: network / TLS / LDAP / Kafka / JVM tools. Deploy alongside a running Conduktor pod. | `ghcr.io/conduktor/conduktor-debug:latest` |
+| [`base-jre-25`](images/base-jre-25/apko.yaml) | `base-os` + OpenJDK 25 JRE + GNU userland. Source for Conduktor Console and Gateway images. | `ghcr.io/conduktor/base-jre-25:latest` |
+| [`conduktor-debug`](images/debug/apko.yaml) | Sidecar debug toolkit: network / TLS / LDAP / Kafka / JVM tools. Deploy alongside a running Conduktor pod. | `conduktor/conduktor-debug:latest` (Docker Hub)<br>`ghcr.io/conduktor/conduktor-debug:latest` |
 
 Multi-arch: `linux/amd64` + `linux/arm64` in a single OCI index per tag.
+
+`conduktor-debug` is published to **both Docker Hub and GHCR** in the same
+build, so the two references resolve to the same digest and either one
+verifies with the commands below. Conduktor docs and Helm charts reference the
+Docker Hub name. The base images are GHCR-only.
 
 ## Vulnerability status
 
@@ -40,6 +44,9 @@ docker pull ghcr.io/conduktor/base-jre-25:latest
 # pin to an immutable tag in production:
 docker pull ghcr.io/conduktor/base-jre-25:2026.07.31
 docker pull ghcr.io/conduktor/base-jre-25:git-2f3fd50
+
+# the debug sidecar is on Docker Hub as well (same digest):
+docker pull conduktor/conduktor-debug:latest
 ```
 
 Available tag streams per image:
@@ -59,6 +66,9 @@ you assert *who* built it, not that a secret was known.
 
 ```sh
 IMAGE=ghcr.io/conduktor/base-jre-25:latest
+# ...or the Docker Hub reference for the debug sidecar — same identity, because
+# each registry's copy is signed natively by the same workflow:
+# IMAGE=docker.io/conduktor/conduktor-debug:latest
 
 # 1. Signature (cosign keyless, Fulcio issuer)
 cosign verify \
@@ -109,7 +119,7 @@ podSpec:
   shareProcessNamespace: true
   containers:
     - name: debug
-      image: ghcr.io/conduktor/conduktor-debug:latest
+      image: conduktor/conduktor-debug:latest
       command: ["sleep", "infinity"]
       securityContext:
         capabilities:

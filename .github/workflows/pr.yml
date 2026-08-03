@@ -9,6 +9,8 @@ on:
     paths:
       - "images/**"
       - "build.sh"
+      - "scripts/**"
+      - "Makefile"
       - ".github/workflows/**"
   workflow_dispatch: {}
 
@@ -24,6 +26,20 @@ env:
   APKO_VERSION: v1.2.30
 
 jobs:
+  # Unconditional: these scripts feed both workflows, and a broken images.json
+  # would otherwise only surface mid-nightly.
+  scripts:
+    name: shellcheck + script tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: shellcheck
+        run: make lint-shell
+
+      - name: Script unit tests
+        run: make test
+
   detect-changes:
     name: detect changed images
     runs-on: ubuntu-latest
@@ -40,23 +56,23 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          # Any change under images/**, plus any change to build.sh or workflows,
-          # triggers *all* images so cross-cutting refactors get exercised.
+          # A change to build.sh, scripts/, workflows or the inventory itself is
+          # cross-cutting and rebuilds everything.
           set -euo pipefail
-          all='["base-os","base-jre-25","debug"]'
+          all="$(jq -c '[.[].dir]' images/images.json)"
           if [ -z "${BASE_SHA:-}" ] || [ -z "${HEAD_SHA:-}" ]; then
-            # workflow_dispatch or first-run: build everything
             echo "matrix=${all}" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           changed_files=$(git diff --name-only "${BASE_SHA}" "${HEAD_SHA}")
-          echo "changed:"; echo "${changed_files}"
-          if echo "${changed_files}" | grep -Eq '^(build\.sh|\.github/)'; then
+          if echo "${changed_files}" \
+            | grep -Eq '^(build\.sh|scripts/|\.github/|images/images\.json$)'; then
             echo "matrix=${all}" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           set +e
-          dirs=$(echo "${changed_files}" | awk -F/ '/^images\// {print $2}' | sort -u)
+          # `[^/]+/` so top-level files under images/ aren't read as image dirs.
+          dirs=$(echo "${changed_files}" | awk -F/ '/^images\/[^/]+\// {print $2}' | sort -u)
           set -e
           if [ -z "${dirs}" ]; then
             echo "matrix=[]" >> "$GITHUB_OUTPUT"
