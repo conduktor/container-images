@@ -131,6 +131,9 @@ files that the `publish-badges` job of the nightly workflow commits back to
 - Base images default to `root` so downstream builds can chown/chmod their
   layers; downstream Dockerfiles must set `USER 10001` themselves. Do not
   add `run-as` at the base layer.
+- The debug image also has no `run-as` (root), so `tcpdump`/`strace` work
+  ad-hoc. `SYS_PTRACE` is **not** what makes `jcmd`/`jstack`/`jmap` work —
+  see the gotcha below before touching those docs.
 
 ### 8. Registry topology — this repo pushes *out* only
 
@@ -240,6 +243,15 @@ CI runs the same tools. Fixing lint locally is faster than the round-trip.
 
 ## Non-obvious gotchas
 
+- `SYS_PTRACE` is not required to attach with `jcmd`/`jstack`/`jmap`/`jfr`.
+  HotSpot's attach listener checks the socket peer's credentials —
+  `is_root(uid) || (geteuid() == uid && getegid() == gid)` in
+  `os::Posix::matches_effective_uid_and_gid_or_root` — so running the debug
+  sidecar as UID/GID 10001, matching the product container, is sufficient.
+  `SYS_PTRACE` is only for tools that call `ptrace(2)`: `strace`, `jstack -F`,
+  `jmap -F`, `jhsdb`. `tcpdump` wants `NET_RAW`, not `SYS_PTRACE`. The README
+  documented all of these as needing `SYS_PTRACE`, which was wrong and led
+  people to grant it unnecessarily.
 - `openjdk-25-jre` in Wolfi is a slim JRE; `openjdk-25` (no suffix) is the
   full JDK. The debug image intentionally uses the JDK for `jstack`/`jmap`
   /`jcmd`/`jfr` because jattach isn't packaged.

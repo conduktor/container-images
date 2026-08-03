@@ -7,9 +7,18 @@
 #
 # Typical Helm sidecar usage:
 #   - shareProcessNamespace: true       # so jcmd/jstack can see the target JVM
-#   - securityContext.capabilities.add: [SYS_PTRACE]  # for jcmd/jmap/strace
-#     (only add when you actually need to attach — the image runs as root
-#     by default so debug tools work out of the box)
+#   - runAsUser: 10001 or 1001          # match the target JVM's UID
+#
+# The JVM attach mechanism (jcmd, jstack, jmap, jinfo, jfr) checks the peer's
+# credentials: HotSpot accepts the attach when the caller is root OR its
+# effective uid+gid exactly match the target JVM's. Running the sidecar as
+# 10001 — the same `conduktor` UID/GID the base images ship, so the same UID
+# the product container runs as — satisfies that without root, and without
+# SYS_PTRACE, which the attach path does not use at all.
+#
+# SYS_PTRACE is only needed for the tools that really do ptrace(2): strace,
+# and the Serviceability Agent paths (`jstack -F`, `jmap -F`, `jhsdb`).
+# tcpdump needs NET_RAW. Add either capability only when you need those tools.
 #
 # We ship the full OpenJDK 25 JDK (jstack/jmap/jcmd/jhsdb/jfr) rather than
 # the JRE + `jattach`, because Wolfi does not currently package jattach.
@@ -94,9 +103,9 @@ environment:
   LANG: C.UTF-8
   TZ: UTC
 
-# Debug sidecar defaults to root so jcmd / strace / tcpdump work without
-# extra runtime privilege beyond the SYS_PTRACE capability where required.
-# The conduktor-platform account is still available for `su - conduktor-platform`.
+# No `run-as`: the image defaults to root so tcpdump/strace also work without
+# extra capabilities. Prefer overriding with `runAsUser: 10001` at deploy time
+# when you only need the JVM tooling — see the attach-credentials note above.
 cmd: /bin/bash
 
 archs:

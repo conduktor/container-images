@@ -8,7 +8,7 @@ and carries a [SLSA build-provenance](https://slsa.dev) attestation.
 
 | Image | Purpose | Reference |
 |-------|---------|-----------|
-| [`base-os`](images/base-os/apko.yaml) | Minimal Wolfi (glibc) OS layer + `conduktor-platform` UID/GID 10001 account. No language runtime. | `ghcr.io/conduktor/base-os:latest` |
+| [`base-os`](images/base-os/apko.yaml) | Minimal Wolfi (glibc) OS layer + `conduktor` UID/GID 10001 account. No language runtime. | `ghcr.io/conduktor/base-os:latest` |
 | [`base-jre-25`](images/base-jre-25/apko.yaml) | `base-os` + OpenJDK 25 JRE + GNU userland. Source for Conduktor Console and Gateway images. | `ghcr.io/conduktor/base-jre-25:latest` |
 | [`conduktor-debug`](images/debug/apko.yaml) | Sidecar debug toolkit: network / TLS / LDAP / Kafka / JVM tools. Deploy alongside a running Conduktor pod. | `conduktor/conduktor-debug:latest` (Docker Hub)<br>`ghcr.io/conduktor/conduktor-debug:latest` |
 
@@ -122,14 +122,37 @@ podSpec:
       image: conduktor/conduktor-debug:latest
       command: ["sleep", "infinity"]
       securityContext:
-        capabilities:
-          add: ["SYS_PTRACE"]   # required for jcmd/jmap/jstack / strace
+        runAsUser: 10001    # same UID as the target JVM — see below
+        runAsGroup: 10001
 ```
 
 Then `kubectl exec -it <pod> -c debug -- bash` and run `jcmd <pid>
-GC.heap_info`, `jstack <pid>`, `tcpdump -i any port 9092`, `openssl
-s_client -connect kafka:9093`, `ldapsearch -H ldaps://ldap:636`, `kafkacat
--b kafka:9092 -L`, …
+GC.heap_info`, `jstack <pid>`, `openssl s_client -connect kafka:9093`,
+`ldapsearch -H ldaps://ldap:636`, `kafkacat -b kafka:9092 -L`, …
+
+### Privileges the JDK tools actually need
+
+`jcmd`, `jstack`, `jmap`, `jinfo` and `jfr` use the HotSpot *attach* mechanism,
+a unix socket whose peer credentials the target JVM checks: it accepts the
+attach when the caller is root **or** when the caller's effective UID and GID
+both match its own. Since every Conduktor image runs as `conduktor` 10001,
+running the sidecar as `runAsUser: 10001` is enough — **no root, and no
+`SYS_PTRACE`**, which the attach path never uses.
+
+Add capabilities only for the tools that genuinely need them:
+
+| Tool | Needs |
+|------|-------|
+| `jcmd` / `jstack` / `jmap` / `jinfo` / `jfr` | matching UID/GID (or root) — nothing else |
+| `strace`, `jstack -F`, `jmap -F`, `jhsdb` | `SYS_PTRACE` (these really do `ptrace(2)`) |
+| `tcpdump` | `NET_RAW` |
+
+The image itself has no `run-as` and so defaults to root, which keeps every
+tool working out of the box for ad-hoc use. Override it with `runAsUser` in
+production namespaces where root sidecars are disallowed.
+
+Gateway pods predating the UID change run as `1001`; the image ships that
+legacy `gateway` account too, so use `runAsUser: 1001` to match those.
 
 ## Build locally
 
