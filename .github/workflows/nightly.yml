@@ -184,7 +184,7 @@ jobs:
           done
 
       - name: Generate SLSA build-provenance attestation
-        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
         with:
           subject-name: ${{ steps.tags.outputs.ref }}
           subject-digest: ${{ steps.apko.outputs.digest }}
@@ -193,7 +193,7 @@ jobs:
       # The action takes a single subject-name, so the mirror needs its own step.
       - name: Generate SLSA build-provenance attestation (Docker Hub)
         if: matrix.image.dockerhub != ''
-        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
         with:
           subject-name: ${{ matrix.image.dockerhub }}
           subject-digest: ${{ steps.apko.outputs.digest }}
