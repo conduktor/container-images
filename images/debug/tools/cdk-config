@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+#
+# Show the target's input platform config and the *rendered* per-app configs
+# that platform-entrypoint writes at startup — the effective configuration,
+# which is what you actually want when a setting "isn't being applied".
+set -uo pipefail
+# shellcheck source-path=SCRIPTDIR
+# shellcheck source=./cdk-common.sh
+. /usr/local/lib/conduktor/cdk-common.sh
+
+usage() {
+  cat <<EOF
+Usage: cdk-config [-l] [-i] [NAME]
+
+  (no args)   list the rendered configs, then print them all
+  -l          list only, with sizes and mtimes
+  -i          print the input platform config instead of the rendered ones
+  NAME        print only the rendered file whose name contains NAME
+
+  CDK_TARGET_PID   pin a specific pid
+  CDK_NO_REDACT=1  show real values
+EOF
+}
+
+mode=all
+case "${1:-}" in
+  -h|--help) usage; exit 0 ;;
+  --version) cdk_version_line; exit 0 ;;
+  -l) mode=list; shift ;;
+  -i) mode=input; shift ;;
+esac
+name="${1:-}"
+
+pid="$(cdk_target_pid)" || exit 1
+root="$(cdk_proc_root "${pid}")" || exit 1
+
+in_file="$(cdk_conf_in_file "${pid}")"
+out_dir="$(cdk_conf_out_dir "${pid}")"
+
+dump() {
+  local label="$1" path="$2"
+  cdk_head "${label}"
+  if [ ! -f "${path}" ]; then
+    cdk_warn "not found: ${path#"${root}"}"
+    return
+  fi
+  if cdk_have yq && case "${path}" in *.yaml|*.yml) true ;; *) false ;; esac; then
+    yq '.' "${path}" 2>/dev/null | cdk_maybe_redact || cdk_maybe_redact < "${path}"
+  else
+    cdk_maybe_redact < "${path}"
+  fi
+}
+
+if [ "${mode}" = "input" ]; then
+  cdk_dim "input config (as given to platform-entrypoint): ${in_file}"
+  dump "${in_file}" "${root}${in_file}"
+  cdk_redact_note
+  exit 0
+fi
+
+if [ ! -d "${root}${out_dir}" ]; then
+  cdk_bad "rendered config dir not found: ${out_dir}"
+  cdk_info "The process may still be starting, or CDK_APPS_CONF_DIR points elsewhere."
+  cdk_info "Input config is ${in_file} — try 'cdk-config -i'."
+  exit 1
+fi
+
+files="$(find "${root}${out_dir}" -maxdepth 1 -type f 2>/dev/null | sort)"
+[ -n "${files}" ] || { cdk_warn "no files in ${out_dir}"; exit 0; }
+
+if [ -n "${name}" ]; then
+  files="$(printf '%s\n' "${files}" | grep -F -- "${name}" || true)"
+  [ -n "${files}" ] || cdk_die "no rendered config matching '${name}'"
+fi
+
+cdk_head "rendered configs in ${out_dir}"
+printf '%s\n' "${files}" | while IFS= read -r f; do
+  printf '  %-40s %8s bytes  %s\n' \
+    "$(basename "${f}")" "$(stat -c %s "${f}" 2>/dev/null || echo '?')" \
+    "$(stat -c %y "${f}" 2>/dev/null | cut -d. -f1 || echo '?')"
+done
+
+[ "${mode}" = "list" ] && exit 0
+
+printf '%s\n' "${files}" | while IFS= read -r f; do
+  dump "$(basename "${f}")" "${f}"
+done
+cdk_redact_note

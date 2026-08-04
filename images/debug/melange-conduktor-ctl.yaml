@@ -1,0 +1,71 @@
+# Packages the Conduktor CLI (https://github.com/conduktor/ctl) as an APK so the
+# debug sidecar can drive Console's API from inside the cluster.
+#
+# Why repackage the released binary instead of building from source: upstream
+# ships a fully static Go binary per arch, and melange builds each arch in a
+# sandbox of that arch — so building from source would compile Go under qemu
+# emulation for aarch64 on every nightly. Fetching is seconds instead of minutes.
+#
+# Upstream publishes only MD5 sums alongside the release, which is an integrity
+# check and not a security one, so we pin our own SHA-256 below. That makes the
+# artifact immutable from our side, and it is what makes this safe.
+#
+# BUMPING: change `version`, then replace BOTH sha256 values:
+#   v=0.9.0
+#   for a in amd64 arm64; do
+#     curl -sSL "https://github.com/conduktor/ctl/releases/download/v${v}/conduktor-v${v}-linux-${a}.tar.gz" \
+#       | sha256sum | cut -d' ' -f1
+#   done
+package:
+  name: conduktor-ctl
+  version: 0.8.0
+  epoch: 0
+  description: Conduktor CLI (conduktor/ctl) — apply/get/token/sql against Console
+  copyright:
+    - license: Apache-2.0
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+
+pipeline:
+  # wget (used by the `fetch` pipeline) has no verbosity input and melange logs
+  # its stderr at WARN, so its progress dots flood the build log. /etc/wgetrc is
+  # read before anything else; see melange-kafka-tools.yaml for the detail.
+  - name: Quiet wget progress output
+    runs: printf 'verbose = off\n' >> /etc/wgetrc
+
+  # strip-components: 0 because the tarball holds a bare `conduktor` binary with
+  # no top-level directory.
+  - if: ${{build.arch}} == 'x86_64'
+    uses: fetch
+    with:
+      uri: https://github.com/conduktor/ctl/releases/download/v${{package.version}}/conduktor-v${{package.version}}-linux-amd64.tar.gz
+      expected-sha256: 0e4bfaaccd8c06a176227ccc5d8dd0365f6359f12c72be0d338056ae3698171a
+      strip-components: 0
+
+  - if: ${{build.arch}} == 'aarch64'
+    uses: fetch
+    with:
+      uri: https://github.com/conduktor/ctl/releases/download/v${{package.version}}/conduktor-v${{package.version}}-linux-arm64.tar.gz
+      expected-sha256: 7e8f3c7fd230898af4bd7c6838061e99dea794f6220f0e7d49ec4eaf14277f40
+      strip-components: 0
+
+  - name: Install the conduktor binary
+    runs: |
+      install -d "${{targets.destdir}}/usr/bin"
+      install -m 0755 conduktor "${{targets.destdir}}/usr/bin/conduktor"
+
+  - name: Smoke-test the packaged binary
+    runs: |
+      # Fails the build if the fetched artifact is not the expected release —
+      # `conduktor version` prints the tag and the upstream commit hash.
+      out="$("${{targets.destdir}}/usr/bin/conduktor" version)"
+      echo "${out}"
+      echo "${out}" | grep -q "v${{package.version}}" \
+        || { echo "binary does not report v${{package.version}}"; exit 1; }

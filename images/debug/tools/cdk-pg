@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+#
+# Console's PostgreSQL database: find the connection it actually uses, check it,
+# and hand you a psql/pgcli session on it.
+#
+# The connection string is discovered rather than configured, in this order:
+#   1. $CDK_PG_URL
+#   2. a postgres URL in the target's environment (CDK_DATABASE_URL et al)
+#   3. a postgres URL in the *rendered* configs under $CDK_APPS_CONF_DIR
+# Step 3 is the reliable one: it is the effective config, whatever the chart set.
+set -uo pipefail
+# shellcheck source-path=SCRIPTDIR
+# shellcheck source=./cdk-common.sh
+. /usr/local/lib/conduktor/cdk-common.sh
+
+usage() {
+  cat <<EOF
+Usage: cdk-pg [check|url|psql|pgcli|sizes|activity] [-- EXTRA ARGS]
+
+  check     (default) reachability, server version, connection count vs limit
+  url       print the discovered connection string, password masked
+  psql      interactive psql on that database
+  pgcli     same, with autocomplete + syntax highlighting
+  sizes     database and top-20 table sizes
+  activity  current backends, longest-running queries first
+
+  CDK_PG_URL       override discovery, e.g. postgres://user:pw@host:5432/db
+  CDK_TARGET_PID   pin a specific pid
+EOF
+}
+
+cmd="${1:-check}"
+case "${cmd}" in
+  -h|--help) usage; exit 0 ;;
+  --version) cdk_version_line; exit 0 ;;
+esac
+shift 2>/dev/null || true
+
+# --- discovery -------------------------------------------------------------
+
+url="${CDK_PG_URL:-}"
+
+if [ -z "${url}" ]; then
+  pid="$(cdk_target_pid)" || exit 1
+
+  for var in CDK_DATABASE_URL CDK_DB_URL DATABASE_URL POSTGRES_URL; do
+    url="$(cdk_target_env "${pid}" "${var}" '')"
+    [ -n "${url}" ] && break
+  done
+
+  if [ -z "${url}" ] && ls "/proc/${pid}/root/" >/dev/null 2>&1; then
+    conf_dir="/proc/${pid}/root$(cdk_conf_out_dir "${pid}")"
+    if [ -d "${conf_dir}" ]; then
+      url="$(grep -rhoE 'postgres(ql)?://[^"'"'"' ]+' "${conf_dir}" 2>/dev/null | head -n1)"
+    fi
+  fi
+fi
+
+if [ -z "${url}" ]; then
+  cdk_bad "could not find a PostgreSQL connection string"
+  cdk_info "Looked in: \$CDK_PG_URL, the target's env, and the rendered configs."
+  cdk_info "Set it explicitly:  CDK_PG_URL=postgres://user:pw@host:5432/db cdk-pg"
+  exit 1
+fi
+
+# --- parse -----------------------------------------------------------------
+# postgres://[user[:password]@]host[:port][/db][?params]
+
+strip="${url#*://}"
+creds=""
+case "${strip}" in *@*) creds="${strip%%@*}"; strip="${strip#*@}" ;; esac
+PG_USER="${creds%%:*}"
+PG_PASS=""
+case "${creds}" in *:*) PG_PASS="${creds#*:}" ;; esac
+
+hostport="${strip%%/*}"
+PG_HOST="${hostport%%:*}"
+PG_PORT="5432"
+case "${hostport}" in *:*) PG_PORT="${hostport##*:}" ;; esac
+
+PG_DB="${strip#*/}"
+PG_DB="${PG_DB%%\?*}"
+[ "${PG_DB}" = "${strip}" ] && PG_DB="postgres"
+[ -n "${PG_DB}" ] || PG_DB="postgres"
+[ -n "${PG_USER}" ] || PG_USER="postgres"
+
+redacted="postgres://${PG_USER}:***@${PG_HOST}:${PG_PORT}/${PG_DB}"
+
+export PGHOST="${PG_HOST}" PGPORT="${PG_PORT}" PGUSER="${PG_USER}" PGDATABASE="${PG_DB}"
+[ -n "${PG_PASS}" ] && export PGPASSWORD="${PG_PASS}"
+
+# Never let the password reach the terminal or a ticket.
+q() { psql -tAX -c "$1" 2>&1; }
+
+case "${cmd}" in
+  url)
+    cdk_info "${redacted}"
+    ;;
+
+  check)
+    cdk_need pg_isready
+    cdk_head "connection"
+    cdk_info "  ${redacted}"
+
+    if ! pg_isready -q 2>/dev/null; then
+      cdk_bad "pg_isready: not accepting connections at ${PG_HOST}:${PG_PORT}"
+      if cdk_have getent && ! getent hosts "${PG_HOST}" >/dev/null 2>&1; then
+        cdk_info "  DNS does not resolve ${PG_HOST}"
+      fi
+      exit 1
+    fi
+    cdk_ok "accepting connections"
+
+    ver="$(q 'select version();')"
+    case "${ver}" in
+      PostgreSQL*) cdk_ok "$(printf '%s' "${ver}" | cut -c1-60)" ;;
+      *) cdk_bad "authenticated query failed: ${ver}"; exit 1 ;;
+    esac
+
+    used="$(q 'select count(*) from pg_stat_activity;')"
+    maxc="$(q 'show max_connections;')"
+    if [ -n "${used}" ] && [ -n "${maxc}" ] && [ "${maxc}" -gt 0 ] 2>/dev/null; then
+      pct=$(( used * 100 / maxc ))
+      if [ "${pct}" -ge 85 ]; then
+        cdk_bad "connections ${used}/${maxc} (${pct}%) — near the limit"
+      else
+        cdk_ok "connections ${used}/${maxc} (${pct}%)"
+      fi
+    fi
+
+    size="$(q "select pg_size_pretty(pg_database_size('${PG_DB}'));")"
+    [ -n "${size}" ] && cdk_ok "database ${PG_DB} is ${size}"
+    ;;
+
+  sizes)
+    cdk_head "database size"
+    psql -X -c "select pg_size_pretty(pg_database_size('${PG_DB}')) as total;"
+    cdk_head "top 20 tables"
+    psql -X -c "select schemaname||'.'||relname as table,
+                       pg_size_pretty(pg_total_relation_size(relid)) as total,
+                       n_live_tup as rows
+                from pg_stat_user_tables
+                order by pg_total_relation_size(relid) desc limit 20;"
+    ;;
+
+  activity)
+    cdk_head "backends, longest first"
+    psql -X -c "select pid, state, wait_event_type, wait_event,
+                       now()-query_start as duration,
+                       left(regexp_replace(query, '\s+', ' ', 'g'), 80) as query
+                from pg_stat_activity
+                where state <> 'idle' and pid <> pg_backend_pid()
+                order by query_start nulls last;"
+    ;;
+
+  psql)  cdk_need psql;  exec psql "$@" ;;
+  pgcli) cdk_need pgcli; exec pgcli "$@" ;;
+
+  *) usage >&2; exit 2 ;;
+esac

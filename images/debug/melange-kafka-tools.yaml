@@ -1,0 +1,86 @@
+# Packages the Apache Kafka shell tools (kafka-topics.sh, kafka-consumer-groups.sh,
+# kafka-configs.sh, kafka-acls.sh, kafka-reassign-partitions.sh, …) for the debug
+# sidecar. Installed under /usr/lib/kafka, which apko.yaml puts on PATH.
+#
+# WHY NOT the Wolfi `kafka-4.3` package, despite rule 1 preferring Wolfi:
+#   * Wolfi's kafka-4.3 depends on openjdk-21-default-jvm, so it installs a
+#     SECOND JVM (~205 MB) next to this image's JDK 25. Kafka's scripts honour
+#     $JAVA_HOME, which this image already points at java-25-openjdk, so that
+#     second JVM would be installed and never used. Measured: +336 MB for the
+#     Wolfi package vs +131 MB here.
+#   * It buys no CVE coverage. Wolfi ships upstream's libs/ verbatim — all 108
+#     jars are byte-for-byte the same set as kafka_2.13-4.3.0.tgz, so there is
+#     no patched-dependency advantage to give up.
+# Verified: the 4.3 tools run on JDK 25 against a live 4.0 broker (create, list,
+# describe, configs, consumer-groups, broker-api-versions).
+#
+# BUMPING: change `version`, then replace expected-sha256 with
+#   curl -sSL https://archive.apache.org/dist/kafka/<v>/kafka_2.13-<v>.tgz \
+#     | sha256sum | cut -d' ' -f1
+# Cross-check it against the .sha512 Apache publishes next to the tarball.
+package:
+  name: kafka-tools
+  version: 4.3.0
+  epoch: 0
+  description: Apache Kafka admin/operations shell tools (no broker, no second JVM)
+  copyright:
+    - license: Apache-2.0
+
+vars:
+  scala-version: "2.13"
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+
+pipeline:
+  # melange's `fetch` pipeline shells out to wget with no verbosity control, and
+  # melange logs its stderr at WARN — ~2700 progress-dot lines for this tarball.
+  # wget reads /etc/wgetrc before anything else, so this switches it to one-line
+  # (-nv style) output while keeping error messages visible.
+  - name: Quiet wget progress output
+    runs: printf 'verbose = off\n' >> /etc/wgetrc
+
+  # One tarball serves both arches: Kafka is pure Java, so the per-arch packages
+  # melange emits have identical content.
+  - uses: fetch
+    with:
+      uri: https://archive.apache.org/dist/kafka/${{package.version}}/kafka_${{vars.scala-version}}-${{package.version}}.tgz
+      expected-sha256: 28cfdb0ca55b4ad85e84d090c10e3f4f970e250db226ae3756b209461e48b54d
+      strip-components: 1
+
+  - name: Install the shell tools and their libs
+    runs: |
+      dest="${{targets.destdir}}/usr/lib/kafka"
+      install -d "${dest}/bin" "${dest}/libs" "${dest}/config"
+
+      # bin/windows/*.bat is dead weight on Linux; site-docs likewise.
+      for f in bin/*.sh; do
+        install -m 0755 "${f}" "${dest}/bin/$(basename "${f}")"
+      done
+
+      cp -a libs/. "${dest}/libs/"
+
+      # kafka-run-class.sh reads config/tools-log4j2.yaml for logging; without it
+      # every invocation prints log4j initialisation warnings.
+      cp -a config/. "${dest}/config/"
+
+  - name: Verify the expected layout
+    runs: |
+      # The sha256 pin fixes the content, so this only guards against a layout
+      # change (or a wrong strip-components) on a version bump.
+      dest="${{targets.destdir}}/usr/lib/kafka"
+      for want in kafka-topics.sh kafka-consumer-groups.sh kafka-configs.sh \
+                  kafka-acls.sh kafka-reassign-partitions.sh \
+                  kafka-console-consumer.sh kafka-console-producer.sh \
+                  kafka-run-class.sh; do
+        [ -x "${dest}/bin/${want}" ] || { echo "missing bin/${want}"; exit 1; }
+      done
+      ls "${dest}/libs"/kafka-clients-*.jar >/dev/null || { echo "no kafka-clients jar"; exit 1; }
+      [ -f "${dest}/config/tools-log4j2.yaml" ] || echo "note: tools-log4j2.yaml absent in this release"
+      echo "installed $(ls "${dest}/bin" | wc -l) tools, $(ls "${dest}/libs" | wc -l) libs"

@@ -27,9 +27,19 @@
 contents:
   repositories:
     - https://packages.wolfi.dev/os
+    # Local APK built by melange.yaml from tools/. Both this and the key below
+    # are produced by `make debug-scripts`; `apko show-config` does not resolve
+    # repositories, so lint still passes on a fresh clone.
+    - "@local ./packages"
   keyring:
     - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    - ./melange.rsa.pub
   packages:
+    # --- Conduktor tooling built locally by melange (see melange*.yaml) ---
+    - conduktor-debug-scripts@local # cdk-* support scripts from tools/
+    - conduktor-ctl@local # `conduktor` CLI, from conduktor/ctl releases
+    - kafka-tools@local # kafka-topics.sh & friends; reuses this image's JDK 25
+
     # --- OS baseline (same as base-jre-25) ---
     - wolfi-baselayout
     - glibc
@@ -74,6 +84,10 @@ contents:
     # --- Kafka debugging ---
     - kafkacat # produce/consume/metadata CLI (kcat's Wolfi name)
 
+    # --- Console's PostgreSQL database ---
+    - postgresql-17-client # psql, pg_dump, pg_isready
+    - py3-pgcli # pgcli: psql with autocomplete + syntax highlighting
+
     # --- HTTP + JSON/YAML ergonomics ---
     - curl
     - wget
@@ -99,7 +113,11 @@ accounts:
 
 environment:
   JAVA_HOME: /usr/lib/jvm/java-25-openjdk
-  PATH: /usr/lib/jvm/java-25-openjdk/bin:/usr/sbin:/sbin:/usr/bin:/bin
+  # /usr/local/bin holds the cdk-* support scripts, and also iputils' arping /
+  # tracepath / clockdiff — all unreachable before it was added here.
+  # /usr/lib/kafka/bin must be on PATH rather than symlinked into /usr/bin: the
+  # Kafka scripts locate kafka-run-class.sh and libs/ relative to $0.
+  PATH: /usr/lib/jvm/java-25-openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/lib/kafka/bin:/usr/sbin:/sbin:/usr/bin:/bin
   LANG: C.UTF-8
   TZ: UTC
 

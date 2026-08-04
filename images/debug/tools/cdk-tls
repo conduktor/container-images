@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+#
+# TLS endpoint triage: chain, expiry, SANs, and whether the target JVM's own
+# truststore validates the peer — the usual cause of "PKIX path building failed".
+set -uo pipefail
+# shellcheck source-path=SCRIPTDIR
+# shellcheck source=./cdk-common.sh
+. /usr/local/lib/conduktor/cdk-common.sh
+
+usage() {
+  cat <<EOF
+Usage: cdk-tls HOST:PORT [SERVERNAME]
+
+Checks one TLS endpoint and reports:
+  - the presented chain (subject / issuer / expiry per cert)
+  - days until the leaf expires
+  - SANs, so you can spot a hostname mismatch
+  - verification against this image's CA bundle, and against the target JVM's
+    truststore when one is configured
+
+  CDK_TARGET_PID   pin a specific pid (for truststore discovery)
+EOF
+}
+
+case "${1:-}" in
+  -h|--help|"") usage; exit 0 ;;
+  --version) cdk_version_line; exit 0 ;;
+esac
+
+endpoint="$1"
+servername="${2:-${endpoint%%:*}}"
+case "${endpoint}" in
+  *:*) ;;
+  *) cdk_die "expected HOST:PORT, got '${endpoint}'" ;;
+esac
+
+cdk_need openssl
+
+cdk_head "handshake with ${endpoint} (SNI ${servername})"
+raw="$(openssl s_client -connect "${endpoint}" -servername "${servername}" \
+        -showcerts </dev/null 2>&1)" || true
+
+if ! printf '%s' "${raw}" | grep -q 'BEGIN CERTIFICATE'; then
+  cdk_bad "no certificate returned"
+  printf '%s\n' "${raw}" | tail -n 8
+  exit 1
+fi
+
+printf '%s\n' "${raw}" | awk '/^ [0-9]+ s:/ || /^   i:/ {print "  " $0}' | head -20
+
+leaf="$(printf '%s' "${raw}" | awk '/BEGIN CERTIFICATE/{f=1} f{print} /END CERTIFICATE/{exit}')"
+
+cdk_head "leaf certificate"
+printf '%s' "${leaf}" | openssl x509 -noout -subject -issuer -dates 2>/dev/null | sed 's/^/  /'
+
+end_date="$(printf '%s' "${leaf}" | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)"
+if [ -n "${end_date}" ]; then
+  end_epoch="$(date -d "${end_date}" +%s 2>/dev/null || echo 0)"
+  now="$(date +%s)"
+  if [ "${end_epoch}" != "0" ]; then
+    days=$(( (end_epoch - now) / 86400 ))
+    if   [ "${days}" -lt 0 ];  then cdk_bad  "EXPIRED ${days#-} days ago"
+    elif [ "${days}" -lt 15 ]; then cdk_bad  "expires in ${days} days"
+    elif [ "${days}" -lt 45 ]; then cdk_warn "expires in ${days} days"
+    else                            cdk_ok   "expires in ${days} days"
+    fi
+  fi
+fi
+
+cdk_head "subject alternative names"
+printf '%s' "${leaf}" | openssl x509 -noout -ext subjectAltName 2>/dev/null \
+  | tail -n +2 | sed 's/^/  /' || cdk_warn "no SAN extension (very old cert)"
+
+cdk_head "verification"
+if printf '%s' "${raw}" | grep -q 'Verify return code: 0 (ok)'; then
+  cdk_ok "valid against this image's CA bundle"
+else
+  cdk_warn "not valid against this image's CA bundle:"
+  printf '%s\n' "${raw}" | grep 'Verify return code' | sed 's/^/  /'
+fi
+
+# The JVM's truststore is what actually matters for the product.
+pid="$(CDK_TARGET_PID="${CDK_TARGET_PID:-}" cdk_jvm_pids | head -n1)"
+if [ -z "${pid}" ]; then
+  cdk_dim "no JVM visible — skipping truststore check"
+  exit 0
+fi
+
+root="/proc/${pid}/root"
+ls "${root}/" >/dev/null 2>&1 || { cdk_dim "cannot read target fs — skipping truststore check"; exit 0; }
+
+ts="$(tr '\0' '\n' < "/proc/${pid}/environ" 2>/dev/null \
+      | sed -n 's/.*-Djavax\.net\.ssl\.trustStore=\([^ ]*\).*/\1/p' | head -n1)"
+[ -n "${ts}" ] || ts="$(cdk_target_env "${pid}" JAVA_TRUSTSTORE '')"
+
+if [ -z "${ts}" ]; then
+  cdk_dim "target JVM uses the default JDK truststore (no -Djavax.net.ssl.trustStore)"
+  exit 0
+fi
+
+cdk_head "target JVM truststore"
+if [ -f "${root}${ts}" ]; then
+  cdk_ok "${ts}"
+  if cdk_have keytool; then
+    printf '  %s certificates\n' \
+      "$(keytool -list -keystore "${root}${ts}" -storepass "${STOREPASS:-changeit}" 2>/dev/null \
+         | grep -c 'trustedCertEntry' || echo '? (wrong store password — set STOREPASS)')"
+  fi
+else
+  cdk_bad "configured truststore is missing inside the target: ${ts}"
+fi

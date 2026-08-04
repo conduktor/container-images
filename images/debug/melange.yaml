@@ -1,0 +1,39 @@
+# Builds the `conduktor-debug-scripts` APK that ships tools/ into the debug
+# image. This is the one sanctioned melange use in the repo (AGENTS.md rule 1):
+# these are our own scripts, so no Wolfi package can provide them.
+#
+# Build it with `make debug-scripts` — or just `make build IMAGE=debug`, which
+# builds the package first and then hands it to apko as a local repository.
+package:
+  name: conduktor-debug-scripts
+  version: 0.1.0
+  epoch: 0
+  description: Conduktor support/TSE helper scripts for the debug sidecar image
+  copyright:
+    - license: Apache-2.0
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+
+pipeline:
+  - name: Install helper scripts
+    runs: |
+      install -d "${{targets.destdir}}/usr/local/bin"
+      install -d "${{targets.destdir}}/usr/local/lib/conduktor"
+
+      # cdk-common.sh is a sourced library, not a command.
+      install -m 0644 tools/cdk-common.sh \
+        "${{targets.destdir}}/usr/local/lib/conduktor/cdk-common.sh"
+
+      for f in tools/cdk-*; do
+        case "${f}" in
+          */cdk-common.sh) continue ;;
+        esac
+        install -m 0755 "${f}" "${{targets.destdir}}/usr/local/bin/$(basename "${f}")"
+      done
