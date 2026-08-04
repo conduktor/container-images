@@ -98,6 +98,32 @@ jobs:
         with:
           version: ${{ env.APKO_VERSION }}
 
+      - name: Collect melange configs
+        id: melange
+        env:
+          DIR: ${{ matrix.image }}
+        run: |
+          set -euo pipefail
+          configs="$(cd "images/${DIR}" \
+            && find . -maxdepth 1 -name 'melange*.yaml' -printf '%f\n' \
+            | sort | paste -sd, -)"
+          echo "configs=${configs}" >> "$GITHUB_OUTPUT"
+          echo "melange configs: ${configs:-<none>}"
+
+      # Same melange step as the nightly, so a PR that only touches
+      # images/debug/tools/ is proven to package and install before merge.
+      # x86_64 only here — the PR build is amd64-only too.
+      - name: Build local APKs with melange
+        if: steps.melange.outputs.configs != ''
+        uses: chainguard-dev/actions/melange-build@9d631658f55713e5f63ca0cc21ee168f81301fd9 # v1.6.30
+        with:
+          multi-config: ${{ steps.melange.outputs.configs }}
+          workdir: images/${{ matrix.image }}
+          archs: x86_64
+          sign-with-temporary-key: true
+          signing-key-path: ${{ github.workspace }}/images/${{ matrix.image }}/melange.rsa
+          repository-path: ${{ github.workspace }}/images/${{ matrix.image }}/packages
+
       - name: Validate apko.yaml parses
         working-directory: images/${{ matrix.image }}
         # apko has no dedicated `lint` subcommand; show-config parses + normalizes

@@ -51,7 +51,16 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 ### 1. Use apko in priority; verify Wolfi packages before adding
 
 - Prefer apko over Dockerfile or melange. Only reach for melange if a needed
-  binary isn't in Wolfi at all.
+  binary isn't in Wolfi at all — **or** when the Wolfi package's dependencies
+  cost more than they give (measure before claiming this). Three melange configs
+  exist under `images/debug/` for those reasons; see rule 10 before adding a
+  fourth or "simplifying" one back to a Wolfi package:
+
+  | Config | Package | Why not Wolfi |
+  |--------|---------|---------------|
+  | `melange.yaml` | `conduktor-debug-scripts` | our own scripts, nothing to package |
+  | `melange-conduktor-ctl.yaml` | `conduktor-ctl` | `conduktor/ctl` is not in Wolfi |
+  | `melange-kafka-tools.yaml` | `kafka-tools` | `kafka-4.3` drags an unused second JVM; see below |
 - **Never invent Wolfi package names.** Verify before editing an `apko.yaml`:
   ```sh
   docker run --rm cgr.dev/chainguard/wolfi-base sh -c 'apk update >/dev/null && apk search -e <name>'
@@ -64,6 +73,8 @@ attested with cosign), and carries a SLSA build-provenance attestation.
   | `nmap-ncat`, `netcat-openbsd` | `netcat-openbsd` (nmap-ncat doesn't exist) |
   | `kcat` | `kafkacat` |
   | `nss-tools` | `libnss-tools` |
+  | `pgcli` | `py3-pgcli` (a bare `apk search -e pgcli` finds nothing) |
+  | `psql`, `postgresql-client` | `postgresql-17-client` (version is part of the name) |
   | `iotop`, `iotop-c` | *not packaged* — use `sysstat` (iostat/pidstat) |
   | `jattach` | *not packaged* — use full `openjdk-25` (has jstack/jmap/jcmd/jhsdb/jfr) instead of `openjdk-25-jre` |
 
@@ -193,6 +204,55 @@ nightly matrix and the `pr.yml` `all` JSON. It now lives once in
   are covered without registering them anywhere. `make test` runs every
   `scripts/tests/test-*.sh`. The `scripts` job in `pr.yml` runs both.
 
+### 10. Debug-image support scripts: `images/debug/tools/`
+
+The TSE-facing `cdk-*` commands live in `images/debug/tools/` and reach the
+image through `images/debug/melange.yaml` as the `conduktor-debug-scripts` APK,
+which apko pulls from a `@local ./packages` repository.
+
+- **Adding a tool needs no wiring.** `melange.yaml` globs `tools/cdk-*` and
+  `make lint-shell` / the pre-commit hook match `cdk-*` by name. A test asserts
+  the glob is still there, so don't replace it with an explicit list.
+- **Adding a package needs no wiring either.** Both workflows and
+  `scripts/melange-build.sh` glob `images/<dir>/melange*.yaml`, so a new config
+  file is picked up automatically (CI passes them via `multi-config`).
+- **Do not replace `kafka-tools` with Wolfi's `kafka-4.3`.** It looks like a
+  rule-1 improvement and is not. Measured: Wolfi's package is +336 MB because it
+  depends on `openjdk-21-default-jvm`, while this image's `JAVA_HOME` points at
+  java-25 and Kafka's scripts honour it — so that JVM installs and never runs.
+  And it gives up nothing: Wolfi ships upstream's `libs/` verbatim (all 108 jars
+  are the same set as `kafka_2.13-4.3.0.tgz`), so there are no patched
+  dependencies to lose. Our package is +131 MB. If you re-litigate this, re-run
+  the measurement rather than assuming.
+- **`/usr/lib/kafka/bin` goes on `PATH`, not symlinked into `/usr/bin`.** Each
+  Kafka script resolves `kafka-run-class.sh` and `libs/` from `$0`, so a symlink
+  in `/usr/bin` makes it look for `/usr/libs`.
+- **Third-party binaries are pinned by SHA-256 we control.** `conduktor/ctl`
+  publishes only MD5 sums, which are an integrity check and not a security one,
+  so `melange-conduktor-ctl.yaml` carries its own `expected-sha256` per arch and
+  a smoke test asserting `conduktor version` matches. Bumping the version means
+  replacing both hashes — the recipe is in that file's header. It repackages the
+  released static binary rather than building from source on purpose: melange
+  builds each arch in a sandbox of that arch, so a Go build would compile under
+  qemu emulation for aarch64 on every nightly.
+- **Derive paths from the target, never hardcode.** Use the `cdk_target_env`
+  helper to read `/proc/<pid>/environ`; the Console defaults
+  (`CDK_IN_CONF_FILE`, `CDK_APPS_CONF_DIR` = `${CDK_VOLUME_DIR}/configs`) are
+  fallbacks only. A chart overriding `CDK_VOLUME_DIR` must still work.
+- **Anything printed goes through `cdk_maybe_redact`.** This output lands in
+  support tickets. `scripts/tests/test-cdk-tools.sh` asserts both directions —
+  secrets masked, and `*_FILE`/`*_PATH` keys preserved. Add a case there when
+  you touch the filter.
+- **Signing keys are ephemeral and gitignored** (`images/*/melange.rsa*`,
+  `images/*/packages/**`). Locally `scripts/melange-build.sh` runs
+  `melange keygen` on demand; CI uses
+  `chainguard-dev/actions/melange-build` with `sign-with-temporary-key: true`.
+  Never commit a key or wire up a persistent one — the key only has to satisfy
+  apk's index signature check inside a single build.
+- `apko show-config` does not resolve repositories, so `make lint` passes on a
+  fresh clone with no `packages/` present. Only `apko build`/`publish` needs the
+  APK, which is why `build.sh` runs melange first when a `melange.yaml` exists.
+
 ## Common tasks
 
 ### Add a package to an image
@@ -237,6 +297,15 @@ make lint            # yamllint + actionlint + apko show-config + shellcheck
 make test            # fixture tests for scripts/ (also asserts images.json is in sync)
 make precommit-run   # all 12 pre-commit hooks
 make build IMAGE=<changed image>   # for any apko.yaml change
+```
+
+`make build` is **host-arch only** — it is a test artifact, and building the
+foreign arch runs the melange pipeline under qemu emulation (~30s becomes several
+minutes once `kafka-tools` is involved). The nightly is what produces multi-arch.
+To reproduce it locally before a risky packaging change:
+
+```sh
+make build IMAGE=debug ARCHES=x86_64,aarch64
 ```
 
 CI runs the same tools. Fixing lint locally is faster than the round-trip.

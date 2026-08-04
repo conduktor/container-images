@@ -48,6 +48,26 @@ case "${HOST_ARCH}" in
   aarch64) HOST_ARCH="arm64" ;;
 esac
 
+# An image with a melange.yaml ships local packages built from source in its
+# directory (see images/debug/tools/). Build those APKs first so apko can resolve
+# them from the `@local ./packages` repository.
+#
+# Only for ${HOST_ARCH}: apko below builds the host arch alone, so a foreign-arch
+# APK would be built under qemu emulation and then never installed. We derive the
+# arch from the Docker daemon rather than letting melange-build.sh fall back to
+# `uname -m`, since the daemon is what actually runs the build. An explicit
+# MELANGE_ARCHES still wins, so `make build ARCHES=x86_64,aarch64` works.
+if [ -f "${WORK_DIR}/melange.yaml" ]; then
+  case "${HOST_ARCH}" in
+    amd64) MELANGE_ARCH="x86_64" ;;
+    arm64) MELANGE_ARCH="aarch64" ;;
+    *) echo "!! Unsupported host arch '${HOST_ARCH}'" >&2; exit 1 ;;
+  esac
+  export MELANGE_ARCHES="${MELANGE_ARCHES:-${MELANGE_ARCH}}"
+  echo ">> Building local APKs from ${IMAGE_DIR}/melange*.yaml (${MELANGE_ARCHES})"
+  "${REPO_ROOT}/scripts/melange-build.sh" "${IMAGE_DIR}"
+fi
+
 echo ">> Building ${IMAGE_REF} (arch: ${HOST_ARCH}) with apko"
 if command -v apko >/dev/null 2>&1; then
   ( cd "${WORK_DIR}" && apko build apko.yaml "${IMAGE_REF}" "${TAR_NAME}" --arch "${HOST_ARCH}" --sbom-path . )
@@ -66,17 +86,18 @@ echo ">> Loading ${WORK_DIR}/${TAR_NAME} into Docker"
 load_out="$(docker load -i "${WORK_DIR}/${TAR_NAME}")"
 echo "${load_out}"
 
-if ! docker image inspect "${IMAGE_REF}" >/dev/null 2>&1; then
-  loaded_ref="$(printf '%s\n' "${load_out}" | sed -n 's/^Loaded image: //p' | head -n1)"
-  loaded_id="$(printf '%s\n' "${load_out}" | sed -n 's/^Loaded image ID: //p' | head -n1)"
-  if [ -n "${loaded_ref}" ]; then
-    docker tag "${loaded_ref}" "${IMAGE_REF}"
-  elif [ -n "${loaded_id}" ]; then
-    docker tag "${loaded_id}" "${IMAGE_REF}"
-  else
-    echo "!! Could not determine the loaded image ref from 'docker load' output." >&2
-    exit 1
-  fi
+# Retag unconditionally: guarding on "does ${IMAGE_REF} already exist" would
+# leave a stale tag from a previous build pointing at the old image, so you'd
+# silently test yesterday's layers.
+loaded_ref="$(printf '%s\n' "${load_out}" | sed -n 's/^Loaded image: //p' | head -n1)"
+loaded_id="$(printf '%s\n' "${load_out}" | sed -n 's/^Loaded image ID: //p' | head -n1)"
+if [ -n "${loaded_ref}" ] && [ "${loaded_ref}" != "${IMAGE_REF}" ]; then
+  docker tag "${loaded_ref}" "${IMAGE_REF}"
+elif [ -n "${loaded_id}" ]; then
+  docker tag "${loaded_id}" "${IMAGE_REF}"
+elif [ -z "${loaded_ref}" ]; then
+  echo "!! Could not determine the loaded image ref from 'docker load' output." >&2
+  exit 1
 fi
 
 echo ">> Done. Try one of:"
