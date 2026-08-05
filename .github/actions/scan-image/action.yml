@@ -1,0 +1,118 @@
+name: "Scan image for CVEs"
+description: >
+  Run Trivy and Grype against one image, write both reports to stable paths
+  (trivy.json / grype.json), and render a Markdown summary into the job summary.
+  Optionally fail on a severity threshold.
+
+# Both workflows scanned with copy-pasted Trivy/Grype steps whose severity lists
+# and flags had already drifted apart. Keeping them here means the nightly badge
+# and the PR summary are measuring the same thing, and the scanner SHAs are
+# pinned in one place for Dependabot.
+#
+# Reporting is deliberately non-gating by default (fail-on: none): Trivy cannot
+# see packages we build with melange — it attributes those files to an APK with
+# no advisory data — so a Trivy-based gate is blind to exactly the content this
+# repo adds. See AGENTS.md rule 11.
+
+inputs:
+  image:
+    required: true
+    description: (string) Image reference to scan. A registry ref or a local docker daemon ref.
+  tar:
+    required: false
+    default: ""
+    description: (string) Optional path to an image tar. When set, Trivy scans this instead of `image` (Grype still uses `image`).
+  label:
+    required: true
+    description: (string) Human-readable name for the summary heading, e.g. the image directory.
+  fail-on:
+    required: false
+    default: "none"
+    description: (string) Fail the step when either scanner reports at or above this severity. One of none | critical | high.
+  summary:
+    required: false
+    default: "true"
+    description: (bool) Append a Markdown table to $GITHUB_STEP_SUMMARY.
+
+outputs:
+  trivy-json:
+    description: Path to the Trivy JSON report.
+    value: trivy.json
+  grype-json:
+    description: Path to the Grype JSON report.
+    value: grype.json
+  critical:
+    description: Highest critical count across both scanners.
+    value: ${{ steps.counts.outputs.critical }}
+  high:
+    description: Highest critical+high count across both scanners.
+    value: ${{ steps.counts.outputs.high }}
+
+runs:
+  using: composite
+  steps:
+    # ignore-unfixed keeps the badge meaningful: an unfixable finding is not
+    # something a rebuild can clear. Grype below intentionally does include
+    # unfixed ones, which is why its totals are larger.
+    - name: Trivy scan
+      uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+      with:
+        image-ref: ${{ inputs.tar == '' && inputs.image || '' }}
+        input: ${{ inputs.tar }}
+        format: json
+        output: trivy.json
+        ignore-unfixed: true
+        severity: CRITICAL,HIGH,MEDIUM,LOW
+        vuln-type: os,library
+        exit-code: "0"
+
+    - name: Grype scan
+      uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
+      id: grype
+      with:
+        image: ${{ inputs.image }}
+        fail-build: false
+        output-format: json
+        only-fixed: false
+        severity-cutoff: negligible
+
+    - name: Move Grype report to a stable path
+      shell: bash
+      run: cp "${{ steps.grype.outputs.json }}" grype.json
+
+    - name: Summarise
+      id: counts
+      shell: bash
+      env:
+        LABEL: ${{ inputs.label }}
+        WRITE_SUMMARY: ${{ inputs.summary }}
+        FAIL_ON: ${{ inputs.fail-on }}
+      run: |
+        set -euo pipefail
+        # This action deliberately reuses the repo's scripts rather than
+        # duplicating the jq, so the badge and this summary cannot diverge. That
+        # makes it repo-local by design: it needs actions/checkout to have run.
+        . "${GITHUB_WORKSPACE}/.github/scripts/cve-counts.sh"
+        cve_counts trivy.json grype.json
+
+        critical=$(( CVE_TRIVY_CRITICAL > CVE_GRYPE_CRITICAL ? CVE_TRIVY_CRITICAL : CVE_GRYPE_CRITICAL ))
+        high=$(( CVE_TRIVY_HIGH > CVE_GRYPE_HIGH ? CVE_TRIVY_HIGH : CVE_GRYPE_HIGH ))
+        {
+          echo "critical=${critical}"
+          echo "high=${high}"
+        } >> "$GITHUB_OUTPUT"
+
+        summary="$("${GITHUB_WORKSPACE}/.github/scripts/scan-summary.sh" trivy.json grype.json "${LABEL}")"
+        echo "${summary}"
+        if [ "${WRITE_SUMMARY}" = "true" ]; then
+          printf '%s\n' "${summary}" >> "$GITHUB_STEP_SUMMARY"
+        fi
+
+        case "${FAIL_ON}" in
+          none) ;;
+          critical)
+            [ "${critical}" = "0" ] || { echo "::error::${critical} critical CVE(s) in ${LABEL}"; exit 1; } ;;
+          high)
+            [ "${high}" = "0" ] || { echo "::error::${high} critical/high CVE(s) in ${LABEL}"; exit 1; } ;;
+          *) echo "::error::invalid fail-on '${FAIL_ON}' (none|critical|high)"; exit 2 ;;
+        esac

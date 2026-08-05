@@ -129,7 +129,7 @@ jobs:
           repository-path: ${{ github.workspace }}/images/${{ matrix.image.dir }}/packages
 
       - name: Login to GHCR
-        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -214,7 +214,7 @@ jobs:
           done
 
       - name: Generate SLSA build-provenance attestation
-        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
         with:
           subject-name: ${{ steps.tags.outputs.ref }}
           subject-digest: ${{ steps.apko.outputs.digest }}
@@ -223,37 +223,21 @@ jobs:
       # The action takes a single subject-name, so the mirror needs its own step.
       - name: Generate SLSA build-provenance attestation (Docker Hub)
         if: matrix.image.dockerhub != ''
-        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
         with:
           subject-name: ${{ matrix.image.dockerhub }}
           subject-digest: ${{ steps.apko.outputs.digest }}
           push-to-registry: true
 
-      - name: Trivy scan
-        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
-        with:
-          image-ref: ${{ steps.apko.outputs.image }}
-          format: json
-          output: trivy.json
-          ignore-unfixed: true
-          severity: CRITICAL,HIGH,MEDIUM,LOW
-          exit-code: "0"
-
-      - name: Grype scan
-        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
-        id: grype
+      - name: Scan for CVEs
+        uses: ./.github/actions/scan-image
         with:
           image: ${{ steps.apko.outputs.image }}
-          fail-build: false
-          output-format: json
-          only-fixed: false
-          severity-cutoff: negligible
-
-      - name: Copy Grype JSON to a stable path
-        run: cp "${{ steps.grype.outputs.json }}" grype.json
+          label: ${{ matrix.image.name }}
+          fail-on: none # the nightly reports; it must never block a rebuild
 
       - name: Upload scan artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: scans-${{ matrix.image.dir }}
           path: |
@@ -265,10 +249,10 @@ jobs:
       - name: Build CVE badge JSON
         env:
           IMAGE_NAME: ${{ matrix.image.name }}
-        run: ./scripts/cve-badge.sh trivy.json grype.json "${IMAGE_NAME}" badges
+        run: ./.github/scripts/cve-badge.sh trivy.json grype.json "${IMAGE_NAME}" badges
 
       - name: Upload badge JSON
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: badges-${{ matrix.image.dir }}
           path: badges/
@@ -290,7 +274,7 @@ jobs:
           persist-credentials: true
 
       - name: Download all badge artifacts
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: badges-*
           path: badges-raw/

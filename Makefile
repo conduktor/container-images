@@ -28,7 +28,10 @@ WORKFLOWS_DIR := .github/workflows
 # them by name too rather than leaving them unlinted.
 SHELL_FILES   := $(shell find . -path ./.git -prune -o -type f \
                    \( -name '*.sh' -o -name 'cdk-*' \) -print 2>/dev/null)
-TESTS         := $(wildcard scripts/tests/test-*.sh)
+# Tests are discovered, not listed: they live next to what they test, so
+# scripts/ has its own and the CI-only ones sit under .github/. A find keeps a
+# new tests/ directory from being silently left out of `make test`.
+TESTS         := $(shell find . -path ./.git -prune -o -path '*/tests/test-*.sh' -print 2>/dev/null | sort)
 
 .PHONY: help
 help: ## Show this help

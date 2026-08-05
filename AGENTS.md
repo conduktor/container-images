@@ -27,9 +27,9 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 │   ├── base-os/apko.yaml        # source of truth per image
 │   ├── base-jre-25/apko.yaml
 │   └── debug/apko.yaml
-├── scripts/
+├── scripts/                     # runnable by a human as well as CI (rule 12)
 │   ├── image-matrix.sh          # manifest -> CI build matrix (validates the dispatch subset)
-│   ├── cve-badge.sh             # trivy/grype JSON -> shields.io endpoint JSON
+│   ├── melange-build.sh         # local APK build; also called by build.sh
 │   └── tests/test-*.sh          # fixture tests for the above; `make test`
 ├── build.sh                     # local `apko build` wrapper (uses cgr.dev/chainguard/apko fallback)
 ├── Makefile                     # dev targets: build / lint / test / scan / sbom / precommit-*
@@ -38,8 +38,12 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 ├── .yamllint.yaml
 ├── .github/
 │   ├── workflows/nightly.yml    # 04:00 UTC cron; publish + sign + attest + scan + refresh badges
-│   ├── workflows/pr.yml         # build-only + scan on PRs; blocks CRITICAL findings
+│   ├── workflows/pr.yml         # build + scan on PRs; report-only, no CVE gate (rule 11)
+│   ├── scripts/                 # CI-only scripts — cve-*/scan-*, never run by hand (rule 12)
+│   │   └── tests/test-*.sh      # their tests, also picked up by `make test`
 │   ├── actions/setup-apko/      # local composite action: verified apko install (Sigstore-checked)
+│   ├── actions/scan-image/      # local composite action: trivy + grype + job summary (rule 11)
+│   ├── actions/pr-comment/      # local composite action: generic sticky PR comment
 │   ├── badges/*.json            # nightly-refreshed shields.io endpoint JSON (auto-committed by CI)
 │   ├── dependabot.yml           # weekly bumps for GHA SHA pins
 │   └── CODEOWNERS               # @conduktor/platform
@@ -104,7 +108,15 @@ Never pin to `@main`, `@master`, or a bare tag. Dependabot
 rewrite both the SHA and the trailing version comment. If you add a new
 action, resolve the SHA with:
 ```sh
-gh api repos/<owner>/<repo>/git/refs/tags/<tag> -q .object.sha
+# Dereference annotated tags: for those, .object.sha is the *tag object*, and
+# `uses:` needs a commit SHA. Silently pinning a tag-object SHA gives a ref
+# Actions cannot resolve — this has caught us out more than once.
+resolve_action_sha() {
+  read -r type sha < <(gh api "repos/$1/git/refs/tags/$2" -q '"\(.object.type) \(.object.sha)"')
+  [ "${type}" = "tag" ] && sha="$(gh api "repos/$1/git/tags/${sha}" -q .object.sha)"
+  echo "${sha}"
+}
+resolve_action_sha actions/upload-artifact v7.0.1
 ```
 
 Note: `chainguard-dev/actions/setup-apko` does **not** exist upstream (that
@@ -199,7 +211,7 @@ nightly matrix and the `pr.yml` `all` JSON. It now lives once in
 - Non-trivial `run:` logic belongs in `scripts/` with a test in
   `scripts/tests/`, not inline in YAML — inline shell is invisible to
   shellcheck beyond actionlint's basic pass and cannot be unit-tested. The jq
-  that computes CVE badge counts is the worked example (`scripts/cve-badge.sh`).
+  that computes CVE badge counts is the worked example (`.github/scripts/cve-badge.sh`).
 - `make lint-shell` shellchecks every `*.sh` found in the repo, so new scripts
   are covered without registering them anywhere. `make test` runs every
   `scripts/tests/test-*.sh`. The `scripts` job in `pr.yml` runs both.
@@ -252,6 +264,65 @@ which apko pulls from a `@local ./packages` repository.
 - `apko show-config` does not resolve repositories, so `make lint` passes on a
   fresh clone with no `packages/` present. Only `apko build`/`publish` needs the
   APK, which is why `build.sh` runs melange first when a `melange.yaml` exists.
+
+### 11. Scanning lives in one action, and is report-only
+
+Both workflows scan via [`./.github/actions/scan-image`](.github/actions/scan-image/action.yml).
+Do not add a bare `trivy-action` or `anchore/scan-action` step to a workflow —
+the two copies had already drifted (different severity lists, different
+`ignore-unfixed`), which is why this exists.
+
+- The action writes `trivy.json` + `grype.json` to the job's working directory
+  and appends a Markdown table to `$GITHUB_STEP_SUMMARY`. Counting is
+  `.github/scripts/cve-counts.sh`, shared with `cve-badge.sh`, so the PR summary
+  and the README badge can't report different numbers for the same report.
+- **`fail-on: none` on purpose.** A Trivy-based gate is blind to the packages we
+  build with melange: Trivy attributes those files to an APK package and finds
+  no advisories for it, so `trivy image` reports 0 while `trivy rootfs` on the
+  same extracted binary reports the CVEs. Grype walks the filesystem and does
+  see them. Measured on the debug image: Trivy 0 critical/0 high, Grype 0
+  critical/20 high, same image.
+- So if you ever turn gating on, gate on the **Grype** numbers (or the action's
+  `critical`/`high` outputs, which take the max of both) — never on Trivy alone.
+- PRs also get **one** aggregated comment, edited in place on every run. The
+  `report` job runs after the scan matrix, downloads the `scans-*` artifacts and
+  renders them with `.github/scripts/scan-report.sh`, then posts via the
+  [`pr-comment`](.github/actions/pr-comment/action.yml) action, which upserts on
+  a `<!-- conduktor-ci:cve-report -->` marker. That action is deliberately
+  generic — it knows nothing about CVEs — so keep report rendering out of it.
+  Don't post from inside the matrix (one comment per image) and don't swap in a
+  marketplace comment action: this is ~30 lines of `gh api` and avoids handing a
+  third-party action `pull-requests: write` on a public repo.
+  Fork PRs get a read-only token, so the comment step is skipped there by
+  design and the report goes to the job summary instead.
+- Trivy runs with `ignore-unfixed: true` and Grype with `only-fixed: false`, on
+  purpose: the badge should track what a rebuild can actually clear, while the
+  summary should still show the full picture. That asymmetry explains most of the
+  gap between the two totals, and the summary says so in its footer.
+
+### 12. Where a script lives says who runs it
+
+- `scripts/` — anything a human might run directly, even if CI runs it too:
+  `melange-build.sh` (called by `build.sh`), `image-matrix.sh`.
+- `.github/scripts/` — CI-only. `cve-counts.sh`, `cve-badge.sh`,
+  `scan-summary.sh`, `scan-report.sh`. Nobody runs these by hand; they exist to
+  keep logic out of YAML.
+- `.github/actions/<name>/` — a script with exactly one consumer lives with its
+  action (`pr-comment/sticky-comment.sh`). Shared ones stay in
+  `.github/scripts/`: `cve-counts.sh` feeds both the `scan-image` action and the
+  nightly's badge step, so burying it in one action would make the other reach
+  into that action's internals.
+
+Two things that make this safe rather than just tidy:
+
+- **Tests live next to what they test** and `make test` *discovers* them with a
+  `find` over `*/tests/test-*.sh` rather than a fixed glob, so adding a
+  `tests/` directory anywhere can't silently drop it from the run.
+  `make lint-shell` already walks the whole tree.
+- **Don't vendor a copy of a script into an action to make it "self-contained".**
+  A repo-local action (`uses: ./.github/actions/...`) cannot run without
+  `actions/checkout` anyway, so referencing `$GITHUB_WORKSPACE/.github/scripts/`
+  costs nothing and duplication costs correctness.
 
 ## Common tasks
 
