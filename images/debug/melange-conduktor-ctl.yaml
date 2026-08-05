@@ -18,7 +18,7 @@
 #   done
 package:
   name: conduktor-ctl
-  version: 0.9.1
+  version: 0.9.2
   epoch: 0
   description: Conduktor CLI (conduktor/ctl) — apply/get/token/sql against Console
   copyright:
@@ -46,14 +46,14 @@ pipeline:
     uses: fetch
     with:
       uri: https://github.com/conduktor/ctl/releases/download/v${{package.version}}/conduktor-v${{package.version}}-linux-amd64.tar.gz
-      expected-sha256: b476a8f382e41475d8ead4e857761190fc5be1e6221cf22ed648f770adf02066
+      expected-sha256: c2cda3749c616b564af3813eadebfe310505e252657b30b07a488494d536ff02
       strip-components: 0
 
   - if: ${{build.arch}} == 'aarch64'
     uses: fetch
     with:
       uri: https://github.com/conduktor/ctl/releases/download/v${{package.version}}/conduktor-v${{package.version}}-linux-arm64.tar.gz
-      expected-sha256: d615f979bc7917365ce60e93dd39b01078c0aafa3c3c2c2757199e5d0bef2293
+      expected-sha256: f3274d251961ec34bd1acc77c243eec34de0ada4ae827f73fbdf44d33cbb84e4
       strip-components: 0
 
   - name: Install the conduktor binary
