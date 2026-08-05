@@ -93,6 +93,8 @@ lint-apko: ## Validate every apko.yaml parses (apko has no `lint`; show-config d
 
 .PHONY: lint-shell
 lint-shell: ## shellcheck every shell script (build.sh, scripts/, image tools/)
+	@# Uses whatever shellcheck is on PATH. CI runs the version pinned in
+	@# .pre-commit-config.yaml instead — see `make precommit-run` if they disagree.
 	shellcheck -x $(SHELL_FILES)
 
 # --- test ------------------------------------------------------------------

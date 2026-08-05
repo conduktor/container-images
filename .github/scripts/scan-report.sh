@@ -25,7 +25,8 @@ shopt -s nullglob
 for dir in "${SCANS_DIR}"/*/; do
   trivy="${dir}trivy.json"
   grype="${dir}grype.json"
-  [ -f "${trivy}" ] && [ -f "${grype}" ] || continue
+  [ -f "${trivy}" ] || continue
+  [ -f "${grype}" ] || continue
 
   label="$(basename "${dir}")"
   label="${label#scans-}"

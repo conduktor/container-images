@@ -332,6 +332,12 @@ Two things that make this safe rather than just tidy:
   `find` over `*/tests/test-*.sh` rather than a fixed glob, so adding a
   `tests/` directory anywhere can't silently drop it from the run.
   `make lint-shell` already walks the whole tree.
+- **CI lints via `pre-commit`, not `make lint`**, so every linter version comes
+  from `.pre-commit-config.yaml`. `make lint-shell` uses whatever shellcheck is
+  on `PATH`; the runner's is older than the pinned one and they disagree (an
+  SC2015 passed locally and failed CI). If CI reports a shellcheck finding you
+  can't reproduce, run `make precommit-run`. The only hook CI skips is
+  `apko-show-config`, which needs apko and is covered by the build job.
 - **Don't vendor a copy of a script into an action to make it "self-contained".**
   A repo-local action (`uses: ./.github/actions/...`) cannot run without
   `actions/checkout` anyway, so referencing `$GITHUB_WORKSPACE/.github/scripts/`

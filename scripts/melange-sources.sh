@@ -41,7 +41,7 @@ for config in "${configs[@]}"; do
   mapfile -t varlines < <(jq -r '(.vars // {}) | to_entries[] | "\(.key)=\(.value)"' <<<"${json}")
 
   while IFS=$'\t' read -r uri sha; do
-    [ -n "${sha}" ] && [ "${sha}" != "null" ] || continue
+    case "${sha}" in ''|null) continue ;; esac
 
     # The two melange substitutions our configs use.
     uri="${uri//\$\{\{package.version\}\}/${version}}"

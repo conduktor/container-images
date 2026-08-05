@@ -30,14 +30,30 @@ env:
 jobs:
   # Unconditional: these scripts feed both workflows, and a broken images.json
   # would otherwise only surface mid-nightly.
-  scripts:
-    name: shellcheck + script tests
+  #
+  # Runs pre-commit rather than `make lint-shell` so every linter is pinned by
+  # .pre-commit-config.yaml. The runner's own shellcheck is older than the pinned
+  # one and disagrees with it, which let an SC2015 through locally and failed CI.
+  lint:
+    name: pre-commit + script tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: shellcheck
-        run: make lint-shell
+      - name: Cache pre-commit hooks
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Run pre-commit
+        env:
+          # The only hook needing a system binary; the build job runs
+          # `apko show-config` anyway.
+          SKIP: apko-show-config
+        run: |
+          pipx install pre-commit
+          pre-commit run --all-files --show-diff-on-failure
 
       - name: Script unit tests
         run: make test
