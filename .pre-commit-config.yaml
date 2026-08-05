@@ -43,7 +43,12 @@ repos:
     rev: v0.11.0.1
     hooks:
       - id: shellcheck
-        files: \.(sh|bash)$
+        # The cdk-* support scripts are commands with no extension, so match
+        # them by name too — otherwise they are silently skipped here while
+        # `make lint-shell` does check them.
+        files: (\.(sh|bash)$|(^|/)cdk-[a-z0-9-]+$)
+        # -x follows `# shellcheck source=` directives into the sourced library.
+        args: [-x]
 
   # apko config validation via a local hook (uses whatever apko is on PATH,
   # e.g. from `nix develop`). apko has no dedicated `lint` subcommand;

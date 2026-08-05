@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+#
+# List the Conduktor JVMs visible from this sidecar and the paths derived from
+# each one's environment. Run this first — if it finds nothing, the sidecar
+# isn't sharing the target's PID namespace and no other cdk-* tool will work.
+set -uo pipefail
+# shellcheck source-path=SCRIPTDIR
+# shellcheck source=./cdk-common.sh
+. /usr/local/lib/conduktor/cdk-common.sh
+
+usage() {
+  cat <<EOF
+Usage: cdk-target [-h]
+
+Lists every visible JVM with its uid, config paths and listening port.
+Set CDK_TARGET_PID=<pid> to pin the other cdk-* tools to one of them.
+EOF
+}
+
+case "${1:-}" in
+  -h|--help) usage; exit 0 ;;
+  --version) cdk_version_line; exit 0 ;;
+  "") ;;
+  *) usage >&2; exit 2 ;;
+esac
+
+pids="$(cdk_jvm_pids)"
+if [ -z "${pids}" ]; then
+  cdk_bad "no JVM visible in this PID namespace"
+  cdk_info ""
+  cdk_info "The sidecar needs to share the target's PID namespace:"
+  cdk_info "  Kubernetes: shareProcessNamespace: true"
+  cdk_info "  Compose:    pid: \"service:<name>\""
+  cdk_info "  docker run: --pid container:<name>"
+  exit 1
+fi
+
+me="$(id -u)"
+for pid in ${pids}; do
+  uid="$(cdk_proc_uid "${pid}")"
+  cdk_head "pid ${pid}"
+  printf '  uid          %s' "${uid}"
+  if [ "${uid}" = "${me}" ] || [ "${me}" = "0" ]; then
+    printf ' (we are %s — attach will work)\n' "${me}"
+  else
+    printf ' (we are %s — MISMATCH, run this sidecar as %s)\n' "${me}" "${uid}"
+  fi
+  printf '  cmdline      %s\n' "$(cdk_proc_cmd "${pid}" | cut -c1-100)"
+
+  if ls "/proc/${pid}/root/" >/dev/null 2>&1; then
+    printf '  input config %s\n' "$(cdk_conf_in_file "${pid}")"
+    printf '  rendered cfg %s\n' "$(cdk_conf_out_dir "${pid}")"
+    printf '  log dir      %s\n' "$(cdk_log_dir "${pid}")"
+    printf '  http port    %s\n' "$(cdk_listening_port "${pid}")"
+  else
+    printf '  %s\n' "cannot read /proc/${pid}/root — uid mismatch, see above"
+  fi
+done

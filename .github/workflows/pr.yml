@@ -1,9 +1,9 @@
 name: pr
 
-# On every PR that touches an image config or the build/CI plumbing, build
-# each affected image locally with apko (no push, no signing) and scan the
-# resulting tar with Trivy + Grype. Fails the PR if a CRITICAL vuln shows
-# up in the built image.
+# On every PR that touches an image config or the build/CI plumbing, build each
+# affected image locally with apko (no push, no signing) and scan it with Trivy +
+# Grype. Scanning is report-only: the counts land in the job summary and in one
+# sticky PR comment. See AGENTS.md rule 11 for why there is no CVE gate yet.
 on:
   pull_request:
     paths:
@@ -11,12 +11,14 @@ on:
       - "build.sh"
       - "scripts/**"
       - "Makefile"
-      - ".github/workflows/**"
+      # Whole tree, not just workflows/: the CI-only scripts and the composite
+      # actions live here too, and they must not be able to change untested.
+      - ".github/**"
   workflow_dispatch: {}
 
 permissions:
   contents: read
-  pull-requests: write # allow the Trivy/Grype actions to comment on the PR
+  pull-requests: write # the `report` job upserts the sticky CVE comment
 
 concurrency:
   group: pr-${{ github.ref }}
@@ -28,14 +30,30 @@ env:
 jobs:
   # Unconditional: these scripts feed both workflows, and a broken images.json
   # would otherwise only surface mid-nightly.
-  scripts:
-    name: shellcheck + script tests
+  #
+  # Runs pre-commit rather than `make lint-shell` so every linter is pinned by
+  # .pre-commit-config.yaml. The runner's own shellcheck is older than the pinned
+  # one and disagrees with it, which let an SC2015 through locally and failed CI.
+  lint:
+    name: pre-commit + script tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: shellcheck
-        run: make lint-shell
+      - name: Cache pre-commit hooks
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Run pre-commit
+        env:
+          # The only hook needing a system binary; the build job runs
+          # `apko show-config` anyway.
+          SKIP: apko-show-config
+        run: |
+          pipx install pre-commit
+          pre-commit run --all-files --show-diff-on-failure
 
       - name: Script unit tests
         run: make test
@@ -98,6 +116,60 @@ jobs:
         with:
           version: ${{ env.APKO_VERSION }}
 
+      - name: Collect melange configs
+        id: melange
+        env:
+          DIR: ${{ matrix.image }}
+        run: |
+          set -euo pipefail
+          configs="$(cd "images/${DIR}" \
+            && find . -maxdepth 1 -name 'melange*.yaml' -printf '%f\n' \
+            | sort | paste -sd, -)"
+          echo "configs=${configs}" >> "$GITHUB_OUTPUT"
+          echo "melange configs: ${configs:-<none>}"
+
+      # Keyed on the pinned source hashes; restore-keys lets a single bumped
+      # source reuse the cache for the others.
+      - name: Resolve melange source cache key
+        id: srcs
+        if: steps.melange.outputs.configs != ''
+        env:
+          DIR: ${{ matrix.image }}
+        run: |
+          set -euo pipefail
+          sources="$(./scripts/melange-sources.sh "${DIR}")"
+          printf '%s\n' "${sources}"
+          echo "key=$(printf '%s' "${sources}" | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache melange sources
+        if: steps.melange.outputs.configs != ''
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/melange-cache
+          key: melange-src-${{ matrix.image }}-${{ steps.srcs.outputs.key }}
+          restore-keys: melange-src-${{ matrix.image }}-
+
+      - name: Prefetch melange sources
+        if: steps.melange.outputs.configs != ''
+        env:
+          DIR: ${{ matrix.image }}
+        run: ./scripts/melange-sources.sh "${DIR}" --prefetch "${{ runner.temp }}/melange-cache"
+
+      # Same melange step as the nightly, so a PR that only touches
+      # images/debug/tools/ is proven to package and install before merge.
+      # x86_64 only here — the PR build is amd64-only too.
+      - name: Build local APKs with melange
+        if: steps.melange.outputs.configs != ''
+        uses: chainguard-dev/actions/melange-build@9d631658f55713e5f63ca0cc21ee168f81301fd9 # v1.6.30
+        with:
+          multi-config: ${{ steps.melange.outputs.configs }}
+          workdir: images/${{ matrix.image }}
+          archs: x86_64
+          sign-with-temporary-key: true
+          cache-dir: ${{ runner.temp }}/melange-cache
+          signing-key-path: ${{ github.workspace }}/images/${{ matrix.image }}/melange.rsa
+          repository-path: ${{ github.workspace }}/images/${{ matrix.image }}/packages
+
       - name: Validate apko.yaml parses
         working-directory: images/${{ matrix.image }}
         # apko has no dedicated `lint` subcommand; show-config parses + normalizes
@@ -123,24 +195,24 @@ jobs:
           ref=$(echo "${out}" | sed -n 's/^Loaded image: //p' | head -n1)
           echo "ref=${ref}" >> "$GITHUB_OUTPUT"
 
-      - name: Trivy scan (fail on CRITICAL)
-        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # 0.36.0
-        with:
-          input: images/${{ matrix.image }}/image.tar
-          format: table
-          severity: CRITICAL,HIGH,MEDIUM
-          ignore-unfixed: true
-          exit-code: "1"
-          # HIGH & MEDIUM are printed but non-fatal — only CRITICAL blocks.
-          vuln-type: os,library
-
-      - name: Grype scan (report-only)
-        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7.4.0
+      # Report-only; see AGENTS.md rule 11. Flip fail-on once the baseline is
+      # trusted.
+      - name: Scan for CVEs
+        uses: ./.github/actions/scan-image
         with:
           image: ${{ steps.load.outputs.ref }}
-          fail-build: false
-          severity-cutoff: high
-          only-fixed: false
+          tar: images/${{ matrix.image }}/image.tar
+          label: ${{ matrix.image }}
+          fail-on: none
+
+      - name: Upload scan reports
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: scans-${{ matrix.image }}
+          path: |
+            trivy.json
+            grype.json
+          retention-days: 7
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -150,3 +222,41 @@ jobs:
             images/${{ matrix.image }}/image.tar
             images/${{ matrix.image }}/*.spdx.json
           retention-days: 7
+
+  # After the matrix, so the PR gets one comment instead of one per image.
+  report:
+    name: comment CVE report
+    needs: build-and-scan
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Not merge-multiple: every artifact has trivy.json / grype.json, so
+      # merging would overwrite.
+      - name: Download scan reports
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: scans-*
+          path: scans/
+        continue-on-error: true # no artifacts when every image was skipped
+
+      - name: Render report
+        run: ./.github/scripts/scan-report.sh scans/ > report.md
+
+      # Fork PRs get a read-only token; the job summary carries the same table.
+      - name: Post sticky comment
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        uses: ./.github/actions/pr-comment
+        with:
+          marker: cve-report
+          body-file: report.md
+
+      - name: Note when commenting is skipped
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          echo "::notice::Fork PR — CVE report is in the job summary, not a comment."
+          cat report.md >> "$GITHUB_STEP_SUMMARY"

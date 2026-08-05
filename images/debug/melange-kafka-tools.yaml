@@ -1,0 +1,73 @@
+# Apache Kafka admin shell tools for the debug sidecar, installed under
+# /usr/lib/kafka which apko.yaml puts on PATH.
+#
+# Not Wolfi's kafka-4.3 despite rule 1: it depends on openjdk-21-default-jvm, so
+# it installs a second, unused JVM (+336 MB vs +131 MB) and ships upstream's
+# libs/ verbatim, so it patches nothing. See AGENTS.md rule 10.
+#
+# BUMPING: change `version`, then replace expected-sha256 with
+#   curl -sSL https://archive.apache.org/dist/kafka/<v>/kafka_2.13-<v>.tgz \
+#     | sha256sum | cut -d' ' -f1
+# Cross-check it against the .sha512 Apache publishes next to the tarball.
+package:
+  name: kafka-tools
+  version: 4.3.0
+  epoch: 0
+  description: Apache Kafka admin/operations shell tools (no broker, no second JVM)
+  copyright:
+    - license: Apache-2.0
+
+vars:
+  scala-version: "2.13"
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - busybox
+
+pipeline:
+  # melange logs wget's stderr at WARN, and its default dots are ~2700 lines.
+  # dot:giga is ~4. Not `verbose = off`: silence for a 12-minute download from
+  # archive.apache.org is indistinguishable from a hang.
+  - name: Quiet wget progress output
+    runs: printf 'progress = dot:giga\n' >> /etc/wgetrc
+
+  # One tarball for both arches: Kafka is pure Java.
+  - uses: fetch
+    with:
+      uri: https://archive.apache.org/dist/kafka/${{package.version}}/kafka_${{vars.scala-version}}-${{package.version}}.tgz
+      expected-sha256: 28cfdb0ca55b4ad85e84d090c10e3f4f970e250db226ae3756b209461e48b54d
+      strip-components: 1
+
+  - name: Install the shell tools and their libs
+    runs: |
+      dest="${{targets.destdir}}/usr/lib/kafka"
+      install -d "${dest}/bin" "${dest}/libs" "${dest}/config"
+
+      # bin/windows/*.bat is dead weight on Linux.
+      for f in bin/*.sh; do
+        install -m 0755 "${f}" "${dest}/bin/$(basename "${f}")"
+      done
+
+      cp -a libs/. "${dest}/libs/"
+
+      # kafka-run-class.sh reads config/tools-log4j2.yaml, else log4j warns.
+      cp -a config/. "${dest}/config/"
+
+  - name: Verify the expected layout
+    runs: |
+      # The sha256 pin fixes content; this guards layout on a version bump.
+      dest="${{targets.destdir}}/usr/lib/kafka"
+      for want in kafka-topics.sh kafka-consumer-groups.sh kafka-configs.sh \
+                  kafka-acls.sh kafka-reassign-partitions.sh \
+                  kafka-console-consumer.sh kafka-console-producer.sh \
+                  kafka-run-class.sh; do
+        [ -x "${dest}/bin/${want}" ] || { echo "missing bin/${want}"; exit 1; }
+      done
+      ls "${dest}/libs"/kafka-clients-*.jar >/dev/null || { echo "no kafka-clients jar"; exit 1; }
+      [ -f "${dest}/config/tools-log4j2.yaml" ] || echo "note: tools-log4j2.yaml absent in this release"
+      echo "installed $(ls "${dest}/bin" | wc -l) tools, $(ls "${dest}/libs" | wc -l) libs"

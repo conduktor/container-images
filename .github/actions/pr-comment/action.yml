@@ -1,0 +1,38 @@
+name: "Sticky pull request comment"
+description: >
+  Upsert a single pull request comment identified by a marker: created on the
+  first run, edited in place afterwards, so a PR gets one comment rather than one
+  per commit.
+
+# Generic on purpose: the body is rendered by the caller. Fork PRs get a
+# read-only token, so callers must skip this step for forks (see pr.yml).
+
+inputs:
+  marker:
+    required: true
+    description: (string) Identifier for this comment, e.g. `cve-report`. One comment is kept per marker.
+  body-file:
+    required: true
+    description: (string) Path to a file holding the Markdown body.
+  token:
+    required: false
+    default: ${{ github.token }}
+    description: "(string) Token used to read and write PR comments. Needs the pull-requests: write permission."
+  pr-number:
+    required: false
+    default: ${{ github.event.pull_request.number }}
+    description: (string) Pull request number. Defaults to the PR that triggered the run.
+
+runs:
+  using: composite
+  steps:
+    - name: Upsert comment
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        GH_REPO: ${{ github.repository }}
+        PR_NUMBER: ${{ inputs.pr-number }}
+      run: |
+        "${GITHUB_ACTION_PATH}/sticky-comment.sh" \
+          --marker "${{ inputs.marker }}" \
+          --body-file "${{ inputs.body-file }}"

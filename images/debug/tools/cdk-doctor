@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+#
+# One-shot triage. Run this first when a customer reports "Console is broken"
+# and paste the output into the ticket — it is redacted by default.
+#
+# Exit code is the number of FAIL lines, so it can gate a script.
+set -uo pipefail
+# shellcheck source-path=SCRIPTDIR
+# shellcheck source=./cdk-common.sh
+. /usr/local/lib/conduktor/cdk-common.sh
+
+usage() {
+  cat <<EOF
+Usage: cdk-doctor [-q]
+
+Checks, in order: PID namespace, UID match, JVM attach, heap pressure,
+rendered config, HTTP liveness, DNS, and Kafka bootstrap reachability.
+
+  -q               only warnings and failures
+  CDK_TARGET_PID   pin a specific pid
+  CDK_KAFKA_BOOTSTRAP  override the bootstrap servers to test
+EOF
+}
+
+quiet=0
+case "${1:-}" in
+  -h|--help) usage; exit 0 ;;
+  --version) cdk_version_line; exit 0 ;;
+  -q) quiet=1 ;;
+esac
+
+fails=0
+ok()   { [ "${quiet}" = "1" ] || cdk_ok "$*"; }
+warn() { cdk_warn "$*"; }
+bad()  { cdk_bad "$*"; fails=$((fails + 1)); }
+
+cdk_head "namespace"
+pids="$(cdk_jvm_pids)"
+if [ -z "${pids}" ]; then
+  bad "no JVM visible — the sidecar is not sharing the target's PID namespace"
+  cdk_info "  Kubernetes: shareProcessNamespace: true"
+  cdk_info "  Compose:    pid: \"service:<name>\""
+  printf '\n%s failure(s)\n' "${fails}"
+  exit "${fails}"
+fi
+ok "$(printf '%s\n' "${pids}" | grep -c .) JVM(s) visible"
+
+pid="$(printf '%s\n' "${pids}" | head -n1)"
+[ -n "${CDK_TARGET_PID:-}" ] && pid="${CDK_TARGET_PID}"
+
+cdk_head "identity"
+me="$(id -u)"; them="$(cdk_proc_uid "${pid}")"
+if [ "${me}" = "${them}" ]; then
+  ok "uid ${me} matches the target"
+elif [ "${me}" = "0" ]; then
+  warn "running as root; works, but prefer runAsUser: ${them}"
+else
+  bad "uid ${me} != target uid ${them} — attach and /proc access will fail"
+  cdk_info "  set runAsUser: ${them} on the debug container"
+fi
+
+cdk_head "jvm"
+if jcmd "${pid}" VM.version >/dev/null 2>&1; then
+  ok "attach works ($(jcmd "${pid}" VM.version 2>/dev/null | sed -n 2p))"
+  heap="$(jcmd "${pid}" GC.heap_info 2>/dev/null || true)"
+  used="$(printf '%s' "${heap}" | sed -n 's/.*used \([0-9]*\)K.*/\1/p' | head -n1)"
+  total="$(printf '%s' "${heap}" | sed -n 's/.*total \([0-9]*\)K.*/\1/p' | head -n1)"
+  if [ -n "${used}" ] && [ -n "${total}" ] && [ "${total}" -gt 0 ]; then
+    pct=$(( used * 100 / total ))
+    if   [ "${pct}" -ge 90 ]; then bad  "heap ${pct}% used — likely GC thrashing"
+    elif [ "${pct}" -ge 75 ]; then warn "heap ${pct}% used"
+    else                           ok   "heap ${pct}% used"
+    fi
+  fi
+else
+  bad "cannot attach to pid ${pid}"
+fi
+
+cdk_head "config"
+root="/proc/${pid}/root"
+if ls "${root}/" >/dev/null 2>&1; then
+  in_file="$(cdk_conf_in_file "${pid}")"
+  out_dir="$(cdk_conf_out_dir "${pid}")"
+  if [ -f "${root}${in_file}" ]; then
+    ok "input config ${in_file}"
+  else
+    warn "input config not found: ${in_file}"
+  fi
+  if [ ! -d "${root}${out_dir}" ]; then
+    bad "rendered config dir missing: ${out_dir}"
+  else
+    n="$(find "${root}${out_dir}" -maxdepth 1 -type f 2>/dev/null | grep -c . || echo 0)"
+    if [ "${n}" -gt 0 ]; then
+      ok "${n} rendered config(s) in ${out_dir}"
+    else
+      bad "rendered config dir is empty — platform-entrypoint may have failed"
+    fi
+  fi
+else
+  warn "cannot read the target filesystem — skipping config checks"
+fi
+
+cdk_head "http"
+port="$(cdk_listening_port "${pid}")"
+if cdk_have curl; then
+  # curl prints 000 *and* exits non-zero on a connection failure, so a
+  # `|| echo 000` fallback would concatenate into "000000" and miss the case.
+  code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 \
+           "http://127.0.0.1:${port}/" 2>/dev/null)" || true
+  [ -n "${code}" ] || code="000"
+  case "${code}" in
+    000|0) bad "no HTTP response on 127.0.0.1:${port}"
+           cdk_info "  the sidecar must share the target's network namespace:"
+           cdk_info "  Compose: network_mode: \"service:<name>\" (automatic in a k8s pod)" ;;
+    5*)    bad "HTTP ${code} on :${port}" ;;
+    *)     ok  "HTTP ${code} on :${port}" ;;
+  esac
+fi
+
+cdk_head "kafka"
+bootstrap="${CDK_KAFKA_BOOTSTRAP:-$(cdk_target_env "${pid}" CDK_KAFKA_BOOTSTRAP_SERVERS \
+  "$(cdk_target_env "${pid}" KAFKA_BOOTSTRAP_SERVERS '')")}"
+if [ -z "${bootstrap}" ]; then
+  cdk_dim "no bootstrap servers in the target env — set CDK_KAFKA_BOOTSTRAP to test"
+else
+  first="${bootstrap%%,*}"
+  host="${first%%:*}"; bport="${first##*:}"
+  if cdk_have getent && getent hosts "${host}" >/dev/null 2>&1; then
+    ok "DNS resolves ${host}"
+  else
+    bad "DNS does not resolve ${host}"
+  fi
+  if cdk_have nc && nc -z -w3 "${host}" "${bport}" 2>/dev/null; then
+    ok "TCP reachable ${first}"
+  else
+    bad "TCP unreachable ${first}"
+  fi
+fi
+
+printf '\n'
+if [ "${fails}" = "0" ]; then
+  cdk_ok "no failures"
+else
+  cdk_bad "${fails} failure(s)"
+fi
+cdk_redact_note
+exit "${fails}"

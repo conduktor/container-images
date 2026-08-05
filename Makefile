@@ -24,8 +24,14 @@ IMAGE         ?=
 IMAGE_REF     ?=
 REPO_ROOT     := $(shell git rev-parse --show-toplevel 2>/dev/null || pwd)
 WORKFLOWS_DIR := .github/workflows
-SHELL_FILES   := $(shell find . -name '*.sh' -not -path './.git/*' 2>/dev/null)
-TESTS         := $(wildcard scripts/tests/test-*.sh)
+# The cdk-* support scripts have no .sh suffix (they are commands), so match
+# them by name too rather than leaving them unlinted.
+SHELL_FILES   := $(shell find . -path ./.git -prune -o -type f \
+                   \( -name '*.sh' -o -name 'cdk-*' \) -print 2>/dev/null)
+# Tests are discovered, not listed: they live next to what they test, so
+# scripts/ has its own and the CI-only ones sit under .github/. A find keeps a
+# new tests/ directory from being silently left out of `make test`.
+TESTS         := $(shell find . -path ./.git -prune -o -path '*/tests/test-*.sh' -print 2>/dev/null | sort)
 
 .PHONY: help
 help: ## Show this help
@@ -36,14 +42,34 @@ help: ## Show this help
 
 # --- build -----------------------------------------------------------------
 
+# Local builds are host-arch only — they are test artifacts, and the foreign arch
+# would run melange under qemu emulation (minutes, not seconds). The nightly is
+# what produces multi-arch; reproduce it with ARCHES=x86_64,aarch64.
+ARCHES        ?=
+
 .PHONY: build
-build: ## Build one image locally with apko (usage: make build IMAGE=base-jre-25 [IMAGE_REF=...])
+build: ## Build one image locally for the host arch (usage: make build IMAGE=debug [IMAGE_REF=...])
 	@test -n "$(IMAGE)" || { echo "IMAGE=<base-os|base-jre-25|debug> is required" >&2; exit 2; }
-	./build.sh $(IMAGE) $(IMAGE_REF)
+	MELANGE_ARCHES=$(ARCHES) ./build.sh $(IMAGE) $(IMAGE_REF)
 
 .PHONY: build-all
-build-all: ## Build every image locally
-	@for img in $(IMAGES); do ./build.sh $$img; done
+build-all: ## Build every image locally for the host arch
+	@for img in $(IMAGES); do MELANGE_ARCHES=$(ARCHES) ./build.sh $$img; done
+
+.PHONY: debug-scripts
+debug-scripts: ## Package images/debug/melange*.yaml into local APKs (host arch; override with ARCHES=)
+	./scripts/melange-build.sh debug $(ARCHES)
+
+.PHONY: debug-shell
+debug-shell: ## Build the debug image and drop into it (usage: make debug-shell [TARGET=<container>])
+	./build.sh debug
+	@if [ -n "$(TARGET)" ]; then \
+		echo ">> attaching to container $(TARGET) namespaces as uid 10001"; \
+		docker run --rm -it --pid "container:$(TARGET)" --network "container:$(TARGET)" \
+			--user 10001:10001 conduktor/conduktor-debug:local bash; \
+	else \
+		docker run --rm -it conduktor/conduktor-debug:local bash; \
+	fi
 
 # --- lint ------------------------------------------------------------------
 
@@ -66,8 +92,10 @@ lint-apko: ## Validate every apko.yaml parses (apko has no `lint`; show-config d
 	done
 
 .PHONY: lint-shell
-lint-shell: ## shellcheck every *.sh in the repo (build.sh + scripts/ + tests)
-	shellcheck $(SHELL_FILES)
+lint-shell: ## shellcheck every shell script (build.sh, scripts/, image tools/)
+	@# Uses whatever shellcheck is on PATH. CI runs the version pinned in
+	@# .pre-commit-config.yaml instead — see `make precommit-run` if they disagree.
+	shellcheck -x $(SHELL_FILES)
 
 # --- test ------------------------------------------------------------------
 

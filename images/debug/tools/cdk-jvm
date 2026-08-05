@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+#
+# JVM state for the target process via the HotSpot attach mechanism. Needs no
+# capability — only a matching UID (see the README's Privileges section).
+set -uo pipefail
+# shellcheck source-path=SCRIPTDIR
+# shellcheck source=./cdk-common.sh
+. /usr/local/lib/conduktor/cdk-common.sh
+
+usage() {
+  cat <<EOF
+Usage: cdk-jvm [SECTION]
+
+  (no args)  summary: version, uptime, heap, GC, thread and class counts
+  threads    full thread dump (jcmd Thread.print)
+  heap       heap histogram, top 25 classes by retained size
+  gc         GC configuration and heap layout
+  flags      all VM flags in effect (diff-friendly, sorted)
+  props      system properties, secrets masked
+  dump FILE  heap dump to FILE (large — write to a mounted volume)
+
+  CDK_TARGET_PID   pin a specific pid
+EOF
+}
+
+section="${1:-summary}"
+case "${section}" in
+  -h|--help) usage; exit 0 ;;
+  --version) cdk_version_line; exit 0 ;;
+esac
+
+cdk_need jcmd
+pid="$(cdk_target_pid)" || exit 1
+
+# jcmd's own failure message for a UID mismatch is unhelpful, so pre-check.
+if ! jcmd "${pid}" VM.version >/dev/null 2>&1; then
+  cdk_bad "cannot attach to pid ${pid}"
+  cdk_info "this container is uid $(id -u), target is uid $(cdk_proc_uid "${pid}")"
+  cdk_info "HotSpot accepts an attach from root or from a matching uid+gid only."
+  cdk_info "Run the sidecar with runAsUser: $(cdk_proc_uid "${pid}")."
+  exit 1
+fi
+
+case "${section}" in
+  summary)
+    cdk_head "pid ${pid}"
+    jcmd "${pid}" VM.version 2>/dev/null | sed -n '2,3p'
+    cdk_head "uptime"
+    jcmd "${pid}" VM.uptime 2>/dev/null | tail -n +2
+    cdk_head "heap"
+    jcmd "${pid}" GC.heap_info 2>/dev/null | tail -n +2
+    cdk_head "threads"
+    printf 'threads  %s\n' "$(jcmd "${pid}" Thread.print 2>/dev/null | grep -c '^"' || echo '?')"
+    ;;
+  threads) jcmd "${pid}" Thread.print ;;
+  heap)    jcmd "${pid}" GC.class_histogram 2>/dev/null | head -n 28 ;;
+  gc)
+    jcmd "${pid}" GC.heap_info
+    jcmd "${pid}" VM.flags 2>/dev/null | tr ' ' '\n' | grep -iE 'gc|heap' || true
+    ;;
+  flags)   jcmd "${pid}" VM.flags 2>/dev/null | tr ' ' '\n' | sed '/^$/d' | sort ;;
+  props)   jcmd "${pid}" VM.system_properties 2>/dev/null | sort | cdk_maybe_redact ;;
+  dump)
+    out="${2:-}"
+    [ -n "${out}" ] || cdk_die "usage: cdk-jvm dump /path/to/heap.hprof"
+    cdk_info "dumping live objects to ${out} (this pauses the JVM briefly)"
+    jcmd "${pid}" GC.heap_dump -all=false "${out}"
+    ;;
+  *) usage >&2; exit 2 ;;
+esac
