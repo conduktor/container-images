@@ -4,13 +4,8 @@ description: >
   first run, edited in place afterwards, so a PR gets one comment rather than one
   per commit.
 
-# Generic on purpose — it knows nothing about CVEs. The body is rendered by the
-# caller, which keeps this reusable for any future report.
-#
-# Rolled with `gh api` instead of a marketplace action because this repo is
-# public and a third-party action here would need `pull-requests: write`.
-# Fork PRs get a read-only token, so callers must skip this step for forks (see
-# pr.yml) — the action does not silently swallow that failure.
+# Generic on purpose: the body is rendered by the caller. Fork PRs get a
+# read-only token, so callers must skip this step for forks (see pr.yml).
 
 inputs:
   marker:

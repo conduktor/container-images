@@ -1,12 +1,10 @@
 # shellcheck shell=bash
 #
-# Shared library for the cdk-* tools. Installed at
-# /usr/local/lib/conduktor/cdk-common.sh; sourced, never executed.
+# Shared library for the cdk-* tools, installed at
+# /usr/local/lib/conduktor/cdk-common.sh. Sourced, never executed.
 #
-# The guiding idea: never hardcode where a Conduktor process keeps its config.
-# Read the target process's own environment from /proc/<pid>/environ and derive
-# the paths from that, so these tools keep working when the product changes its
-# layout or a chart overrides CDK_VOLUME_DIR.
+# Paths are read from the target process's own /proc/<pid>/environ rather than
+# hardcoded, so a chart overriding CDK_VOLUME_DIR still works.
 
 CDK_TOOLS_VERSION="0.1.0"
 
@@ -36,8 +34,7 @@ cdk_version_line() { printf 'conduktor-debug-scripts %s\n' "${CDK_TOOLS_VERSION}
 
 # --- target process discovery ----------------------------------------------
 
-# Every JVM in the visible PID namespace. Empty when the sidecar was started
-# without a shared PID namespace, which is the most common setup mistake.
+# Empty when the sidecar has no shared PID namespace — the usual mistake.
 cdk_jvm_pids() {
   local d pid cmd
   for d in /proc/[0-9]*; do
@@ -53,8 +50,7 @@ cdk_jvm_pids() {
 cdk_proc_cmd() { tr '\0' ' ' < "/proc/$1/cmdline" 2>/dev/null || printf '?'; }
 cdk_proc_uid() { awk '/^Uid:/ {print $2; exit}' "/proc/$1/status" 2>/dev/null; }
 
-# Resolve the pid to work against: $CDK_TARGET_PID, else the only JVM found.
-# Refuses to guess when several are visible.
+# $CDK_TARGET_PID, else the only JVM. Refuses to guess between several.
 cdk_target_pid() {
   if [ -n "${CDK_TARGET_PID:-}" ]; then
     [ -d "/proc/${CDK_TARGET_PID}" ] \
@@ -87,9 +83,8 @@ cdk_target_pid() {
   printf '%s\n' "${pids}"
 }
 
-# The target's filesystem as seen from here. The kernel only lets the process
-# owner (or root) traverse /proc/<pid>/root, so this is where a UID mismatch
-# surfaces — with an actionable message rather than a bare EACCES.
+# Only the process owner (or root) may traverse /proc/<pid>/root, so this is
+# where a UID mismatch surfaces; report it actionably rather than as EACCES.
 cdk_proc_root() {
   local pid="$1" root="/proc/$1/root"
   if ! ls "${root}/" >/dev/null 2>&1; then
@@ -109,8 +104,8 @@ cdk_target_env() {
 
 # --- Conduktor config layout ----------------------------------------------
 #
-# Defaults mirror /opt/conduktor/scripts/conduktor-env.sh in the Console image.
-# They are only fallbacks — the target's own environment always wins.
+# Defaults mirror conduktor-env.sh in the Console image; the target's own
+# environment always wins.
 
 cdk_conf_in_file() {
   local dir
@@ -118,7 +113,7 @@ cdk_conf_in_file() {
   cdk_target_env "$1" CDK_IN_CONF_FILE "${dir}/default-platform-config.yaml"
 }
 
-# Where platform-entrypoint renders the *effective* per-app configs.
+# Where platform-entrypoint renders the effective per-app configs.
 cdk_conf_out_dir() {
   local vol
   vol="$(cdk_target_env "$1" CDK_VOLUME_DIR /var/conduktor)"
@@ -139,10 +134,9 @@ cdk_listening_port() {
 
 # --- redaction -------------------------------------------------------------
 #
-# stdin -> stdout with secret-looking values masked. Deliberately errs towards
-# over-redacting: the output of these tools gets pasted into support tickets.
-# Keys ending in _FILE/_PATH/_LOCATION/_DIR/_TYPE/_ALGORITHM/_ENABLED are left
-# alone — when debugging TLS, the *location* of a keystore is often the answer.
+# Masks secret-looking values; errs towards over-redacting because this output
+# goes into support tickets. _FILE/_PATH/_LOCATION/_DIR/_TYPE/_ALGORITHM/_ENABLED
+# keys are kept — a keystore's location is usually the answer, not a secret.
 cdk_redact() {
   sed -E \
     -e '/^[[:space:]]*-?[[:space:]]*"?[A-Za-z0-9_.-]*(_FILE|_PATH|_LOCATION|_DIR|_TYPE|_ALGORITHM|_ENABLED)"?[[:space:]]*[:=]/b' \
@@ -151,7 +145,6 @@ cdk_redact() {
     -e 's#(://[^:/@[:space:]]+):[^@[:space:]]+@#\1:***REDACTED***@#g'
 }
 
-# Honours CDK_NO_REDACT for engineers debugging their own cluster.
 cdk_maybe_redact() {
   if [ -n "${CDK_NO_REDACT:-}" ]; then cat; else cdk_redact; fi
 }

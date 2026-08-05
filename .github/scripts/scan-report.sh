@@ -4,12 +4,9 @@
 #
 # Usage: scripts/scan-report.sh <scans-dir> [title]
 #
-# <scans-dir> holds one subdirectory per image, each containing trivy.json and
-# grype.json — the layout `actions/download-artifact` produces from the
-# `scans-<image>` artifacts the PR workflow uploads.
-#
-# Prints Markdown on stdout. Emits a report even when nothing was scanned, so the
-# sticky comment gets updated rather than left showing a stale previous run.
+# <scans-dir> holds one scans-<image>/ per image with trivy.json + grype.json —
+# the layout download-artifact produces. Always emits something, so the sticky
+# comment refreshes instead of showing a stale run.
 #
 # Requires: jq
 set -euo pipefail
@@ -30,7 +27,6 @@ for dir in "${SCANS_DIR}"/*/; do
   grype="${dir}grype.json"
   [ -f "${trivy}" ] && [ -f "${grype}" ] || continue
 
-  # Artifacts are named scans-<image>; strip the prefix for the heading.
   label="$(basename "${dir}")"
   label="${label#scans-}"
 
@@ -44,7 +40,5 @@ if [ "${found}" = "0" ]; then
   exit 0
 fi
 
-# The scanners-disagree explanation belongs once at the bottom, not after every
-# image's table.
 printf '\n<sub>Trivy counts fixed vulnerabilities only; Grype includes unfixed, '
 printf 'so its totals run higher. Full reports are in the workflow artifacts.</sub>\n'

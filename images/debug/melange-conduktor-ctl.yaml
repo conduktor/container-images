@@ -1,14 +1,10 @@
 # Packages the Conduktor CLI (https://github.com/conduktor/ctl) as an APK so the
 # debug sidecar can drive Console's API from inside the cluster.
 #
-# Why repackage the released binary instead of building from source: upstream
-# ships a fully static Go binary per arch, and melange builds each arch in a
-# sandbox of that arch — so building from source would compile Go under qemu
-# emulation for aarch64 on every nightly. Fetching is seconds instead of minutes.
-#
-# Upstream publishes only MD5 sums alongside the release, which is an integrity
-# check and not a security one, so we pin our own SHA-256 below. That makes the
-# artifact immutable from our side, and it is what makes this safe.
+# Repackages the released static binary rather than building from source: melange
+# builds each arch in a sandbox of that arch, so a Go build would compile under
+# qemu emulation for aarch64 every nightly. Upstream publishes only MD5, so we
+# pin our own SHA-256.
 #
 # BUMPING: change `version`, then replace BOTH sha256 values:
 #   v=0.9.0
@@ -34,14 +30,11 @@ environment:
       - busybox
 
 pipeline:
-  # wget (used by the `fetch` pipeline) has no verbosity input and melange logs
-  # its stderr at WARN, so its progress dots flood the build log. /etc/wgetrc is
-  # read before anything else; see melange-kafka-tools.yaml for the detail.
+  # See melange-kafka-tools.yaml for why dot:giga.
   - name: Quiet wget progress output
-    runs: printf 'verbose = off\n' >> /etc/wgetrc
+    runs: printf 'progress = dot:giga\n' >> /etc/wgetrc
 
-  # strip-components: 0 because the tarball holds a bare `conduktor` binary with
-  # no top-level directory.
+  # strip-components: 0 — the tarball holds a bare binary, no top-level dir.
   - if: ${{build.arch}} == 'x86_64'
     uses: fetch
     with:
@@ -63,8 +56,7 @@ pipeline:
 
   - name: Smoke-test the packaged binary
     runs: |
-      # Fails the build if the fetched artifact is not the expected release —
-      # `conduktor version` prints the tag and the upstream commit hash.
+      # Fails the build if the artifact is not the expected release.
       out="$("${{targets.destdir}}/usr/bin/conduktor" version)"
       echo "${out}"
       echo "${out}" | grep -q "v${{package.version}}" \

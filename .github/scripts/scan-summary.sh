@@ -4,11 +4,8 @@
 #
 # Usage: scripts/scan-summary.sh <trivy.json> <grype.json> <image-label>
 #
-# Prints Markdown on stdout. Deliberately reports both scanners side by side:
-# they legitimately disagree here, and hiding that has bitten us — Trivy cannot
-# see content we ship via melange (it attributes those files to an APK package
-# with no advisories), while Grype walks the filesystem and does. A row where
-# Grype is high and Trivy is 0 is expected, not a bug.
+# Both scanners are shown because they legitimately disagree: Trivy cannot see
+# packages we build with melange, Grype can. See AGENTS.md rule 11.
 #
 # Requires: jq
 set -euo pipefail
@@ -28,7 +25,6 @@ LABEL="$3"
 
 cve_counts "${TRIVY_JSON}" "${GRYPE_JSON}"
 
-# Exported so scan-report.sh can print it once for a multi-image report.
 scan_summary_footer() {
   printf '\n<sub>Trivy counts fixed vulnerabilities only; Grype includes unfixed, '
   printf 'so its totals run higher. Full reports are in the workflow artifacts.</sub>\n'
@@ -50,8 +46,7 @@ cat <<EOF
 | Grype | $(verdict "${CVE_GRYPE_CRITICAL}" 0) | $(verdict "${CVE_GRYPE_CRITICAL}" "${CVE_GRYPE_HIGH}") | ${CVE_GRYPE_TOTAL} |
 EOF
 
-# Top offenders are what make the summary actionable — a count alone sends the
-# reader off to download the artifact.
+# A bare count would send the reader to the artifacts.
 top="$(jq -r '
   [ .matches[]?
     | select((.vulnerability.severity | ascii_upcase) == "CRITICAL"
@@ -67,8 +62,7 @@ if [ -n "${top}" ]; then
   printf '\n</details>\n'
 fi
 
-# SCAN_SUMMARY_FOOTER=0 lets scan-report.sh stack several images and print the
-# explanation once at the end instead of after every table.
+# scan-report.sh sets this to 0 and prints the footer once for all images.
 if [ "${SCAN_SUMMARY_FOOTER:-1}" != "0" ]; then
   scan_summary_footer
 fi

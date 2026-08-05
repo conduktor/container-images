@@ -30,6 +30,7 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 ├── scripts/                     # runnable by a human as well as CI (rule 12)
 │   ├── image-matrix.sh          # manifest -> CI build matrix (validates the dispatch subset)
 │   ├── melange-build.sh         # local APK build; also called by build.sh
+│   ├── melange-sources.sh       # list/prefetch pinned sources; CI cache key + prefetch
 │   └── tests/test-*.sh          # fixture tests for the above; `make test`
 ├── build.sh                     # local `apko build` wrapper (uses cgr.dev/chainguard/apko fallback)
 ├── Makefile                     # dev targets: build / lint / test / scan / sbom / precommit-*
@@ -255,6 +256,18 @@ which apko pulls from a `@local ./packages` repository.
   support tickets. `scripts/tests/test-cdk-tools.sh` asserts both directions —
   secrets masked, and `*_FILE`/`*_PATH` keys preserved. Add a case there when
   you touch the filter.
+- **melange's source cache is READ-ONLY.** The `fetch` pipeline copies from
+  `<cache>/sha256:<hash>` when it exists but never writes back, so
+  `--cache-dir` on its own caches nothing. `scripts/melange-sources.sh`
+  populates it, and is the single source for both the local build and the CI
+  `actions/cache` key. Don't "simplify" it away — without it every build
+  re-downloads `kafka_2.13-4.3.0.tgz`, which is 135 MB and only available from
+  `archive.apache.org` (dlcdn and downloads 404 it) at ~250 KB/s: 12 minutes per
+  arch. With the cache a rebuild is ~11s.
+  Its listing output *is* the cache key, so it is sorted — glob order follows
+  `LC_COLLATE` (`-` sorts before `.`, so `melange-ctl.yaml` precedes
+  `melange.yaml`) and an unsorted list would produce different keys on different
+  machines for identical inputs.
 - **Signing keys are ephemeral and gitignored** (`images/*/melange.rsa*`,
   `images/*/packages/**`). Locally `scripts/melange-build.sh` runs
   `melange keygen` on demand; CI uses

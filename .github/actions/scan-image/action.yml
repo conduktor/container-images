@@ -4,15 +4,9 @@ description: >
   (trivy.json / grype.json), and render a Markdown summary into the job summary.
   Optionally fail on a severity threshold.
 
-# Both workflows scanned with copy-pasted Trivy/Grype steps whose severity lists
-# and flags had already drifted apart. Keeping them here means the nightly badge
-# and the PR summary are measuring the same thing, and the scanner SHAs are
-# pinned in one place for Dependabot.
-#
-# Reporting is deliberately non-gating by default (fail-on: none): Trivy cannot
-# see packages we build with melange — it attributes those files to an APK with
-# no advisory data — so a Trivy-based gate is blind to exactly the content this
-# repo adds. See AGENTS.md rule 11.
+# One definition for both workflows, so the badge and the PR summary measure the
+# same thing. Non-gating by default: a Trivy-based gate is blind to packages we
+# build with melange. See AGENTS.md rule 11.
 
 inputs:
   image:
@@ -51,9 +45,8 @@ outputs:
 runs:
   using: composite
   steps:
-    # ignore-unfixed keeps the badge meaningful: an unfixable finding is not
-    # something a rebuild can clear. Grype below intentionally does include
-    # unfixed ones, which is why its totals are larger.
+    # ignore-unfixed: the badge should track what a rebuild can clear. Grype
+    # below deliberately includes unfixed, hence its larger totals.
     - name: Trivy scan
       uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
       with:
@@ -89,9 +82,8 @@ runs:
         FAIL_ON: ${{ inputs.fail-on }}
       run: |
         set -euo pipefail
-        # This action deliberately reuses the repo's scripts rather than
-        # duplicating the jq, so the badge and this summary cannot diverge. That
-        # makes it repo-local by design: it needs actions/checkout to have run.
+        # Shared with the badge step, so the two cannot diverge. Requires
+        # actions/checkout, which a repo-local action needs regardless.
         . "${GITHUB_WORKSPACE}/.github/scripts/cve-counts.sh"
         cve_counts trivy.json grype.json
 

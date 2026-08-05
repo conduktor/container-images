@@ -1,32 +1,23 @@
 #!/usr/bin/env bash
 #
-# Build an image's local APK from its melange.yaml into images/<dir>/packages/,
-# so apko can resolve it via the `@local ./packages` repository.
-#
-# This is the LOCAL path only. CI uses chainguard-dev/actions/melange-build with
-# sign-with-temporary-key, pointed at the same two output paths — see the
-# "Build local APK with melange" step in the workflows.
-#
-# The signing key is generated on demand and never committed (.gitignore covers
-# images/*/melange.rsa*): it exists only to satisfy apk's index signature check
-# within a single build, so a fresh key per machine or per CI run is correct.
+# Build an image's local APKs from its melange*.yaml into images/<dir>/packages/
+# so apko can resolve them via `@local ./packages`.
 #
 # Usage: scripts/melange-build.sh <image-dir> [arch,arch...]
 #
-# Defaults to the HOST arch only, because build.sh also builds the image for the
-# host arch alone — a local build is a test artifact, not a release. Building the
-# foreign arch means running the melange pipeline under qemu emulation, which for
-# kafka-tools costs minutes rather than seconds. Pass arches explicitly (or set
-# MELANGE_ARCHES) to reproduce the multi-arch nightly:
-#   scripts/melange-build.sh debug x86_64,aarch64
+# Defaults to the host arch: build.sh builds the image for the host arch alone,
+# and a foreign arch runs the melange pipeline under qemu emulation. Pass arches
+# (or MELANGE_ARCHES) to reproduce the multi-arch nightly.
 #
-# Requires: melange, and a container runner (docker by default — override with
-# MELANGE_RUNNER=bubblewrap if you have bwrap and no daemon).
+# CI does the same via chainguard-dev/actions/melange-build; see the workflows.
+#
+# Requires: melange + a container runner (MELANGE_RUNNER=bubblewrap to override).
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE_DIR="${1:-}"
 RUNNER="${MELANGE_RUNNER:-docker}"
+CACHE_DIR="${MELANGE_CACHE_DIR:-${XDG_CACHE_HOME:-${HOME}/.cache}/melange}"
 
 # melange spells arches x86_64/aarch64, unlike apko's amd64/arm64.
 host_arch() {
@@ -49,33 +40,32 @@ command -v melange >/dev/null 2>&1 \
 
 cd "${WORK_DIR}"
 
+# Ephemeral: it only has to satisfy apk's index signature check within a build.
 if [ ! -f melange.rsa ]; then
   echo ">> generating an ephemeral melange signing key"
   melange keygen melange.rsa
 fi
 
-# Stale APKs from a previous run would still be indexed and could shadow the
-# rebuild, so start from an empty repository each time.
+# Stale APKs would still be indexed and could shadow the rebuild.
 rm -rf packages
 
-# Every melange*.yaml in the image dir is built into the same repository, so
-# adding a package is just adding a file. Mirrors the workflows' multi-config.
 shopt -s nullglob
 configs=(melange*.yaml)
 [ "${#configs[@]}" -gt 0 ] || { echo "no melange*.yaml in images/${IMAGE_DIR}" >&2; exit 2; }
 
+# melange's cache is read-only, so sources have to be put there for it.
+"${REPO_ROOT}/scripts/melange-sources.sh" "${IMAGE_DIR}" --prefetch "${CACHE_DIR}"
+
 for config in "${configs[@]}"; do
   echo ">> melange build ${config} (${ARCHES})"
-  # --namespace matters for scanning, not cosmetics: melange defaults SBOM PURLs
-  # to pkg:apk/unknown/..., and Trivy skips any package whose PURL namespace does
-  # not match the image's detected distro ("Some OS packages were skipped due to
-  # mismatched PURL namespace"). Without this our local packages are invisible to
-  # Trivy while Grype still reports them, so the two scanners disagree.
+  # --namespace wolfi: melange defaults SBOM PURLs to pkg:apk/unknown/..., and
+  # Trivy skips packages whose namespace doesn't match the image's distro.
   melange build "${config}" \
     --arch "${ARCHES}" \
     --namespace wolfi \
     --signing-key melange.rsa \
     --out-dir ./packages \
+    --cache-dir "${CACHE_DIR}" \
     --runner "${RUNNER}"
 done
 

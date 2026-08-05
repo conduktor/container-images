@@ -111,10 +111,36 @@ jobs:
           echo "configs=${configs}" >> "$GITHUB_OUTPUT"
           echo "melange configs: ${configs:-<none>}"
 
-      # The temporary signing key only has to satisfy apk's index signature check
-      # inside this job, so it is generated per run and never stored.
-      # setup-melange installs qemu-user-static itself, so the aarch64 packages
-      # cross-build without a separate QEMU step.
+      # Keyed on the pinned source hashes; restore-keys lets a single bumped
+      # source reuse the cache for the others.
+      - name: Resolve melange source cache key
+        id: srcs
+        if: steps.melange.outputs.configs != ''
+        env:
+          DIR: ${{ matrix.image.dir }}
+        run: |
+          set -euo pipefail
+          sources="$(./scripts/melange-sources.sh "${DIR}")"
+          printf '%s\n' "${sources}"
+          echo "key=$(printf '%s' "${sources}" | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache melange sources
+        if: steps.melange.outputs.configs != ''
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/melange-cache
+          key: melange-src-${{ matrix.image.dir }}-${{ steps.srcs.outputs.key }}
+          restore-keys: melange-src-${{ matrix.image.dir }}-
+
+      # melange never writes to its own cache, so a miss must be filled here.
+      - name: Prefetch melange sources
+        if: steps.melange.outputs.configs != ''
+        env:
+          DIR: ${{ matrix.image.dir }}
+        run: ./scripts/melange-sources.sh "${DIR}" --prefetch "${{ runner.temp }}/melange-cache"
+
+      # setup-melange installs qemu-user-static, so aarch64 cross-builds without
+      # a separate QEMU step.
       - name: Build local APKs with melange
         if: steps.melange.outputs.configs != ''
         uses: chainguard-dev/actions/melange-build@9d631658f55713e5f63ca0cc21ee168f81301fd9 # v1.6.30
@@ -123,6 +149,8 @@ jobs:
           workdir: images/${{ matrix.image.dir }}
           archs: x86_64,aarch64
           sign-with-temporary-key: true
+          # Absolute: melange runs under sudo, where ~ is root's home.
+          cache-dir: ${{ runner.temp }}/melange-cache
           # Absolute paths so they land where apko.yaml's `@local ./packages`
           # and `./melange.rsa.pub` resolve from the image directory.
           signing-key-path: ${{ github.workspace }}/images/${{ matrix.image.dir }}/melange.rsa
