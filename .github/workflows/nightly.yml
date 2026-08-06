@@ -1,19 +1,14 @@
 name: nightly
 
 # Nightly rebuild of every image so Wolfi package updates land within 24h of
-# upstream: publish multi-arch, sign + attest (SBOM and SLSA provenance), scan,
-# then push refreshed CVE badge JSON to the `badges` branch (rule 6).
+# upstream (see AGENTS.md rule 14 for what keeps that true): publish multi-arch,
+# sign + attest (SBOM and SLSA provenance), scan, then push refreshed CVE badge
+# JSON to the `badges` branch (rule 6).
 #
-# The image inventory comes from images/images.json, not from this file, and both
-# matrices below are resolved by scripts/build-matrix.sh.
-#
-# Shape: local APKs are built one job per (image, arch) on a runner of that
-# arch — from-source Go/npm builds like base-monitoring's Prometheus and Cortex
-# forks are far too slow under qemu — and the per-image publish job assembles
-# them into one multi-arch push. See AGENTS.md rule 13.
-#
-# Every third-party action is pinned to a full commit SHA with the tag in a
-# trailing comment; Dependabot bumps them weekly.
+# The build itself lives in build.yml, which pr.yml calls too — the only
+# difference here is `publish: true`. Do not fork a nightly-only copy of those
+# steps; that asymmetry is what let the PR check pass while the nightly's
+# assembly path went untested (rule 13).
 on:
   schedule:
     - cron: "0 4 * * *" # 04:00 UTC daily
@@ -34,329 +29,22 @@ concurrency:
   group: nightly-publish
   cancel-in-progress: false
 
-env:
-  REGISTRY: ghcr.io
-  REGISTRY_NAMESPACE: ${{ github.repository_owner }}
-  APKO_VERSION: v1.2.30
-  # Pinned because two jobs have to agree: the apk job builds the packages and
-  # the publish job re-indexes them. Keep in sync with flake.nix.
-  MELANGE_VERSION: v0.41.1
-  # cosign version is pinned by the sigstore/cosign-installer SHA below.
-  # The v4 installer explicitly discourages `cosign-release` overrides.
-
 jobs:
-  prepare:
-    name: resolve build matrices
-    runs-on: ubuntu-latest
-    outputs:
-      images: ${{ steps.matrix.outputs.images }}
-      apks: ${{ steps.matrix.outputs.apks }}
-      count: ${{ steps.matrix.outputs.count }}
-      apk_count: ${{ steps.matrix.outputs.apk_count }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      # Filtering here rather than per-step downstream means a skipped image
-      # produces no job at all.
-      - name: Resolve matrices from images/images.json
-        id: matrix
-        env:
-          SUBSET: ${{ github.event.inputs.images }}
-        run: |
-          set -euo pipefail
-          out="$(./scripts/build-matrix.sh "${SUBSET}")"
-          {
-            echo "images=$(jq -c '.images' <<<"${out}")"
-            echo "apks=$(jq -c '.apks' <<<"${out}")"
-            echo "count=$(jq '.images | length' <<<"${out}")"
-            echo "apk_count=$(jq '.apks | length' <<<"${out}")"
-          } >> "$GITHUB_OUTPUT"
-          jq -rj '"building: " + ([.images[].dir] | join(", ")) + "\n"' <<<"${out}"
-          jq -rj '"apk jobs: " + ([.apks[] | .dir + "/" + .arch] | join(", ")) + "\n"' <<<"${out}"
-
-  # One job per (image, arch), on a runner of that arch. Native only: melange
-  # builds each arch in a sandbox of that arch, so an aarch64 Go + npm build on
-  # an amd64 runner would run the whole compile under qemu emulation.
-  apks:
-    name: apks-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}
-    runs-on: ${{ matrix.apk.runner }}
-    needs: prepare
-    if: needs.prepare.outputs.apk_count != '0'
-    strategy:
-      fail-fast: false
-      matrix:
-        apk: ${{ fromJson(needs.prepare.outputs.apks) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      # Keyed on the pinned source hashes; restore-keys lets a single bumped
-      # source reuse the cache for the others. Per-arch keys because both arch
-      # jobs run concurrently and would otherwise race to save the same entry.
-      #
-      # This caches melange's *inputs* (files named after their expected-sha256)
-      # and nothing else. Do not extend it — and do not add a cache for
-      # ~/.cache/dev.chainguard.go-apk — to the apk/APKINDEX cache: the nightly
-      # only picks up Wolfi updates because that one starts empty every run.
-      # See AGENTS.md rule 14; a test enforces it.
-      - name: Resolve melange source cache key
-        id: srcs
-        env:
-          DIR: ${{ matrix.apk.dir }}
-        run: |
-          set -euo pipefail
-          sources="$(./scripts/melange-sources.sh "${DIR}")"
-          printf '%s\n' "${sources}"
-          echo "key=$(printf '%s' "${sources}" | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
-
-      - name: Cache melange sources
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ${{ runner.temp }}/melange-cache
-          key: melange-src-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}-${{ steps.srcs.outputs.key }}
-          restore-keys: melange-src-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}-
-
-      # melange never writes to its own cache, so a miss must be filled here.
-      - name: Prefetch melange sources
-        env:
-          DIR: ${{ matrix.apk.dir }}
-        run: ./scripts/melange-sources.sh "${DIR}" --prefetch "${{ runner.temp }}/melange-cache"
-
-      # The temporary signing key is per-job and thrown away with the runner:
-      # the publish job re-indexes every arch under one key of its own
-      # (scripts/melange-index.sh). It cannot be skipped here — melange-build
-      # adds `--keyring-append <key>.pub` for every config after the first.
-      - name: Build local APKs with melange
-        uses: chainguard-dev/actions/melange-build@9d631658f55713e5f63ca0cc21ee168f81301fd9 # v1.6.30
-        with:
-          version: ${{ env.MELANGE_VERSION }}
-          multi-config: ${{ matrix.apk.configs }}
-          workdir: images/${{ matrix.apk.dir }}
-          archs: ${{ matrix.apk.arch }}
-          sign-with-temporary-key: true
-          # Trivy skips packages whose PURL namespace doesn't match the image's
-          # distro, so without this our own packages' CVEs go unreported.
-          namespace: wolfi
-          # Absolute: melange runs under sudo, where ~ is root's home.
-          cache-dir: ${{ runner.temp }}/melange-cache
-          # Absolute paths so they land where apko.yaml's `@local ./packages`
-          # and `./melange.rsa.pub` resolve from the image directory.
-          signing-key-path: ${{ github.workspace }}/images/${{ matrix.apk.dir }}/melange.rsa
-          repository-path: ${{ github.workspace }}/images/${{ matrix.apk.dir }}/packages
-
-      # The whole packages/ tree, so the arch subdirectory is preserved and the
-      # publish job can merge every arch into one local repository.
-      - name: Upload local APKs
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: apks-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}
-          path: images/${{ matrix.apk.dir }}/packages
-          retention-days: 1 # build intermediates; the image is the artifact
-          if-no-files-found: error
-
-  publish:
-    name: publish-${{ matrix.image.dir }}
-    runs-on: ubuntu-latest
-    needs: [prepare, apks]
-    # `apks` is skipped when no selected image builds local packages, and a
-    # skipped dependency would skip this job too — hence `!cancelled()` rather
-    # than a plain `needs`. That also drops the implicit "all needs succeeded",
-    # so `prepare` is re-asserted explicitly; `apks` deliberately is not, because
-    # one image's failed arch must not stop the others from getting a fresh
-    # nightly. That image still fails, fail-closed — melange-index.sh rejects an
-    # empty packages/, and apko cannot resolve `@local` for an arch whose APKs
-    # never arrived.
-    if: ${{ !cancelled() && needs.prepare.result == 'success' && needs.prepare.outputs.count != '0' }}
-    strategy:
-      fail-fast: false
-      matrix:
-        image: ${{ fromJson(needs.prepare.outputs.images) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Compute tags
-        id: tags
-        env:
-          IMAGE_NAME: ${{ matrix.image.name }}
-          # Empty for GHCR-only images; unquoted expansion below drops it.
-          DOCKERHUB_REPO: ${{ matrix.image.dockerhub }}
-        run: |
-          set -euo pipefail
-          GHCR_REPO="${REGISTRY}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}"
-          # Kept orthogonal: consumers below build the cross-product they need.
-          {
-            echo "ref=${GHCR_REPO}"
-            echo "repos=${GHCR_REPO}${DOCKERHUB_REPO:+ ${DOCKERHUB_REPO}}"
-            echo "tags=latest nightly $(date -u +%Y.%m.%d) git-$(git rev-parse --short HEAD)"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Install apko
-        uses: ./.github/actions/setup-apko
-        with:
-          version: ${{ env.APKO_VERSION }}
-
-      - name: Install cosign
-        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
-
-      # merge-multiple: each artifact contains a single <arch>/ directory, so the
-      # arches merge into one `@local ./packages` repository without colliding.
-      - name: Download local APKs
-        if: matrix.image.melange
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          pattern: apks-${{ matrix.image.dir }}-*
-          path: images/${{ matrix.image.dir }}/packages
-          merge-multiple: true
-
-      - name: Install melange
-        if: matrix.image.melange
-        uses: chainguard-dev/actions/setup-melange@9d631658f55713e5f63ca0cc21ee168f81301fd9 # v1.6.30
-        with:
-          version: ${{ env.MELANGE_VERSION }}
-
-      # Each arch job signed with its own throwaway key, so the whole set is
-      # re-indexed here under one key that matches apko.yaml's keyring entry.
-      - name: Sign the local APK index
-        if: matrix.image.melange
-        run: ./scripts/melange-index.sh "${{ matrix.image.dir }}"
-
-      - name: Login to GHCR
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      # Org access token scoped to write on this one Docker Hub repository — the
-      # only registry credential in this public repo. Never widen it; private
-      # registries pull from GHCR rather than being pushed to. See AGENTS.md rule 8.
-      - name: Login to Docker Hub
-        if: matrix.image.dockerhub != ''
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
-        with:
-          registry: docker.io
-          username: ${{ secrets.CONDUKTORBOT_DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.CONDUKTORBOT_DOCKER_HUB_PAT }}
-
-      - name: Publish with apko (multi-arch, SBOM per arch + index)
-        id: apko
-        working-directory: images/${{ matrix.image.dir }}
-        env:
-          REPOS: ${{ steps.tags.outputs.repos }}
-          TAGS: ${{ steps.tags.outputs.tags }}
-          GHCR_REPO: ${{ steps.tags.outputs.ref }}
-        run: |
-          set -euo pipefail
-          # repos × tags into "$@" so the refs stay properly quoted.
-          set --
-          for repo in ${REPOS}; do
-            for tag in ${TAGS}; do
-              set -- "$@" "${repo}:${tag}"
-            done
-          done
-
-          # apko prints one `<ref>@sha256:...` line per pushed tag, all resolving
-          # to the same OCI index digest — across registries too, since the
-          # content is byte-identical. Take the last line.
-          out=$(apko publish \
-            --arch amd64,arm64 \
-            --sbom-path . \
-            apko.yaml \
-            "$@")
-          echo "${out}"
-          last=$(printf '%s\n' "${out}" | tail -n1)
-          digest="${last##*@}"
-
-          images=""
-          for repo in ${REPOS}; do
-            images="${images}${images:+ }${repo}@${digest}"
-          done
-
-          {
-            echo "digest=${digest}"
-            echo "image=${GHCR_REPO}@${digest}"
-            echo "images=${images}"
-          } >> "$GITHUB_OUTPUT"
-
-      # Signed per registry rather than copied from GHCR: a native signature
-      # embeds the registry's own ref, so the README `cosign verify` snippet is
-      # identical for docker.io and ghcr.io pulls.
-      - name: Sign image (cosign keyless)
-        env:
-          COSIGN_YES: "true"
-          IMAGES: ${{ steps.apko.outputs.images }}
-        run: |
-          set -euo pipefail
-          for image in ${IMAGES}; do
-            cosign sign "${image}"
-          done
-
-      - name: Attest apko-emitted SPDX SBOMs
-        env:
-          COSIGN_YES: "true"
-          IMAGES: ${{ steps.apko.outputs.images }}
-          IMAGE_DIR: ${{ matrix.image.dir }}
-        run: |
-          set -euo pipefail
-          shopt -s nullglob
-          for image in ${IMAGES}; do
-            for f in "images/${IMAGE_DIR}"/*.spdx.json; do
-              cosign attest --predicate "${f}" --type spdxjson "${image}"
-            done
-          done
-
-      - name: Generate SLSA build-provenance attestation
-        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
-        with:
-          subject-name: ${{ steps.tags.outputs.ref }}
-          subject-digest: ${{ steps.apko.outputs.digest }}
-          push-to-registry: true
-
-      # The action takes a single subject-name, so the mirror needs its own step.
-      - name: Generate SLSA build-provenance attestation (Docker Hub)
-        if: matrix.image.dockerhub != ''
-        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
-        with:
-          subject-name: ${{ matrix.image.dockerhub }}
-          subject-digest: ${{ steps.apko.outputs.digest }}
-          push-to-registry: true
-
-      - name: Scan for CVEs
-        uses: ./.github/actions/scan-image
-        with:
-          image: ${{ steps.apko.outputs.image }}
-          label: ${{ matrix.image.name }}
-          fail-on: none # the nightly reports; it must never block a rebuild
-
-      - name: Upload scan artifacts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: scans-${{ matrix.image.dir }}
-          path: |
-            trivy.json
-            grype.json
-            images/${{ matrix.image.dir }}/*.spdx.json
-          retention-days: 30
-
-      - name: Build CVE badge JSON
-        env:
-          IMAGE_NAME: ${{ matrix.image.name }}
-        run: ./.github/scripts/cve-badge.sh trivy.json grype.json "${IMAGE_NAME}" badges
-
-      - name: Upload badge JSON
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: badges-${{ matrix.image.dir }}
-          path: badges/
-          retention-days: 30
+  build:
+    name: build
+    uses: ./.github/workflows/build.yml
+    with:
+      images: ${{ github.event.inputs.images || '' }}
+      arches: x86_64,aarch64
+      publish: true
+    # Docker Hub credentials for the debug image; inherit passes them by name.
+    secrets: inherit
 
   publish-badges:
     name: refresh CVE badges
     runs-on: ubuntu-latest
-    needs: [prepare, publish]
-    if: ${{ !cancelled() && needs.prepare.result == 'success' && needs.prepare.outputs.count != '0' }}
+    needs: build
+    if: ${{ !cancelled() && needs.build.result != 'skipped' && needs.build.outputs.count != '0' }}
     permissions:
       contents: write # push refreshed JSON to the `badges` branch
     steps:

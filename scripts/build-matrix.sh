@@ -5,6 +5,8 @@
 #
 # Prints one compact JSON object on stdout:
 #   {
+#     "arches": "x86_64,aarch64",
+#     "apko_arches": "amd64,arm64",
 #     "images": [
 #       {"dir":"base-os","name":"base-os","melange":false,"configs":""},
 #       {"dir":"debug","name":"conduktor-debug","dockerhub":"docker.io/...",
@@ -69,9 +71,15 @@ jq -cn \
   --argjson configs "${configs}" \
   --arg arches "${arches}" '
   {"x86_64": "ubuntu-latest", "aarch64": "ubuntu-24.04-arm"} as $runners
+  # apko names OCI architectures; melange names apk ones. Both come from this
+  # one place so a workflow can never pass apko an arch set that the APKs were
+  # not built for.
+  | {"x86_64": "amd64", "aarch64": "arm64"} as $oci
   | ($arches | split(",") | map(select(length > 0))) as $arches
   | ($images | map(($configs[.dir] // "") as $c | . + {melange: ($c != ""), configs: $c})) as $images
   | {
+      arches: ($arches | join(",")),
+      apko_arches: ($arches | map($oci[.] // ("no OCI name for arch: " + . | error)) | join(",")),
       images: $images,
       apks: [
         $images[]

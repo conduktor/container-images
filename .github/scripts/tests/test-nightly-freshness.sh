@@ -96,10 +96,12 @@ fi
 
 # The cache we *do* persist must stay the content-addressed source cache, keyed
 # by the expected-sha256 in the melange configs, which cannot serve different
-# content than it is asked for.
+# content than it is asked for. Located by scanning the CI tree rather than one
+# named workflow, so moving the build into a reusable workflow doesn't turn this
+# into a false alarm.
 checks=$((checks + 1))
-if ! grep -q 'melange-cache' "${REPO_ROOT}/.github/workflows/nightly.yml"; then
-  fail "the melange source cache disappeared from the nightly — re-check rule 14"
+if ! grep -rq 'melange-cache' "${REPO_ROOT}/.github/workflows/"; then
+  fail "the melange source cache disappeared from CI — re-check rule 14"
 fi
 
 # --- fixtures: prove the scan actually catches a violation ------------------

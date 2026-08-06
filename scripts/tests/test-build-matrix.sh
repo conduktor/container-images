@@ -90,6 +90,18 @@ assert_eq "arch argument narrows .apks" "x86_64 x86_64" \
 assert_eq "arch argument leaves .images alone" "3" \
   "$(jq -r '.images | length' <<<"${one}")"
 
+# apko names architectures amd64/arm64 and melange x86_64/aarch64. Both come
+# from this script so a workflow cannot ask apko for an arch whose APKs were
+# never built.
+assert_eq "apko arches translated, both" "amd64,arm64" \
+  "$(jq -r '.apko_arches' <<<"${out}")"
+assert_eq "apko arches translated, one" "amd64" \
+  "$(jq -r '.apko_arches' <<<"${one}")"
+assert_eq "melange arches echoed back" "x86_64" \
+  "$(jq -r '.arches' <<<"${one}")"
+assert_eq "arch order is preserved" "arm64,amd64" \
+  "$(jq -r '.apko_arches' <<<"$("${SCRIPT}" "" aarch64,x86_64)")"
+
 # --- failure modes ----------------------------------------------------------
 checks=$((checks + 1))
 if "${SCRIPT}" alpha,nope >/dev/null 2>&1; then

@@ -42,8 +42,9 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 ├── .pre-commit-config.yaml
 ├── .yamllint.yaml
 ├── .github/
-│   ├── workflows/nightly.yml    # 04:00 UTC cron; publish + sign + attest + scan + refresh badges
-│   ├── workflows/pr.yml         # build + scan on PRs; report-only, no CVE gate (rule 11)
+│   ├── workflows/build.yml      # reusable: the ONE build definition, `publish` on/off (rule 13)
+│   ├── workflows/nightly.yml    # 04:00 UTC cron; calls build.yml with publish -> sign/attest, badges
+│   ├── workflows/pr.yml         # lint + calls build.yml without publish; report-only (rule 11)
 │   ├── scripts/                 # CI-only scripts — cve-*/scan-*, never run by hand (rule 12)
 │   │   └── tests/test-*.sh      # their tests, also picked up by `make test`
 │   ├── actions/setup-apko/      # local composite action: verified apko install (Sigstore-checked)
@@ -136,8 +137,11 @@ asserts the installed binary reports the pinned tag + commit. Use
 
 ### 5. Tool versions in CI are pinned too
 
-`APKO_VERSION` at the top of the workflows is passed as `version` to the
-local setup-apko action. Cosign is pinned transitively via the SHA of
+`APKO_VERSION` and `MELANGE_VERSION` live in
+[`build.yml`](.github/workflows/build.yml) only — it is the one workflow that
+runs either tool, so there is no second copy to drift (rule 13). `APKO_VERSION`
+is passed as `version` to the local setup-apko action. Cosign is pinned
+transitively via the SHA of
 `sigstore/cosign-installer` — do **not** add a `cosign-release:` input.
 Since cosign 3.x the installer maintainers explicitly discourage
 version-override there, and you must be on `cosign-installer v4+` to
@@ -416,10 +420,25 @@ Things that look like simplifications and are not:
 - **`MELANGE_VERSION` is pinned in both workflows** because two jobs have to
   agree — the one that builds the APKs and the one that re-indexes them. Bump it
   with the flake, like apko (rule 5).
-- **The PR workflow stays a single job.** It builds amd64 only, which is already
-  native, so fanning out would add artifact round-trips for no wall-clock gain.
-  It still runs the same melange step, so a recipe change is proven to package
-  before merge; the nightly is what proves aarch64.
+- **There is one build definition, not two.**
+  [`build.yml`](.github/workflows/build.yml) is a `workflow_call` workflow that
+  owns `prepare` → `apks` → `build`; `nightly.yml` calls it with
+  `publish: true` and `pr.yml` with `publish: false`. Everything that differs
+  between a PR check and a release — registry logins, `apko publish` vs
+  `apko build` into a tar, cosign signing, SBOM attestation, SLSA provenance,
+  badge JSON — is a step gated on that one input.
+  Do not "simplify" the PR back to an inline single-job build. It was written
+  that way first, and it meant the riskiest machinery in this repo (artifact
+  merge, `melange-index.sh`, `@local` resolution across two jobs) was only ever
+  executed by the nightly, i.e. after merge, on a schedule, with no reviewer
+  watching. Same reasoning as rule 11's single scan action.
+- **The PR still builds one arch.** It passes `arches: x86_64`, so the fan-out
+  is a one-element matrix: same shape, same code path, without doubling the wall
+  clock of every image-touching PR. The nightly is what proves aarch64.
+- **Arch names come from `build-matrix.sh`, both spellings.** It emits `arches`
+  (melange: `x86_64,aarch64`) and `apko_arches` (OCI: `amd64,arm64`) from one
+  input, so a workflow cannot hand apko an arch set the APKs were never built
+  for. Don't hardcode `--arch amd64,arm64` in a workflow again.
 
 ### 14. Nothing may make the apk cache authoritative
 
@@ -478,10 +497,11 @@ manifest and `images/*/` stay in sync, so a directory added without a manifest
 entry fails the PR rather than silently never being built.
 
 ### Bump apko / melange / cosign in CI
-1. Update `APKO_VERSION` / `MELANGE_VERSION` env in `.github/workflows/*.yml`
-   — both workflows, since the nightly's two melange jobs have to agree.
+1. Update `APKO_VERSION` / `MELANGE_VERSION` env in
+   `.github/workflows/build.yml` — one place, both workflows (rule 5).
 2. Update the same pin in `flake.nix` (via nixpkgs revision) if it drifts.
-3. Trigger the nightly with `workflow_dispatch` to verify.
+3. Open a PR: it runs the same build.yml the nightly will, so the bump is
+   exercised before merge. Then trigger the nightly with `workflow_dispatch`.
 
 ### Debugging a failed nightly
 - `apko publish` failed → look at `Publish with apko` step. Most common
