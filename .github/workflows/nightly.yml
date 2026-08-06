@@ -94,6 +94,12 @@ jobs:
       # Keyed on the pinned source hashes; restore-keys lets a single bumped
       # source reuse the cache for the others. Per-arch keys because both arch
       # jobs run concurrently and would otherwise race to save the same entry.
+      #
+      # This caches melange's *inputs* (files named after their expected-sha256)
+      # and nothing else. Do not extend it — and do not add a cache for
+      # ~/.cache/dev.chainguard.go-apk — to the apk/APKINDEX cache: the nightly
+      # only picks up Wolfi updates because that one starts empty every run.
+      # See AGENTS.md rule 14; a test enforces it.
       - name: Resolve melange source cache key
         id: srcs
         env:

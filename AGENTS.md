@@ -421,6 +421,39 @@ Things that look like simplifications and are not:
   It still runs the same melange step, so a recipe change is proven to package
   before merge; the nightly is what proves aarch64.
 
+### 14. Nothing may make the apk cache authoritative
+
+The nightly exists so a Wolfi package update reaches our images within 24h *even
+though no file in this repo changed*. That only holds while every run resolves
+against the live index, so the apk cache must stay an accelerator, never a
+source of truth. `.github/scripts/tests/test-nightly-freshness.sh` enforces the
+three ways it could stop being one — a frozen nightly still looks perfectly
+healthy (green runs, moving tags, new digests), so this cannot be left to
+review.
+
+- **Never `actions/cache` the apk cache directory.** apko and melange both use
+  go-apk, which caches packages *and* the APKINDEX in
+  `~/.cache/dev.chainguard.go-apk` (overridable with apko's `--cache-dir` and
+  melange's `--apk-cache-dir`). GitHub-hosted runners start with it empty, which
+  is exactly why the nightly is fresh today. Persisting it is the one change
+  that would break rule-14 semantics while looking like a speedup.
+- **Never `--offline`, never a lockfile.** `apko --offline` builds from the
+  cache alone, and `apko lock` pins resolved versions — either turns every later
+  build into a replay of the day it was generated. Neither belongs in this repo.
+- **The cache we do persist is safe by construction.** `melange-cache` holds
+  melange's *inputs*: files named `sha256:<hash>` from `fetch`'s
+  `expected-sha256`, so it cannot serve content other than what was asked for.
+  It cannot hold apks — melange keeps those under `--apk-cache-dir`, a different
+  directory (verified: no `.apk` and no `APKINDEX` ever appears in it). It also
+  accumulates melange's `gomodcache/` and `npm/`, which are pinned by `go.sum` /
+  `package-lock.json` and equally cannot go stale — but they are why the entry
+  reaches ~1 GB for `base-monitoring`.
+- Worth knowing before someone "fixes" a warm cache they think is stale: a warm
+  cache is not stale anyway. Measured against an 11 GB local one, a rebuild
+  re-downloaded the 10 MB APKINDEX and picked up packages published three hours
+  earlier; go-apk fetches the index every build, and package entries are keyed
+  `name-version-rN`, so a newer version is always a miss.
+
 ## Common tasks
 
 ### Add a package to an image
