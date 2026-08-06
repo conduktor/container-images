@@ -25,14 +25,15 @@ Nightly scans of each `:latest` image, refreshed on every push.
 
 <!--
 Each badge is a shields.io endpoint pointing at a JSON file the nightly
-workflow refreshes under `.github/badges/`. No external gist / PAT needed.
+workflow refreshes on the dedicated `badges` branch of this repo. No
+external gist / PAT needed.
 -->
 
 | Image | Trivy | Grype |
 |-------|-------|-------|
-| `base-os` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-os-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-os-grype.json) |
-| `base-jre-25` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-jre-25-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-jre-25-grype.json) |
-| `conduktor-debug` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/conduktor-debug-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/conduktor-debug-grype.json) |
+| `base-os` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-os-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-os-grype.json) |
+| `base-jre-25` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-jre-25-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-jre-25-grype.json) |
+| `conduktor-debug` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/conduktor-debug-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/conduktor-debug-grype.json) |
 
 The raw scan JSON and SBOMs are attached as workflow artifacts on each
 [nightly run](../../actions/workflows/nightly.yml) (30-day retention).
@@ -203,8 +204,8 @@ accidentally-staged secrets.
 - The nightly workflow assumes GHCR pushes are enabled via the built-in
   `GITHUB_TOKEN` (`packages: write`). No extra secrets are required for
   signing, provenance, or the CVE badges — the badges are plain JSON files
-  under `.github/badges/` that the `publish-badges` job commits back to
-  `main` after every nightly.
+  that the `publish-badges` job commits to the dedicated `badges` branch
+  after every nightly (main is protected).
 - Every third-party GitHub Action is pinned to a commit SHA; Dependabot
   ([`.github/dependabot.yml`](.github/dependabot.yml)) opens PRs to bump
   them weekly.

@@ -45,7 +45,6 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 │   ├── actions/setup-apko/      # local composite action: verified apko install (Sigstore-checked)
 │   ├── actions/scan-image/      # local composite action: trivy + grype + job summary (rule 11)
 │   ├── actions/pr-comment/      # local composite action: generic sticky PR comment
-│   ├── badges/*.json            # nightly-refreshed shields.io endpoint JSON (auto-committed by CI)
 │   ├── dependabot.yml           # weekly bumps for GHA SHA pins
 │   └── CODEOWNERS               # @conduktor/platform
 └── README.md                    # user-facing docs (pull / verify / sidecar)
@@ -140,11 +139,17 @@ that no longer exists in cosign v3 releases; you'll see HTTP 22/404 in
 `Install cosign`). Bump the installer SHA + apko version together and
 update the flake so `nix develop` matches.
 
-### 6. Badges are in-repo, not on a gist
+### 6. Badges live on the `badges` branch, not on `main` or a gist
 
-`.github/badges/<image>-{trivy,grype}.json` are shields.io endpoint JSON
-files that the `publish-badges` job of the nightly workflow commits back to
-`main` with `[skip ci]`. Do not add gist/PAT plumbing.
+`<image>-{trivy,grype}.json` are shields.io endpoint JSON files that the
+`publish-badges` job of the nightly workflow force-updates on a dedicated
+orphan `badges` branch of this repo — README URLs point at
+`raw.githubusercontent.com/.../badges/...`. That branch is state-only:
+`publish-badges.sh` overwrites every file on each run, so a removed image
+stops showing a stale badge, and there is no meaningful history to
+preserve. Do not touch it by hand, and do not "restore" it onto `main`.
+Do not add gist/PAT plumbing either — the branch is written with the
+built-in `GITHUB_TOKEN` and needs no extra credential.
 
 ### 7. Account convention
 
@@ -376,9 +381,11 @@ the PR rather than silently never being built.
 - `cosign sign/attest` failed → OIDC issue. Check `id-token: write`
   permission and that the workflow ref matches the identity regex readers
   use in the README verify snippet.
-- Badge commit rejected → the `publish-badges` job pushes directly to
-  `main`. Branch protection can block it — the fix is to give the workflow
-  a token/rule exception, not to disable the job.
+- `publish-badges` failed → check `Publish badges to `badges` branch`.
+  It pushes to the orphan `badges` branch, not to `main`, so branch
+  protection on `main` cannot block it (rule 6). If the branch itself is
+  protected, drop the protection — the branch is state-only and the
+  workflow is the only writer.
 
 ## Before pushing
 
