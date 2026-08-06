@@ -192,6 +192,7 @@ can be pasted into a ticket as-is.
 | `cdk-env [-a] [PATTERN]` | The target's environment, sorted and masked. |
 | `cdk-config [-l\|-i] [NAME]` | The *rendered* per-app configs (`-i` for the input platform config). |
 | `cdk-jvm [threads\|heap\|gc\|flags\|props\|dump F]` | JVM state over the attach mechanism. |
+| `cdk-jvm-profile [-d SECS] [-e EVENTS] [-o DIR]` | JFR recording via async-profiler, handles the cross-container `--libpath` / mount-namespace dance. Input-compatible with the older `profile.sh` (`ASYNC_PROFILER_*` env vars). |
 | `cdk-tls HOST:PORT` | Chain, expiry, SANs, and validation against the target JVM's own truststore. |
 | `cdk-pg [check\|url\|psql\|pgcli\|sizes\|activity]` | Console's Postgres: discovers the connection from the rendered config, checks it, or opens a session. |
 
