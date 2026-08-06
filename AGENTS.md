@@ -522,6 +522,16 @@ CI runs the same tools. Fixing lint locally is faster than the round-trip.
   pinned minor. That is deliberate and self-correcting: the melange build env
   and the apko image resolve `python-3` from the same Wolfi snapshot minutes
   apart. Never hardcode `python3.13` anywhere in that recipe.
+- **`prometheus-cdk` is built without the web UI**, via upstream's
+  `SKIP_UI_BUILD=1` *plus* a yq edit dropping the `builtinassets` tag from
+  `.promu.yml`. `SKIP_UI_BUILD` alone does not work: it means "pre-built assets
+  are provided", and `web/ui/embed.go` — which declares the `EmbedFS` that
+  `assets_embed.go` embeds — is generated and gitignored, so the tag would fail
+  to compile. Without the tag, `web/ui/ui.go` serves assets from a directory
+  that isn't in the image, and `/graph` 404s while the API is untouched.
+  Measured: −86s per arch, −4 MB. Don't "restore" the UI to fix a size problem —
+  the size is two ~190 MB Go binaries (`promtool` is 187 MB of it, and nothing
+  in Console calls it; `-ldflags=-s -w` is the untried lever worth ~25%).
 - The `melange*.yaml` `package.version` fields are asserted against what the
   built binary reports (`prometheus --version`, `cortex -version`,
   `conduktor version`). This is not ceremony: it caught the ported Prometheus

@@ -24,14 +24,18 @@ IMAGE         ?=
 IMAGE_REF     ?=
 REPO_ROOT     := $(shell git rev-parse --show-toplevel 2>/dev/null || pwd)
 WORKFLOWS_DIR := .github/workflows
+# Pruned everywhere below: `.claude/worktrees/<branch>/` holds whole checkouts of
+# this repo (agent worktrees), so without this every script and test is found
+# twice — once here and once in a stale copy that then fails on old code.
+PRUNE         := -path ./.git -prune -o -path ./.claude -prune -o
 # The cdk-* support scripts have no .sh suffix (they are commands), so match
 # them by name too rather than leaving them unlinted.
-SHELL_FILES   := $(shell find . -path ./.git -prune -o -type f \
+SHELL_FILES   := $(shell find . $(PRUNE) -type f \
                    \( -name '*.sh' -o -name 'cdk-*' \) -print 2>/dev/null)
 # Tests are discovered, not listed: they live next to what they test, so
 # scripts/ has its own and the CI-only ones sit under .github/. A find keeps a
 # new tests/ directory from being silently left out of `make test`.
-TESTS         := $(shell find . -path ./.git -prune -o -path '*/tests/test-*.sh' -print 2>/dev/null | sort)
+TESTS         := $(shell find . $(PRUNE) -path '*/tests/test-*.sh' -print 2>/dev/null | sort)
 
 .PHONY: help
 help: ## Show this help

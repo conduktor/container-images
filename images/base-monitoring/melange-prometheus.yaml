@@ -2,10 +2,23 @@
 # into /opt/monitoring/prometheus.
 #
 # Not Wolfi's `prometheus`: Console ships a fork whose changes are not upstream,
-# so the binary has to come from our tag. That makes this a from-source Go +
-# npm build — the long pole in this image and the reason the nightly builds
-# APKs on native amd64 and arm64 runners rather than cross-building one of them
-# under qemu (AGENTS.md rule 13).
+# so the binary has to come from our tag. That makes this a from-source Go
+# build — one of the two reasons the nightly builds APKs on native amd64 and
+# arm64 runners rather than cross-building one of them under qemu (rule 13).
+#
+# NO WEB UI. Console runs Prometheus as an internal TSDB behind Cortex: it only
+# ever talks to `/-/healthy` and the HTTP API, and never serves :9090 to a user.
+# Building the React UI cost ~86s per arch per nightly (two `npm install`s and a
+# vite build, ~45% of this recipe's wall clock) and pulled the whole npm
+# dependency tree — including the deprecated legacy react-app deps — into an
+# artifact we sign and attest. Measured saving: 86s/arch and 4 MB. The 4 MB is
+# small because the bulk of this package is two ~190 MB Go binaries, not assets.
+#
+# What is lost: `/`, `/graph` and `/query` return 404 instead of the UI, so
+# `kubectl port-forward` debugging has to use the API rather than the browser.
+# The API, `/metrics`, `/-/healthy` and `/-/ready` are unaffected (verified).
+# To put the UI back: drop the "Drop the web UI" step, restore `nodejs-22` +
+# `npm` below, and build plain `make build tarball`.
 #
 # BUMPING: change `version` to the fork's Prometheus version, then set `tag` and
 # `expected-commit` to the new fork tag:
@@ -41,8 +54,7 @@ environment:
       - make
       - bzip2
       - gzip
-      - nodejs-22 # the `make build` target builds the React web UI
-      - npm
+      - yq # rewrites .promu.yml below; no nodejs/npm — see the header
 
 pipeline:
   - uses: git-checkout
@@ -50,6 +62,30 @@ pipeline:
       repository: https://github.com/conduktor/prometheus
       tag: cdk-3.8-2026.06.09-a0c0750d72
       expected-commit: a0c0750d72b3036f2ea617d5bdc6f374acd5a23f
+
+  # `SKIP_UI_BUILD=1` is upstream's own switch, but on its own it is not enough:
+  # it means "pre-built assets are provided", and `web/ui/embed.go` (which
+  # declares the EmbedFS that assets_embed.go embeds) is generated, gitignored,
+  # and only produced by the asset build. So the `builtinassets` build tag has
+  # to go too, which selects web/ui/ui.go instead — it serves assets from disk
+  # at runtime, and the directory simply isn't there.
+  #
+  # Edited via yq rather than sed so the two list entries are targeted exactly,
+  # and bracketed by greps so this fails closed the day the fork restructures
+  # its build instead of silently shipping a UI-less binary we didn't ask for
+  # (or, worse, silently building the UI again).
+  - name: Drop the web UI from the build
+    runs: |
+      set -eux
+      grep -q 'builtinassets' .promu.yml
+      grep -q 'npm_licenses.tar.bz2' .promu.yml
+      yq -i 'del(.build.tags.all[] | select(. == "builtinassets"))' .promu.yml
+      yq -i 'del(.build.tags.windows[] | select(. == "builtinassets"))' .promu.yml
+      # No npm step means no npm_licenses.tar.bz2, and `promu tarball` fails on a
+      # missing file. Nothing npm-licensed ships any more, so dropping it is also
+      # the correct licensing answer.
+      yq -i 'del(.tarball.files[] | select(. == "npm_licenses.tar.bz2"))' .promu.yml
+      ! grep -q 'builtinassets' .promu.yml
 
   - name: Build tarball
     runs: |
@@ -60,7 +96,7 @@ pipeline:
       export GOTOOLCHAIN=local
       export GOPATH="${HOME}/go"
       export PATH="${GOPATH}/bin:${PATH}"
-      make build tarball
+      make build tarball SKIP_UI_BUILD=1
 
   - name: Stage artifacts
     runs: |
@@ -79,4 +115,13 @@ pipeline:
       echo "${out}"
       echo "${out}" | grep -q "${{package.version}}" \
         || { echo "prometheus does not report ${{package.version}}"; exit 1; }
+      # `--version` reports its build tags, which is the cheapest exact check
+      # that the UI really was left out — the assets are otherwise invisible
+      # from outside the binary. Written as if/then, not `grep && exit`: the
+      # latter returns non-zero on the *success* path and `set -e` would kill
+      # the build.
+      if echo "${out}" | grep -q 'builtinassets'; then
+        echo "web UI was built in; the .promu.yml edit did not take" >&2
+        exit 1
+      fi
       "${dest}/promtool" --version 2>&1 | head -n1

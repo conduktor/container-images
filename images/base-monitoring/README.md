@@ -19,12 +19,29 @@ If you need Java, use [`base-jre-25`](../base-jre-25/) instead.
 
 | Path | Package | Contents |
 |------|---------|----------|
-| `/opt/monitoring/prometheus/` | `prometheus-cdk` | `prometheus`, `promtool`, console templates and web assets |
+| `/opt/monitoring/prometheus/` | `prometheus-cdk` | `prometheus`, `promtool` |
 | `/opt/monitoring/cortex/` | `cortex-cdk` | `cortex` plus `migrations/` (also exported as `MIGRATIONS_DIR`) |
 | `/usr/bin/supervisord`, `/usr/bin/supervisorctl` | `supervisor-cdk` | supervisor, pre-patched (see below) |
 
 Both `/opt/monitoring/prometheus` and `/opt/monitoring/cortex` are on `PATH`,
 so the supervisor `conf.d` programs can invoke `prometheus` / `cortex` bare.
+
+> **Prometheus ships without its web UI.** Console runs Prometheus as an
+> internal TSDB behind Cortex and only ever calls `/-/healthy` and the HTTP
+> API, so the React UI is not built in: `/`, `/graph` and `/query` return 404.
+> `/api/v1/*`, `/metrics`, `/-/healthy` and `/-/ready` behave normally, so
+> `kubectl port-forward` debugging works — through the API, not the browser:
+>
+> ```sh
+> curl -s localhost:9090/api/v1/query --data-urlencode 'query=up' | jq
+> curl -s localhost:9090/api/v1/status/tsdb | jq
+> ```
+>
+> This drops ~86s per architecture from every nightly and takes the entire npm
+> dependency tree out of a build we sign and attest. It saves only ~4 MB —
+> the package is two ~190 MB Go binaries, not assets. The rationale and the
+> one-step revert are in
+> [`melange-prometheus.yaml`](melange-prometheus.yaml)'s header.
 
 Alongside those: `bash` + the GNU userland, `curl`, `openssl`, `envsubst`
 (config templating), `logrotate`, `netcat-openbsd`, `procps`, `less` and

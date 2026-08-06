@@ -17,7 +17,9 @@
 #
 # Contract with the downstream Monitoring Dockerfile (which does `FROM <this>`,
 # lays down monitoring-helper + the supervisor conf.d files, then `USER 10001`):
-#   - /opt/monitoring/prometheus/{prometheus,promtool,...} on PATH
+#   - /opt/monitoring/prometheus/{prometheus,promtool,...} on PATH, with the
+#     HTTP API but NO web UI — `/graph` 404s, `/-/healthy` and /api/v1 do not.
+#     See melange-prometheus.yaml's header for what that buys and how to undo it
 #   - /opt/monitoring/cortex/cortex + /opt/monitoring/cortex/migrations
 #     (also exported as MIGRATIONS_DIR)
 #   - supervisord + supervisorctl on PATH, with site-packages already patched
