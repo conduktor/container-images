@@ -1,0 +1,110 @@
+# conduktor/base-monitoring
+#
+# Base image for the Conduktor Console *monitoring* service: Prometheus +
+# Cortex + supervisord, with no JVM (monitoring is not a Java service).
+#
+# It is the monitoring counterpart to base-jre-25: same Wolfi baseline, same
+# UID/GID 10001 account, same "default user stays root" contract. The
+# difference is that its three main payloads are not Wolfi packages — they are
+# built here by melange from Conduktor forks and patched sources:
+#
+#   melange-prometheus.yaml -> prometheus-cdk  (conduktor/prometheus fork)
+#   melange-cortex.yaml     -> cortex-cdk      (conduktor/cortex fork)
+#   melange-supervisor.yaml -> supervisor-cdk  (upstream sdist + arbitrary-UID patch)
+#
+# Those are the reason this image gets its APKs built on native amd64 *and*
+# arm64 runners instead of one cross-building job — see AGENTS.md rule 13.
+#
+# Contract with the downstream Monitoring Dockerfile (which does `FROM <this>`,
+# lays down monitoring-helper + the supervisor conf.d files, then `USER 10001`):
+#   - /opt/monitoring/prometheus/{prometheus,promtool,...} on PATH
+#   - /opt/monitoring/cortex/cortex + /opt/monitoring/cortex/migrations
+#     (also exported as MIGRATIONS_DIR)
+#   - supervisord + supervisorctl on PATH, with site-packages already patched
+#     to tolerate arbitrary UIDs — apko has no RUN phase, so unlike the Ubuntu
+#     base there is no patch_supervisord step for the consumer to run
+#   - envsubst (gettext) + logrotate, used by the monitoring startup scripts
+#   - UID/GID 10001 account exists, but the image default user stays root so
+#     the consumer can mkdir/chown /var/conduktor before switching to it
+contents:
+  repositories:
+    - https://packages.wolfi.dev/os
+    # Local APKs built by the melange*.yaml files next to this config. Produced
+    # by `make packages IMAGE=base-monitoring` (or `make build IMAGE=...`);
+    # `apko show-config` does not resolve repositories, so lint still passes on
+    # a fresh clone with no packages/ present.
+    - "@local ./packages"
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    - ./melange.rsa.pub
+  packages:
+    # --- Conduktor payloads built locally by melange (see melange*.yaml) ---
+    - prometheus-cdk@local # conduktor/prometheus fork -> /opt/monitoring/prometheus
+    - cortex-cdk@local # conduktor/cortex fork -> /opt/monitoring/cortex
+    - supervisor-cdk@local # supervisord, pre-patched for arbitrary UIDs
+
+    # --- OS baseline (same set as base-jre-25) ---
+    - wolfi-baselayout # /etc/{passwd,group,nsswitch.conf}, os-release
+    - glibc # glibc + NSS resolver modules -> DNS works
+    - ca-certificates-bundle # system trust store (remote-write TLS)
+    - tzdata # zoneinfo (TZ / CDK_LOG_TIMEZONE)
+    - busybox # /bin/sh for downstream RUN steps
+    - bash # the monitoring startup scripts are bash
+    - coreutils # GNU id/tr/cat/tee/chmod/... (busybox subtly differs)
+    - sed # GNU sed
+    - gawk # GNU awk
+    - findutils # GNU find
+    - grep # GNU grep
+
+    # --- Runtime tooling the monitoring scripts and operators rely on ---
+    - curl # healthcheck.sh + Prometheus/Cortex API pokes
+    - openssl # TLS tooling parity with the other bases
+    # No `gnupg`: the Ubuntu base needed it to add apt repository keys at image
+    # build time, and there is no apt here. Wolfi's `gnupg` is a meta package
+    # that leaves no gpg binary in the image, so it would be pure CVE surface.
+    - gzip # tar.gz handling in the data-cleaner path
+    - netcat-openbsd # port waits in run.sh (Wolfi ships the OpenBSD flavour)
+    - less # readable logs when exec'ing into the container
+    - nano # on-the-fly config edits during incident response
+    - logrotate # rotates supervisord + Prometheus/Cortex logs
+    - gettext # envsubst — renders the Prometheus/Cortex config templates
+    - procps # ps/top/pgrep — supervisord child inspection
+
+# UID/GID 10001, the Conduktor convention across every image in this repo
+# (AGENTS.md rule 7). The Ubuntu monitoring base named this account
+# `conduktor-platform`; only the numeric IDs are load-bearing downstream —
+# the consumer does `USER 10001`, supervisord's `user=` takes CDK_USER_UID,
+# and nothing resolves the account by name.
+accounts:
+  groups:
+    - groupname: conduktor
+      gid: 10001
+  users:
+    - username: conduktor
+      uid: 10001
+      gid: 10001
+
+environment:
+  # Both payload dirs on PATH: `prometheus`, `promtool` and `cortex` are
+  # invoked bare by the supervisor conf.d programs.
+  PATH: /opt/monitoring/prometheus:/opt/monitoring/cortex:/usr/sbin:/sbin:/usr/bin:/bin
+  LANG: C.UTF-8
+  TZ: UTC
+  # Cortex's schema migrations, run by monitoring-helper at startup.
+  MIGRATIONS_DIR: /opt/monitoring/cortex/migrations
+
+# No `run-as`: the default user stays root so the downstream build can
+# chown/chmod /var/conduktor. The consumer sets `USER 10001` in its final layer.
+cmd: /bin/bash
+
+archs:
+  - x86_64
+  - aarch64
+
+annotations:
+  org.opencontainers.image.title: "Conduktor monitoring base image (Wolfi/apko)"
+  org.opencontainers.image.description: "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord."
+  org.opencontainers.image.vendor: "Conduktor"
+  org.opencontainers.image.authors: "Conduktor <support@conduktor.io>"
+  org.opencontainers.image.source: "https://github.com/conduktor/container-images"
+  org.opencontainers.image.licenses: "Apache-2.0"
