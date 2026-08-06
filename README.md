@@ -10,6 +10,7 @@ and carries a [SLSA build-provenance](https://slsa.dev) attestation.
 |-------|---------|-----------|
 | [`base-os`](images/base-os/apko.yaml) | Minimal Wolfi (glibc) OS layer + `conduktor` UID/GID 10001 account. No language runtime. | `ghcr.io/conduktor/base-os:latest` |
 | [`base-jre-25`](images/base-jre-25/apko.yaml) | `base-os` + OpenJDK 25 JRE + GNU userland. Source for Conduktor Console and Gateway images. | `ghcr.io/conduktor/base-jre-25:latest` |
+| [`base-monitoring`](images/base-monitoring/apko.yaml) | Conduktor's Prometheus + Cortex builds and a patched `supervisord`, no JVM. Source for the Console monitoring image. | `ghcr.io/conduktor/base-monitoring:latest` |
 | [`conduktor-debug`](images/debug/apko.yaml) | Sidecar debug toolkit: network / TLS / LDAP / Kafka / JVM tools. Deploy alongside a running Conduktor pod. | `conduktor/conduktor-debug:latest` (Docker Hub)<br>`ghcr.io/conduktor/conduktor-debug:latest` |
 
 Multi-arch: `linux/amd64` + `linux/arm64` in a single OCI index per tag.
@@ -32,6 +33,7 @@ workflow refreshes under `.github/badges/`. No external gist / PAT needed.
 |-------|-------|-------|
 | `base-os` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-os-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-os-grype.json) |
 | `base-jre-25` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-jre-25-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-jre-25-grype.json) |
+| `base-monitoring` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-monitoring-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/base-monitoring-grype.json) |
 | `conduktor-debug` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/conduktor-debug-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/main/.github/badges/conduktor-debug-grype.json) |
 
 The raw scan JSON and SBOMs are attached as workflow artifacts on each
@@ -103,6 +105,15 @@ FROM ghcr.io/conduktor/base-jre-25:latest
 COPY --chown=10001:10001 --chmod=0755 ./bin /opt/conduktor/bin
 USER 10001
 CMD ["/opt/conduktor/bin/run.sh"]
+```
+
+```dockerfile
+# Console monitoring — prometheus, promtool and cortex are already on PATH,
+# and supervisord is pre-patched for arbitrary UIDs (see the image README).
+FROM ghcr.io/conduktor/base-monitoring:latest
+COPY --chown=0:0 --chmod=0755 ./monitoring-helper /opt/conduktor/bin/
+USER 10001
+CMD ["/opt/conduktor/scripts/run.sh"]
 ```
 
 The image default user stays `root` so downstream `RUN` steps can

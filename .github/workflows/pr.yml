@@ -26,6 +26,8 @@ concurrency:
 
 env:
   APKO_VERSION: v1.2.30
+  # Keep in sync with the nightly and with flake.nix.
+  MELANGE_VERSION: v0.41.1
 
 jobs:
   # Unconditional: these scripts feed both workflows, and a broken images.json
@@ -76,16 +78,24 @@ jobs:
         run: |
           # A change to build.sh, scripts/, workflows or the inventory itself is
           # cross-cutting and rebuilds everything.
+          #
+          # Only the changed-file -> image-dir mapping lives here; the matrix
+          # entries themselves (melange flag + config list) come from
+          # scripts/build-matrix.sh so this and the nightly agree.
           set -euo pipefail
-          all="$(jq -c '[.[].dir]' images/images.json)"
+          emit() { # emit(subset) — "" means every image
+            matrix="$(./scripts/build-matrix.sh "$1" | jq -c '.images')"
+            echo "matrix=${matrix}" >> "$GITHUB_OUTPUT"
+            jq -rj '"building: " + ([.[].dir] | join(", ")) + "\n"' <<<"${matrix}"
+          }
           if [ -z "${BASE_SHA:-}" ] || [ -z "${HEAD_SHA:-}" ]; then
-            echo "matrix=${all}" >> "$GITHUB_OUTPUT"
+            emit ""
             exit 0
           fi
           changed_files=$(git diff --name-only "${BASE_SHA}" "${HEAD_SHA}")
           if echo "${changed_files}" \
             | grep -Eq '^(build\.sh|scripts/|\.github/|images/images\.json$)'; then
-            echo "matrix=${all}" >> "$GITHUB_OUTPUT"
+            emit ""
             exit 0
           fi
           set +e
@@ -95,12 +105,11 @@ jobs:
           if [ -z "${dirs}" ]; then
             echo "matrix=[]" >> "$GITHUB_OUTPUT"
           else
-            json=$(printf '%s\n' "${dirs}" | jq -R . | jq -s -c .)
-            echo "matrix=${json}" >> "$GITHUB_OUTPUT"
+            emit "$(printf '%s' "${dirs}" | paste -sd, -)"
           fi
 
   build-and-scan:
-    name: build+scan ${{ matrix.image }}
+    name: build+scan ${{ matrix.image.dir }}
     needs: detect-changes
     if: needs.detect-changes.outputs.matrix != '[]'
     runs-on: ubuntu-latest
@@ -116,25 +125,13 @@ jobs:
         with:
           version: ${{ env.APKO_VERSION }}
 
-      - name: Collect melange configs
-        id: melange
-        env:
-          DIR: ${{ matrix.image }}
-        run: |
-          set -euo pipefail
-          configs="$(cd "images/${DIR}" \
-            && find . -maxdepth 1 -name 'melange*.yaml' -printf '%f\n' \
-            | sort | paste -sd, -)"
-          echo "configs=${configs}" >> "$GITHUB_OUTPUT"
-          echo "melange configs: ${configs:-<none>}"
-
       # Keyed on the pinned source hashes; restore-keys lets a single bumped
       # source reuse the cache for the others.
       - name: Resolve melange source cache key
         id: srcs
-        if: steps.melange.outputs.configs != ''
+        if: matrix.image.melange
         env:
-          DIR: ${{ matrix.image }}
+          DIR: ${{ matrix.image.dir }}
         run: |
           set -euo pipefail
           sources="$(./scripts/melange-sources.sh "${DIR}")"
@@ -142,53 +139,59 @@ jobs:
           echo "key=$(printf '%s' "${sources}" | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
 
       - name: Cache melange sources
-        if: steps.melange.outputs.configs != ''
+        if: matrix.image.melange
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ${{ runner.temp }}/melange-cache
-          key: melange-src-${{ matrix.image }}-${{ steps.srcs.outputs.key }}
-          restore-keys: melange-src-${{ matrix.image }}-
+          key: melange-src-${{ matrix.image.dir }}-x86_64-${{ steps.srcs.outputs.key }}
+          restore-keys: melange-src-${{ matrix.image.dir }}-x86_64-
 
       - name: Prefetch melange sources
-        if: steps.melange.outputs.configs != ''
+        if: matrix.image.melange
         env:
-          DIR: ${{ matrix.image }}
+          DIR: ${{ matrix.image.dir }}
         run: ./scripts/melange-sources.sh "${DIR}" --prefetch "${{ runner.temp }}/melange-cache"
 
-      # Same melange step as the nightly, so a PR that only touches
-      # images/debug/tools/ is proven to package and install before merge.
-      # x86_64 only here — the PR build is amd64-only too.
+      # Same melange step as the nightly's apks job, so a PR that only touches
+      # images/debug/tools/ or a melange recipe is proven to package and install
+      # before merge. Single-arch, so it stays one job: x86_64 only here, native,
+      # matching the amd64-only apko build below. The nightly is what proves
+      # aarch64 — on its own native runner.
       - name: Build local APKs with melange
-        if: steps.melange.outputs.configs != ''
+        if: matrix.image.melange
         uses: chainguard-dev/actions/melange-build@9d631658f55713e5f63ca0cc21ee168f81301fd9 # v1.6.30
         with:
-          multi-config: ${{ steps.melange.outputs.configs }}
-          workdir: images/${{ matrix.image }}
+          version: ${{ env.MELANGE_VERSION }}
+          multi-config: ${{ matrix.image.configs }}
+          workdir: images/${{ matrix.image.dir }}
           archs: x86_64
           sign-with-temporary-key: true
+          # Trivy skips packages whose PURL namespace doesn't match the image's
+          # distro, so without this our own packages' CVEs go unreported.
+          namespace: wolfi
           cache-dir: ${{ runner.temp }}/melange-cache
-          signing-key-path: ${{ github.workspace }}/images/${{ matrix.image }}/melange.rsa
-          repository-path: ${{ github.workspace }}/images/${{ matrix.image }}/packages
+          signing-key-path: ${{ github.workspace }}/images/${{ matrix.image.dir }}/melange.rsa
+          repository-path: ${{ github.workspace }}/images/${{ matrix.image.dir }}/packages
 
       - name: Validate apko.yaml parses
-        working-directory: images/${{ matrix.image }}
+        working-directory: images/${{ matrix.image.dir }}
         # apko has no dedicated `lint` subcommand; show-config parses + normalizes
         # the YAML and fails on invalid schema/refs, which is functionally a lint.
         run: apko show-config apko.yaml > /dev/null
 
       - name: Build image tar (amd64) with SBOM
-        working-directory: images/${{ matrix.image }}
+        working-directory: images/${{ matrix.image.dir }}
         run: |
           apko build \
             --arch amd64 \
             --sbom-path . \
             apko.yaml \
-            "pr-${{ github.event.pull_request.number || 'manual' }}/${{ matrix.image }}:${{ github.sha }}" \
+            "pr-${{ github.event.pull_request.number || 'manual' }}/${{ matrix.image.dir }}:${{ github.sha }}" \
             image.tar
 
       - name: Load into Docker (for scanners that want a daemon ref)
         id: load
-        working-directory: images/${{ matrix.image }}
+        working-directory: images/${{ matrix.image.dir }}
         run: |
           out=$(docker load -i image.tar)
           echo "${out}"
@@ -201,14 +204,14 @@ jobs:
         uses: ./.github/actions/scan-image
         with:
           image: ${{ steps.load.outputs.ref }}
-          tar: images/${{ matrix.image }}/image.tar
-          label: ${{ matrix.image }}
+          tar: images/${{ matrix.image.dir }}/image.tar
+          label: ${{ matrix.image.dir }}
           fail-on: none
 
       - name: Upload scan reports
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: scans-${{ matrix.image }}
+          name: scans-${{ matrix.image.dir }}
           path: |
             trivy.json
             grype.json
@@ -217,10 +220,10 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: pr-${{ matrix.image }}
+          name: pr-${{ matrix.image.dir }}
           path: |
-            images/${{ matrix.image }}/image.tar
-            images/${{ matrix.image }}/*.spdx.json
+            images/${{ matrix.image.dir }}/image.tar
+            images/${{ matrix.image.dir }}/*.spdx.json
           retention-days: 7
 
   # After the matrix, so the PR gets one comment instead of one per image.

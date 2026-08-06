@@ -1,0 +1,82 @@
+# Builds the Conduktor fork of Prometheus (https://github.com/conduktor/prometheus)
+# into /opt/monitoring/prometheus.
+#
+# Not Wolfi's `prometheus`: Console ships a fork whose changes are not upstream,
+# so the binary has to come from our tag. That makes this a from-source Go +
+# npm build — the long pole in this image and the reason the nightly builds
+# APKs on native amd64 and arm64 runners rather than cross-building one of them
+# under qemu (AGENTS.md rule 13).
+#
+# BUMPING: change `version` to the fork's Prometheus version, then set `tag` and
+# `expected-commit` to the new fork tag:
+#   t=cdk-3.9-2026.xx.xx-xxxxxxxxxx
+#   git ls-remote https://github.com/conduktor/prometheus "refs/tags/${t}"
+# expected-commit makes the checkout fail closed if the tag is ever moved.
+package:
+  name: prometheus-cdk
+  # The fork's own VERSION file, which is what promu stamps into the binary and
+  # what the smoke test below asserts — keep them equal so the SBOM (and so the
+  # CVE matching that reads it) reports the Prometheus that is actually shipped.
+  version: 3.8.1
+  epoch: 0
+  description: "Conduktor fork of Prometheus, built from https://github.com/conduktor/prometheus"
+  copyright:
+    - license: Apache-2.0
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - wolfi-baselayout
+      - ca-certificates-bundle
+      - build-base
+      - bash
+      - busybox
+      - curl
+      - git
+      - go-1.26
+      - make
+      - bzip2
+      - gzip
+      - nodejs-22 # the `make build` target builds the React web UI
+      - npm
+
+pipeline:
+  - uses: git-checkout
+    with:
+      repository: https://github.com/conduktor/prometheus
+      tag: cdk-3.8-2026.06.09-a0c0750d72
+      expected-commit: a0c0750d72b3036f2ea617d5bdc6f374acd5a23f
+
+  - name: Build tarball
+    runs: |
+      set -eux
+      # Pin to Wolfi's shipped Go (go-1.26 build dep). If the fork's go.mod ever
+      # requires a newer version than Wolfi ships, the build fails loudly instead
+      # of `auto` silently downloading an unpinned toolchain.
+      export GOTOOLCHAIN=local
+      export GOPATH="${HOME}/go"
+      export PATH="${GOPATH}/bin:${PATH}"
+      make build tarball
+
+  - name: Stage artifacts
+    runs: |
+      set -eux
+      mkdir -p "${{targets.destdir}}/opt/monitoring/prometheus"
+      tar -xzf prometheus-*.tar.gz \
+        -C "${{targets.destdir}}/opt/monitoring/prometheus" \
+        --strip-components=1
+
+  - name: Smoke-test the packaged binaries
+    runs: |
+      set -eu
+      # Fails the build if the tarball layout changed or the binary is not ours.
+      dest="${{targets.destdir}}/opt/monitoring/prometheus"
+      out="$("${dest}/prometheus" --version 2>&1)"
+      echo "${out}"
+      echo "${out}" | grep -q "${{package.version}}" \
+        || { echo "prometheus does not report ${{package.version}}"; exit 1; }
+      "${dest}/promtool" --version 2>&1 | head -n1
