@@ -287,45 +287,32 @@ jobs:
           retention-days: 30
 
   publish-badges:
-    name: refresh README badges
+    name: refresh CVE badges
     runs-on: ubuntu-latest
     needs: [prepare, publish]
     if: ${{ !cancelled() && needs.prepare.outputs.count != '0' }}
     permissions:
-      contents: write # commit refreshed badge JSON back to main
+      contents: write # push refreshed JSON to the `badges` branch
     steps:
+      # Only needed for the publish-badges.sh script itself — the workflow
+      # never touches main. The script clones the `badges` branch into a
+      # temp dir of its own (or creates it orphan on first run).
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.ref }}
-          fetch-depth: 1
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Download all badge artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: badges-*
-          path: badges-raw/
+          path: badges-out/
           merge-multiple: true
 
-      - name: Copy into .github/badges/
-        run: |
-          mkdir -p .github/badges
-          find badges-raw -maxdepth 1 -type f -name '*.json' -exec cp {} .github/badges/ \;
-
-      - name: Commit + push if changed
+      # main is protected, so we publish to a dedicated `badges` branch and
+      # point the README's shields.io URLs at that branch instead. See
+      # AGENTS.md rule 6.
+      - name: Publish badges to `badges` branch
         env:
-          GIT_AUTHOR_NAME: "github-actions[bot]"
-          GIT_AUTHOR_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
-          GIT_COMMITTER_NAME: "github-actions[bot]"
-          GIT_COMMITTER_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
-        run: |
-          # Stage first: plain `git diff` ignores untracked files, which would
-          # silently no-op the very first badge publish.
-          git add .github/badges/
-          if git diff --cached --quiet -- .github/badges/; then
-            echo "No badge changes — nothing to commit."
-            exit 0
-          fi
-          git commit -m "ci: refresh CVE badges [skip ci]"
-          git push
+          REMOTE_URL: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        run: ./.github/scripts/publish-badges.sh badges-out badges
