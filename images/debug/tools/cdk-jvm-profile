@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+#
+# Capture a JFR recording from the target JVM with async-profiler, from a
+# sidecar. Handles the cross-container quirk that catches most first attempts:
+# the target JVM dlopens the profiler .so and writes the .jfr through its
+# *own* mount namespace, so both paths must be reachable target-side — not
+# sidecar-side. See images/debug/README.md#async-profiler-across-containers.
+#
+# Input-compatible with the previous per-image `profile.sh` (gateway, console)
+# so existing runbooks keep working: the ASYNC_PROFILER_* environment
+# variables have the same meaning as before.
+set -uo pipefail
+# shellcheck source-path=SCRIPTDIR
+# shellcheck source=./cdk-common.sh
+. /usr/local/lib/conduktor/cdk-common.sh
+
+usage() {
+  cat <<EOF
+Usage: cdk-jvm-profile [-d SECONDS] [-e EVENTS] [-o DIR]
+
+  Runs async-profiler against the target JVM and writes a .jfr bundling the
+  default event set (CPU, allocation, locks, wall-clock).
+
+  -d SECONDS   duration                 (default: 60)
+  -e EVENTS    asprof event list        (default: --all)
+               '-e cpu' uses perf_event_open, which a sidecar without extra
+               capabilities cannot do against another process — use
+               '-e wall,alloc' instead if you see 'No samples were collected'.
+  -o DIR       output directory on the sidecar (default: /tmp)
+
+Environment (kept for parity with the previous profile.sh):
+  ASYNC_PROFILER_DURATION    same as -d
+  ASYNC_PROFILER_OUTPUT_DIR  same as -o
+  ASYNC_PROFILER_PID         pin a specific pid (or use CDK_TARGET_PID)
+  ASPROF_BIN                 path to asprof (default: asprof)
+
+Open the resulting .jfr in JDK Mission Control or IntelliJ, or convert it
+with the bundled jfrconv, e.g.:
+  jfrconv -o html --cpu recording.jfr flamegraph.html
+EOF
+}
+
+DURATION="${ASYNC_PROFILER_DURATION:-60}"
+OUTPUT_DIR="${ASYNC_PROFILER_OUTPUT_DIR:-/tmp}"
+EVENTS=""
+ASPROF="${ASPROF_BIN:-asprof}"
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h|--help)  usage; exit 0 ;;
+    --version)  cdk_version_line; exit 0 ;;
+    -d)         DURATION="${2:-}"; shift 2 ;;
+    -e)         EVENTS="${2:-}"; shift 2 ;;
+    -o)         OUTPUT_DIR="${2:-}"; shift 2 ;;
+    *)          usage >&2; exit 2 ;;
+  esac
+done
+
+cdk_need "${ASPROF}"
+
+# Legacy ASYNC_PROFILER_PID keeps working; CDK_TARGET_PID (used by every other
+# cdk-* tool) wins if both are set.
+if [ -z "${CDK_TARGET_PID:-}" ] && [ -n "${ASYNC_PROFILER_PID:-}" ]; then
+  export CDK_TARGET_PID="${ASYNC_PROFILER_PID}"
+fi
+pid="$(cdk_target_pid)" || exit 1
+
+# HotSpot's attach socket accepts root or a matching uid+gid. Pre-check so the
+# failure message points at runAsUser instead of a cryptic asprof error.
+me="$(id -u)"; them="$(cdk_proc_uid "${pid}")"
+if [ "${me}" != "${them}" ] && [ "${me}" != "0" ]; then
+  cdk_bad "cannot attach to pid ${pid}: this container is uid ${me}, target is uid ${them}"
+  cdk_info "Run the sidecar with runAsUser: ${them}."
+  exit 1
+fi
+
+# The target JVM sees its own mount namespace, so libasyncProfiler.so and the
+# -f output path both have to exist in *its* view. Reach into /proc/<pid>/root
+# — kernel-gated by the same uid rule as the attach socket above.
+target_root="$(cdk_proc_root "${pid}")" || exit 1
+
+lib_src=""
+for p in /usr/lib/libasyncProfiler.so /usr/local/lib/libasyncProfiler.so; do
+  [ -f "${p}" ] && { lib_src="${p}"; break; }
+done
+[ -n "${lib_src}" ] || cdk_die "libasyncProfiler.so not found on this image"
+
+ts="$(date -u +'%Y%m%dT%H%M%S')"
+jfr_name="jvm-profile-${pid}-${ts}.jfr"
+target_lib="/tmp/libasyncProfiler.so"
+target_jfr="/tmp/${jfr_name}"
+
+install -m 0644 "${lib_src}" "${target_root}${target_lib}" \
+  || cdk_die "cannot write ${target_root}${target_lib} (uid mismatch?)"
+
+mkdir -p "${OUTPUT_DIR}"
+
+# Best-effort cleanup — we deliberately leave nothing behind in the customer's
+# container, even on SIGINT or a partial recording.
+trap 'rm -f "${target_root}${target_lib}" "${target_root}${target_jfr}"' EXIT
+
+cdk_info "async-profiler: pid=${pid} duration=${DURATION}s events=${EVENTS:-<all>}"
+cdk_info "  target-side output: ${target_jfr}"
+
+set +e
+if [ -n "${EVENTS}" ]; then
+  "${ASPROF}" --libpath "${target_lib}" -e "${EVENTS}" \
+    -d "${DURATION}" -f "${target_jfr}" "${pid}"
+else
+  "${ASPROF}" --libpath "${target_lib}" --all \
+    -d "${DURATION}" -f "${target_jfr}" "${pid}"
+fi
+rc=$?
+set -e
+
+# Recover the recording before the trap wipes it, regardless of asprof's exit
+# code — a partial .jfr is still worth inspecting.
+final="${OUTPUT_DIR}/${jfr_name}"
+if [ -f "${target_root}${target_jfr}" ]; then
+  cp "${target_root}${target_jfr}" "${final}"
+  cdk_ok "${final}"
+else
+  cdk_bad "no .jfr produced at ${target_jfr} (target-side)"
+  [ "${rc}" = "0" ] && rc=1
+fi
+
+exit "${rc}"
