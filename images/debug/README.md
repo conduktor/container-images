@@ -25,7 +25,7 @@ Grouped as in the [`apko.yaml`](apko.yaml):
 | **Network debugging** | `iproute2` (`ip`, `ss`, `tc`), `iputils`, `bind-tools` (`dig`, `nslookup`), `tcpdump`, `nmap`, `netcat-openbsd` (`nc`), `socat`, `mtr`, `iftop`, `lsof` |
 | **TLS / PKI** | `openssl`, `libnss-tools` (`certutil`, `pk12util`) |
 | **LDAP** | `openldap-2.6-clients` (`ldapsearch`, `ldapwhoami`) |
-| **Kafka** | `kafkacat` (formerly `kcat`), the Apache Kafka [shell tools](https://docs.confluent.io/kafka/operations-tools/kafka-tools.html) — `kafka-topics.sh`, `kafka-consumer-groups.sh`, `kafka-configs.sh`, `kafka-acls.sh`, `kafka-reassign-partitions.sh`, `kafka-console-{consumer,producer}.sh`, … |
+| **Kafka** | `kcat` (formerly `kafkacat`), the Apache Kafka [shell tools](https://docs.confluent.io/kafka/operations-tools/kafka-tools.html) — `kafka-topics.sh`, `kafka-consumer-groups.sh`, `kafka-configs.sh`, `kafka-acls.sh`, `kafka-reassign-partitions.sh`, `kafka-console-{consumer,producer}.sh`, … (also available without the `.sh` suffix) |
 | **PostgreSQL** | `postgresql-17-client` (`psql`, `pg_dump`, `pg_isready`), `pgcli` |
 | **Conduktor** | `conduktor` CLI ([conduktor/ctl](https://github.com/conduktor/ctl)), `cdk-*` helpers |
 | **Perf / observability** | `htop`, `sysstat` (`iostat`, `pidstat`, `mpstat`), `strace` |
@@ -303,17 +303,28 @@ It is packaged from the upstream release tarball, pinned by SHA-256 — see
 
 ### Kafka shell tools and the JVM
 
-The Apache tools live in `/usr/lib/kafka/bin`, which is on `PATH` — they are not
-symlinked into `/usr/bin` because each script locates `kafka-run-class.sh` and
-`libs/` relative to `$0`.
+The tools live in `/usr/lib/kafka/bin`, which is on `PATH` — they are not
+symlinked into `/usr/bin` because each script locates `kafka-run-class` and its
+jars relative to `$0`.
 
-They run on this image's JDK 25 via `JAVA_HOME`, so there is no second JVM.
-That is why they are packaged by
+They are packaged from the **Confluent Community** archive rather than
+`kafka_2.13-4.3.0.tgz`. The `-ccs` jars are Apache Kafka built from the same
+source with a refreshed dependency set: same Kafka 4.3.0, but jackson 2.21.5
+instead of 2.21.2, which removes 11 CVE findings (3 High, 8 Medium) from this
+image at identical size. Nothing else from Confluent Platform is installed — no
+Schema Registry, ksqlDB, REST Proxy, or `confluent` CLI. Consequently
+`kafka-topics --version` reports `8.3.1-ccs`.
+
+Confluent drops the `.sh` suffix, so each tool is installed under both names —
+`kafka-topics` and `kafka-topics.sh` both work.
+
+They run on this image's JDK 25 via `JAVA_HOME`, so there is no second JVM. That
+is why they are packaged by
 [`melange-kafka-tools.yaml`](melange-kafka-tools.yaml) rather than installed from
 Wolfi's `kafka-4.3`: that package depends on `openjdk-21-default-jvm` and would
-add ~205 MB of JVM that `JAVA_HOME` guarantees is never used (+336 MB vs
-+131 MB), while shipping the identical 108 jars, so it gives up no patched
-dependencies. Verified against a live Kafka 4.0 broker on JDK 25.
+add ~205 MB of JVM that `JAVA_HOME` guarantees is never used, while shipping
+upstream's jars verbatim, so it patches nothing. Verified against a live Kafka
+broker on JDK 25.
 
 Kafka 4.x clients talk to brokers from 2.1 onward, so these tools work against
 older customer clusters; a handful of newer subcommands will report an
