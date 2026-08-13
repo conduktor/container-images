@@ -1,33 +1,38 @@
 #!/usr/bin/env bash
 #
-# List — or prefetch — the external sources an image's melange configs fetch.
+# List — or prefetch — the pinned sources an image's melange configs fetch.
 #
 # Usage:
-#   scripts/melange-sources.sh <image-dir>                     # print "uri<TAB>sha256"
-#   scripts/melange-sources.sh <image-dir> --prefetch <cache>  # download missing
+#   scripts/melange-sources.sh <image-dir>                     # print "sha256<TAB>config"
+#   scripts/melange-sources.sh <image-dir> --prefetch <cache>  # populate the cache
 #
-# melange's cache is read-only: `fetch` copies from <cache>/sha256:<hash> but
-# never writes back, so it has to be populated from outside. That is why this
-# script exists and must not be "simplified" into just passing --cache-dir:
-# without it every build re-downloads kafka_2.13-4.3.0.tgz, which is 135 MB and
-# only served by archive.apache.org (dlcdn and downloads 404 it) at ~250 KB/s —
-# 12 minutes per arch, against ~11s warm.
-#
-# The printed list is also the CI cache key, hence the sort: glob order follows
-# LC_COLLATE, so an unsorted list would key identical inputs differently on
-# different machines.
+# melange's cache is read-only: the `fetch` pipeline copies from
+# <cache>/sha256:<hash> when it exists but never writes back, so `--cache-dir` on
+# its own caches nothing and the cache has to be populated from outside. That is
+# why this script exists: without it every build re-downloads
+# confluent-community-8.3.1.tar.gz (414 MB), against ~11s warm.
 #
 # Only `uses: fetch` steps appear here. A git-checkout source has no content
 # hash to address, so the forks contribute nothing to this cache by design.
 #
-# This re-implements the subset of melange's templating our configs use —
-# ${{package.version}}, ${{vars.*}} and var-transforms — rather than asking
-# melange to resolve it. `melange query` would do that correctly, but this script
-# runs in CI *before* melange is installed (it populates the cache the melange
-# build then reads), so it cannot depend on the binary. Anything left unresolved
-# is a hard error rather than a URL that 404s later; see the guard below.
+# This deliberately does NOT resolve download URLs. The cache is keyed by content
+# hash and `expected-sha256` needs no templating, so both the listing and the
+# is-it-cached check are plain yq. The one step that genuinely needs a resolved
+# URL — downloading — is handed to `melange update-cache`, which is melange
+# resolving its own templating rather than us guessing at it.
 #
-# Requires: jq, yq, curl
+# That split is the point. This script used to re-implement the templating, and
+# when a var-transform was added it emitted a literal ${{vars.release-branch}}
+# into the URL: the string was stable, so it hashed to a stable CI cache key and
+# the cache step reported a hit, then the download died on
+# `curl: (3) nested brace in URL`. There is no longer any templating here to
+# fall behind melange.
+#
+# `melange update-cache` re-downloads every source in a config unconditionally,
+# so it is only invoked for configs that are actually missing something. On a
+# warm cache this makes no network calls at all.
+#
+# Listing needs jq/yq only. --prefetch also needs melange on PATH.
 set -euo pipefail
 
 IMAGE_DIR="${1:-}"
@@ -41,6 +46,9 @@ if [ -n "${MODE}" ]; then
 fi
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Overridable so a caller can point at a specific build, and so the tests can
+# exercise both the stubbed and the absent case without rewriting PATH.
+MELANGE_BIN="${MELANGE_BIN:-melange}"
 WORK_DIR="${IMAGES_DIR:-${REPO_ROOT}/images}/${IMAGE_DIR}"
 [ -d "${WORK_DIR}" ] || { echo "no such image directory: ${WORK_DIR}" >&2; exit 2; }
 
@@ -48,115 +56,71 @@ shopt -s nullglob
 configs=("${WORK_DIR}"/melange*.yaml)
 [ "${#configs[@]}" -gt 0 ] || exit 0
 
-[ -n "${CACHE_DIR}" ] && mkdir -p "${CACHE_DIR}"
+# The sha256 of every `fetch` pin in a config, in pipeline order.
+pinned_hashes() {
+  yq -r '
+    .pipeline[]? | select(.uses == "fetch") | .with["expected-sha256"] // ""
+  ' "$1" | grep -v '^$' || true
+}
 
-sources=()
-for config in "${configs[@]}"; do
-  # -o=json so the queries below are jq, not a second dialect.
-  json="$(yq -o=json '.' "${config}")"
-  version="$(jq -r '.package.version' <<<"${json}")"
-  mapfile -t varlines < <(jq -r '(.vars // {}) | to_entries[] | "\(.key)=\(.value)"' <<<"${json}")
+# --- list -------------------------------------------------------------------
 
-  # var-transforms derive further vars from existing ones, and melange evaluates
-  # them after `vars`. kafka-tools uses one to get the archive's release branch
-  # (8.3) out of the package version (8.3.1), so skipping this leaves a literal
-  # ${{vars.release-branch}} in the URL.
-  # Read field by field, NOT via @tsv: @tsv escapes backslashes, so a `match` of
-  # ^(\d+\.\d+)\.\d+$ would arrive as ^(\\d+\\.\\d+)\\.\\d+$ and quietly fail to
-  # match — leaving the version untransformed and the URL pointing at /8.3.1/.
-  n_transforms="$(jq '(.["var-transforms"] // []) | length' <<<"${json}")"
-  for ((i = 0; i < n_transforms; i++)); do
-    t_from="$(jq -r --argjson i "${i}" '.["var-transforms"][$i].from // ""' <<<"${json}")"
-    t_match="$(jq -r --argjson i "${i}" '.["var-transforms"][$i].match // ""' <<<"${json}")"
-    t_replace="$(jq -r --argjson i "${i}" '.["var-transforms"][$i].replace // ""' <<<"${json}")"
-    t_to="$(jq -r --argjson i "${i}" '.["var-transforms"][$i].to // ""' <<<"${json}")"
-    [ -n "${t_to}" ] || continue
-
-    src="${t_from//\$\{\{package.version\}\}/${version}}"
-    for kv in "${varlines[@]}"; do
-      src="${src//\$\{\{vars.${kv%%=*}\}\}/${kv#*=}}"
+if [ -z "${MODE}" ]; then
+  # Sorted, because this listing *is* the CI cache key: glob order follows
+  # LC_COLLATE (`-` sorts before `.`, so melange-ctl.yaml precedes melange.yaml)
+  # and an unsorted list would key identical inputs differently per machine.
+  {
+    for config in "${configs[@]}"; do
+      while IFS= read -r sha; do
+        printf '%s\t%s\n' "${sha}" "$(basename "${config}")"
+      done < <(pinned_hashes "${config}")
     done
-
-    # melange's regexes are Go's, and sed's are POSIX ERE. Translate the
-    # shorthand classes Go accepts and ERE does not — `\d` is the one our config
-    # uses, and it is what anyone writing a new transform will reach for — plus
-    # Go's `$1` capture references, which ERE spells `\1`.
-    ere="$(printf '%s' "${t_match}" \
-      | sed -e 's/\\d/[0-9]/g' -e 's/\\w/[A-Za-z0-9_]/g' -e 's/\\s/[[:space:]]/g')"
-    # shellcheck disable=SC2016  # `$([0-9])` is sed's syntax here, not a subshell
-    repl="$(printf '%s' "${t_replace}" | sed -E 's/\$([0-9])/\\\1/g')"
-
-    transformed="$(printf '%s' "${src}" | sed -E "s|${ere}|${repl}|")"
-
-    # sed prints its input unchanged when the pattern does not match, so a
-    # non-matching transform is indistinguishable from an identity one. melange
-    # would report this; we would silently build a wrong URL.
-    if [ "${transformed}" = "${src}" ]; then
-      echo "var-transform '${t_to}' in ${config} did not match:" >&2
-      echo "  input   ${src}" >&2
-      echo "  match   ${t_match}" >&2
-      exit 1
-    fi
-
-    varlines+=("${t_to}=${transformed}")
-  done
-
-  while IFS=$'\t' read -r uri sha; do
-    case "${sha}" in ''|null) continue ;; esac
-
-    uri="${uri//\$\{\{package.version\}\}/${version}}"
-    for kv in "${varlines[@]}"; do
-      uri="${uri//\$\{\{vars.${kv%%=*}\}\}/${kv#*=}}"
-    done
-
-    # Fail loudly on anything this script cannot resolve. Emitting the URL
-    # unexpanded is worse than useless: the cache key stays stable so CI reports
-    # a hit, and the prefetch dies on `curl: (3) nested brace in URL`.
-    # shellcheck disable=SC2016  # matching a literal ${{ , not expanding it
-    case "${uri}" in
-      *'${{'*)
-        echo "unresolved melange substitution in ${config}:" >&2
-        echo "  ${uri}" >&2
-        echo "  This script re-implements melange's templating (see its header)." >&2
-        echo "  Teach it the new form, or express the value as a var-transform." >&2
-        exit 1 ;;
-    esac
-
-    sources+=("${uri}"$'\t'"${sha}")
-  done < <(jq -r '
-    .pipeline[]? | select(.uses == "fetch")
-    | [.with.uri, .with["expected-sha256"]] | @tsv
-  ' <<<"${json}")
-done
-
-# Sorted: glob order follows LC_COLLATE, and this list is a cache key.
-[ "${#sources[@]}" -gt 0 ] || exit 0
-mapfile -t sources < <(printf '%s\n' "${sources[@]}" | sort -u)
-
-if [ "${MODE}" != "--prefetch" ]; then
-  printf '%s\n' "${sources[@]}"
+  } | LC_ALL=C sort
   exit 0
 fi
 
-for entry in "${sources[@]}"; do
-    uri="${entry%%$'\t'*}"
-    sha="${entry##*$'\t'}"
-    target="${CACHE_DIR}/sha256:${sha}"
-    if [ -f "${target}" ]; then
-      echo "cached  $(basename "${uri}")"
-      continue
-    fi
+# --- prefetch ---------------------------------------------------------------
 
-    echo "fetch   $(basename "${uri}")"
-    curl -fsSL --retry 3 -o "${target}.part" "${uri}" \
-      || { rm -f "${target}.part"; echo "!! download failed: ${uri}" >&2; exit 1; }
-    actual="$(sha256sum "${target}.part" | cut -d' ' -f1)"
-    if [ "${actual}" != "${sha}" ]; then
-      rm -f "${target}.part"
-      echo "!! checksum mismatch for ${uri}" >&2
-      echo "   expected ${sha}" >&2
-      echo "   got      ${actual}" >&2
-      exit 1
+mkdir -p "${CACHE_DIR}"
+fetched=0
+
+for config in "${configs[@]}"; do
+  name="$(basename "${config}")"
+  mapfile -t hashes < <(pinned_hashes "${config}")
+  [ "${#hashes[@]}" -gt 0 ] || continue
+
+  missing=()
+  for sha in "${hashes[@]}"; do
+    if [ -f "${CACHE_DIR}/sha256:${sha}" ]; then
+      echo "cached  ${name}  ${sha}"
+    else
+      missing+=("${sha}")
     fi
-    mv "${target}.part" "${target}"
+  done
+  [ "${#missing[@]}" -gt 0 ] || continue
+
+  command -v "${MELANGE_BIN}" >/dev/null 2>&1 || {
+    echo "melange not found (${MELANGE_BIN}), and ${#missing[@]} source(s) for ${name} are not cached" >&2
+    echo "  run inside 'nix develop', or install melange, to prefetch" >&2
+    exit 2
+  }
+
+  echo "fetch   ${name}  (${#missing[@]} of ${#hashes[@]} not cached)"
+  "${MELANGE_BIN}" update-cache --cache-dir "${CACHE_DIR}" "${config}"
+  fetched=$((fetched + 1))
+
+  # melange writes each artifact under the hash it *actually* got, so a pin that
+  # no longer matches upstream leaves the expected filename absent rather than
+  # failing loudly. Catch it here, where the message can name the config.
+  for sha in "${missing[@]}"; do
+    [ -f "${CACHE_DIR}/sha256:${sha}" ] && continue
+    echo "expected-sha256 in ${name} does not match what upstream served:" >&2
+    echo "  pinned  ${sha}" >&2
+    echo "  melange wrote:" >&2
+    find "${CACHE_DIR}" -maxdepth 1 -name 'sha256:*' -newer "${config}" \
+      -printf '    %f\n' >&2 2>/dev/null || true
+    exit 1
+  done
 done
+
+[ "${fetched}" -gt 0 ] || echo "all sources already cached"
