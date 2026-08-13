@@ -1,25 +1,40 @@
-name: "Setup apko"
+name: "Setup Chainguard tool"
 description: >
-  Install the Chainguard apko CLI on a linux/amd64 runner.
+  Install a Chainguard Go CLI (apko, melange, ...) on a linux/amd64 runner.
   Resolves the requested version (or the latest release) to an immutable
   release tag + commit sha1, verifies the downloaded archive against the
   release SHA-256 checksums and their Sigstore (cosign keyless) signature,
   then verifies the installed binary reports the expected tag and commit.
 
-# This action is the public-repo port of conduktor/conduktor-actions/setup-apko.
-# There is no `chainguard-dev/actions/setup-apko` upstream (that path 404s),
-# so we ship our own hardened installer instead of shelling out to `apt` or
-# `curl | sh`. See the accompanying README for the trust model.
+# Started life as the public-repo port of conduktor/conduktor-actions/setup-apko
+# — there is no `chainguard-dev/actions/setup-apko` upstream (that path 404s), so
+# we ship our own hardened installer rather than `apt` or `curl | sh`.
+#
+# Generalised to any Chainguard CLI once melange was needed too. Their releases
+# are goreleaser-built to the same shape — `<tool>_<version>_linux_amd64.tar.gz`
+# beside a cosign-signed `checksums.txt`, and a `version` subcommand printing
+# `GitVersion:` / `GitCommit:` — so only the tool name varies. The alternative,
+# `chainguard-dev/actions/setup-melange`, installs Go and build-essential and
+# builds from source; this downloads one verified binary.
+#
+# See the accompanying README for the trust model.
 
 inputs:
+  tool:
+    required: false
+    default: "apko"
+    description: >
+      (string) Chainguard CLI to install. Doubles as the binary name, the
+      release archive prefix, and by default the repository name under
+      chainguard-dev.
   version:
     required: false
     default: "latest"
-    description: (string) apko version to install, e.g. 1.2.30 or v1.2.30. Use "latest" to resolve the latest GitHub release.
+    description: (string) Version to install, e.g. 1.2.30 or v1.2.30. Use "latest" to resolve the latest GitHub release.
   repository:
     required: false
-    default: "chainguard-dev/apko"
-    description: (string) GitHub repository to download apko releases from.
+    default: ""
+    description: (string) GitHub repository to download releases from. Defaults to chainguard-dev/<tool>.
   github-token:
     required: false
     default: ${{ github.token }}
@@ -38,8 +53,11 @@ inputs:
     description: (bool) Verify the Sigstore (cosign keyless) signature of the release checksums.txt.
   cosign-certificate-identity-regexp:
     required: false
-    default: "^https://github\\.com/chainguard-dev/apko/\\.github/workflows/.+$"
-    description: (string) Expected cosign certificate identity (regexp) of the release signing workflow.
+    default: ""
+    description: >
+      (string) Expected cosign certificate identity (regexp) of the release
+      signing workflow. Defaults to the tool's own workflows under
+      chainguard-dev/<tool>.
   cosign-oidc-issuer:
     required: false
     default: "https://token.actions.githubusercontent.com"
@@ -47,11 +65,11 @@ inputs:
   install-dir:
     required: false
     default: ""
-    description: (string) Directory to install the apko binary into (defaults to a versioned directory in the runner tool cache).
+    description: (string) Directory to install the binary into (defaults to a versioned directory in the runner tool cache).
 
 outputs:
   version:
-    description: Installed apko version without the leading v, e.g. 1.2.30.
+    description: Installed version without the leading v, e.g. 1.2.30.
     value: ${{ steps.resolve.outputs.version }}
   tag:
     description: Release tag the installation is pinned to, e.g. v1.2.30.
@@ -63,21 +81,22 @@ outputs:
     description: SHA-256 checksum of the downloaded release archive.
     value: ${{ steps.install.outputs.sha256 }}
   path:
-    description: Full path to the installed apko binary.
+    description: Full path to the installed binary.
     value: ${{ steps.install.outputs.path }}
   install-dir:
-    description: Directory added to PATH that contains the apko binary.
+    description: Directory added to PATH that contains the binary.
     value: ${{ steps.resolve.outputs.install-dir }}
 
 runs:
   using: composite
   steps:
-    - name: Resolve apko release tag and commit sha1
+    - name: Resolve release tag and commit sha1
       id: resolve
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
-        REPOSITORY: ${{ inputs.repository }}
+        TOOL: ${{ inputs.tool }}
+        REPOSITORY: ${{ inputs.repository || format('chainguard-dev/{0}', inputs.tool) }}
         VERSION: ${{ inputs.version }}
         EXPECTED_COMMIT_SHA: ${{ inputs.expected-commit-sha }}
         INSTALL_DIR_INPUT: ${{ inputs.install-dir }}
@@ -88,24 +107,28 @@ runs:
       # v3 installer cannot install cosign v3.x — must use v4+.
       uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
 
-    - name: Download and verify apko
+    - name: Download and verify the release archive
       id: install
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
-        REPOSITORY: ${{ inputs.repository }}
+        TOOL: ${{ inputs.tool }}
+        REPOSITORY: ${{ inputs.repository || format('chainguard-dev/{0}', inputs.tool) }}
         TAG: ${{ steps.resolve.outputs.tag }}
         ARCHIVE: ${{ steps.resolve.outputs.archive }}
         INSTALL_DIR: ${{ steps.resolve.outputs.install-dir }}
         EXPECTED_SHA256: ${{ inputs.expected-sha256 }}
         VERIFY_SIGNATURE: ${{ inputs.verify-signature }}
-        CERTIFICATE_IDENTITY_REGEXP: ${{ inputs.cosign-certificate-identity-regexp }}
+        CERTIFICATE_IDENTITY_REGEXP: >-
+          ${{ inputs.cosign-certificate-identity-regexp ||
+              format('^https://github\.com/chainguard-dev/{0}/\.github/workflows/.+$', inputs.tool) }}
         OIDC_ISSUER: ${{ inputs.cosign-oidc-issuer }}
       run: "${{ github.action_path }}/scripts/download-and-verify.sh"
 
-    - name: Verify installed apko binary
+    - name: Verify the installed binary
       shell: bash
       env:
+        TOOL: ${{ inputs.tool }}
         EXPECTED_PATH: ${{ steps.install.outputs.path }}
         EXPECTED_TAG: ${{ steps.resolve.outputs.tag }}
         EXPECTED_COMMIT_SHA: ${{ steps.resolve.outputs.commit-sha }}

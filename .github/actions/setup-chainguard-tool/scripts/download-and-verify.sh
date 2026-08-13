@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Download the pinned apko release archive, verify the release checksums (and
+# Download the pinned tool release archive, verify the release checksums (and
 # their Sigstore signature), then install the binary and add it to PATH.
 #
-# Inputs (env): REPOSITORY, TAG, ARCHIVE, INSTALL_DIR, EXPECTED_SHA256,
+# Inputs (env): TOOL, REPOSITORY, TAG, ARCHIVE, INSTALL_DIR, EXPECTED_SHA256,
 #               VERIFY_SIGNATURE, CERTIFICATE_IDENTITY_REGEXP, OIDC_ISSUER, GH_TOKEN
 # Outputs (GITHUB_OUTPUT): sha256, path
 set -euo pipefail
@@ -21,7 +21,7 @@ gh release download "${TAG}" \
   --dir "${WORK_DIR}" \
   "${PATTERNS[@]}"
 
-# Verify the checksums file itself was signed by the apko release workflow.
+# Verify the checksums file itself was signed by the tool's release workflow.
 if [ "${VERIFY_SIGNATURE}" = "true" ]; then
   cosign verify-blob \
     --certificate "${WORK_DIR}/checksums.txt.crt" \
@@ -52,17 +52,17 @@ if [ -n "${EXPECTED_SHA256}" ] && [ "${EXPECTED_SHA256}" != "${ACTUAL}" ]; then
 fi
 
 tar -xzf "${WORK_DIR}/${ARCHIVE}" -C "${WORK_DIR}"
-BINARY="$(find "${WORK_DIR}" -type f -name apko | head -n 1)"
+BINARY="$(find "${WORK_DIR}" -type f -name "${TOOL}" | head -n 1)"
 if [ -z "${BINARY}" ]; then
-  echo "::error::No apko binary found in ${ARCHIVE}"
+  echo "::error::No ${TOOL} binary found in ${ARCHIVE}"
   exit 1
 fi
 
 mkdir -p "${INSTALL_DIR}"
-install -m 0755 "${BINARY}" "${INSTALL_DIR}/apko"
+install -m 0755 "${BINARY}" "${INSTALL_DIR}/${TOOL}"
 echo "${INSTALL_DIR}" >> "${GITHUB_PATH}"
 
 {
   echo "sha256=${ACTUAL}"
-  echo "path=${INSTALL_DIR}/apko"
+  echo "path=${INSTALL_DIR}/${TOOL}"
 } >> "${GITHUB_OUTPUT}"

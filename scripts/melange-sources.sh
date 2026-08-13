@@ -20,6 +20,13 @@
 # Only `uses: fetch` steps appear here. A git-checkout source has no content
 # hash to address, so the forks contribute nothing to this cache by design.
 #
+# This re-implements the subset of melange's templating our configs use —
+# ${{package.version}}, ${{vars.*}} and var-transforms — rather than asking
+# melange to resolve it. `melange query` would do that correctly, but this script
+# runs in CI *before* melange is installed (it populates the cache the melange
+# build then reads), so it cannot depend on the binary. Anything left unresolved
+# is a hard error rather than a URL that 404s later; see the guard below.
+#
 # Requires: jq, yq, curl
 set -euo pipefail
 
@@ -50,14 +57,70 @@ for config in "${configs[@]}"; do
   version="$(jq -r '.package.version' <<<"${json}")"
   mapfile -t varlines < <(jq -r '(.vars // {}) | to_entries[] | "\(.key)=\(.value)"' <<<"${json}")
 
+  # var-transforms derive further vars from existing ones, and melange evaluates
+  # them after `vars`. kafka-tools uses one to get the archive's release branch
+  # (8.3) out of the package version (8.3.1), so skipping this leaves a literal
+  # ${{vars.release-branch}} in the URL.
+  # Read field by field, NOT via @tsv: @tsv escapes backslashes, so a `match` of
+  # ^(\d+\.\d+)\.\d+$ would arrive as ^(\\d+\\.\\d+)\\.\\d+$ and quietly fail to
+  # match — leaving the version untransformed and the URL pointing at /8.3.1/.
+  n_transforms="$(jq '(.["var-transforms"] // []) | length' <<<"${json}")"
+  for ((i = 0; i < n_transforms; i++)); do
+    t_from="$(jq -r --argjson i "${i}" '.["var-transforms"][$i].from // ""' <<<"${json}")"
+    t_match="$(jq -r --argjson i "${i}" '.["var-transforms"][$i].match // ""' <<<"${json}")"
+    t_replace="$(jq -r --argjson i "${i}" '.["var-transforms"][$i].replace // ""' <<<"${json}")"
+    t_to="$(jq -r --argjson i "${i}" '.["var-transforms"][$i].to // ""' <<<"${json}")"
+    [ -n "${t_to}" ] || continue
+
+    src="${t_from//\$\{\{package.version\}\}/${version}}"
+    for kv in "${varlines[@]}"; do
+      src="${src//\$\{\{vars.${kv%%=*}\}\}/${kv#*=}}"
+    done
+
+    # melange's regexes are Go's, and sed's are POSIX ERE. Translate the
+    # shorthand classes Go accepts and ERE does not — `\d` is the one our config
+    # uses, and it is what anyone writing a new transform will reach for — plus
+    # Go's `$1` capture references, which ERE spells `\1`.
+    ere="$(printf '%s' "${t_match}" \
+      | sed -e 's/\\d/[0-9]/g' -e 's/\\w/[A-Za-z0-9_]/g' -e 's/\\s/[[:space:]]/g')"
+    # shellcheck disable=SC2016  # `$([0-9])` is sed's syntax here, not a subshell
+    repl="$(printf '%s' "${t_replace}" | sed -E 's/\$([0-9])/\\\1/g')"
+
+    transformed="$(printf '%s' "${src}" | sed -E "s|${ere}|${repl}|")"
+
+    # sed prints its input unchanged when the pattern does not match, so a
+    # non-matching transform is indistinguishable from an identity one. melange
+    # would report this; we would silently build a wrong URL.
+    if [ "${transformed}" = "${src}" ]; then
+      echo "var-transform '${t_to}' in ${config} did not match:" >&2
+      echo "  input   ${src}" >&2
+      echo "  match   ${t_match}" >&2
+      exit 1
+    fi
+
+    varlines+=("${t_to}=${transformed}")
+  done
+
   while IFS=$'\t' read -r uri sha; do
     case "${sha}" in ''|null) continue ;; esac
 
-    # The two melange substitutions our configs use.
     uri="${uri//\$\{\{package.version\}\}/${version}}"
     for kv in "${varlines[@]}"; do
       uri="${uri//\$\{\{vars.${kv%%=*}\}\}/${kv#*=}}"
     done
+
+    # Fail loudly on anything this script cannot resolve. Emitting the URL
+    # unexpanded is worse than useless: the cache key stays stable so CI reports
+    # a hit, and the prefetch dies on `curl: (3) nested brace in URL`.
+    # shellcheck disable=SC2016  # matching a literal ${{ , not expanding it
+    case "${uri}" in
+      *'${{'*)
+        echo "unresolved melange substitution in ${config}:" >&2
+        echo "  ${uri}" >&2
+        echo "  This script re-implements melange's templating (see its header)." >&2
+        echo "  Teach it the new form, or express the value as a var-transform." >&2
+        exit 1 ;;
+    esac
 
     sources+=("${uri}"$'\t'"${sha}")
   done < <(jq -r '

@@ -70,6 +70,74 @@ case "${out}" in *'no fetch here'*) fail "non-fetch steps must be ignored" ;; es
 # The listing is the cache key, so it must be stable across runs.
 assert_eq "listing is deterministic" "${out}" "$("${SCRIPT}" demo)"
 
+# --- var-transforms ----------------------------------------------------------
+# kafka-tools derives the archive's release branch (8.3) from the package version
+# (8.3.1) this way. Missing it emitted a literal ${{vars.release-branch}} in the
+# URL, which sailed through the cache key and died in CI on `curl: (3) nested
+# brace in URL`.
+mkdir -p "${TMP}/images/xform"
+cat > "${TMP}/images/xform/melange.yaml" <<'YAML'
+package:
+  name: xform
+  version: 8.3.1
+var-transforms:
+  - from: ${{package.version}}
+    match: ^(\d+\.\d+)\.\d+$
+    replace: "$1"
+    to: release-branch
+pipeline:
+  - uses: fetch
+    with:
+      uri: https://example.invalid/${{vars.release-branch}}/pkg-${{package.version}}.tgz
+      expected-sha256: cccc
+YAML
+# `\d` on purpose: melange's regexes are Go's, so that is what a new transform
+# will be written with, and sed -E would not understand it untranslated.
+assert_eq "var-transforms resolve, with Go regex syntax" \
+  "https://example.invalid/8.3/pkg-8.3.1.tgz	cccc" \
+  "$("${SCRIPT}" xform)"
+
+# A transform whose pattern does not match leaves sed's input untouched, which is
+# indistinguishable from an identity transform — so it must be an error, not a
+# silently wrong URL.
+cat > "${TMP}/images/xform/melange.yaml" <<'YAML'
+package:
+  name: xform
+  version: not-a-version
+var-transforms:
+  - from: ${{package.version}}
+    match: ^(\d+\.\d+)\.\d+$
+    replace: "$1"
+    to: release-branch
+pipeline:
+  - uses: fetch
+    with:
+      uri: https://example.invalid/${{vars.release-branch}}/x.tgz
+      expected-sha256: cccc
+YAML
+checks=$((checks + 1))
+if "${SCRIPT}" xform >/dev/null 2>&1; then
+  fail "a var-transform that does not match should exit non-zero"
+fi
+
+# Any substitution form this script cannot resolve must fail here, where the
+# message can point at the config, rather than downstream in curl.
+cat > "${TMP}/images/xform/melange.yaml" <<'YAML'
+package:
+  name: xform
+  version: 1.0.0
+pipeline:
+  - uses: fetch
+    with:
+      uri: https://example.invalid/${{vars.never-defined}}/x.tgz
+      expected-sha256: cccc
+YAML
+checks=$((checks + 1))
+if "${SCRIPT}" xform >/dev/null 2>&1; then
+  fail "an unresolvable substitution should exit non-zero"
+fi
+rm -rf "${TMP}/images/xform"
+
 # --- prefetch ---------------------------------------------------------------
 cache="${TMP}/cache"
 mkdir -p "${cache}"
