@@ -43,10 +43,10 @@ repos:
     rev: v0.11.0.1
     hooks:
       - id: shellcheck
-        # The cdk-* support scripts are commands with no extension, so match
-        # them by name too — otherwise they are silently skipped here while
-        # `make lint-shell` does check them.
-        files: (\.(sh|bash)$|(^|/)cdk-[a-z0-9-]+$)
+        # The cdk-* support scripts are commands with no extension, and
+        # bash.bashrc is named by bash, so match both by name too — otherwise
+        # they are silently skipped here while `make lint-shell` does check them.
+        files: (\.(sh|bash)$|(^|/)cdk-[a-z0-9-]+$|(^|/)bash\.bashrc$)
         # -x follows `# shellcheck source=` directives into the sourced library.
         args: [-x]
 
