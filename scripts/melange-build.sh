@@ -5,7 +5,7 @@
 #
 # Usage: scripts/melange-build.sh <image-dir> [arch,arch...]
 #
-# Defaults to the host arch: build.sh builds the image for the host arch alone,
+# Defaults to the host arch: image-build.sh builds the image for the host arch alone,
 # and a foreign arch runs the melange pipeline under qemu emulation. Pass arches
 # (or MELANGE_ARCHES) to reproduce the multi-arch nightly.
 #

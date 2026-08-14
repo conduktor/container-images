@@ -12,7 +12,6 @@ on:
   pull_request:
     paths:
       - "images/**"
-      - "build.sh"
       - "scripts/**"
       - "Makefile"
       # Whole tree, not just workflows/: the CI-only scripts and the composite
@@ -80,7 +79,7 @@ jobs:
           # Only the changed-file -> image-dir mapping lives here; resolving that
           # into a matrix is build.yml's job, via scripts/build-matrix.sh.
           #
-          # A change to build.sh, scripts/, workflows or the inventory itself is
+          # A change to scripts/, the workflows or the inventory itself is
           # cross-cutting and rebuilds everything (empty subset = all).
           set -euo pipefail
           emit() { # emit(subset, any)

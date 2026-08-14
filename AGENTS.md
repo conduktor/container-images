@@ -30,13 +30,13 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 │   ├── base-monitoring/apko.yaml
 │   └── debug/apko.yaml
 ├── scripts/                     # runnable by a human as well as CI (rule 12)
+│   ├── image-build.sh           # local end-to-end image build (melange -> apko -> docker load)
 │   ├── image-matrix.sh          # manifest -> image list (validates the dispatch subset)
 │   ├── build-matrix.sh          # both CI matrices: images + per-(image,arch) APK jobs (rule 13)
-│   ├── melange-build.sh         # local APK build; also called by build.sh
+│   ├── melange-build.sh         # local APK build; also called by scripts/image-build.sh
 │   ├── melange-index.sh         # re-sign the APK index after a per-arch fan-out (rule 13)
 │   ├── melange-sources.sh       # list/prefetch pinned sources; CI cache key + prefetch
 │   └── tests/test-*.sh          # fixture tests for the above; `make test`
-├── build.sh                     # local `apko build` wrapper (uses cgr.dev/chainguard/apko fallback)
 ├── Makefile                     # dev targets: build / lint / test / scan / sbom / precommit-*
 ├── flake.nix                    # nix devShell with every tool pinned
 ├── .pre-commit-config.yaml
@@ -213,7 +213,7 @@ credential for any Conduktor-internal system. Trust flows inbound only.
 
 ### 9. `images/images.json` is the image inventory; logic lives in `scripts/`
 
-The image list used to be duplicated in the `Makefile`, `build.sh`, the
+The image list used to be duplicated in the `Makefile`, `scripts/image-build.sh`, the
 nightly matrix and the `pr.yml` `all` JSON. It now lives once in
 [`images/images.json`](images/images.json):
 
@@ -306,10 +306,10 @@ which apko pulls from a `@local ./packages` repository.
   check inside a single build.
 - `apko show-config` does not resolve repositories, so `make lint` passes on a
   fresh clone with no `packages/` present. Only `apko build`/`publish` needs the
-  APK, which is why `build.sh` runs melange first when the image dir has any
+  APK, which is why `scripts/image-build.sh` runs melange first when the image dir has any
   `melange*.yaml`. Match that by **glob, never by the literal name
   `melange.yaml`** — `base-monitoring` has three configs and no plain
-  `melange.yaml`, and both `build.sh` and `melange-build.sh` used to skip it
+  `melange.yaml`, and both `image-build.sh` and `melange-build.sh` used to skip it
   silently for exactly that reason.
 
 ### 11. Scanning lives in one action, and is report-only
@@ -350,7 +350,10 @@ the two copies had already drifted (different severity lists, different
 ### 12. Where a script lives says who runs it
 
 - `scripts/` — anything a human might run directly, even if CI runs it too:
-  `melange-build.sh` (called by `build.sh`), `image-matrix.sh`.
+  `image-build.sh` (the local image build, what `make build` shells out to),
+  `melange-build.sh` (called by `image-build.sh` in turn), `image-matrix.sh`.
+  Nothing executable stays at the repo root; `make <target>` is the root-level
+  entry point and every target delegates here.
 - `.github/scripts/` — CI-only. `cve-counts.sh`, `cve-badge.sh`,
   `scan-summary.sh`, `scan-report.sh`. Nobody runs these by hand; they exist to
   keep logic out of YAML.
@@ -490,7 +493,7 @@ review.
    and `dockerhub` only if it must also ship to Docker Hub (see rule 8).
 3. Add a row to the README's images + badges tables.
 
-That's it — the Makefile, `build.sh` and both workflows all derive the image
+That's it — the Makefile, `scripts/image-build.sh` and both workflows all derive the image
 list from the manifest (rule 9), and an image with `melange*.yaml` files picks
 up its per-arch APK jobs from the same place (rule 13). `make test` asserts the
 manifest and `images/*/` stay in sync, so a directory added without a manifest

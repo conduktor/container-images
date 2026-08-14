@@ -10,11 +10,11 @@
 #
 # The set of images and their published names comes from images/images.json.
 #
-# Usage:
-#   ./build.sh base-os                       # -> conduktor/base-os:local
-#   ./build.sh base-jre-25                   # -> conduktor/base-jre-25:local
-#   ./build.sh debug                         # -> conduktor/conduktor-debug:local
-#   ./build.sh base-jre-25 myrepo/base:tag   # custom image ref
+# Usage (runnable from anywhere — paths resolve from the script's location):
+#   scripts/image-build.sh base-os                       # -> conduktor/base-os:local
+#   scripts/image-build.sh base-jre-25                   # -> conduktor/base-jre-25:local
+#   scripts/image-build.sh debug                         # -> conduktor/conduktor-debug:local
+#   scripts/image-build.sh base-jre-25 myrepo/base:tag   # custom image ref
 #
 # Requires: docker, jq (apko optional — falls back to the apko container).
 set -euo pipefail
@@ -25,7 +25,7 @@ if [ $# -lt 1 ]; then
 fi
 
 IMAGE_DIR="$1"
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MANIFEST="${REPO_ROOT}/images/images.json"
 
 IMAGE_NAME="$(jq -r --arg dir "${IMAGE_DIR}" \

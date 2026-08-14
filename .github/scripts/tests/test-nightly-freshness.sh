@@ -76,7 +76,7 @@ ${offenders}"
 # `--offline` makes apko build from the cache alone. Correct for an air-gapped
 # rebuild, fatal for a nightly.
 checks=$((checks + 1))
-if grep -rn -- '--offline' "${REPO_ROOT}/.github" "${REPO_ROOT}/build.sh" \
+if grep -rn -- '--offline' "${REPO_ROOT}/.github" \
      "${REPO_ROOT}/scripts" 2>/dev/null | grep -v '/tests/'; then
   fail "apko --offline would build from cache instead of the live index"
 fi
@@ -90,7 +90,7 @@ ${locks}"
 
 checks=$((checks + 1))
 if grep -rn -e '--lockfile' -e 'apko lock' "${REPO_ROOT}/.github" \
-     "${REPO_ROOT}/scripts" "${REPO_ROOT}/build.sh" 2>/dev/null | grep -v '/tests/'; then
+     "${REPO_ROOT}/scripts" 2>/dev/null | grep -v '/tests/'; then
   fail "apko lockfile flag in use — images would stop picking up updates"
 fi
 

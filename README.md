@@ -172,9 +172,9 @@ Requires Docker (for the apko container fallback and to `docker load` the
 result). A native `apko` binary is used if it's on `PATH`.
 
 ```sh
-./build.sh base-os
-./build.sh base-jre-25
-./build.sh debug
+./scripts/image-build.sh base-os
+./scripts/image-build.sh base-jre-25
+./scripts/image-build.sh debug
 # or via Make:
 make build IMAGE=base-jre-25
 make build-all

@@ -17,7 +17,7 @@ SHELL := bash
 .SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := help
 
-# Image inventory — also read by build.sh and both workflows.
+# Image inventory — also read by scripts/image-build.sh and both workflows.
 MANIFEST      := images/images.json
 IMAGES        := $(shell jq -r '[.[].dir] | join(" ")' $(MANIFEST) 2>/dev/null)
 IMAGE         ?=
@@ -50,11 +50,11 @@ ARCHES        ?=
 .PHONY: build
 build: ## Build one image locally for the host arch (usage: make build IMAGE=debug [IMAGE_REF=...])
 	@test -n "$(IMAGE)" || { echo "IMAGE=<one of: $(IMAGES)> is required" >&2; exit 2; }
-	MELANGE_ARCHES=$(ARCHES) ./build.sh $(IMAGE) $(IMAGE_REF)
+	MELANGE_ARCHES=$(ARCHES) ./scripts/image-build.sh $(IMAGE) $(IMAGE_REF)
 
 .PHONY: build-all
 build-all: ## Build every image locally for the host arch
-	@for img in $(IMAGES); do MELANGE_ARCHES=$(ARCHES) ./build.sh $$img; done
+	@for img in $(IMAGES); do MELANGE_ARCHES=$(ARCHES) ./scripts/image-build.sh $$img; done
 
 .PHONY: packages
 packages: ## Build one image's melange*.yaml into local APKs (usage: make packages IMAGE=base-monitoring [ARCHES=...])
@@ -67,7 +67,7 @@ debug-scripts: ## Alias for `make packages IMAGE=debug`
 
 .PHONY: debug-shell
 debug-shell: ## Build the debug image and drop into it (usage: make debug-shell [TARGET=<container>])
-	./build.sh debug
+	./scripts/image-build.sh debug
 	@if [ -n "$(TARGET)" ]; then \
 		echo ">> attaching to container $(TARGET) namespaces as uid 10001"; \
 		docker run --rm -it --pid "container:$(TARGET)" --network "container:$(TARGET)" \
@@ -97,7 +97,7 @@ lint-apko: ## Validate every apko.yaml parses (apko has no `lint`; show-config d
 	done
 
 .PHONY: lint-shell
-lint-shell: ## shellcheck every shell script (build.sh, scripts/, image tools/)
+lint-shell: ## shellcheck every shell script (scripts/, .github/scripts/, image tools/)
 	@# Uses whatever shellcheck is on PATH. CI runs the version pinned in
 	@# .pre-commit-config.yaml instead — see `make precommit-run` if they disagree.
 	shellcheck -x $(SHELL_FILES)
