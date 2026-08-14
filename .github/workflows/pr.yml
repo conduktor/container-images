@@ -92,7 +92,7 @@ jobs:
           fi
           changed_files=$(git diff --name-only "${BASE_SHA}" "${HEAD_SHA}")
           if echo "${changed_files}" \
-            | grep -Eq '^(build\.sh|scripts/|\.github/|images/images\.json$)'; then
+            | grep -Eq '^(scripts/|\.github/|images/images\.json$)'; then
             emit "" true
             exit 0
           fi

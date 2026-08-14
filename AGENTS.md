@@ -470,6 +470,28 @@ review.
   accumulates melange's `gomodcache/` and `npm/`, which are pinned by `go.sum` /
   `package-lock.json` and equally cannot go stale — but they are why the entry
   reaches ~1 GB for `base-monitoring`.
+- **`GOCACHE` belongs in there too, and is the reason the forks don't recompile
+  from scratch every run.** melange wires `GOMODCACHE` and `npm_config_cache`
+  into `/var/cache/melange` itself but *not* Go's compiled-object cache, so
+  before `melange-prometheus.yaml` / `melange-cortex.yaml` exported
+  `GOCACHE=/var/cache/melange/gocache` every build re-compiled the whole
+  dependency graph even on a cache hit. It is safe for the same reason the
+  source cache is: Go keys entries on compiler version + source + build flags,
+  so a stale entry is unreachable rather than merely unlikely. Do not
+  generalise this into "so caching build output is fine" — see the next bullet.
+- **Do not cache the built `.apk`s of the from-source packages in the nightly.**
+  It is tempting (each `apks` job spends minutes compiling something whose fork
+  tag and `expected-commit` did not move) and `test-nightly-freshness.sh` would
+  not stop you: it scans for the *go-apk* cache
+  (`dev.chainguard.go-apk` / `apk-cache`), not for `images/*/packages`. But
+  `prometheus-cdk` and `cortex-cdk` bake the Go toolchain and every Go module
+  into the binary at compile time, and that is exactly what Grype matches CVEs
+  against. A key over (config + fork commit) cannot see a `go-1.26` bump in
+  Wolfi, so the nightly would keep shipping a binary built with a superseded
+  stdlib — rule 14's promise, broken for the three packages we own outright,
+  with no test covering it. Restoring such a cache on PR runs only (where
+  freshness is not the point) is defensible; if you add it, gate it on
+  `publish == false` and extend the freshness test to assert that gate.
 - Worth knowing before someone "fixes" a warm cache they think is stale: a warm
   cache is not stale anyway. Measured against an 11 GB local one, a rebuild
   re-downloaded the 10 MB APKINDEX and picked up packages published three hours

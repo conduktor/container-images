@@ -94,6 +94,10 @@ pipeline:
       export GOTOOLCHAIN=local
       export GOPATH="${HOME}/go"
       export PATH="${GOPATH}/bin:${PATH}"
+      # Compiled objects into melange's cache dir; melange wires GOMODCACHE but
+      # not GOCACHE, so without this every run recompiles the dependency graph
+      # even on a warm cache. See AGENTS.md rule 14.
+      export GOCACHE=/var/cache/melange/gocache
       mkdir -p "${GOPATH}/src/github.com/cortexproject"
       ln -s "$(pwd)" "${GOPATH}/src/github.com/cortexproject/cortex"
       cd "${GOPATH}/src/github.com/cortexproject/cortex"

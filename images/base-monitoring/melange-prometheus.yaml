@@ -60,6 +60,9 @@ pipeline:
       export GOTOOLCHAIN=local
       export GOPATH="${HOME}/go"
       export PATH="${GOPATH}/bin:${PATH}"
+      # Compiled objects into melange's cache dir, which CI persists and the
+      # local build keeps under ~/.cache/melange.
+      export GOCACHE=/var/cache/melange/gocache
       make build tarball
 
   - name: Stage artifacts
