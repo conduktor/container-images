@@ -23,7 +23,6 @@
 #   - supervisord + supervisorctl on PATH, with site-packages already patched
 #     to tolerate arbitrary UIDs — apko has no RUN phase, so unlike the Ubuntu
 #     base there is no patch_supervisord step for the consumer to run
-#   - envsubst (gettext) + logrotate, used by the monitoring startup scripts
 #   - UID/GID 10001 account exists, but the image default user stays root so
 #     the consumer can mkdir/chown /var/conduktor before switching to it
 contents:

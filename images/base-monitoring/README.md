@@ -26,9 +26,8 @@ If you need Java, use [`base-jre-25`](../base-jre-25/) instead.
 Both `/opt/monitoring/prometheus` and `/opt/monitoring/cortex` are on `PATH`,
 so the supervisor `conf.d` programs can invoke `prometheus` / `cortex` bare.
 
-Alongside those: `bash` + the GNU userland, `curl`, `openssl`, `envsubst`
-(config templating), `logrotate`, `netcat-openbsd`, `procps`, `less` and
-`nano`. The full list, with a `# why` per line, is in [`apko.yaml`](apko.yaml).
+Alongside those: `bash` + the GNU userland, `curl`, `openssl`.
+The full list, with a `# why` per line, is in [`apko.yaml`](apko.yaml).
 
 ## Why three melange packages instead of Wolfi packages
 
