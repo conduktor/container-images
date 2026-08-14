@@ -59,16 +59,6 @@ contents:
     # --- Runtime tooling the monitoring scripts and operators rely on ---
     - curl # healthcheck.sh + Prometheus/Cortex API pokes
     - openssl # TLS tooling parity with the other bases
-    # No `gnupg`: the Ubuntu base needed it to add apt repository keys at image
-    # build time, and there is no apt here. Wolfi's `gnupg` is a meta package
-    # that leaves no gpg binary in the image, so it would be pure CVE surface.
-    - gzip # tar.gz handling in the data-cleaner path
-    - netcat-openbsd # port waits in run.sh (Wolfi ships the OpenBSD flavour)
-    - less # readable logs when exec'ing into the container
-    - nano # on-the-fly config edits during incident response
-    - logrotate # rotates supervisord + Prometheus/Cortex logs
-    - gettext # envsubst — renders the Prometheus/Cortex config templates
-    - procps # ps/top/pgrep — supervisord child inspection
 
 # UID/GID 10001, the Conduktor convention across every image in this repo
 # (AGENTS.md rule 7). The Ubuntu monitoring base named this account
