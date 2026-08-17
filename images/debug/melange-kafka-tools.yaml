@@ -1,9 +1,10 @@
 # Apache Kafka admin shell tools for the debug sidecar, installed under
 # /usr/lib/kafka which apko.yaml puts on PATH.
 #
-# Not Wolfi's kafka-4.3 despite rule 1: it depends on openjdk-21-default-jvm, so
+# Not Wolfi's kafka-4.3, despite the preference for Wolfi packages: it depends
+# on openjdk-21-default-jvm, so
 # it installs a second, unused JVM (+336 MB vs +131 MB) and ships upstream's
-# libs/ verbatim, so it patches nothing. See AGENTS.md rule 10.
+# libs/ verbatim, so it patches nothing.
 #
 # BUMPING: change `version`, then replace expected-sha256 with
 #   curl -sSL https://archive.apache.org/dist/kafka/<v>/kafka_2.13-<v>.tgz \

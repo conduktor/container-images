@@ -13,7 +13,7 @@
 #   melange-supervisor.yaml -> supervisor-cdk  (upstream sdist + arbitrary-UID patch)
 #
 # Those are the reason this image gets its APKs built on native amd64 *and*
-# arm64 runners instead of one cross-building job — see AGENTS.md rule 13.
+# arm64 runners instead of one cross-building job.
 #
 # Contract with the downstream Monitoring Dockerfile (which does `FROM <this>`,
 # lays down monitoring-helper + the supervisor conf.d files, then `USER 10001`):
@@ -59,8 +59,8 @@ contents:
     - curl # healthcheck.sh + Prometheus/Cortex API pokes
     - openssl # TLS tooling parity with the other bases
 
-# UID/GID 10001, the Conduktor convention across every image in this repo
-# (AGENTS.md rule 7). The Ubuntu monitoring base named this account
+# UID/GID 10001, the Conduktor convention across every image in this repo.
+# The Ubuntu monitoring base named this account
 # `conduktor-platform`; only the numeric IDs are load-bearing downstream —
 # the consumer does `USER 10001`, supervisord's `user=` takes CDK_USER_UID,
 # and nothing resolves the account by name.

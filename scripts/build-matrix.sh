@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Resolve both CI matrices — the per-image one and the per-(image,arch) melange
-# one — from images/images.json plus what is actually on disk (AGENTS.md rule 9).
+# one — from images/images.json plus what is actually on disk.
 #
 # Prints one compact JSON object on stdout:
 #   {
@@ -24,7 +24,7 @@
 # has to glob the image directory itself.
 #
 # `apks` drives the melange fan-out: one job per image *and* arch, each pinned to
-# a runner of that arch so nothing cross-builds under qemu (AGENTS.md rule 13).
+# a runner of that arch so nothing cross-builds under qemu.
 # Images with no melange*.yaml contribute no `apks` entries at all, which is how
 # base-os and base-jre-25 skip the fan-out without a per-step `if:`.
 #

@@ -5,7 +5,7 @@
 # Cortex is not in Wolfi at all, and Console needs our fork regardless, so this
 # is a from-source Go build. Together with prometheus-cdk it is why the nightly
 # builds this image's APKs on native amd64 and arm64 runners instead of
-# cross-building under qemu (AGENTS.md rule 13).
+# cross-building under qemu.
 #
 # BUMPING: change `version` to the fork's Cortex version, then set `tag` and
 # `expected-commit` to the new fork tag:
@@ -96,7 +96,7 @@ pipeline:
       export PATH="${GOPATH}/bin:${PATH}"
       # Compiled objects into melange's cache dir; melange wires GOMODCACHE but
       # not GOCACHE, so without this every run recompiles the dependency graph
-      # even on a warm cache. See AGENTS.md rule 14.
+      # even on a warm cache.
       export GOCACHE=/var/cache/melange/gocache
       mkdir -p "${GOPATH}/src/github.com/cortexproject"
       ln -s "$(pwd)" "${GOPATH}/src/github.com/cortexproject/cortex"

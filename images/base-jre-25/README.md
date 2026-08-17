@@ -83,6 +83,6 @@ docker run --rm ghcr.io/conduktor/base-jre-25:latest java -version
 
 Package changes go in [`apko.yaml`](apko.yaml) with a trailing `# why`
 comment. Verify Wolfi names first (see the [agent
-guide](../../AGENTS.md#1-use-apko-in-priority-verify-wolfi-packages-before-adding)),
+guide](../../AGENTS.md#verify-dont-assume)),
 then `make build IMAGE=base-jre-25 && make scan IMAGE=base-jre-25` before
 opening a PR.

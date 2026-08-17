@@ -91,7 +91,7 @@ CMD ["/opt/conduktor/scripts/run.sh"]
 ```
 
 The account is `conduktor` at **UID/GID 10001** — the repo-wide convention
-([AGENTS.md rule 7](../../AGENTS.md#7-account-convention)). The Ubuntu
+([AGENTS.md](../../AGENTS.md#downstream-contracts)). The Ubuntu
 monitoring base called it `conduktor-platform`; only the numeric IDs are
 load-bearing (`USER 10001`, supervisord's `user=%(ENV_CDK_USER_UID)s`), so a
 consumer that never resolves the account by name needs no change.
@@ -107,13 +107,13 @@ That runs the three melange recipes first (from-source Go + npm builds, so
 budget ~10 minutes cold, and expect the Prometheus source download to
 dominate a cold cache), then apko. Building the foreign arch locally runs
 those compiles under qemu — don't; the nightly builds each arch on a native
-runner instead ([AGENTS.md rule 13](../../AGENTS.md#13-long-builds-fan-out-to-native-runners-per-arch)).
+runner instead ([AGENTS.md](../../AGENTS.md#ci-shape)).
 
 ## Contributing
 
 Package additions go in [`apko.yaml`](apko.yaml) with a trailing `# why`
 comment. Verify the Wolfi package name first (see the [agent
-guide](../../AGENTS.md#1-use-apko-in-priority-verify-wolfi-packages-before-adding)).
+guide](../../AGENTS.md#verify-dont-assume)).
 Bumping a fork or supervisor version is documented in the header of each
 `melange-*.yaml`. Then `make build IMAGE=base-monitoring && make scan
 IMAGE=base-monitoring` before opening a PR.

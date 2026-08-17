@@ -35,7 +35,7 @@ Grouped as in the [`apko.yaml`](apko.yaml):
 ### Why the full JDK, not the JRE + jattach?
 
 The original design shipped `openjdk-25-jre` + `jattach`, but jattach is
-**not packaged in Wolfi** ([verified via `apk search`](../../AGENTS.md#1-use-apko-in-priority-verify-wolfi-packages-before-adding)).
+**not packaged in Wolfi** ([verified via `apk search`](../../AGENTS.md#verify-dont-assume)).
 The full JDK provides `jstack`, `jmap`, `jcmd`, `jhsdb`, and `jfr` natively
 and is the pragmatic path today. If jattach lands in Wolfi later, we can
 revisit and drop ~150 MB.
@@ -351,5 +351,5 @@ Same recipe as the other images — see
 
 Package changes go in [`apko.yaml`](apko.yaml) with a trailing `# why`
 comment. Verify Wolfi names first (see the [agent
-guide](../../AGENTS.md#1-use-apko-in-priority-verify-wolfi-packages-before-adding)),
+guide](../../AGENTS.md#verify-dont-assume)),
 then `make build IMAGE=debug && make scan IMAGE=debug` before opening a PR.

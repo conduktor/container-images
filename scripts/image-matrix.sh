@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Resolve the CI build matrix from images/images.json, the single source of
-# truth for the image inventory (see AGENTS.md rule 9).
+# truth for the image inventory.
 #
 # Prints a compact JSON array on stdout:
 #   [{"dir":"debug","name":"conduktor-debug","dockerhub":"docker.io/..."}]

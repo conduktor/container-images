@@ -70,6 +70,6 @@ The full package list lives in [`apko.yaml`](apko.yaml). Notable choices:
 
 Package additions go in [`apko.yaml`](apko.yaml) with a trailing `# why`
 comment. Verify the Wolfi package name first (see the [agent
-guide](../../AGENTS.md#1-use-apko-in-priority-verify-wolfi-packages-before-adding)),
+guide](../../AGENTS.md#verify-dont-assume)),
 then `make build IMAGE=base-os && make scan IMAGE=base-os` locally before
 opening a PR.
