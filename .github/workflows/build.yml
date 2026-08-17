@@ -369,7 +369,7 @@ jobs:
         uses: ./.github/actions/scan-image
         with:
           image: ${{ inputs.publish && steps.apko.outputs.image || steps.apko_build.outputs.ref }}
-          tar: ${{ inputs.publish && '' || format('images/{0}/image.tar', matrix.image.dir) }}
+          tar: ${{ !inputs.publish && format('images/{0}/image.tar', matrix.image.dir) || '' }}
           label: ${{ matrix.image.name }}
           fail-on: none
 
