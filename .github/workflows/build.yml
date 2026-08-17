@@ -136,7 +136,7 @@ jobs:
       # (scripts/melange-index.sh). It cannot be skipped here — melange-build
       # adds `--keyring-append <key>.pub` for every config after the first.
       - name: Build local APKs with melange
-        uses: chainguard-dev/actions/melange-build@9d631658f55713e5f63ca0cc21ee168f81301fd9 # v1.6.30
+        uses: chainguard-dev/actions/melange-build@bed8050123fff65538e2db1902ff9404030c0221 # v1.6.31
         with:
           version: ${{ env.MELANGE_VERSION }}
           multi-config: ${{ matrix.apk.configs }}
