@@ -2,8 +2,9 @@ name: pr
 
 # On every PR that touches an image config or the build/CI plumbing, build each
 # affected image and scan it with Trivy + Grype. Scanning is report-only: the
-# counts land in the job summary and in one sticky PR comment. See AGENTS.md
-# rule 11 for why there is no CVE gate yet.
+# counts land in the job summary and in one sticky PR comment. There is no CVE
+# gate: Trivy cannot see the packages we build with melange, so a Trivy-based
+# gate would pass on findings Grype reports for the same image.
 #
 # The build is build.yml — the same workflow the nightly calls, with
 # `publish: false`. So a PR exercises the real assembly path (per-arch APK jobs,

@@ -5,7 +5,7 @@ name: build
 # release is the `publish` input (and how many arches they ask for).
 #
 # That matters more than it looks: local APKs are built in a separate job per
-# (image, arch) and assembled by the build job (AGENTS.md rule 13). When the PR
+# (image, arch) and assembled by the build job. When the PR
 # ran its own inline single-job variant, the assembly path — artifact merge,
 # melange-index.sh, the `@local` resolution that depends on both — was only ever
 # exercised by the nightly, after merge. Now a PR proves the same path.
@@ -33,7 +33,7 @@ on:
         value: ${{ jobs.prepare.outputs.count }}
     secrets:
       # Declared optional so the PR caller can omit them entirely; the steps
-      # that use them only run when publishing. See AGENTS.md rule 8.
+      # that use them only run when publishing.
       CONDUKTORBOT_DOCKER_HUB_USERNAME:
         required: false
       CONDUKTORBOT_DOCKER_HUB_PAT:
@@ -107,7 +107,7 @@ jobs:
       # and nothing else. Do not extend it — and do not add a cache for
       # ~/.cache/dev.chainguard.go-apk — to the apk/APKINDEX cache: the nightly
       # only picks up Wolfi updates because that one starts empty every run.
-      # See AGENTS.md rule 14; a test enforces it.
+      # test-nightly-freshness.sh enforces it.
       - name: Resolve melange source cache key
         id: srcs
         env:
@@ -248,7 +248,7 @@ jobs:
 
       # Org access token scoped to write on this one Docker Hub repository — the
       # only registry credential in this public repo. Never widen it; private
-      # registries pull from GHCR rather than being pushed to. See AGENTS.md rule 8.
+      # registries pull from GHCR rather than being pushed to.
       - name: Login to Docker Hub
         if: inputs.publish && matrix.image.dockerhub != ''
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
@@ -363,7 +363,7 @@ jobs:
           subject-digest: ${{ steps.apko.outputs.digest }}
           push-to-registry: true
 
-      # Report-only in both modes; see AGENTS.md rule 11. The published image is
+      # Report-only in both modes. The published image is
       # scanned by digest, the unpublished one from its tar.
       - name: Scan for CVEs
         uses: ./.github/actions/scan-image

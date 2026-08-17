@@ -1,14 +1,15 @@
 name: nightly
 
 # Nightly rebuild of every image so Wolfi package updates land within 24h of
-# upstream (see AGENTS.md rule 14 for what keeps that true): publish multi-arch,
+# upstream — which only holds while every run resolves against the live Wolfi
+# index, so nothing here may cache apks or pin versions: publish multi-arch,
 # sign + attest (SBOM and SLSA provenance), scan, then push refreshed CVE badge
-# JSON to the `badges` branch (rule 6).
+# JSON to the `badges` branch.
 #
 # The build itself lives in build.yml, which pr.yml calls too — the only
 # difference here is `publish: true`. Do not fork a nightly-only copy of those
 # steps; that asymmetry is what let the PR check pass while the nightly's
-# assembly path went untested (rule 13).
+# assembly path went untested.
 on:
   schedule:
     - cron: "0 4 * * *" # 04:00 UTC daily
@@ -63,9 +64,9 @@ jobs:
           path: badges-out/
           merge-multiple: true
 
-      # main is protected, so we publish to a dedicated `badges` branch and
-      # point the README's shields.io URLs at that branch instead. See
-      # AGENTS.md rule 6.
+      # main is protected, so we publish to a dedicated orphan `badges` branch
+      # and point the README's shields.io URLs at that branch instead. It is
+      # state-only: publish-badges.sh overwrites every file on each run.
       - name: Publish badges to `badges` branch
         env:
           REMOTE_URL: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git

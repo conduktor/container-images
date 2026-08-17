@@ -7,8 +7,18 @@
 #   scripts/melange-sources.sh <image-dir> --prefetch <cache>  # download missing
 #
 # melange's cache is read-only: `fetch` copies from <cache>/sha256:<hash> but
-# never writes back, so it has to be populated from outside. The printed list is
-# also the CI cache key.
+# never writes back, so it has to be populated from outside. That is why this
+# script exists and must not be "simplified" into just passing --cache-dir:
+# without it every build re-downloads kafka_2.13-4.3.0.tgz, which is 135 MB and
+# only served by archive.apache.org (dlcdn and downloads 404 it) at ~250 KB/s —
+# 12 minutes per arch, against ~11s warm.
+#
+# The printed list is also the CI cache key, hence the sort: glob order follows
+# LC_COLLATE, so an unsorted list would key identical inputs differently on
+# different machines.
+#
+# Only `uses: fetch` steps appear here. A git-checkout source has no content
+# hash to address, so the forks contribute nothing to this cache by design.
 #
 # Requires: jq, yq, curl
 set -euo pipefail

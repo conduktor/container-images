@@ -5,7 +5,7 @@
 # Usage: scripts/scan-summary.sh <trivy.json> <grype.json> <image-label>
 #
 # Both scanners are shown because they legitimately disagree: Trivy cannot see
-# packages we build with melange, Grype can. See AGENTS.md rule 11.
+# packages we build with melange, Grype can.
 #
 # Requires: jq
 set -euo pipefail

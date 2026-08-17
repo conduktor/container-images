@@ -2,7 +2,7 @@
 #
 # Guards the one property the nightly exists for: every run must resolve Wolfi
 # packages against the *live* index, so an image picks up package updates even
-# when no apko.yaml or melange*.yaml changed (AGENTS.md rule 14).
+# when no apko.yaml or melange*.yaml changed.
 #
 # Nothing here is hypothetical — each assertion blocks a specific, plausible
 # "optimization" that would silently freeze the images:
@@ -101,7 +101,7 @@ fi
 # into a false alarm.
 checks=$((checks + 1))
 if ! grep -rq 'melange-cache' "${REPO_ROOT}/.github/workflows/"; then
-  fail "the melange source cache disappeared from CI — re-check rule 14"
+  fail "the melange source cache disappeared from CI — see the freshness rules in AGENTS.md"
 fi
 
 # --- fixtures: prove the scan actually catches a violation ------------------

@@ -7,7 +7,7 @@
 # Usage: scripts/melange-index.sh <image-dir>
 #
 # Why this exists: the nightly builds each arch's APKs in its own native-runner
-# job (AGENTS.md rule 13), so they arrive as artifacts from N jobs, each signed
+# job, so they arrive as artifacts from N jobs, each signed
 # with that job's own throwaway key and carrying that job's index. apk verifies
 # the *index* signature and the package checksums it records — not each APK's own
 # signature — so re-indexing the whole set under one key is what makes the
