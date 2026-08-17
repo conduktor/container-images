@@ -140,7 +140,7 @@ podSpec:
 
 Then `kubectl exec -it <pod> -c debug -- bash` and run `jcmd <pid>
 GC.heap_info`, `jstack <pid>`, `openssl s_client -connect kafka:9093`,
-`ldapsearch -H ldaps://ldap:636`, `kafkacat -b kafka:9092 -L`, …
+`ldapsearch -H ldaps://ldap:636`, `kcat -b kafka:9092 -L`, …
 
 ### Privileges the JDK tools actually need
 

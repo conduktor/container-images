@@ -1,10 +1,9 @@
 # Installed as /etc/bash.bashrc by melange.yaml.
 #
-#
 # shellcheck shell=bash
 
-# Non-interactive shells (scripts, `bash -c`, the melange build itself) must see
-# no side effects at all from this file.
+# Non-interactive shells (scripts, `bash -c`) must see no side effects at all
+# from this file.
 case $- in
   *i*) ;;
   *) return ;;
@@ -26,11 +25,14 @@ __cdk_colour() {
   return 0
 }
 
+# `debug` rather than \h: in a sidecar the hostname is the *pod's*, so every
+# container in the pod prompts identically and it is easy to forget which one
+# you are typing into.
 if __cdk_colour; then
   # \[...\] wraps non-printing bytes; without it bash miscounts the line length
   # and readline corrupts long command lines when you edit them.
   if [ "$(id -u)" -eq 0 ]; then
-    __cdk_user='\[\e[1;31m\]\u\[\e[0m\]'   # red: root, no UID match for attach
+    __cdk_user='\[\e[1;31m\]\u\[\e[0m\]'   # red: root
   else
     __cdk_user='\[\e[1;32m\]\u\[\e[0m\]'
   fi
@@ -41,10 +43,6 @@ else
   PS1='\u@debug:\w\$ '
 fi
 unset -f __cdk_colour
-
-# `debug` rather than \h: in a sidecar the hostname is the *pod's*, so every
-# container in the pod prompts identically and it is easy to forget which one
-# you are typing into.
 
 # --- history -----------------------------------------------------------------
 
@@ -61,11 +59,10 @@ shopt -s histappend checkwinsize
 alias ll='ls -alF'
 alias la='ls -A'
 
-# Both name forms exist for the Kafka tools; `k` is neither, so it is safe.
 alias k='kafka-topics.sh'
 
-# The single most common thing to want, and easy to get wrong across a shared
-# PID namespace.
+# Every JVM visible in the namespace, which is what you want first when the
+# sidecar shares the target's PID namespace.
 cdk-pids() {
   ps -eo pid,user,args | awk 'NR==1 || /[j]ava/'
 }

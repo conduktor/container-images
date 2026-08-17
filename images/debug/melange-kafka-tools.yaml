@@ -10,10 +10,8 @@
 # Kafka built from the same source with a refreshed dependency set, so 8.3.1 is
 # Kafka 4.3.0 carrying jackson 2.21.5 / log4j 2.25.5 instead of 2.21.2 / 2.25.4.
 # Measured with grype over the whole image, that clears 11 findings (3 High,
-# 8 Medium, all jackson) and introduces none, at the same 132 MB. jetty, jline
-# and lz4-java are byte-identical to upstream's, so those findings survive.
-# Only the tools Apache ships are installed, nothing else from Confluent
-# Platform.
+# 8 Medium, all jackson) and introduces none, at the same installed size. jetty,
+# jline and lz4-java are byte-identical to upstream's, so those findings survive.
 #
 # BUMPING: change `version` (release-branch follows via var-transforms), then take
 # expected-sha256 from Confluent's published checksum rather than your own
@@ -57,7 +55,8 @@ environment:
       - busybox
 
 pipeline:
-  # melange logs wget's stderr at WARN
+  # melange logs wget's stderr at WARN, so the default per-dot progress arrives
+  # as thousands of warning lines; dot:giga is a handful.
   - name: Quiet wget progress output
     runs: printf 'progress = dot:giga\n' >> /etc/wgetrc
 
@@ -89,9 +88,8 @@ pipeline:
       install -d "${dest}/bin"
 
       # Exactly the tools kafka_2.13-4.3.0.tgz ships, by their Apache names minus
-      # the .sh suffix Confluent drops. Every one of them has a CP equivalent, so
-      # this set is a strict superset of nothing — it is parity with what the
-      # image shipped before.
+      # the .sh suffix Confluent drops — parity with what the image shipped
+      # before, and nothing else from Confluent Platform.
       for t in \
         connect-distributed connect-mirror-maker connect-plugin-path \
         connect-standalone \

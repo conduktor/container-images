@@ -6,18 +6,9 @@ description: >
   release SHA-256 checksums and their Sigstore (cosign keyless) signature,
   then verifies the installed binary reports the expected tag and commit.
 
-# Started life as the public-repo port of conduktor/conduktor-actions/setup-apko
-# — there is no `chainguard-dev/actions/setup-apko` upstream (that path 404s), so
-# we ship our own hardened installer rather than `apt` or `curl | sh`.
-#
-# Generalised to any Chainguard CLI once melange was needed too. Their releases
-# are goreleaser-built to the same shape — `<tool>_<version>_linux_amd64.tar.gz`
-# beside a cosign-signed `checksums.txt`, and a `version` subcommand printing
-# `GitVersion:` / `GitCommit:` — so only the tool name varies. The alternative,
-# `chainguard-dev/actions/setup-melange`, installs Go and build-essential and
-# builds from source; this downloads one verified binary.
-#
-# See the accompanying README for the trust model.
+# One action for every Chainguard CLI: their releases are goreleaser-built to
+# the same shape, so only the tool name varies. See the accompanying README for
+# the trust model and for why neither upstream alternative is used.
 
 inputs:
   tool:

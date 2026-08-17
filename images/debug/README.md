@@ -260,8 +260,8 @@ openssl x509 -in cert.pem -noout -text
 ldapsearch -H ldaps://ldap:636 -x -b "dc=conduktor,dc=io" -D "cn=admin,..." -W
 
 # Kafka — quick metadata / consume with kcat
-kafkacat -b kafka:9092 -L                          # metadata
-kafkacat -b kafka:9092 -t my-topic -C -o beginning # consume from earliest
+kcat -b kafka:9092 -L                          # metadata
+kcat -b kafka:9092 -t my-topic -C -o beginning # consume from earliest
 
 # Kafka — admin operations with the Apache shell tools (already on PATH)
 kafka-topics.sh --bootstrap-server kafka:9092 --list

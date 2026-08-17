@@ -16,23 +16,19 @@
 # hash to address, so the forks contribute nothing to this cache by design.
 #
 # This deliberately does NOT resolve download URLs. The cache is keyed by content
-# hash and `expected-sha256` needs no templating, so both the listing and the
-# is-it-cached check are plain yq. The one step that genuinely needs a resolved
-# URL — downloading — is handed to `melange update-cache`, which is melange
-# resolving its own templating rather than us guessing at it.
-#
-# That split is the point. This script used to re-implement the templating, and
-# when a var-transform was added it emitted a literal ${{vars.release-branch}}
-# into the URL: the string was stable, so it hashed to a stable CI cache key and
-# the cache step reported a hit, then the download died on
-# `curl: (3) nested brace in URL`. There is no longer any templating here to
-# fall behind melange.
+# hash and `expected-sha256` needs no templating, so listing and the is-it-cached
+# check are plain yq; downloading, the one step that needs a resolved URL, is
+# handed to `melange update-cache`. An earlier version re-implemented the
+# templating and fell behind it — a var-transform left a literal
+# ${{vars.release-branch}} in the URL, which still hashed to a stable CI cache
+# key, so the cache reported a hit and the download died on
+# `curl: (3) nested brace in URL`.
 #
 # `melange update-cache` re-downloads every source in a config unconditionally,
 # so it is only invoked for configs that are actually missing something. On a
 # warm cache this makes no network calls at all.
 #
-# Listing needs jq/yq only. --prefetch also needs melange on PATH.
+# Listing needs yq only. --prefetch also needs melange on PATH.
 set -euo pipefail
 
 IMAGE_DIR="${1:-}"
