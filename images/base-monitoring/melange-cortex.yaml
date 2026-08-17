@@ -1,0 +1,127 @@
+# Builds the Conduktor fork of Cortex (https://github.com/conduktor/cortex) into
+# /opt/monitoring/cortex, together with the schema migrations Console runs at
+# startup.
+#
+# Cortex is not in Wolfi at all, and Console needs our fork regardless, so this
+# is a from-source Go build. Together with prometheus-cdk it is why the nightly
+# builds this image's APKs on native amd64 and arm64 runners instead of
+# cross-building under qemu (AGENTS.md rule 13).
+#
+# BUMPING: change `version` to the fork's Cortex version, then set `tag` and
+# `expected-commit` to the new fork tag:
+#   t=cdk-cortex-1.22-prom-3.9-2026.xx.xx-xxxxxxxxxx
+#   git ls-remote https://github.com/conduktor/cortex "refs/tags/${t}"
+# expected-commit makes the checkout fail closed if the tag is ever moved.
+package:
+  name: cortex-cdk
+  version: 1.21.0
+  epoch: 0
+  description: "Conduktor fork of Cortex, built from https://github.com/conduktor/cortex"
+  copyright:
+    - license: Apache-2.0
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - wolfi-baselayout
+      - ca-certificates-bundle
+      - build-base
+      - bash
+      - busybox
+      - git
+      - go-1.26
+      - make
+      - jq
+      - python-3
+      - gzip
+
+pipeline:
+  # Cortex insists on being in a GOPATH-style path
+  # (/go/src/github.com/cortexproject/cortex). git-checkout drops the source at
+  # ${{targets.contextdir}}; we symlink it into GOPATH before invoking make.
+  - uses: git-checkout
+    with:
+      repository: https://github.com/conduktor/cortex
+      tag: cdk-cortex-1.21-prom-3.8-2026.08.10-8e5fc5644e
+      expected-commit: 8e5fc5644e83c6874b0e5bc142c8c2ee89f660be
+
+  # Stale-proto guardrail: our melange env deliberately omits protoc +
+  # protoc-gen-gogoslick (Cortex's build-image ships them, but the
+  # `./cmd/cortex/cortex` target doesn't invoke them because .pb.go files are
+  # committed to the fork). That means if the fork adds a NEW .proto without
+  # committing the generated .pb.go, our build would silently produce a Cortex
+  # binary missing those symbols — `go build` succeeds because no Go code
+  # references the ungenerated types yet, but runtime code paths that expect
+  # them fail later. This check catches that.
+  #
+  # Limitation: only catches "new .proto without any .pb.go", not "existing
+  # .proto edited without regenerating .pb.go". Detecting the latter needs
+  # protoc + a matching gen-gogoslick to actually regenerate + diff — deferred
+  # to keep the build env small. If we ever need it, add `protoc protobuf-dev`
+  # to environment.contents.packages and invoke `make check-protos`.
+  - name: Guardrail — every .proto has a committed .pb.go
+    runs: |
+      set -eu
+      # Non-vendored proto files only; vendor/ carries upstream code we don't own.
+      missing_file="$(mktemp)"
+      trap 'rm -f "${missing_file}"' EXIT
+      count=0
+      while IFS= read -r proto; do
+        count=$((count + 1))
+        expected="${proto%.proto}.pb.go"
+        [ -f "${expected}" ] || printf '  %s (missing %s)\n' "${proto}" "${expected}" >> "${missing_file}"
+      done < <(find . -type f -name '*.proto' -not -path './vendor/*' | sort)
+      if [ -s "${missing_file}" ]; then
+        printf '\nERROR: .proto files without generated .pb.go in the fork checkout.\n' >&2
+        printf 'The Cortex fork bumped protos but forgot to commit generated code.\n' >&2
+        printf 'Fix in the fork: run `make protos` in the cortex build-image and commit.\n\n' >&2
+        cat "${missing_file}" >&2
+        exit 1
+      fi
+      printf 'stale-proto guardrail: OK (%d .proto files, all with .pb.go)\n' "${count}"
+
+  - name: Build cortex binary
+    runs: |
+      set -eux
+      # Pin to Wolfi's shipped Go (go-1.26 build dep). If the fork's go.mod ever
+      # requires a newer version than Wolfi ships, the build fails loudly instead
+      # of `auto` silently downloading an unpinned toolchain — that matches the
+      # Cortex build-image which also sets GOTOOLCHAIN=local.
+      export GOTOOLCHAIN=local
+      export GOPATH="${HOME}/go"
+      export PATH="${GOPATH}/bin:${PATH}"
+      # Compiled objects into melange's cache dir; melange wires GOMODCACHE but
+      # not GOCACHE, so without this every run recompiles the dependency graph
+      # even on a warm cache. See AGENTS.md rule 14.
+      export GOCACHE=/var/cache/melange/gocache
+      mkdir -p "${GOPATH}/src/github.com/cortexproject"
+      ln -s "$(pwd)" "${GOPATH}/src/github.com/cortexproject/cortex"
+      cd "${GOPATH}/src/github.com/cortexproject/cortex"
+      # Cortex's Makefile names its output cortex-<goarch>; melange resolves
+      # ${{build.goarch}} to the sandbox's native Go arch (amd64 / arm64).
+      make BUILD_IN_CONTAINER=false ARCHS="${{build.goarch}}" ./cmd/cortex/cortex
+
+  - name: Stage artifacts
+    runs: |
+      set -eux
+      dest="${{targets.destdir}}/opt/monitoring/cortex"
+      mkdir -p "${dest}/migrations"
+      cp -r cmd/cortex/migrations/. "${dest}/migrations/"
+      mv "cmd/cortex/cortex-${{build.goarch}}" "${dest}/cortex"
+
+  - name: Smoke-test the packaged binary
+    runs: |
+      set -eu
+      # Fails the build if the fork's Makefile stopped stamping the version, or
+      # if the migrations directory came out empty.
+      dest="${{targets.destdir}}/opt/monitoring/cortex"
+      out="$("${dest}/cortex" -version 2>&1)"
+      echo "${out}"
+      echo "${out}" | grep -q "${{package.version}}" \
+        || { echo "cortex does not report ${{package.version}}"; exit 1; }
+      ls -1 "${dest}/migrations" | head -n5
+      [ -n "$(ls -A "${dest}/migrations")" ] || { echo "migrations/ is empty"; exit 1; }

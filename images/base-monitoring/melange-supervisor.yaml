@@ -1,0 +1,95 @@
+# Packages upstream supervisor with the Conduktor arbitrary-UID patch, replacing
+# Wolfi's `supervisor`.
+#
+# Why not Wolfi's package: supervisord calls pwd.getpwuid(uid) on the UID it is
+# told to run as, which raises KeyError when the platform runs us as a UID that
+# has no /etc/passwd entry — exactly what OpenShift does. The Ubuntu monitoring
+# base sed'd the installed site-packages files at image build time
+# (prebuildfs/usr/sbin/patch_supervisord); apko has no RUN phase, so the same
+# substitution is applied here at *package* build time instead and the consumer
+# gets a pre-patched supervisord.
+#
+# BUMPING: change `version`, then replace expected-sha256:
+#   v=4.3.1
+#   curl -sSL "https://files.pythonhosted.org/packages/source/s/supervisor/supervisor-${v}.tar.gz" \
+#     | sha256sum | cut -d' ' -f1
+# Re-check that options.py and datatypes.py are still the only files calling
+# pwd.getpwuid — the post-install guardrail below fails the build if the patch
+# stops applying, but a *new* call site in a third file would slip through.
+package:
+  name: supervisor-cdk
+  version: 4.3.0
+  epoch: 0
+  description: "Supervisor with the Conduktor patch replacing pwd.getpwuid(uid) so supervisord tolerates arbitrary UIDs (OpenShift)"
+  copyright:
+    - license: BSD-3-Clause
+  dependencies:
+    # `python-3` rather than a pinned `python-3.13`: the interpreter that pip
+    # targets below and the one apko installs both resolve from the same Wolfi
+    # snapshot, so the baked site-packages path and the installed interpreter
+    # move together. Never hardcode the python minor version anywhere here.
+    runtime:
+      - python-3
+    # Same provides as Wolfi's `supervisor` so this shadows it cleanly in the
+    # apko build; the `@local` tag in apko.yaml is what actually pins us.
+    provides:
+      - supervisor=${{package.full-version}}
+      - cmd:supervisord=${{package.full-version}}
+      - cmd:supervisorctl=${{package.full-version}}
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - wolfi-baselayout
+      - ca-certificates-bundle
+      - busybox
+      - bash
+      - python-3
+      - py3-pip
+
+pipeline:
+  - uses: fetch
+    with:
+      uri: https://files.pythonhosted.org/packages/source/s/supervisor/supervisor-${{package.version}}.tar.gz
+      expected-sha256: 4a2bf149adf42997e1bb44b70c43b613275ec9852c3edacca86a9166b27e945e
+
+  - name: Patch pwd.getpwuid for arbitrary-UID support
+    runs: |
+      set -eux
+      # Same substitution as the Ubuntu base's prebuildfs/usr/sbin/patch_supervisord.
+      sed -i 's/pwd\.getpwuid(uid)/(None, None, uid, 0)/g' supervisor/options.py
+      sed -i 's/pwd\.getpwuid(uid)/(None, None, uid, 0)/g' supervisor/datatypes.py
+
+  - name: pip install into destdir
+    runs: |
+      set -eux
+      python3 -m pip install \
+        --prefix=/usr \
+        --root="${{targets.destdir}}" \
+        --no-deps \
+        --no-build-isolation \
+        --no-compile \
+        .
+
+  # Checked on the *installed* files, not the source tree: this also proves the
+  # sdist still ships those two modules and that pip put site-packages where
+  # the image will look for it.
+  - name: Guardrail — the installed site-packages are patched
+    runs: |
+      set -eu
+      patched=0
+      for f in options datatypes; do
+        installed="$(find "${{targets.destdir}}/usr/lib" \
+          -path "*/site-packages/supervisor/${f}.py" -print -quit)"
+        [ -n "${installed}" ] || { echo "supervisor/${f}.py not installed" >&2; exit 1; }
+        grep -q 'None, None, uid, 0' "${installed}" \
+          || { echo "${installed} is missing the arbitrary-UID patch" >&2; exit 1; }
+        ! grep -q 'pwd\.getpwuid' "${installed}" \
+          || { echo "${installed} still calls pwd.getpwuid" >&2; exit 1; }
+        patched=$((patched + 1))
+      done
+      printf 'arbitrary-UID patch: OK (%d files patched)\n' "${patched}"

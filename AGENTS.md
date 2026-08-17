@@ -6,13 +6,14 @@ the same background at a higher level.
 
 ## What this repo is
 
-Apko-built base and public container images for Conduktor products. Three
+Apko-built base and public container images for Conduktor products. Four
 images ship from here:
 
 | Directory | Published tag | Purpose |
 |-----------|---------------|---------|
 | `images/base-os/` | `ghcr.io/conduktor/base-os` | Minimal Wolfi OS + `conduktor` UID 10001 account. No language runtime. |
 | `images/base-jre-25/` | `ghcr.io/conduktor/base-jre-25` | OpenJDK 25 JRE base for Console + Gateway. |
+| `images/base-monitoring/` | `ghcr.io/conduktor/base-monitoring` | Console monitoring base: Conduktor's Prometheus + Cortex forks and a patched supervisord. No JVM. Three melange packages, all built from source — see rule 13. |
 | `images/debug/` | `ghcr.io/conduktor/conduktor-debug` + `docker.io/conduktor/conduktor-debug` | Debug sidecar (JDK-25 + network/TLS/LDAP/Kafka/JVM tooling). Customer-facing, so it is also on Docker Hub — see rule 8. |
 
 Every image is signed keyless with cosign, ships an SPDX SBOM (apko-emitted,
@@ -26,20 +27,24 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 │   ├── images.json              # image inventory — single source of truth (rule 9)
 │   ├── base-os/apko.yaml        # source of truth per image
 │   ├── base-jre-25/apko.yaml
+│   ├── base-monitoring/apko.yaml
 │   └── debug/apko.yaml
 ├── scripts/                     # runnable by a human as well as CI (rule 12)
-│   ├── image-matrix.sh          # manifest -> CI build matrix (validates the dispatch subset)
-│   ├── melange-build.sh         # local APK build; also called by build.sh
+│   ├── image-build.sh           # local end-to-end image build (melange -> apko -> docker load)
+│   ├── image-matrix.sh          # manifest -> image list (validates the dispatch subset)
+│   ├── build-matrix.sh          # both CI matrices: images + per-(image,arch) APK jobs (rule 13)
+│   ├── melange-build.sh         # local APK build; also called by scripts/image-build.sh
+│   ├── melange-index.sh         # re-sign the APK index after a per-arch fan-out (rule 13)
 │   ├── melange-sources.sh       # list/prefetch pinned sources; CI cache key + prefetch
 │   └── tests/test-*.sh          # fixture tests for the above; `make test`
-├── build.sh                     # local `apko build` wrapper (uses cgr.dev/chainguard/apko fallback)
 ├── Makefile                     # dev targets: build / lint / test / scan / sbom / precommit-*
 ├── flake.nix                    # nix devShell with every tool pinned
 ├── .pre-commit-config.yaml
 ├── .yamllint.yaml
 ├── .github/
-│   ├── workflows/nightly.yml    # 04:00 UTC cron; publish + sign + attest + scan + refresh badges
-│   ├── workflows/pr.yml         # build + scan on PRs; report-only, no CVE gate (rule 11)
+│   ├── workflows/build.yml      # reusable: the ONE build definition, `publish` on/off (rule 13)
+│   ├── workflows/nightly.yml    # 04:00 UTC cron; calls build.yml with publish -> sign/attest, badges
+│   ├── workflows/pr.yml         # lint + calls build.yml without publish; report-only (rule 11)
 │   ├── scripts/                 # CI-only scripts — cve-*/scan-*, never run by hand (rule 12)
 │   │   └── tests/test-*.sh      # their tests, also picked up by `make test`
 │   ├── actions/setup-apko/      # local composite action: verified apko install (Sigstore-checked)
@@ -56,15 +61,18 @@ attested with cosign), and carries a SLSA build-provenance attestation.
 
 - Prefer apko over Dockerfile or melange. Only reach for melange if a needed
   binary isn't in Wolfi at all — **or** when the Wolfi package's dependencies
-  cost more than they give (measure before claiming this). Three melange configs
-  exist under `images/debug/` for those reasons; see rule 10 before adding a
-  fourth or "simplifying" one back to a Wolfi package:
+  cost more than they give (measure before claiming this). Six melange configs
+  exist for those reasons; see rules 10 and 13 before adding another or
+  "simplifying" one back to a Wolfi package:
 
   | Config | Package | Why not Wolfi |
   |--------|---------|---------------|
-  | `melange.yaml` | `conduktor-debug-scripts` | our own scripts, nothing to package |
-  | `melange-conduktor-ctl.yaml` | `conduktor-ctl` | `conduktor/ctl` is not in Wolfi |
-  | `melange-kafka-tools.yaml` | `kafka-tools` | `kafka-4.3` drags an unused second JVM; see below |
+  | `debug/melange.yaml` | `conduktor-debug-scripts` | our own scripts, nothing to package |
+  | `debug/melange-conduktor-ctl.yaml` | `conduktor-ctl` | `conduktor/ctl` is not in Wolfi |
+  | `debug/melange-kafka-tools.yaml` | `kafka-tools` | `kafka-4.3` drags an unused second JVM; see below |
+  | `base-monitoring/melange-prometheus.yaml` | `prometheus-cdk` | Console runs the `conduktor/prometheus` fork, not upstream |
+  | `base-monitoring/melange-cortex.yaml` | `cortex-cdk` | Cortex isn't in Wolfi at all, and we run a fork |
+  | `base-monitoring/melange-supervisor.yaml` | `supervisor-cdk` | needs the arbitrary-UID patch applied before packaging |
 - **Never invent Wolfi package names.** Verify before editing an `apko.yaml`:
   ```sh
   docker run --rm cgr.dev/chainguard/wolfi-base sh -c 'apk update >/dev/null && apk search -e <name>'
@@ -129,8 +137,11 @@ asserts the installed binary reports the pinned tag + commit. Use
 
 ### 5. Tool versions in CI are pinned too
 
-`APKO_VERSION` at the top of the workflows is passed as `version` to the
-local setup-apko action. Cosign is pinned transitively via the SHA of
+`APKO_VERSION` and `MELANGE_VERSION` live in
+[`build.yml`](.github/workflows/build.yml) only — it is the one workflow that
+runs either tool, so there is no second copy to drift (rule 13). `APKO_VERSION`
+is passed as `version` to the local setup-apko action. Cosign is pinned
+transitively via the SHA of
 `sigstore/cosign-installer` — do **not** add a `cosign-release:` input.
 Since cosign 3.x the installer maintainers explicitly discourage
 version-override there, and you must be on `cosign-installer v4+` to
@@ -153,7 +164,12 @@ built-in `GITHUB_TOKEN` and needs no extra credential.
 
 ### 7. Account convention
 
-- All three images ship the `conduktor` group + user at UID/GID 10001.
+- All four images ship the `conduktor` group + user at UID/GID 10001. The
+  Ubuntu-era Console and monitoring bases named this account
+  `conduktor-platform`; `base-monitoring` deliberately does not, because only
+  the numeric IDs are load-bearing downstream (`USER 10001`, and supervisord's
+  `user=%(ENV_CDK_USER_UID)s`). If you ever find a consumer that resolves the
+  account *by name*, fix the consumer or change all four images — not one.
 - The debug image *additionally* ships a legacy `gateway` user at UID/GID
   1001 (kept for compatibility with existing Gateway deployments). Do not
   remove it without checking product Helm charts.
@@ -197,7 +213,7 @@ credential for any Conduktor-internal system. Trust flows inbound only.
 
 ### 9. `images/images.json` is the image inventory; logic lives in `scripts/`
 
-The image list used to be duplicated in the `Makefile`, `build.sh`, the
+The image list used to be duplicated in the `Makefile`, `scripts/image-build.sh`, the
 nightly matrix and the `pr.yml` `all` JSON. It now lives once in
 [`images/images.json`](images/images.json):
 
@@ -208,12 +224,20 @@ nightly matrix and the `pr.yml` `all` JSON. It now lives once in
 `dir` is the directory under `images/`, `name` is the published image name,
 `dockerhub` is optional. Do not re-hardcode the list anywhere.
 
-- The nightly's `prepare` job resolves the matrix with
-  `scripts/image-matrix.sh`. **Do not add per-step `if:` guards to filter
-  images** — that was the old pattern and it needed the same condition on 16
-  steps. Filter by emitting a narrower matrix instead.
+- Both workflows resolve their matrices with `scripts/build-matrix.sh`, which
+  wraps `scripts/image-matrix.sh` and enriches each entry with what is on disk:
+  `melange` (boolean, for a workflow `if:`) and `configs` (the comma-separated
+  `melange*.yaml` list for melange-build's `multi-config`). It also emits the
+  per-`(image, arch)` APK matrix — see rule 13. **Do not glob for melange
+  configs inside a workflow `run:` step**; that was the old pattern and the two
+  copies were already drifting.
+- **Do not add per-step `if:` guards to filter images** — that was the old
+  pattern and it needed the same condition on 16 steps. Filter by emitting a
+  narrower matrix instead.
 - `scripts/image-matrix.sh` exits non-zero on an unknown name, so a typo'd
   `workflow_dispatch` input fails the run instead of quietly building nothing.
+  `build-matrix.sh` inherits that, and additionally fails on an arch with no
+  runner mapping.
 - Non-trivial `run:` logic belongs in `scripts/` with a test in
   `scripts/tests/`, not inline in YAML — inline shell is invisible to
   shellcheck beyond actionlint's basic pass and cannot be unit-tested. The jq
@@ -276,12 +300,17 @@ which apko pulls from a `@local ./packages` repository.
 - **Signing keys are ephemeral and gitignored** (`images/*/melange.rsa*`,
   `images/*/packages/**`). Locally `scripts/melange-build.sh` runs
   `melange keygen` on demand; CI uses
-  `chainguard-dev/actions/melange-build` with `sign-with-temporary-key: true`.
-  Never commit a key or wire up a persistent one — the key only has to satisfy
-  apk's index signature check inside a single build.
+  `chainguard-dev/actions/melange-build` with `sign-with-temporary-key: true`,
+  plus one more throwaway key in the publish job (rule 13). Never commit a key
+  or wire up a persistent one — a key only has to satisfy apk's index signature
+  check inside a single build.
 - `apko show-config` does not resolve repositories, so `make lint` passes on a
   fresh clone with no `packages/` present. Only `apko build`/`publish` needs the
-  APK, which is why `build.sh` runs melange first when a `melange.yaml` exists.
+  APK, which is why `scripts/image-build.sh` runs melange first when the image dir has any
+  `melange*.yaml`. Match that by **glob, never by the literal name
+  `melange.yaml`** — `base-monitoring` has three configs and no plain
+  `melange.yaml`, and both `image-build.sh` and `melange-build.sh` used to skip it
+  silently for exactly that reason.
 
 ### 11. Scanning lives in one action, and is report-only
 
@@ -321,7 +350,10 @@ the two copies had already drifted (different severity lists, different
 ### 12. Where a script lives says who runs it
 
 - `scripts/` — anything a human might run directly, even if CI runs it too:
-  `melange-build.sh` (called by `build.sh`), `image-matrix.sh`.
+  `image-build.sh` (the local image build, what `make build` shells out to),
+  `melange-build.sh` (called by `image-build.sh` in turn), `image-matrix.sh`.
+  Nothing executable stays at the repo root; `make <target>` is the root-level
+  entry point and every target delegates here.
 - `.github/scripts/` — CI-only. `cve-counts.sh`, `cve-badge.sh`,
   `scan-summary.sh`, `scan-report.sh`. Nobody runs these by hand; they exist to
   keep logic out of YAML.
@@ -348,6 +380,124 @@ Two things that make this safe rather than just tidy:
   `actions/checkout` anyway, so referencing `$GITHUB_WORKSPACE/.github/scripts/`
   costs nothing and duplication costs correctness.
 
+### 13. Long builds fan out to native runners, per arch
+
+`base-monitoring` builds Prometheus and Cortex from source (Go + an npm web-UI
+build). melange builds each arch in a sandbox *of that arch*, so building
+aarch64 on an amd64 runner runs the entire compile under qemu emulation. The
+nightly therefore has two stages:
+
+1. **`apks`** — one job per `(image, arch)` from `build-matrix.sh`'s `.apks`,
+   `runs-on: ${{ matrix.apk.runner }}`. Each job builds only its own arch,
+   natively, and uploads `images/<dir>/packages` as `apks-<dir>-<arch>`.
+2. **`publish`** — one job per image. It downloads every `apks-<dir>-*` with
+   `merge-multiple: true` (each artifact holds a single `<arch>/` directory, so
+   they merge into one `@local ./packages` repo), re-signs the index, then does
+   the single multi-arch `apko publish` exactly as before.
+
+Things that look like simplifications and are not:
+
+- **Runner labels are standard GitHub-hosted only** (`ubuntu-latest`,
+  `ubuntu-24.04-arm`), and they live in `build-matrix.sh` with a test asserting
+  every label starts with `ubuntu-`. Do not point these at a self-hosted or
+  third-party runner pool: this repo is public and forkable, and the nightly
+  base-image rebuild must not depend on private infrastructure (same reasoning
+  as rule 8). Note arm64 GitHub runners have no `-latest` alias.
+- **The publish job must re-sign the index** (`scripts/melange-index.sh`).
+  Each `apks` job signs with its own temporary key and uploads its own
+  `APKINDEX.tar.gz`, so the merged repo would otherwise carry two indexes signed
+  by two keys neither of which apko has. Verified while building this: apk
+  checks the *index* signature and the checksums it records, not each APK's own
+  signature, so re-indexing the whole set under one fresh key is enough — an APK
+  signed by key A installs from an index signed by key B. The script drops the
+  stale index rather than merging, because `melange index` *appends* signatures.
+- **Signing cannot be skipped in the `apks` job to avoid the re-index.**
+  `melange-build` adds `--keyring-append <signing-key>.pub` for every config
+  after the first, so a multi-config build with no key fails on a missing file.
+- **`publish` deliberately does not gate on the `apks` result.** It runs under
+  `!cancelled()` so that (a) images with no melange configs still publish when
+  the `apks` job is skipped entirely, and (b) one image's failed arch does not
+  hold back everyone else's nightly. That image still fails, fail-closed:
+  `melange-index.sh` rejects an empty `packages/`, and apko cannot resolve
+  `@local` for an arch whose APKs never arrived.
+- **`MELANGE_VERSION` is pinned in both workflows** because two jobs have to
+  agree — the one that builds the APKs and the one that re-indexes them. Bump it
+  with the flake, like apko (rule 5).
+- **There is one build definition, not two.**
+  [`build.yml`](.github/workflows/build.yml) is a `workflow_call` workflow that
+  owns `prepare` → `apks` → `build`; `nightly.yml` calls it with
+  `publish: true` and `pr.yml` with `publish: false`. Everything that differs
+  between a PR check and a release — registry logins, `apko publish` vs
+  `apko build` into a tar, cosign signing, SBOM attestation, SLSA provenance,
+  badge JSON — is a step gated on that one input.
+  Do not "simplify" the PR back to an inline single-job build. It was written
+  that way first, and it meant the riskiest machinery in this repo (artifact
+  merge, `melange-index.sh`, `@local` resolution across two jobs) was only ever
+  executed by the nightly, i.e. after merge, on a schedule, with no reviewer
+  watching. Same reasoning as rule 11's single scan action.
+- **The PR still builds one arch.** It passes `arches: x86_64`, so the fan-out
+  is a one-element matrix: same shape, same code path, without doubling the wall
+  clock of every image-touching PR. The nightly is what proves aarch64.
+- **Arch names come from `build-matrix.sh`, both spellings.** It emits `arches`
+  (melange: `x86_64,aarch64`) and `apko_arches` (OCI: `amd64,arm64`) from one
+  input, so a workflow cannot hand apko an arch set the APKs were never built
+  for. Don't hardcode `--arch amd64,arm64` in a workflow again.
+
+### 14. Nothing may make the apk cache authoritative
+
+The nightly exists so a Wolfi package update reaches our images within 24h *even
+though no file in this repo changed*. That only holds while every run resolves
+against the live index, so the apk cache must stay an accelerator, never a
+source of truth. `.github/scripts/tests/test-nightly-freshness.sh` enforces the
+three ways it could stop being one — a frozen nightly still looks perfectly
+healthy (green runs, moving tags, new digests), so this cannot be left to
+review.
+
+- **Never `actions/cache` the apk cache directory.** apko and melange both use
+  go-apk, which caches packages *and* the APKINDEX in
+  `~/.cache/dev.chainguard.go-apk` (overridable with apko's `--cache-dir` and
+  melange's `--apk-cache-dir`). GitHub-hosted runners start with it empty, which
+  is exactly why the nightly is fresh today. Persisting it is the one change
+  that would break rule-14 semantics while looking like a speedup.
+- **Never `--offline`, never a lockfile.** `apko --offline` builds from the
+  cache alone, and `apko lock` pins resolved versions — either turns every later
+  build into a replay of the day it was generated. Neither belongs in this repo.
+- **The cache we do persist is safe by construction.** `melange-cache` holds
+  melange's *inputs*: files named `sha256:<hash>` from `fetch`'s
+  `expected-sha256`, so it cannot serve content other than what was asked for.
+  It cannot hold apks — melange keeps those under `--apk-cache-dir`, a different
+  directory (verified: no `.apk` and no `APKINDEX` ever appears in it). It also
+  accumulates melange's `gomodcache/` and `npm/`, which are pinned by `go.sum` /
+  `package-lock.json` and equally cannot go stale — but they are why the entry
+  reaches ~1 GB for `base-monitoring`.
+- **`GOCACHE` belongs in there too, and is the reason the forks don't recompile
+  from scratch every run.** melange wires `GOMODCACHE` and `npm_config_cache`
+  into `/var/cache/melange` itself but *not* Go's compiled-object cache, so
+  before `melange-prometheus.yaml` / `melange-cortex.yaml` exported
+  `GOCACHE=/var/cache/melange/gocache` every build re-compiled the whole
+  dependency graph even on a cache hit. It is safe for the same reason the
+  source cache is: Go keys entries on compiler version + source + build flags,
+  so a stale entry is unreachable rather than merely unlikely. Do not
+  generalise this into "so caching build output is fine" — see the next bullet.
+- **Do not cache the built `.apk`s of the from-source packages in the nightly.**
+  It is tempting (each `apks` job spends minutes compiling something whose fork
+  tag and `expected-commit` did not move) and `test-nightly-freshness.sh` would
+  not stop you: it scans for the *go-apk* cache
+  (`dev.chainguard.go-apk` / `apk-cache`), not for `images/*/packages`. But
+  `prometheus-cdk` and `cortex-cdk` bake the Go toolchain and every Go module
+  into the binary at compile time, and that is exactly what Grype matches CVEs
+  against. A key over (config + fork commit) cannot see a `go-1.26` bump in
+  Wolfi, so the nightly would keep shipping a binary built with a superseded
+  stdlib — rule 14's promise, broken for the three packages we own outright,
+  with no test covering it. Restoring such a cache on PR runs only (where
+  freshness is not the point) is defensible; if you add it, gate it on
+  `publish == false` and extend the freshness test to assert that gate.
+- Worth knowing before someone "fixes" a warm cache they think is stale: a warm
+  cache is not stale anyway. Measured against an 11 GB local one, a rebuild
+  re-downloaded the 10 MB APKINDEX and picked up packages published three hours
+  earlier; go-apk fetches the index every build, and package entries are keyed
+  `name-version-rN`, so a newer version is always a miss.
+
 ## Common tasks
 
 ### Add a package to an image
@@ -359,25 +509,32 @@ Two things that make this safe rather than just tidy:
 5. `make lint && make precommit-run` before pushing.
 
 ### Add a new image
-1. Create `images/<dir>/apko.yaml` (copy the closest existing one).
+1. Create `images/<dir>/apko.yaml` (copy the closest existing one), plus a
+   `README.md` and any `melange*.yaml` it needs.
 2. Add one entry to [`images/images.json`](images/images.json) — `dir`, `name`,
    and `dockerhub` only if it must also ship to Docker Hub (see rule 8).
 3. Add a row to the README's images + badges tables.
 
-That's it — the Makefile, `build.sh` and both workflows all derive the image
-list from the manifest (rule 9). `make test` asserts the manifest and
-`images/*/` stay in sync, so a directory added without a manifest entry fails
-the PR rather than silently never being built.
+That's it — the Makefile, `scripts/image-build.sh` and both workflows all derive the image
+list from the manifest (rule 9), and an image with `melange*.yaml` files picks
+up its per-arch APK jobs from the same place (rule 13). `make test` asserts the
+manifest and `images/*/` stay in sync, so a directory added without a manifest
+entry fails the PR rather than silently never being built.
 
-### Bump apko / cosign in CI
-1. Update `APKO_VERSION` / `COSIGN_VERSION` env in `.github/workflows/*.yml`.
+### Bump apko / melange / cosign in CI
+1. Update `APKO_VERSION` / `MELANGE_VERSION` env in
+   `.github/workflows/build.yml` — one place, both workflows (rule 5).
 2. Update the same pin in `flake.nix` (via nixpkgs revision) if it drifts.
-3. Trigger the nightly with `workflow_dispatch` to verify.
+3. Open a PR: it runs the same build.yml the nightly will, so the bump is
+   exercised before merge. Then trigger the nightly with `workflow_dispatch`.
 
 ### Debugging a failed nightly
 - `apko publish` failed → look at `Publish with apko` step. Most common
   cause: a Wolfi package rename (see rule 1) or the Wolfi keyring URL
-  changing.
+  changing. If it failed to resolve an `@local` package for one arch only,
+  the real failure is that arch's `apks-<image>-<arch>` job (rule 13).
+- `Sign the local APK index` failed → an `apks` job produced nothing for some
+  arch. Fix that job; do not work around it by publishing a single arch.
 - `cosign sign/attest` failed → OIDC issue. Check `id-token: write`
   permission and that the workflow ref matches the identity regex readers
   use in the README verify snippet.
@@ -398,11 +555,21 @@ make build IMAGE=<changed image>   # for any apko.yaml change
 
 `make build` is **host-arch only** — it is a test artifact, and building the
 foreign arch runs the melange pipeline under qemu emulation (~30s becomes several
-minutes once `kafka-tools` is involved). The nightly is what produces multi-arch.
-To reproduce it locally before a risky packaging change:
+minutes once `kafka-tools` is involved, and far worse for `base-monitoring`,
+which compiles Prometheus and Cortex). The nightly is what produces multi-arch,
+one native runner per arch (rule 13). To reproduce it locally before a risky
+packaging change:
 
 ```sh
 make build IMAGE=debug ARCHES=x86_64,aarch64
+```
+
+To rehearse the nightly's *assembly* step instead — APKs from several sources
+merged and re-indexed under one key — drop each arch's `.apk` files into
+`images/<image>/packages/<arch>/` and run:
+
+```sh
+scripts/melange-index.sh <image> && (cd images/<image> && apko build apko.yaml ...)
 ```
 
 CI runs the same tools. Fixing lint locally is faster than the round-trip.
@@ -428,7 +595,24 @@ CI runs the same tools. Fixing lint locally is faster than the round-trip.
   `git-<sha>` tags.
 - `JAVA_HOME` is `/usr/lib/jvm/java-25-openjdk` — hardcoded in the configs.
   If Wolfi changes the JDK layout, update all three of `base-jre-25`,
-  `debug`, and any consuming Dockerfiles.
+  `debug`, and any consuming Dockerfiles. `base-monitoring` has no JVM at all.
+- Wolfi's `gnupg` is a **meta package that installs no `gpg` binary**. The
+  Ubuntu monitoring base listed it because `install_packages` needed it for apt
+  repository keys at build time; there is no apt in an apko image, so it was
+  dropped from `base-monitoring` rather than carried over. Check
+  `docker run --rm <img> command -v <tool>` before assuming a package name
+  gives you the command you expect.
+- `supervisor-cdk` bakes the python `site-packages` path chosen at package
+  build time, and depends on `python-3` (the moving meta package) rather than a
+  pinned minor. That is deliberate and self-correcting: the melange build env
+  and the apko image resolve `python-3` from the same Wolfi snapshot minutes
+  apart. Never hardcode `python3.13` anywhere in that recipe.
+- The `melange*.yaml` `package.version` fields are asserted against what the
+  built binary reports (`prometheus --version`, `cortex -version`,
+  `conduktor version`). This is not ceremony: it caught the ported Prometheus
+  recipe declaring `3.8.0` while the fork tag actually builds `3.8.1`, which
+  would have put the wrong version in the SBOM — and Grype matches CVEs on
+  exactly that.
 - The badge JSON follows the shields.io *endpoint* schema
   (`{schemaVersion, label, message, color, namedLogo}`), not the *dynamic*
   schema. Don't confuse them.

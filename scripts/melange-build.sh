@@ -5,7 +5,7 @@
 #
 # Usage: scripts/melange-build.sh <image-dir> [arch,arch...]
 #
-# Defaults to the host arch: build.sh builds the image for the host arch alone,
+# Defaults to the host arch: image-build.sh builds the image for the host arch alone,
 # and a foreign arch runs the melange pipeline under qemu emulation. Pass arches
 # (or MELANGE_ARCHES) to reproduce the multi-arch nightly.
 #
@@ -32,13 +32,18 @@ ARCHES="${2:-${MELANGE_ARCHES:-$(host_arch)}}"
 [ -n "${IMAGE_DIR}" ] || { echo "Usage: $0 <image-dir> [arches]" >&2; exit 2; }
 
 WORK_DIR="${REPO_ROOT}/images/${IMAGE_DIR}"
-[ -f "${WORK_DIR}/melange.yaml" ] \
-  || { echo "no melange.yaml in images/${IMAGE_DIR}" >&2; exit 2; }
 
 command -v melange >/dev/null 2>&1 \
   || { echo "melange not found — run inside 'nix develop'" >&2; exit 2; }
 
 cd "${WORK_DIR}"
+
+# Every melange*.yaml, not just `melange.yaml`: base-monitoring has three
+# configs and no plain melange.yaml. Resolved before anything is mutated below.
+shopt -s nullglob
+configs=(melange*.yaml)
+shopt -u nullglob
+[ "${#configs[@]}" -gt 0 ] || { echo "no melange*.yaml in images/${IMAGE_DIR}" >&2; exit 2; }
 
 # Ephemeral: it only has to satisfy apk's index signature check within a build.
 if [ ! -f melange.rsa ]; then
@@ -48,10 +53,6 @@ fi
 
 # Stale APKs would still be indexed and could shadow the rebuild.
 rm -rf packages
-
-shopt -s nullglob
-configs=(melange*.yaml)
-[ "${#configs[@]}" -gt 0 ] || { echo "no melange*.yaml in images/${IMAGE_DIR}" >&2; exit 2; }
 
 # melange's cache is read-only, so sources have to be put there for it.
 "${REPO_ROOT}/scripts/melange-sources.sh" "${IMAGE_DIR}" --prefetch "${CACHE_DIR}"

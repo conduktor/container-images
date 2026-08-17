@@ -10,11 +10,11 @@
 #
 # The set of images and their published names comes from images/images.json.
 #
-# Usage:
-#   ./build.sh base-os                       # -> conduktor/base-os:local
-#   ./build.sh base-jre-25                   # -> conduktor/base-jre-25:local
-#   ./build.sh debug                         # -> conduktor/conduktor-debug:local
-#   ./build.sh base-jre-25 myrepo/base:tag   # custom image ref
+# Usage (runnable from anywhere — paths resolve from the script's location):
+#   scripts/image-build.sh base-os                       # -> conduktor/base-os:local
+#   scripts/image-build.sh base-jre-25                   # -> conduktor/base-jre-25:local
+#   scripts/image-build.sh debug                         # -> conduktor/conduktor-debug:local
+#   scripts/image-build.sh base-jre-25 myrepo/base:tag   # custom image ref
 #
 # Requires: docker, jq (apko optional — falls back to the apko container).
 set -euo pipefail
@@ -25,7 +25,7 @@ if [ $# -lt 1 ]; then
 fi
 
 IMAGE_DIR="$1"
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MANIFEST="${REPO_ROOT}/images/images.json"
 
 IMAGE_NAME="$(jq -r --arg dir "${IMAGE_DIR}" \
@@ -48,16 +48,21 @@ case "${HOST_ARCH}" in
   aarch64) HOST_ARCH="arm64" ;;
 esac
 
-# An image with a melange.yaml ships local packages built from source in its
-# directory (see images/debug/tools/). Build those APKs first so apko can resolve
-# them from the `@local ./packages` repository.
+# An image with a melange*.yaml ships local packages built from source in its
+# directory (images/debug/tools/, images/base-monitoring/'s forks). Build those
+# APKs first so apko can resolve them from the `@local ./packages` repository.
+# Matched by glob, not by the exact name `melange.yaml`: base-monitoring has
+# three configs and no plain melange.yaml.
 #
 # Only for ${HOST_ARCH}: apko below builds the host arch alone, so a foreign-arch
 # APK would be built under qemu emulation and then never installed. We derive the
 # arch from the Docker daemon rather than letting melange-build.sh fall back to
 # `uname -m`, since the daemon is what actually runs the build. An explicit
 # MELANGE_ARCHES still wins, so `make build ARCHES=x86_64,aarch64` works.
-if [ -f "${WORK_DIR}/melange.yaml" ]; then
+shopt -s nullglob
+melange_configs=("${WORK_DIR}"/melange*.yaml)
+shopt -u nullglob
+if [ "${#melange_configs[@]}" -gt 0 ]; then
   case "${HOST_ARCH}" in
     amd64) MELANGE_ARCH="x86_64" ;;
     arm64) MELANGE_ARCH="aarch64" ;;
@@ -102,6 +107,13 @@ fi
 
 echo ">> Done. Try one of:"
 echo "     docker run --rm ${IMAGE_REF} /bin/sh -c 'cat /etc/os-release'"
-if [ "${IMAGE_DIR}" != "base-os" ]; then
-  echo "     docker run --rm ${IMAGE_REF} java -version"
-fi
+case "${IMAGE_DIR}" in
+  base-jre-25|debug)
+    echo "     docker run --rm ${IMAGE_REF} java -version"
+    ;;
+  base-monitoring)
+    echo "     docker run --rm ${IMAGE_REF} prometheus --version"
+    echo "     docker run --rm ${IMAGE_REF} cortex -version"
+    echo "     docker run --rm ${IMAGE_REF} supervisord --version"
+    ;;
+esac
