@@ -125,8 +125,6 @@ jobs:
           key: melange-src-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}-${{ steps.srcs.outputs.key }}
           restore-keys: melange-src-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}-
 
-      # melange-sources.sh --prefetch hands the download to `melange
-      # update-cache`, so the binary has to be here before the step below.
       - name: Install melange
         uses: ./.github/actions/setup-chainguard-tool
         with:
