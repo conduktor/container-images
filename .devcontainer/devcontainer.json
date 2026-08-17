@@ -1,0 +1,62 @@
+// Dev container for contributors without Nix on their machine. It installs no
+// tools of its own — flake.nix stays the single source of truth, and
+// post-create.sh puts its dev shell in every shell.
+//
+// docker-in-docker rather than the host's socket: melange bind-mounts its
+// workspace into the containers it launches, and those paths exist only here.
+{
+  "name": "conduktor-container-images",
+  "image": "mcr.microsoft.com/devcontainers/base:debian-12",
+
+  "features": {
+    "ghcr.io/devcontainers/features/nix:1": {
+      "version": "latest",
+      "multiUser": true,
+      // The feature enables flakes only for its own `flakeUri` option.
+      "extraNixConfig": "experimental-features = nix-command flakes"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:4": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  // melange's source cache, the Go module cache and pre-commit's environments
+  // all live under ~/.cache. /nix gets its own volume from the Nix feature.
+  "mounts": [
+    "source=cdk-container-images-cache,target=/home/vscode/.cache,type=volume"
+  ],
+
+  // Multi-user install: without this a lifecycle command or editor task can try
+  // to open the store directly and fail as non-root.
+  "remoteEnv": {
+    "NIX_REMOTE": "daemon"
+  },
+
+  "postCreateCommand": ".devcontainer/post-create.sh",
+
+  // base-monitoring compiles Prometheus and Cortex from source.
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb",
+    "storage": "64gb"
+  },
+
+  "customizations": {
+    "vscode": {
+      // Pure-JS only: an extension shelling out to a native binary would not
+      // find the dev shell's copy and would lint with a different version.
+      "extensions": [
+        "jnoortheen.nix-ide",
+        "redhat.vscode-yaml",
+        "github.vscode-github-actions"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "yaml.schemas": {
+          "https://raw.githubusercontent.com/chainguard-dev/apko/main/pkg/build/types/schema.json": "images/*/apko.yaml"
+        }
+      }
+    }
+  },
+
+  "remoteUser": "vscode"
+}

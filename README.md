@@ -197,6 +197,25 @@ make precommit-install  # install the git hooks
 Non-Nix users can install the same tools via their OS package manager; the
 Makefile only cares that they're on `PATH`.
 
+#### Without Nix on your machine
+
+[`.devcontainer/`](.devcontainer/devcontainer.json) defines a dev container that
+runs the *same* flake inside a Debian container, so tool versions stay identical
+either way — the container installs Nix and a nested Docker daemon and nothing
+else. Open the repo in VS Code and choose **Reopen in Container**, in a
+Codespace, or from the CLI:
+
+```sh
+npx @devcontainers/cli up --workspace-folder .
+npx @devcontainers/cli exec --workspace-folder . make lint
+```
+
+`make build IMAGE=<image>` works because the Docker daemon is nested rather than
+the host's — melange bind-mounts its workspace into the containers it launches,
+and those paths only exist inside this container. The Nix store and `~/.cache`
+are named volumes, so rebuilding the container re-downloads neither the dev
+shell nor melange's sources.
+
 ## Contributing
 
 Pull requests are welcome. The [PR workflow](.github/workflows/pr.yml)
