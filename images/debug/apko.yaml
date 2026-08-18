@@ -82,7 +82,7 @@ contents:
     - openldap-2.6-clients # ldapsearch / ldapwhoami (a.k.a. ldap-utils)
 
     # --- Kafka debugging ---
-    - kafkacat # produce/consume/metadata CLI (kcat's Wolfi name)
+    - kafkacat # produce/consume/metadata CLI; installs the `kcat` binary
 
     # --- Console's PostgreSQL database ---
     - postgresql-17-client # psql, pg_dump, pg_isready
@@ -116,7 +116,7 @@ environment:
   # /usr/local/bin holds the cdk-* support scripts, and also iputils' arping /
   # tracepath / clockdiff — all unreachable before it was added here.
   # /usr/lib/kafka/bin must be on PATH rather than symlinked into /usr/bin: the
-  # Kafka scripts locate kafka-run-class.sh and libs/ relative to $0.
+  # Kafka scripts locate kafka-run-class and share/java/kafka relative to $0.
   PATH: /usr/lib/jvm/java-25-openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/lib/kafka/bin:/usr/sbin:/sbin:/usr/bin:/bin
   LANG: C.UTF-8
   TZ: UTC

@@ -1,18 +1,33 @@
-# Apache Kafka admin shell tools for the debug sidecar, installed under
-# /usr/lib/kafka which apko.yaml puts on PATH.
+# Kafka admin shell tools for the debug sidecar, installed under /usr/lib/kafka
+# which apko.yaml puts on PATH.
 #
 # Not Wolfi's kafka-4.3, despite the preference for Wolfi packages: it depends
 # on openjdk-21-default-jvm, so
 # it installs a second, unused JVM (+336 MB vs +131 MB) and ships upstream's
 # libs/ verbatim, so it patches nothing.
 #
-# BUMPING: change `version`, then replace expected-sha256 with
-#   curl -sSL https://archive.apache.org/dist/kafka/<v>/kafka_2.13-<v>.tgz \
-#     | sha256sum | cut -d' ' -f1
-# Cross-check it against the .sha512 Apache publishes next to the tarball.
+# From Confluent Community, not archive.apache.org: the `-ccs` jars are Apache
+# Kafka built from the same source with a refreshed dependency set, so 8.3.1 is
+# Kafka 4.3.0 carrying jackson 2.21.5 / log4j 2.25.5 instead of 2.21.2 / 2.25.4.
+# Measured with grype over the whole image, that clears 11 findings (3 High,
+# 8 Medium, all jackson) and introduces none, at the same installed size. jetty,
+# jline and lz4-java are byte-identical to upstream's, so those findings survive.
+#
+# BUMPING: change `version` (release-branch follows via var-transforms), then take
+# expected-sha256 from Confluent's published checksum rather than your own
+# download, and verify their detached signature once — melange's fetch asserts
+# hashes only, so it cannot:
+#
+#   B=https://packages.confluent.io/archive/8.3/confluent-community-8.3.1.tar.gz
+#   curl -sSL "$B.sha256.txt"
+#   curl -sSLO "$B.asc" && curl -sSL "${B%/*}/archive.key" | gpg --import
+#   gpg --verify confluent-community-8.3.1.tar.gz{.asc,}
+#
+# Expect a good signature from key CBBB821E8FAF364F79835C438B1DA6120C2BF624
+# (Confluent Packaging); gpg warns it is uncertified, so check the fingerprint.
 package:
   name: kafka-tools
-  version: 4.3.0
+  version: 8.3.1
   epoch: 0
   description: Apache Kafka admin/operations shell tools (no broker, no second JVM)
   copyright:
@@ -20,6 +35,15 @@ package:
 
 vars:
   scala-version: "2.13"
+
+# The archive is served per release branch (8.3.1 lives under /archive/8.3/), and
+# melange templating has no expressions, so the branch is derived here instead of
+# being a second thing to remember on a bump.
+var-transforms:
+  - from: ${{package.version}}
+    match: ^(\d+\.\d+)\.\d+$
+    replace: "$1"
+    to: release-branch
 
 environment:
   contents:
@@ -31,44 +55,96 @@ environment:
       - busybox
 
 pipeline:
-  # melange logs wget's stderr at WARN, and its default dots are ~2700 lines.
-  # dot:giga is ~4. Not `verbose = off`: silence for a 12-minute download from
-  # archive.apache.org is indistinguishable from a hang.
+  # melange logs wget's stderr at WARN, so the default per-dot progress arrives
+  # as thousands of warning lines; dot:giga is a handful.
   - name: Quiet wget progress output
     runs: printf 'progress = dot:giga\n' >> /etc/wgetrc
 
-  # One tarball for both arches: Kafka is pure Java.
+  # One archive for both arches: Kafka is pure Java.
   - uses: fetch
     with:
-      uri: https://archive.apache.org/dist/kafka/${{package.version}}/kafka_${{vars.scala-version}}-${{package.version}}.tgz
-      expected-sha256: 28cfdb0ca55b4ad85e84d090c10e3f4f970e250db226ae3756b209461e48b54d
+      uri: https://packages.confluent.io/archive/${{vars.release-branch}}/confluent-community-${{package.version}}.tar.gz
+      expected-sha256: f0256f4afa3ae6fe9efc0684dc63c156179d24b7ccb6db6edaf1439368655618
       strip-components: 1
 
-  - name: Install the shell tools and their libs
+  - name: Install the jars
     runs: |
       dest="${{targets.destdir}}/usr/lib/kafka"
-      install -d "${dest}/bin" "${dest}/libs" "${dest}/config"
+      install -d "${dest}/share/java/kafka"
 
-      # bin/windows/*.bat is dead weight on Linux.
-      for f in bin/*.sh; do
-        install -m 0755 "${f}" "${dest}/bin/$(basename "${f}")"
+      # 43 of the 108 entries in share/java/kafka are symlinks into sibling
+      # component directories (../ksqldb, ../kafka-rest-lib, ../confluent-common),
+      # so this has to dereference — the components themselves are not installed.
+      cp -rL share/java/kafka/. "${dest}/share/java/kafka/"
+
+      # kafka.jar is a self-referential symlink within the directory; -L turned
+      # it into a second copy of the ~10 MB core jar. Put the link back.
+      ln -sfn "kafka_${{vars.scala-version}}-${{package.version}}-ccs.jar" \
+        "${dest}/share/java/kafka/kafka.jar"
+
+  - name: Install the shell tools
+    runs: |
+      dest="${{targets.destdir}}/usr/lib/kafka"
+      install -d "${dest}/bin"
+
+      # Exactly the tools kafka_2.13-4.3.0.tgz ships, by their Apache names minus
+      # the .sh suffix Confluent drops — parity with what the image shipped
+      # before, and nothing else from Confluent Platform.
+      for t in \
+        connect-distributed connect-mirror-maker connect-plugin-path \
+        connect-standalone \
+        kafka-acls kafka-broker-api-versions kafka-client-metrics kafka-cluster \
+        kafka-configs kafka-console-consumer kafka-console-producer \
+        kafka-console-share-consumer kafka-consumer-groups \
+        kafka-consumer-perf-test kafka-delegation-tokens kafka-delete-records \
+        kafka-dump-log kafka-e2e-latency kafka-features kafka-get-offsets \
+        kafka-groups kafka-jmx kafka-leader-election kafka-log-dirs \
+        kafka-metadata-quorum kafka-metadata-shell kafka-producer-perf-test \
+        kafka-reassign-partitions kafka-replica-verification kafka-run-class \
+        kafka-server-start kafka-server-stop kafka-share-consumer-perf-test \
+        kafka-share-groups kafka-storage kafka-streams-application-reset \
+        kafka-streams-groups kafka-topics kafka-transactions \
+        kafka-verifiable-consumer kafka-verifiable-producer \
+        kafka-verifiable-share-consumer trogdor; do
+        [ -f "bin/${t}" ] || { echo "missing bin/${t} in the archive"; exit 1; }
+        install -m 0755 "bin/${t}" "${dest}/bin/${t}"
+        # The README, and every runbook written against this image, uses the
+        # Apache .sh names. Keep them working.
+        ln -sfn "${t}" "${dest}/bin/${t}.sh"
       done
 
-      cp -a libs/. "${dest}/libs/"
-
-      # kafka-run-class.sh reads config/tools-log4j2.yaml, else log4j warns.
-      cp -a config/. "${dest}/config/"
+      # kafka-run-class resolves base_dir as $(dirname $0)/.. and reads
+      # $base_dir/etc/kafka/tools-log4j2.yaml; without it log4j warns on stderr.
+      install -D -m 0644 etc/kafka/tools-log4j2.yaml "${dest}/etc/kafka/tools-log4j2.yaml"
 
   - name: Verify the expected layout
     runs: |
       # The sha256 pin fixes content; this guards layout on a version bump.
       dest="${{targets.destdir}}/usr/lib/kafka"
-      for want in kafka-topics.sh kafka-consumer-groups.sh kafka-configs.sh \
-                  kafka-acls.sh kafka-reassign-partitions.sh \
-                  kafka-console-consumer.sh kafka-console-producer.sh \
-                  kafka-run-class.sh; do
+      for want in kafka-topics kafka-consumer-groups kafka-configs kafka-acls \
+                  kafka-reassign-partitions kafka-console-consumer \
+                  kafka-console-producer kafka-run-class; do
         [ -x "${dest}/bin/${want}" ] || { echo "missing bin/${want}"; exit 1; }
+        [ -x "${dest}/bin/${want}.sh" ] || { echo "missing compat bin/${want}.sh"; exit 1; }
       done
-      ls "${dest}/libs"/kafka-clients-*.jar >/dev/null || { echo "no kafka-clients jar"; exit 1; }
-      [ -f "${dest}/config/tools-log4j2.yaml" ] || echo "note: tools-log4j2.yaml absent in this release"
-      echo "installed $(ls "${dest}/bin" | wc -l) tools, $(ls "${dest}/libs" | wc -l) libs"
+
+      ls "${dest}/share/java/kafka"/kafka-clients-*.jar >/dev/null || {
+        echo "no kafka-clients jar"; exit 1; }
+      [ -f "${dest}/etc/kafka/tools-log4j2.yaml" ] || {
+        echo "missing etc/kafka/tools-log4j2.yaml"; exit 1; }
+
+      # A dangling symlink here means a jar resolved outside share/java/kafka and
+      # the dereferencing copy above missed it. Spelled as a shell loop, not
+      # `find -xtype l`: the build environment is busybox, whose find has no
+      # -xtype and merely prints its usage — the check would silently pass.
+      broken=0
+      for f in "${dest}/share/java/kafka"/*; do
+        if [ -L "${f}" ] && [ ! -e "${f}" ]; then
+          echo "dangling symlink: ${f} -> $(readlink "${f}")"
+          broken=$((broken + 1))
+        fi
+      done
+      [ "${broken}" -eq 0 ] || { echo "${broken} dangling symlink(s)"; exit 1; }
+
+      echo "installed $(ls "${dest}/bin" | wc -l) bin entries, \
+      $(ls "${dest}/share/java/kafka" | wc -l) jars"

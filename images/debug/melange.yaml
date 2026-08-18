@@ -37,3 +37,10 @@ pipeline:
         esac
         install -m 0755 "${f}" "${{targets.destdir}}/usr/local/bin/$(basename "${f}")"
       done
+
+      # Not covered by the cdk-* glob above: this one is not a command, and its
+      # install path is fixed by bash rather than by us. Wolfi's bash is built
+      # with -DSYS_BASHRC, so interactive non-login shells — every `kubectl exec
+      # -it ... -- bash` — read it.
+      install -D -m 0644 tools/bash.bashrc \
+        "${{targets.destdir}}/etc/bash.bashrc"

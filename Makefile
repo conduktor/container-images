@@ -24,10 +24,13 @@ IMAGE         ?=
 IMAGE_REF     ?=
 REPO_ROOT     := $(shell git rev-parse --show-toplevel 2>/dev/null || pwd)
 WORKFLOWS_DIR := .github/workflows
-# The cdk-* support scripts have no .sh suffix (they are commands), so match
-# them by name too rather than leaving them unlinted.
+# The cdk-* support scripts have no .sh suffix (they are commands), and
+# bash.bashrc is named by bash rather than by us, so match both by name rather
+# than leaving them unlinted — a syntax error in the bashrc would break every
+# interactive shell in the debug image.
 SHELL_FILES   := $(shell find . -path ./.git -prune -o -type f \
-                   \( -name '*.sh' -o -name 'cdk-*' \) -print 2>/dev/null)
+                   \( -name '*.sh' -o -name 'cdk-*' -o -name 'bash.bashrc' \) \
+                   -print 2>/dev/null)
 # Tests are discovered, not listed: they live next to what they test, so
 # scripts/ has its own and the CI-only ones sit under .github/. A find keeps a
 # new tests/ directory from being silently left out of `make test`.

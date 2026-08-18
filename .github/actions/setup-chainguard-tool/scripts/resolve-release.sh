@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# Resolve the requested apko version to an immutable release tag and the
+# Resolve the requested tool version to an immutable release tag and the
 # commit sha1 that tag points at, then decide where the binary will be
 # installed.
 #
-# Inputs (env): REPOSITORY, VERSION, EXPECTED_COMMIT_SHA, INSTALL_DIR_INPUT, GH_TOKEN
+# Inputs (env): TOOL, REPOSITORY, VERSION, EXPECTED_COMMIT_SHA, INSTALL_DIR_INPUT, GH_TOKEN
 # Outputs (GITHUB_OUTPUT): tag, version, commit-sha, archive, install-dir
 set -euo pipefail
 
 # This action only ships the linux/amd64 release archive.
 if [ "$(uname -s)" != "Linux" ] || [ "$(uname -m)" != "x86_64" ]; then
-  echo "::error::setup-apko only supports linux/amd64 runners (got $(uname -s)/$(uname -m))"
+  echo "::error::setup-chainguard-tool only supports linux/amd64 runners (got $(uname -s)/$(uname -m))"
   exit 1
 fi
 
@@ -51,15 +51,15 @@ fi
 
 INSTALL_DIR="${INSTALL_DIR_INPUT}"
 if [ -z "${INSTALL_DIR}" ]; then
-  INSTALL_DIR="${RUNNER_TOOL_CACHE:-${HOME}/.cache}/apko/${TAG}/amd64"
+  INSTALL_DIR="${RUNNER_TOOL_CACHE:-${HOME}/.cache}/${TOOL}/${TAG}/amd64"
 fi
 
-echo "apko ${TAG} (${COMMIT_SHA}) for linux/amd64 -> ${INSTALL_DIR}"
+echo "${TOOL} ${TAG} (${COMMIT_SHA}) for linux/amd64 -> ${INSTALL_DIR}"
 
 {
   echo "tag=${TAG}"
   echo "version=${VERSION_NUMBER}"
   echo "commit-sha=${COMMIT_SHA}"
-  echo "archive=apko_${VERSION_NUMBER}_linux_amd64.tar.gz"
+  echo "archive=${TOOL}_${VERSION_NUMBER}_linux_amd64.tar.gz"
   echo "install-dir=${INSTALL_DIR}"
 } >> "${GITHUB_OUTPUT}"

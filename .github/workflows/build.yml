@@ -125,6 +125,12 @@ jobs:
           key: melange-src-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}-${{ steps.srcs.outputs.key }}
           restore-keys: melange-src-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}-
 
+      - name: Install melange
+        uses: ./.github/actions/setup-chainguard-tool
+        with:
+          tool: melange
+          version: ${{ env.MELANGE_VERSION }}
+
       # melange never writes to its own cache, so a miss must be filled here.
       - name: Prefetch melange sources
         env:
@@ -202,8 +208,9 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Install apko
-        uses: ./.github/actions/setup-apko
+        uses: ./.github/actions/setup-chainguard-tool
         with:
+          tool: apko
           version: ${{ env.APKO_VERSION }}
 
       - name: Install cosign
@@ -222,8 +229,9 @@ jobs:
 
       - name: Install melange
         if: matrix.image.melange
-        uses: chainguard-dev/actions/setup-melange@9d631658f55713e5f63ca0cc21ee168f81301fd9 # v1.6.30
+        uses: ./.github/actions/setup-chainguard-tool
         with:
+          tool: melange
           version: ${{ env.MELANGE_VERSION }}
 
       # Each arch job signed with its own throwaway key, so the whole set is

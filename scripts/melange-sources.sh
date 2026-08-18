@@ -1,26 +1,34 @@
 #!/usr/bin/env bash
 #
-# List — or prefetch — the external sources an image's melange configs fetch.
+# List — or prefetch — the pinned sources an image's melange configs fetch.
 #
 # Usage:
-#   scripts/melange-sources.sh <image-dir>                     # print "uri<TAB>sha256"
-#   scripts/melange-sources.sh <image-dir> --prefetch <cache>  # download missing
+#   scripts/melange-sources.sh <image-dir>                     # print "sha256<TAB>config"
+#   scripts/melange-sources.sh <image-dir> --prefetch <cache>  # populate the cache
 #
-# melange's cache is read-only: `fetch` copies from <cache>/sha256:<hash> but
-# never writes back, so it has to be populated from outside. That is why this
-# script exists and must not be "simplified" into just passing --cache-dir:
-# without it every build re-downloads kafka_2.13-4.3.0.tgz, which is 135 MB and
-# only served by archive.apache.org (dlcdn and downloads 404 it) at ~250 KB/s —
-# 12 minutes per arch, against ~11s warm.
-#
-# The printed list is also the CI cache key, hence the sort: glob order follows
-# LC_COLLATE, so an unsorted list would key identical inputs differently on
-# different machines.
+# melange's cache is read-only: the `fetch` pipeline copies from
+# <cache>/sha256:<hash> when it exists but never writes back, so `--cache-dir` on
+# its own caches nothing and the cache has to be populated from outside. That is
+# why this script exists: without it every build re-downloads
+# confluent-community-8.3.1.tar.gz (414 MB), against ~11s warm.
 #
 # Only `uses: fetch` steps appear here. A git-checkout source has no content
 # hash to address, so the forks contribute nothing to this cache by design.
 #
-# Requires: jq, yq, curl
+# This deliberately does NOT resolve download URLs. The cache is keyed by content
+# hash and `expected-sha256` needs no templating, so listing and the is-it-cached
+# check are plain yq; downloading, the one step that needs a resolved URL, is
+# handed to `melange update-cache`. An earlier version re-implemented the
+# templating and fell behind it — a var-transform left a literal
+# ${{vars.release-branch}} in the URL, which still hashed to a stable CI cache
+# key, so the cache reported a hit and the download died on
+# `curl: (3) nested brace in URL`.
+#
+# `melange update-cache` re-downloads every source in a config unconditionally,
+# so it is only invoked for configs that are actually missing something. On a
+# warm cache this makes no network calls at all.
+#
+# Listing needs yq only. --prefetch also needs melange on PATH.
 set -euo pipefail
 
 IMAGE_DIR="${1:-}"
@@ -34,6 +42,9 @@ if [ -n "${MODE}" ]; then
 fi
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Overridable so a caller can point at a specific build, and so the tests can
+# exercise both the stubbed and the absent case without rewriting PATH.
+MELANGE_BIN="${MELANGE_BIN:-melange}"
 WORK_DIR="${IMAGES_DIR:-${REPO_ROOT}/images}/${IMAGE_DIR}"
 [ -d "${WORK_DIR}" ] || { echo "no such image directory: ${WORK_DIR}" >&2; exit 2; }
 
@@ -41,59 +52,71 @@ shopt -s nullglob
 configs=("${WORK_DIR}"/melange*.yaml)
 [ "${#configs[@]}" -gt 0 ] || exit 0
 
-[ -n "${CACHE_DIR}" ] && mkdir -p "${CACHE_DIR}"
+# The sha256 of every `fetch` pin in a config, in pipeline order.
+pinned_hashes() {
+  yq -r '
+    .pipeline[]? | select(.uses == "fetch") | .with["expected-sha256"] // ""
+  ' "$1" | grep -v '^$' || true
+}
 
-sources=()
-for config in "${configs[@]}"; do
-  # -o=json so the queries below are jq, not a second dialect.
-  json="$(yq -o=json '.' "${config}")"
-  version="$(jq -r '.package.version' <<<"${json}")"
-  mapfile -t varlines < <(jq -r '(.vars // {}) | to_entries[] | "\(.key)=\(.value)"' <<<"${json}")
+# --- list -------------------------------------------------------------------
 
-  while IFS=$'\t' read -r uri sha; do
-    case "${sha}" in ''|null) continue ;; esac
-
-    # The two melange substitutions our configs use.
-    uri="${uri//\$\{\{package.version\}\}/${version}}"
-    for kv in "${varlines[@]}"; do
-      uri="${uri//\$\{\{vars.${kv%%=*}\}\}/${kv#*=}}"
+if [ -z "${MODE}" ]; then
+  # Sorted, because this listing *is* the CI cache key: glob order follows
+  # LC_COLLATE (`-` sorts before `.`, so melange-ctl.yaml precedes melange.yaml)
+  # and an unsorted list would key identical inputs differently per machine.
+  {
+    for config in "${configs[@]}"; do
+      while IFS= read -r sha; do
+        printf '%s\t%s\n' "${sha}" "$(basename "${config}")"
+      done < <(pinned_hashes "${config}")
     done
-
-    sources+=("${uri}"$'\t'"${sha}")
-  done < <(jq -r '
-    .pipeline[]? | select(.uses == "fetch")
-    | [.with.uri, .with["expected-sha256"]] | @tsv
-  ' <<<"${json}")
-done
-
-# Sorted: glob order follows LC_COLLATE, and this list is a cache key.
-[ "${#sources[@]}" -gt 0 ] || exit 0
-mapfile -t sources < <(printf '%s\n' "${sources[@]}" | sort -u)
-
-if [ "${MODE}" != "--prefetch" ]; then
-  printf '%s\n' "${sources[@]}"
+  } | LC_ALL=C sort
   exit 0
 fi
 
-for entry in "${sources[@]}"; do
-    uri="${entry%%$'\t'*}"
-    sha="${entry##*$'\t'}"
-    target="${CACHE_DIR}/sha256:${sha}"
-    if [ -f "${target}" ]; then
-      echo "cached  $(basename "${uri}")"
-      continue
-    fi
+# --- prefetch ---------------------------------------------------------------
 
-    echo "fetch   $(basename "${uri}")"
-    curl -fsSL --retry 3 -o "${target}.part" "${uri}" \
-      || { rm -f "${target}.part"; echo "!! download failed: ${uri}" >&2; exit 1; }
-    actual="$(sha256sum "${target}.part" | cut -d' ' -f1)"
-    if [ "${actual}" != "${sha}" ]; then
-      rm -f "${target}.part"
-      echo "!! checksum mismatch for ${uri}" >&2
-      echo "   expected ${sha}" >&2
-      echo "   got      ${actual}" >&2
-      exit 1
+mkdir -p "${CACHE_DIR}"
+fetched=0
+
+for config in "${configs[@]}"; do
+  name="$(basename "${config}")"
+  mapfile -t hashes < <(pinned_hashes "${config}")
+  [ "${#hashes[@]}" -gt 0 ] || continue
+
+  missing=()
+  for sha in "${hashes[@]}"; do
+    if [ -f "${CACHE_DIR}/sha256:${sha}" ]; then
+      echo "cached  ${name}  ${sha}"
+    else
+      missing+=("${sha}")
     fi
-    mv "${target}.part" "${target}"
+  done
+  [ "${#missing[@]}" -gt 0 ] || continue
+
+  command -v "${MELANGE_BIN}" >/dev/null 2>&1 || {
+    echo "melange not found (${MELANGE_BIN}), and ${#missing[@]} source(s) for ${name} are not cached" >&2
+    echo "  run inside 'nix develop', or install melange, to prefetch" >&2
+    exit 2
+  }
+
+  echo "fetch   ${name}  (${#missing[@]} of ${#hashes[@]} not cached)"
+  "${MELANGE_BIN}" update-cache --cache-dir "${CACHE_DIR}" "${config}"
+  fetched=$((fetched + 1))
+
+  # melange writes each artifact under the hash it *actually* got, so a pin that
+  # no longer matches upstream leaves the expected filename absent rather than
+  # failing loudly. Catch it here, where the message can name the config.
+  for sha in "${missing[@]}"; do
+    [ -f "${CACHE_DIR}/sha256:${sha}" ] && continue
+    echo "expected-sha256 in ${name} does not match what upstream served:" >&2
+    echo "  pinned  ${sha}" >&2
+    echo "  melange wrote:" >&2
+    find "${CACHE_DIR}" -maxdepth 1 -name 'sha256:*' -newer "${config}" \
+      -printf '    %f\n' >&2 2>/dev/null || true
+    exit 1
+  done
 done
+
+[ "${fetched}" -gt 0 ] || echo "all sources already cached"
