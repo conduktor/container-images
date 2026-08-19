@@ -58,8 +58,15 @@ if [ -z "${BINARY}" ]; then
   exit 1
 fi
 
-mkdir -p "${INSTALL_DIR}"
-install -m 0755 "${BINARY}" "${INSTALL_DIR}/${TOOL}"
+# A root-owned install-dir is deliberate: `sudo melange` (what melange-build-pkg
+# runs) searches sudo's secure_path, which the tool cache is not in.
+SUDO=()
+mkdir -p "${INSTALL_DIR}" 2>/dev/null || true
+if [ ! -w "${INSTALL_DIR}" ]; then
+  SUDO=(sudo)
+  "${SUDO[@]}" mkdir -p "${INSTALL_DIR}"
+fi
+"${SUDO[@]}" install -m 0755 "${BINARY}" "${INSTALL_DIR}/${TOOL}"
 echo "${INSTALL_DIR}" >> "${GITHUB_PATH}"
 
 {

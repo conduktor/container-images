@@ -1,8 +1,9 @@
 # setup-chainguard-tool
 
 Local composite action that installs a Chainguard Go CLI — [apko](https://github.com/chainguard-dev/apko)
-or [melange](https://github.com/chainguard-dev/melange) — on a `linux/amd64`
-GitHub-hosted runner.
+or [melange](https://github.com/chainguard-dev/melange) — on a `linux/amd64` or
+`linux/arm64` GitHub-hosted runner. Both are needed: the `apks` jobs run
+natively on a runner of the arch they build.
 
 There is no first-party `chainguard-dev/actions/setup-apko` upstream, and
 `curl | sh` is not a supply-chain story we want to tell. So we ship our own
@@ -10,8 +11,8 @@ installer that:
 
 1. Resolves the requested version (or `latest`) to an immutable release tag
    and dereferences it to the commit SHA the tag points at.
-2. Downloads `<tool>_<version>_linux_amd64.tar.gz` + `checksums.txt` from the
-   release.
+2. Downloads `<tool>_<version>_linux_<runner arch>.tar.gz` + `checksums.txt`
+   from the release.
 3. Verifies `checksums.txt` was signed by that project's release workflow using
    Sigstore keyless (cosign `verify-blob` against Fulcio + Rekor).
 4. Verifies the SHA-256 of the archive matches the entry in `checksums.txt`.
@@ -23,7 +24,7 @@ installer that:
 ## Why one action for both
 
 Chainguard's CLIs are goreleaser-built to the same shape — the archive is
-`<tool>_<version>_linux_amd64.tar.gz`, it sits beside a cosign-signed
+`<tool>_<version>_linux_<arch>.tar.gz`, it sits beside a cosign-signed
 `checksums.txt`, and `<tool> version` prints `GitVersion:` / `GitCommit:`. Only
 the name varies, so the tool is an input rather than a second copy of the
 scripts.
@@ -61,7 +62,7 @@ This downloads one verified binary instead.
 | `verify-signature` | `"true"` | Verify the Sigstore signature of `checksums.txt`. |
 | `cosign-certificate-identity-regexp` | the tool's own release workflows | Cosign identity regex for the release signer. |
 | `cosign-oidc-issuer` | `https://token.actions.githubusercontent.com` | Cosign OIDC issuer. |
-| `install-dir` | `<runner-tool-cache>/<tool>/<tag>/amd64` | Where to install the binary. |
+| `install-dir` | `<runner-tool-cache>/<tool>/<tag>/<arch>` | Where to install the binary. |
 
 ## Outputs
 
@@ -70,6 +71,7 @@ This downloads one verified binary instead.
 | `version` | Installed version without the leading `v` (e.g. `1.2.30`). |
 | `tag` | Release tag installed (e.g. `v1.2.30`). |
 | `commit-sha` | Commit SHA the release tag dereferences to (also verified against the binary). |
+| `arch` | Release architecture installed for this runner (`amd64` or `arm64`). |
 | `sha256` | SHA-256 of the downloaded archive. |
 | `path` | Full path to the installed binary. |
 | `install-dir` | Directory added to `PATH`. |

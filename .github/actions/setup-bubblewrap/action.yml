@@ -1,0 +1,13 @@
+name: "Setup bubblewrap"
+description: >
+  Install bubblewrap and the apparmor profile melange's default Linux runner
+  needs on a GitHub-hosted Ubuntu runner, without the Go toolchain, qemu and
+  unverified melange download that chainguard-dev/actions/setup-melange also
+  brings. Pair it with setup-chainguard-tool, which installs melange itself.
+
+runs:
+  using: composite
+  steps:
+    - name: Install bubblewrap
+      shell: bash
+      run: "${{ github.action_path }}/scripts/setup-bubblewrap.sh"

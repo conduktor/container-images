@@ -1,9 +1,9 @@
 name: "Setup Chainguard tool"
 description: >
-  Install a Chainguard Go CLI (apko, melange, ...) on a linux/amd64 runner.
-  Resolves the requested version (or the latest release) to an immutable
-  release tag + commit sha1, verifies the downloaded archive against the
-  release SHA-256 checksums and their Sigstore (cosign keyless) signature,
+  Install a Chainguard Go CLI (apko, melange, ...) on a linux/amd64 or
+  linux/arm64 runner. Resolves the requested version (or the latest release) to
+  an immutable release tag + commit sha1, verifies the downloaded archive against
+  the release SHA-256 checksums and their Sigstore (cosign keyless) signature,
   then verifies the installed binary reports the expected tag and commit.
 
 # One action for every Chainguard CLI: their releases are goreleaser-built to
@@ -68,6 +68,9 @@ outputs:
   commit-sha:
     description: Commit sha1 the release tag points at, also verified against the installed binary.
     value: ${{ steps.resolve.outputs.commit-sha }}
+  arch:
+    description: Release architecture installed for this runner, amd64 or arm64.
+    value: ${{ steps.resolve.outputs.arch }}
   sha256:
     description: SHA-256 checksum of the downloaded release archive.
     value: ${{ steps.install.outputs.sha256 }}

@@ -130,6 +130,11 @@ jobs:
         with:
           tool: melange
           version: ${{ env.MELANGE_VERSION }}
+          # melange-build-pkg runs `sudo melange`, which searches secure_path.
+          install-dir: /usr/local/bin
+
+      - name: Setup bubblewrap
+        uses: ./.github/actions/setup-bubblewrap
 
       # melange never writes to its own cache, so a miss must be filled here.
       - name: Prefetch melange sources
@@ -137,25 +142,33 @@ jobs:
           DIR: ${{ matrix.apk.dir }}
         run: ./scripts/melange-sources.sh "${DIR}" --prefetch "${{ runner.temp }}/melange-cache"
 
+      # These two rather than the melange-build wrapper around them: that wrapper
+      # starts with setup-melange, which apt-installs a Go toolchain and qemu on
+      # every job, then curls an unverified melange over the one installed above.
+      #
       # The temporary signing key is per-job and thrown away with the runner:
       # the build job re-indexes every arch under one key of its own
-      # (scripts/melange-index.sh). It cannot be skipped here — melange-build
+      # (scripts/melange-index.sh). It cannot be skipped here — melange-build-pkg
       # adds `--keyring-append <key>.pub` for every config after the first.
-      - name: Build local APKs with melange
-        uses: chainguard-dev/actions/melange-build@bed8050123fff65538e2db1902ff9404030c0221 # v1.6.31
+      - name: Generate a temporary melange signing key
+        uses: chainguard-dev/actions/melange-keygen@bed8050123fff65538e2db1902ff9404030c0221 # v1.6.31
         with:
-          version: ${{ env.MELANGE_VERSION }}
+          # Absolute paths so the key and the packages land where apko.yaml's
+          # `@local ./packages` and `./melange.rsa.pub` resolve from the image dir.
+          signing-key-path: ${{ github.workspace }}/images/${{ matrix.apk.dir }}/melange.rsa
+
+      - name: Build local APKs with melange
+        uses: chainguard-dev/actions/melange-build-pkg@bed8050123fff65538e2db1902ff9404030c0221 # v1.6.31
+        with:
           multi-config: ${{ matrix.apk.configs }}
           workdir: images/${{ matrix.apk.dir }}
           archs: ${{ matrix.apk.arch }}
-          sign-with-temporary-key: true
+          sign-with-key: true
           # Trivy skips packages whose PURL namespace doesn't match the image's
           # distro, so without this our own packages' CVEs go unreported.
           namespace: wolfi
           # Absolute: melange runs under sudo, where ~ is root's home.
           cache-dir: ${{ runner.temp }}/melange-cache
-          # Absolute paths so they land where apko.yaml's `@local ./packages`
-          # and `./melange.rsa.pub` resolve from the image directory.
           signing-key-path: ${{ github.workspace }}/images/${{ matrix.apk.dir }}/melange.rsa
           repository-path: ${{ github.workspace }}/images/${{ matrix.apk.dir }}/packages
 
