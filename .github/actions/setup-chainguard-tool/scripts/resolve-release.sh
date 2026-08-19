@@ -4,14 +4,25 @@
 # installed.
 #
 # Inputs (env): TOOL, REPOSITORY, VERSION, EXPECTED_COMMIT_SHA, INSTALL_DIR_INPUT, GH_TOKEN
-# Outputs (GITHUB_OUTPUT): tag, version, commit-sha, archive, install-dir
+# Outputs (GITHUB_OUTPUT): tag, version, commit-sha, arch, archive, install-dir
 set -euo pipefail
 
-# This action only ships the linux/amd64 release archive.
-if [ "$(uname -s)" != "Linux" ] || [ "$(uname -m)" != "x86_64" ]; then
-  echo "::error::setup-chainguard-tool only supports linux/amd64 runners (got $(uname -s)/$(uname -m))"
+# The runner's own architecture, not the image's: this picks which release
+# archive to download. `apks` jobs run natively on an arm64 runner, so hardcoding
+# amd64 here fails half the matrix. RUNNER_ARCH is what GitHub sets; uname is the
+# fallback for local runs, and both spellings of each arch are accepted.
+if [ "$(uname -s)" != "Linux" ]; then
+  echo "::error::setup-chainguard-tool only supports Linux runners (got $(uname -s))"
   exit 1
 fi
+case "${RUNNER_ARCH:-$(uname -m)}" in
+  X64 | x86_64 | amd64) ARCH="amd64" ;;
+  ARM64 | aarch64 | arm64) ARCH="arm64" ;;
+  *)
+    echo "::error::setup-chainguard-tool has no release archive for ${RUNNER_ARCH:-$(uname -m)}"
+    exit 1
+    ;;
+esac
 
 # Resolve the requested version to an immutable release tag.
 if [ -z "${VERSION}" ] || [ "${VERSION}" = "latest" ]; then
@@ -51,15 +62,16 @@ fi
 
 INSTALL_DIR="${INSTALL_DIR_INPUT}"
 if [ -z "${INSTALL_DIR}" ]; then
-  INSTALL_DIR="${RUNNER_TOOL_CACHE:-${HOME}/.cache}/${TOOL}/${TAG}/amd64"
+  INSTALL_DIR="${RUNNER_TOOL_CACHE:-${HOME}/.cache}/${TOOL}/${TAG}/${ARCH}"
 fi
 
-echo "${TOOL} ${TAG} (${COMMIT_SHA}) for linux/amd64 -> ${INSTALL_DIR}"
+echo "${TOOL} ${TAG} (${COMMIT_SHA}) for linux/${ARCH} -> ${INSTALL_DIR}"
 
 {
   echo "tag=${TAG}"
   echo "version=${VERSION_NUMBER}"
   echo "commit-sha=${COMMIT_SHA}"
-  echo "archive=${TOOL}_${VERSION_NUMBER}_linux_amd64.tar.gz"
+  echo "arch=${ARCH}"
+  echo "archive=${TOOL}_${VERSION_NUMBER}_linux_${ARCH}.tar.gz"
   echo "install-dir=${INSTALL_DIR}"
 } >> "${GITHUB_OUTPUT}"
