@@ -96,7 +96,7 @@ gh attestation verify "oci://${IMAGE}" --repo conduktor/container-images
 
 # 4. apko lock — the exact package set this digest was built from
 cosign verify-attestation \
-  --type=apko-lock \
+  --type=https://conduktor.io/apko-lock/v1 \
   --certificate-identity-regexp='^https://github\.com/conduktor/container-images/\.github/workflows/build\.yml@refs/heads/main$' \
   --certificate-oidc-issuer='https://token.actions.githubusercontent.com' \
   "${IMAGE}" \

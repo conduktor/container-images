@@ -384,10 +384,10 @@ jobs:
             done
           done
 
-      # `apko-lock` is our own predicate type, and the README's verify snippet has
-      # to keep matching it. Never `--type custom`: that renames the type to
-      # cosign's generic one and embeds the lock as a string under
-      # `.predicate.Data` instead of an object under `.predicate`.
+      # Our own predicate type, so the README's verify snippet has to keep matching
+      # it. `cosign attest` rejects anything without a scheme, and `--type custom`
+      # would rename the type to cosign's generic one and embed the lock as a
+      # string under `.predicate.Data` instead of an object under `.predicate`.
       - name: Attest the apko lock
         if: inputs.publish
         env:
@@ -397,7 +397,7 @@ jobs:
           set -euo pipefail
           for image in ${IMAGES}; do
             cosign attest --predicate "${RUNNER_TEMP}/apko.lock.json" \
-              --type apko-lock "${image}"
+              --type https://conduktor.io/apko-lock/v1 "${image}"
           done
 
       - name: Generate SLSA build-provenance attestation
