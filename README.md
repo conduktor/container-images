@@ -201,8 +201,9 @@ Makefile only cares that they're on `PATH`.
 
 Pull requests are welcome. The [PR workflow](.github/workflows/pr.yml)
 builds every affected image on `amd64` and runs Trivy + Grype against the
-tarball. A `CRITICAL` or `HIGH` finding blocks the merge; `MEDIUM` are
-reported but non-fatal. Before pushing, run `make lint` and
+tarball. Scanning is **report-only**: the counts land in the job summary and a
+sticky PR comment, and no severity blocks the merge. Before pushing, run
+`make lint` and
 `make precommit-run` — the same checks run in CI, and `gitleaks` will catch
 accidentally-staged secrets.
 

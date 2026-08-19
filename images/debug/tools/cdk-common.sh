@@ -104,8 +104,8 @@ cdk_target_env() {
 
 # --- Conduktor config layout ----------------------------------------------
 #
-# Defaults mirror conduktor-env.sh in the Console image; the target's own
-# environment always wins.
+# Paths come from the target's own environment; the defaults are only a fallback,
+# so a deployment that relocates them still works.
 
 cdk_conf_in_file() {
   local dir

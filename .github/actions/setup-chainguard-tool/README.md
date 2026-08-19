@@ -75,9 +75,3 @@ This downloads one verified binary instead.
 | `sha256` | SHA-256 of the downloaded archive. |
 | `path` | Full path to the installed binary. |
 | `install-dir` | Directory added to `PATH`. |
-
-## Origin
-
-Adapted from the private `conduktor/conduktor-actions/setup-apko` action so
-this repo can stay public without depending on a private action, then
-generalised to any Chainguard CLI when the melange prefetch step needed one too.
