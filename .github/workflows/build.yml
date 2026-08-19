@@ -259,6 +259,21 @@ jobs:
         # the YAML and fails on invalid schema/refs, which is functionally a lint.
         run: apko show-config apko.yaml > /dev/null
 
+      # Generated per run and passed to apko below, so it records what shipped.
+      # Consuming a lock from anywhere but this run would freeze the images —
+      # test-nightly-freshness.sh tells the two apart. Not gated on `publish`, so
+      # PRs run it too; must follow the index signing or `@local` won't resolve.
+      - name: Lock the resolved package set
+        working-directory: images/${{ matrix.image.dir }}
+        env:
+          ARCHES: ${{ needs.prepare.outputs.apko_arches }}
+        run: |
+          set -euo pipefail
+          apko lock --arch "${ARCHES}" --output "${RUNNER_TEMP}/apko.lock.json" apko.yaml
+          jq -r '.contents.packages | group_by(.architecture)[]
+                 | "locked \(length) packages for \(.[0].architecture)"' \
+            "${RUNNER_TEMP}/apko.lock.json"
+
       - name: Login to GHCR
         if: inputs.publish
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
@@ -303,6 +318,7 @@ jobs:
           out=$(apko publish \
             --arch "${ARCHES}" \
             --sbom-path . \
+            --lockfile "${RUNNER_TEMP}/apko.lock.json" \
             apko.yaml \
             "$@")
           echo "${out}"
@@ -331,7 +347,8 @@ jobs:
           REF: pr-${{ github.event.pull_request.number || 'manual' }}/${{ matrix.image.dir }}:${{ github.sha }}
         run: |
           set -euo pipefail
-          apko build --arch "${ARCHES}" --sbom-path . apko.yaml "${REF}" image.tar
+          apko build --arch "${ARCHES}" --sbom-path . \
+            --lockfile "${RUNNER_TEMP}/apko.lock.json" apko.yaml "${REF}" image.tar
           out=$(docker load -i image.tar)
           echo "${out}"
           # apko suffixes the tag with the arch when the tar holds more than one,
@@ -365,6 +382,22 @@ jobs:
             for f in "images/${IMAGE_DIR}"/*.spdx.json; do
               cosign attest --predicate "${f}" --type spdxjson "${image}"
             done
+          done
+
+      # `apko-lock` is our own predicate type, and the README's verify snippet has
+      # to keep matching it. Never `--type custom`: that renames the type to
+      # cosign's generic one and embeds the lock as a string under
+      # `.predicate.Data` instead of an object under `.predicate`.
+      - name: Attest the apko lock
+        if: inputs.publish
+        env:
+          COSIGN_YES: "true"
+          IMAGES: ${{ steps.apko.outputs.images }}
+        run: |
+          set -euo pipefail
+          for image in ${IMAGES}; do
+            cosign attest --predicate "${RUNNER_TEMP}/apko.lock.json" \
+              --type apko-lock "${image}"
           done
 
       - name: Generate SLSA build-provenance attestation
@@ -403,6 +436,15 @@ jobs:
             grype.json
             images/${{ matrix.image.dir }}/*.spdx.json
           retention-days: ${{ inputs.publish && 30 || 7 }}
+
+      # On a PR this is the only copy; publishing runs also attest it above.
+      - name: Upload the apko lock
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lock-${{ matrix.image.dir }}
+          path: ${{ runner.temp }}/apko.lock.json
+          retention-days: ${{ inputs.publish && 30 || 7 }}
+          if-no-files-found: error
 
       - name: Upload image tar
         if: ${{ !inputs.publish }}

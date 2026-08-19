@@ -78,9 +78,12 @@ the repo hints at it) or a contract with something outside this repo.
   passes so a called workflow never receives more than it needs.
 - **Mirror inside the single `apko publish` call**, both refs passed as
   arguments, then sign per registry. A later `cosign copy` or registry
-  replication hop can drop the cosign accessories (`sha256-<digest>.sig` /
-  `.att`) and silently break the `cosign verify` snippet customers follow in the
-  README.
+  replication hop can drop the cosign accessories and silently break the
+  `cosign verify` snippet customers follow in the README. cosign 3.x attaches
+  them through the OCI 1.1 **referrers** API, not the legacy
+  `sha256-<digest>.sig` / `.att` tags — they are untagged manifests bound to the
+  digest by `subject`, so a tag-based copy or "delete untagged" sweep sees none
+  of them. `cosign tree <ref>` lists what should be there.
 - `pr.yml` stays push-free and signing-free. Fork PRs get no secrets, and
   nothing here may use `pull_request_target`.
 
@@ -92,10 +95,15 @@ frozen nightly still looks healthy (green runs, moving tags, new digests), so
 [`test-nightly-freshness.sh`](.github/scripts/tests/test-nightly-freshness.sh)
 enforces this instead of review.
 
-- **Never `actions/cache` the go-apk cache directory**, never `apko --offline`,
-  never an `apko lock` file. Each turns later builds into a replay of the day
-  the cache was filled. GitHub runners starting empty is *why* the nightly is
-  fresh.
+- **Never `actions/cache` the go-apk cache directory** and never `apko
+  --offline`. Each turns later builds into a replay of the day the cache was
+  filled. GitHub runners starting empty is *why* the nightly is fresh.
+- **A lockfile is an output here, never an input.** `build.yml` generates one per
+  run and feeds it to the same apko call, so it records what shipped. Never let
+  apko consume a lock from anywhere else — committed, cached or downloaded — which
+  pins versions and freezes the image. The freshness test enforces the
+  distinction: `RUNNER_TEMP` path, not gated on `publish`, consumed by every apko
+  invocation.
 - **Never cache the built `.apk`s in the nightly.** `prometheus-cdk` and
   `cortex-cdk` bake the Go toolchain and every module into the binary, which is
   what Grype matches CVEs against, and no key you can compute sees a `go-1.26`
@@ -258,7 +266,10 @@ before `apko build`.
 ## Where to look for context you don't have
 
 - Wolfi package index: <https://packages.wolfi.dev/os/>
-- Cosign keyless identity: `https://github.com/conduktor/container-images/.github/workflows/nightly.yml@refs/heads/<branch>`,
-  issuer `https://token.actions.githubusercontent.com`
+- Cosign keyless identity: `https://github.com/conduktor/container-images/.github/workflows/build.yml@refs/heads/main`,
+  issuer `https://token.actions.githubusercontent.com`. It is `build.yml`
+  because Fulcio's SAN is the workflow holding the signing job, not the
+  `nightly.yml` that called it — check with `cosign verify` before editing the
+  README snippet, the earlier `nightly.yml` regex never matched anything.
 - Anything about *why a specific pin, patch or package is what it is*: that
   file's own header comment.
