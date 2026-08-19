@@ -67,6 +67,10 @@ All three attestations are keyless — they are bound to the GitHub Actions
 workflow that produced the image, not to a private key. To trust an image
 you assert *who* built it, not that a secret was known.
 
+The identity is [`build.yml`](.github/workflows/build.yml), not `nightly.yml`:
+Fulcio's SAN names the workflow containing the signing job, not the one that
+called it. Only a publishing run on `main` can hold it — `pr.yml` never signs.
+
 ```sh
 IMAGE=ghcr.io/conduktor/base-jre-25:latest
 # ...or the Docker Hub reference for the debug sidecar — same identity, because
@@ -75,20 +79,28 @@ IMAGE=ghcr.io/conduktor/base-jre-25:latest
 
 # 1. Signature (cosign keyless, Fulcio issuer)
 cosign verify \
-  --certificate-identity-regexp='^https://github\.com/conduktor/container-images/\.github/workflows/nightly\.yml@refs/heads/.+$' \
+  --certificate-identity-regexp='^https://github\.com/conduktor/container-images/\.github/workflows/build\.yml@refs/heads/main$' \
   --certificate-oidc-issuer='https://token.actions.githubusercontent.com' \
   "${IMAGE}"
 
 # 2. SPDX SBOM attestation
 cosign verify-attestation \
   --type=spdxjson \
-  --certificate-identity-regexp='^https://github\.com/conduktor/container-images/\.github/workflows/nightly\.yml@refs/heads/.+$' \
+  --certificate-identity-regexp='^https://github\.com/conduktor/container-images/\.github/workflows/build\.yml@refs/heads/main$' \
   --certificate-oidc-issuer='https://token.actions.githubusercontent.com' \
   "${IMAGE}" \
   | jq -r '.payload' | base64 -d | jq '.predicate' > sbom.spdx.json
 
 # 3. SLSA build-provenance (verifiable with gh CLI too)
 gh attestation verify "oci://${IMAGE}" --repo conduktor/container-images
+
+# 4. apko lock — the exact package set this digest was built from
+cosign verify-attestation \
+  --type=apko-lock \
+  --certificate-identity-regexp='^https://github\.com/conduktor/container-images/\.github/workflows/build\.yml@refs/heads/main$' \
+  --certificate-oidc-issuer='https://token.actions.githubusercontent.com' \
+  "${IMAGE}" \
+  | jq -r '.payload' | base64 -d | jq '.predicate' > apko.lock.json
 ```
 
 Scan the extracted SBOM against your own policy:
@@ -97,6 +109,24 @@ Scan the extracted SBOM against your own policy:
 grype sbom:./sbom.spdx.json
 trivy sbom ./sbom.spdx.json
 ```
+
+### Diff two builds
+
+The lock is `apko lock` output: every package with its version, architecture and
+`.apk` URL, as resolved when the image was built. Extract it for two tags to see
+what a nightly changed — usually the answer to "why did the CVE count move":
+
+```sh
+jq -r '.contents.packages[] | "\(.architecture) \(.name) \(.version)"' \
+  apko.lock.json | sort > new.txt
+# ...same for the older tag, then:
+diff old.txt new.txt
+```
+
+Diff the package list, not the whole file: for `conduktor-debug` and
+`base-monitoring` the lock also embeds a per-build melange signing key. And the
+`.apk` URLs stop resolving once Wolfi drops those versions, so pin a digest to
+keep an exact image — the lock is a record, not a rebuild input.
 
 ## Use as a base image
 
