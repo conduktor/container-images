@@ -22,7 +22,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write # the `report` job upserts the sticky CVE comment
 
 concurrency:
   group: pr-${{ github.ref }}
