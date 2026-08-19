@@ -113,6 +113,27 @@ pipeline:
       cp -r cmd/cortex/migrations/. "${dest}/migrations/"
       mv "cmd/cortex/cortex-${{build.goarch}}" "${dest}/cortex"
 
+  # Cortex has no NOTICE, and nothing else puts its LICENSE in the image. The
+  # binary statically links the vendored modules, so their licences ship too.
+  - name: Install the licence and vendored dependency licences
+    runs: |
+      set -eu
+      dest="${{targets.destdir}}/opt/monitoring/cortex"
+      install -m 0644 LICENSE "${dest}/LICENSE"
+
+      # Paths stay relative to vendor/ so each file remains attributable to the
+      # module it covers.
+      find vendor -type f \( -iname 'LICENSE*' -o -iname 'LICENCE*' \
+        -o -iname 'NOTICE*' -o -iname 'COPYING*' \) | sort | while read -r f; do
+        install -D -m 0644 "${f}" "${dest}/licenses/${f#vendor/}"
+      done
+
+      n="$(find "${dest}/licenses" -type f | wc -l)"
+      echo "installed ${n} vendored licence files"
+      # A collapse to near-zero means vendor/ moved or was dropped, not that the
+      # dependency set shrank — re-audit before shipping in that case.
+      [ "${n}" -gt 100 ] || { echo "only ${n} vendored licences"; exit 1; }
+
   - name: Smoke-test the packaged binary
     runs: |
       set -eu

@@ -25,6 +25,16 @@
 #
 # Expect a good signature from key CBBB821E8FAF364F79835C438B1DA6120C2BF624
 # (Confluent Packaging); gpg warns it is uncertified, so check the fingerprint.
+#
+# LICENSING: the installed PROVENANCE states the position and why; don't restate
+# it here. It holds only for the component set installed below, so re-audit on a
+# version bump — the check that matters is which jars carry Confluent code:
+#
+#   for f in share/java/kafka/*; do
+#     unzip -l "$f" | grep -q io/confluent/ && echo "$f"; done
+#
+# Only kafka_*-ccs.jar may match (two SupportedKafka stubs in that Apache-2.0
+# jar). Anything else means Confluent-licensed code crept in — stop.
 package:
   name: kafka-tools
   version: 8.3.1
@@ -117,6 +127,58 @@ pipeline:
       # $base_dir/etc/kafka/tools-log4j2.yaml; without it log4j warns on stderr.
       install -D -m 0644 etc/kafka/tools-log4j2.yaml "${dest}/etc/kafka/tools-log4j2.yaml"
 
+  # Apache-2.0 s4(d): the NOTICE has to travel with every redistribution.
+  - name: Install the licence, notice and provenance
+    runs: |
+      docdir="${{targets.destdir}}/usr/share/doc/kafka-tools"
+      install -d "${docdir}"
+
+      # share/doc/kafka/, never share/doc/ksqldb/ — that one is the Confluent
+      # Community License, for a component we do not install.
+      install -m 0644 share/doc/kafka/LICENSE "${docdir}/LICENSE"
+      install -m 0644 share/doc/kafka/NOTICE "${docdir}/NOTICE"
+
+      cat > "${docdir}/PROVENANCE" <<'EOF'
+      kafka-tools — repackaging disclosure
+      ====================================
+
+      This package is a subset of the Confluent Community distribution
+      confluent-community-${{package.version}}.tar.gz, from
+      https://packages.confluent.io/archive/${{vars.release-branch}}/ ,
+      repackaged by Conduktor for the conduktor-debug container image.
+
+      INCLUDED
+        * The Apache Kafka admin/operations shell tools from the archive's bin/
+          — the same set Apache's own kafka_${{vars.scala-version}}-*.tgz ships.
+          Confluent drops the .sh suffix; compatibility symlinks restore it.
+        * share/java/kafka: Apache Kafka's jars (the `-ccs` build, which is the
+          Apache Kafka source compiled by Confluent against a refreshed
+          dependency set) together with their third-party dependencies.
+        * etc/kafka/tools-log4j2.yaml.
+
+      NOT INCLUDED
+        No component licensed under the Confluent Community License Agreement.
+        ksqlDB, Schema Registry, REST Proxy, Control Center and Replicator are
+        all absent. 43 of the 108 entries in share/java/kafka are symlinks into
+        ../ksqldb, ../kafka-rest-lib and ../confluent-common, so installing them
+        requires dereferencing; 42 resolve to third-party open-source dependency
+        jars and the 43rd is self-referential. None resolves to Confluent-authored
+        code — those directories are only where the upstream packaging places
+        dependencies shared between components.
+
+      LICENSING
+        Apache License 2.0. LICENSE in this directory is copied verbatim from
+        share/doc/kafka/LICENSE of the upstream archive — the licence Confluent
+        applies to the kafka component — and its appendix enumerates the bundled
+        third-party components and their licences. NOTICE is likewise verbatim,
+        as Apache-2.0 section 4(d) requires. Dependency jars additionally carry
+        their own META-INF licence files.
+
+        The Confluent Community License Agreement present in the upstream archive
+        covers components excluded from this package and is deliberately not
+        reproduced here: doing so would misstate the terms of this package.
+      EOF
+
   - name: Verify the expected layout
     runs: |
       # The sha256 pin fixes content; this guards layout on a version bump.
@@ -132,6 +194,20 @@ pipeline:
         echo "no kafka-clients jar"; exit 1; }
       [ -f "${dest}/etc/kafka/tools-log4j2.yaml" ] || {
         echo "missing etc/kafka/tools-log4j2.yaml"; exit 1; }
+
+      # Fail rather than ship unlicensed if a bump moves share/doc/kafka/.
+      docdir="${{targets.destdir}}/usr/share/doc/kafka-tools"
+      for want in LICENSE NOTICE PROVENANCE; do
+        [ -s "${docdir}/${want}" ] || { echo "missing ${want}"; exit 1; }
+      done
+      grep -q 'Apache License' "${docdir}/LICENSE" || {
+        echo "LICENSE is not the Apache-2.0 text"; exit 1; }
+      # CCL text here would mean the installed set is no longer Apache-2.0-only.
+      if grep -qi 'Confluent Community License' "${docdir}/LICENSE" \
+        || grep -qi 'Confluent Community License' "${docdir}/NOTICE"; then
+        echo "Confluent Community License text in LICENSE/NOTICE — re-audit"
+        exit 1
+      fi
 
       # A dangling symlink here means a jar resolved outside share/java/kafka and
       # the dereferencing copy above missed it. Spelled as a shell loop, not

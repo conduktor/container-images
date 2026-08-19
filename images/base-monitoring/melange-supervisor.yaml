@@ -16,13 +16,26 @@
 # Re-check that options.py and datatypes.py are still the only files calling
 # pwd.getpwuid — the post-install guardrail below fails the build if the patch
 # stops applying, but a *new* call site in a third file would slip through.
+#
+# LICENSING: upstream declares "BSD-derived (repoze.org)", which is SPDX
+# BSD-3-Clause-Modification — not plain BSD-3-Clause; it has a fourth condition.
+# Two of its clauses bind us, and one only because we patch the source:
+#   clause 2 — binary redistributions must reproduce the accompanying copyright
+#     notice, so COPYRIGHT.txt is installed below. pip ships LICENSES.txt inside
+#     dist-info but never COPYRIGHT.txt, which is the notice clause 2 means.
+#   clause 4 — modified files must carry prominent notices stating the change and
+#     its date, so the patch step prepends one. Keep `patch-date` equal to the
+#     date the substitution itself last changed, not the date of the build.
 package:
   name: supervisor-cdk
   version: 4.3.0
   epoch: 0
   description: "Supervisor with the Conduktor patch replacing pwd.getpwuid(uid) so supervisord tolerates arbitrary UIDs (OpenShift)"
   copyright:
-    - license: BSD-3-Clause
+    - license: BSD-3-Clause-Modification
+    # Both bundled in the sdist and covered by the same LICENSES.txt.
+    - license: BSD-3-Clause # http_client.py, based on rdflib
+    - license: HPND # medusa, relicensed by Sam Rushing to the old Python licence
   dependencies:
     # `python-3` rather than a pinned `python-3.13`: the interpreter that pip
     # targets below and the one apko installs both resolve from the same Wolfi
@@ -36,6 +49,11 @@ package:
       - supervisor=${{package.full-version}}
       - cmd:supervisord=${{package.full-version}}
       - cmd:supervisorctl=${{package.full-version}}
+
+vars:
+  # Date the substitution below last changed, for the clause 4 notice. Not a
+  # build timestamp — it must stay stable across rebuilds.
+  patch-date: "2026-08-06"
 
 environment:
   contents:
@@ -60,9 +78,29 @@ pipeline:
   - name: Patch pwd.getpwuid for arbitrary-UID support
     runs: |
       set -eux
+
+      # Clause 4 of the licence (see the LICENSING note above). Deliberately
+      # written without the literal name of the substituted call: the guardrail
+      # below asserts that string is absent from the installed files, and putting
+      # it in this banner would make that check pass on the banner alone.
+      notice="$(mktemp)"
+      cat > "${notice}" <<'EOF'
+      # MODIFIED BY CONDUKTOR on ${{vars.patch-date}}: the pwd-module UID lookup in
+      # this file was replaced with the tuple (None, None, uid, 0) so supervisord
+      # tolerates running as a UID that has no /etc/passwd entry, as OpenShift
+      # does. This file therefore differs from upstream supervisor
+      # ${{package.version}}. Licence and copyright: /usr/share/doc/supervisor-cdk/.
+      EOF
+
       # Same substitution as the Ubuntu base's prebuildfs/usr/sbin/patch_supervisord.
-      sed -i 's/pwd\.getpwuid(uid)/(None, None, uid, 0)/g' supervisor/options.py
-      sed -i 's/pwd\.getpwuid(uid)/(None, None, uid, 0)/g' supervisor/datatypes.py
+      # Neither file has a shebang or a PEP 263 coding declaration, so the banner
+      # can go on line 1.
+      for f in supervisor/options.py supervisor/datatypes.py; do
+        sed -i 's/pwd\.getpwuid(uid)/(None, None, uid, 0)/g' "${f}"
+        cat "${notice}" "${f}" > "${f}.new"
+        mv "${f}.new" "${f}"
+      done
+      rm -f "${notice}"
 
   - name: pip install into destdir
     runs: |
@@ -74,6 +112,17 @@ pipeline:
         --no-build-isolation \
         --no-compile \
         .
+
+  # pip puts LICENSES.txt in dist-info but drops COPYRIGHT.txt, which is the
+  # notice clause 2 requires binary redistributions to reproduce. Both go to a
+  # stable path rather than a version-stamped dist-info directory.
+  - name: Install the licence and copyright notice
+    runs: |
+      set -eu
+      docdir="${{targets.destdir}}/usr/share/doc/supervisor-cdk"
+      install -d "${docdir}"
+      install -m 0644 LICENSES.txt "${docdir}/LICENSES.txt"
+      install -m 0644 COPYRIGHT.txt "${docdir}/COPYRIGHT.txt"
 
   # Checked on the *installed* files, not the source tree: this also proves the
   # sdist still ships those two modules and that pip put site-packages where
@@ -90,6 +139,14 @@ pipeline:
           || { echo "${installed} is missing the arbitrary-UID patch" >&2; exit 1; }
         ! grep -q 'pwd\.getpwuid' "${installed}" \
           || { echo "${installed} still calls pwd.getpwuid" >&2; exit 1; }
+        # Clause 4: the notice has to reach the shipped file, not just the source.
+        grep -q 'MODIFIED BY CONDUKTOR' "${installed}" \
+          || { echo "${installed} lost the modification notice" >&2; exit 1; }
         patched=$((patched + 1))
       done
       printf 'arbitrary-UID patch: OK (%d files patched)\n' "${patched}"
+
+      docdir="${{targets.destdir}}/usr/share/doc/supervisor-cdk"
+      for want in LICENSES.txt COPYRIGHT.txt; do
+        [ -s "${docdir}/${want}" ] || { echo "missing ${want}" >&2; exit 1; }
+      done

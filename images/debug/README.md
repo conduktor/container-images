@@ -330,6 +330,15 @@ Kafka 4.x clients talk to brokers from 2.1 onward, so these tools work against
 older customer clusters; a handful of newer subcommands will report an
 unsupported API against much older brokers.
 
+The Kafka component is **Apache-2.0** — nothing under the Confluent Community
+License is installed. The image ships the upstream `LICENSE` and `NOTICE`
+alongside a `PROVENANCE` note stating exactly what the subset is:
+
+```sh
+docker run --rm ghcr.io/conduktor/debug:latest \
+  ls /usr/share/doc/kafka-tools/   # LICENSE, NOTICE, PROVENANCE
+```
+
 ## Pull
 
 ```sh
