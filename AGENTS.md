@@ -70,12 +70,12 @@ the repo hints at it) or a contract with something outside this repo.
 ### Registry and secrets
 
 - **Never add a cloud-credential or private-registry login step.** This repo is
-  public and forkable, and the nightly must not depend on internal
-  infrastructure being up. Internal mirrors *pull* from `ghcr.io`; nothing is
-  ever pushed to them from here.
-- The Docker Hub token is the only registry secret: an org token scoped to
-  **write on `conduktor/conduktor-debug` only**. Do not widen its scope or reuse
-  it elsewhere.
+  public and forkable, and a run must not depend on anything outside it being
+  reachable. Consumers *pull* from `ghcr.io`; this repo pushes nowhere else.
+- The Docker Hub token is the only registry secret, and it is scoped to
+  **write on `conduktor/conduktor-debug` only**. Do not widen its scope, reuse it
+  elsewhere, or reach for `secrets: inherit` — `nightly.yml` names the secrets it
+  passes so a called workflow never receives more than it needs.
 - **Mirror inside the single `apko publish` call**, both refs passed as
   arguments, then sign per registry. A later `cosign copy` or registry
   replication hop can drop the cosign accessories (`sha256-<digest>.sig` /
@@ -119,6 +119,32 @@ enforces this instead of review.
   image stays root so `tcpdump`/`strace` work ad-hoc.
 - `latest` and `nightly` move on every run. Downstream pins `YYYY.MM.DD` or
   `git-<sha>`.
+
+### Licences of what we redistribute
+
+These images are published publicly, so every melange package must ship the
+licences of what it installs — Apache-2.0 s4(d) obliges us to carry the upstream
+NOTICE, BSD/MIT to carry the copyright text. Nothing fails on its own when a
+licence is missing, which is why this is a rule rather than a check.
+
+- **Never install third-party code without checking its licence and shipping
+  it.** Install the upstream `LICENSE`/`NOTICE` in the recipe *and* assert they
+  exist there, so a version bump that moves them fails the build instead of
+  publishing unlicensed. See `melange-kafka-tools.yaml` and `melange-cortex.yaml`.
+- Statically linked and bundled dependencies count: `cortex-cdk` ships
+  `licenses/` collected from `vendor/`, `prometheus-cdk` ships
+  `npm_licenses.tar.bz2` for the JS compiled into its binary.
+- **If a recipe patches upstream source, check whether the licence obliges a
+  modification notice** — supervisor's clause 4 does, so
+  `melange-supervisor.yaml` prepends one to each file it `sed`s, carrying a
+  `patch-date` that must not become a build timestamp.
+- `copyright.license` must match what the upstream file says, not what the
+  project is known for. Check it, don't assume: `head -3 <src>/LICENSE`.
+- When the source archive carries licences broader than the subset we install,
+  say so in a provenance note rather than shipping the broader licence — copying
+  it in would misstate our own terms (`melange-kafka-tools.yaml`).
+- Wolfi packages listed in an `apko.yaml` carry their own metadata and need
+  nothing extra; this rule is about what *we* build and install.
 
 ### CI shape
 

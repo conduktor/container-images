@@ -38,8 +38,9 @@ jobs:
       images: ${{ github.event.inputs.images || '' }}
       arches: x86_64,aarch64
       publish: true
-    # Docker Hub credentials for the debug image; inherit passes them by name.
-    secrets: inherit
+    secrets:
+      CONDUKTORBOT_DOCKER_HUB_USERNAME: ${{ secrets.CONDUKTORBOT_DOCKER_HUB_USERNAME }}
+      CONDUKTORBOT_DOCKER_HUB_PAT: ${{ secrets.CONDUKTORBOT_DOCKER_HUB_PAT }}
 
   publish-badges:
     name: refresh CVE badges

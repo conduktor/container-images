@@ -73,6 +73,19 @@ pipeline:
         -C "${{targets.destdir}}/opt/monitoring/prometheus" \
         --strip-components=1
 
+  # .promu.yml lists LICENSE, NOTICE and npm_licenses.tar.bz2 among the tarball
+  # files, so staging already extracted them — assert rather than re-copy, so an
+  # upstream .promu.yml edit cannot drop them silently. npm_licenses.tar.bz2 holds
+  # the bundled JS licences for the React UI compiled into the binary, and only
+  # exists because `make tarball` depends on the npm_licenses target.
+  - name: Verify the redistribution licences
+    runs: |
+      set -eu
+      dest="${{targets.destdir}}/opt/monitoring/prometheus"
+      for want in LICENSE NOTICE npm_licenses.tar.bz2; do
+        [ -s "${dest}/${want}" ] || { echo "missing ${want}"; exit 1; }
+      done
+
   - name: Smoke-test the packaged binaries
     runs: |
       set -eu
