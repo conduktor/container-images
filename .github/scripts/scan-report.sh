@@ -8,6 +8,10 @@
 # the layout download-artifact produces. Always emits something, so the sticky
 # comment refreshes instead of showing a stale run.
 #
+# Per-image sections come from cve_summary_section, the same function the
+# single-image scan-summary.sh calls, so a PR comment and the nightly job
+# summary cannot describe the same scan differently.
+#
 # Requires: jq
 set -euo pipefail
 
@@ -16,7 +20,9 @@ TITLE="${2:-Container image CVE report}"
 
 [ -n "${SCANS_DIR}" ] || { echo "Usage: $0 <scans-dir> [title]" >&2; exit 2; }
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source-path=SCRIPTDIR
+# shellcheck source=./cve-lib.sh
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/cve-lib.sh"
 
 printf '## %s\n' "${TITLE}"
 
@@ -33,7 +39,7 @@ for dir in "${SCANS_DIR}"/*/; do
 
   found=$((found + 1))
   printf '\n'
-  SCAN_SUMMARY_FOOTER=0 "${SCRIPT_DIR}/scan-summary.sh" "${trivy}" "${grype}" "${label}"
+  cve_summary_section "${trivy}" "${grype}" "${label}"
 done
 
 if [ "${found}" = "0" ]; then
@@ -41,5 +47,5 @@ if [ "${found}" = "0" ]; then
   exit 0
 fi
 
-printf '\n<sub>Trivy counts fixed vulnerabilities only; Grype includes unfixed, '
-printf 'so its totals run higher. Full reports are in the workflow artifacts.</sub>\n'
+printf '\n'
+cve_scanner_note

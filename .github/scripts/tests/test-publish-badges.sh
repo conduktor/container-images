@@ -60,10 +60,16 @@ echo '{"schemaVersion":1,"label":"trivy CVEs","message":"0 high / 1 total","colo
   > "${TMP}/src1/foo-trivy.json"
 echo '{"schemaVersion":1,"label":"grype CVEs","message":"0 high / 2 total","color":"brightgreen"}' \
   > "${TMP}/src1/foo-grype.json"
+# The Markdown reports the badges link to ride along in the same directory.
+echo '# foo — Trivy CVE report' > "${TMP}/src1/foo-trivy.md"
+echo '# foo — Grype CVE report' > "${TMP}/src1/foo-grype.md"
 
 "${SCRIPT}" "${TMP}/src1" badges > /dev/null 2>&1
 
-assert_eq "first run: files"  "foo-grype.json foo-trivy.json" "$(inspect_ls)"
+assert_eq "first run: files" \
+  "foo-grype.json foo-grype.md foo-trivy.json foo-trivy.md" "$(inspect_ls)"
+assert_eq "first run: report content" '# foo — Trivy CVE report' \
+  "$(inspect_read foo-trivy.md)"
 assert_eq "first run: content" '{"schemaVersion":1,"label":"trivy CVEs","message":"0 high / 1 total","color":"brightgreen"}' \
   "$(inspect_read foo-trivy.json)"
 assert_eq "first run: commits" "1" "$(inspect_commits)"
@@ -79,19 +85,26 @@ echo '{"schemaVersion":1,"label":"trivy CVEs","message":"1 high / 3 total","colo
 # note: foo-grype.json intentionally omitted — must be removed from the branch
 echo '{"schemaVersion":1,"label":"trivy CVEs","message":"0 high / 0 total","color":"brightgreen"}' \
   > "${TMP}/src2/bar-trivy.json"
+# foo-*.md and foo-grype.json are gone: a stale report is worse than none, since
+# the badge would still link to it.
+echo '# bar — Trivy CVE report' > "${TMP}/src2/bar-trivy.md"
 
 "${SCRIPT}" "${TMP}/src2" badges > /dev/null 2>&1
 
-assert_eq "third run: files" "bar-trivy.json foo-trivy.json" "$(inspect_ls)"
+assert_eq "third run: files" \
+  "bar-trivy.json bar-trivy.md foo-trivy.json" "$(inspect_ls)"
 assert_eq "third run: updated content" '{"schemaVersion":1,"label":"trivy CVEs","message":"1 high / 3 total","color":"orange"}' \
   "$(inspect_read foo-trivy.json)"
 assert_eq "third run: commits advance" "2" "$(inspect_commits)"
 
 # --- Refuse to blank the branch when src has no JSON -----------------------
+# Markdown alone is not enough: the badges are the thing the README cannot do
+# without, so a run that produced only reports must not wipe them.
 mkdir -p "${TMP}/empty"
+echo '# orphan report' > "${TMP}/empty/orphan-trivy.md"
 checks=$((checks + 1))
 if "${SCRIPT}" "${TMP}/empty" badges >/dev/null 2>&1; then
-  echo "  FAIL empty src-dir should exit non-zero" >&2
+  echo "  FAIL src-dir with no badge JSON should exit non-zero" >&2
   fails=$((fails + 1))
 fi
 assert_eq "empty run: branch untouched" "2" "$(inspect_commits)"

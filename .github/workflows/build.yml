@@ -454,13 +454,13 @@ jobs:
           path: images/${{ matrix.image.dir }}/image.tar
           retention-days: 7
 
-      - name: Build CVE badge JSON
+      - name: Build CVE badge JSON and Markdown report
         if: inputs.publish
         env:
           IMAGE_NAME: ${{ matrix.image.name }}
-        run: ./.github/scripts/cve-badge.sh trivy.json grype.json "${IMAGE_NAME}" badges
+        run: ./.github/scripts/cve-publish.sh trivy.json grype.json "${IMAGE_NAME}" badges
 
-      - name: Upload badge JSON
+      - name: Upload badge JSON and report
         if: inputs.publish
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

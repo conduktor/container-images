@@ -24,18 +24,32 @@ Docker Hub name. The base images are GHCR-only.
 
 Nightly scans of each `:latest` image, refreshed on every push.
 
+Each badge reads `<n>C / <n>H / <n>M / <n>L` — findings at critical, high,
+medium and low severity. **Click one for the full listing**: every finding with
+its CVE ID, package, installed version and fix, refreshed by the same run.
+
 <!--
 Each badge is a shields.io endpoint pointing at a JSON file the nightly
-workflow refreshes on the dedicated `badges` branch of this repo. No
-external gist / PAT needed.
+workflow refreshes on the dedicated `badges` branch of this repo, and links to
+the Markdown report the same run writes beside it. No external gist / PAT
+needed. Both come from .github/scripts/cve-publish.sh, which shares its counting
+and its Trivy/Grype normalisation with the PR comment — see
+.github/scripts/cve-lib.sh.
 -->
 
 | Image | Trivy | Grype |
 |-------|-------|-------|
-| `base-os` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-os-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-os-grype.json) |
-| `base-jre-25` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-jre-25-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-jre-25-grype.json) |
-| `base-monitoring` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-monitoring-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-monitoring-grype.json) |
-| `conduktor-debug` | ![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/conduktor-debug-trivy.json) | ![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/conduktor-debug-grype.json) |
+| `base-os` | [![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-os-trivy.json)](../../blob/badges/base-os-trivy.md) | [![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-os-grype.json)](../../blob/badges/base-os-grype.md) |
+| `base-jre-25` | [![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-jre-25-trivy.json)](../../blob/badges/base-jre-25-trivy.md) | [![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-jre-25-grype.json)](../../blob/badges/base-jre-25-grype.md) |
+| `base-monitoring` | [![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-monitoring-trivy.json)](../../blob/badges/base-monitoring-trivy.md) | [![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-monitoring-grype.json)](../../blob/badges/base-monitoring-grype.md) |
+| `conduktor-debug` | [![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/conduktor-debug-trivy.json)](../../blob/badges/conduktor-debug-trivy.md) | [![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/conduktor-debug-grype.json)](../../blob/badges/conduktor-debug-grype.md) |
+
+Trivy runs with `--ignore-unfixed`, so it lists only what a rebuild can clear.
+Grype includes unfixed findings and every severity down to negligible. The two
+disagreeing is expected; that is why both are here.
+
+Pull requests get the same per-severity table as a comment, from the same
+counting code, so a PR and a badge never report different numbers.
 
 The raw scan JSON and SBOMs are attached as workflow artifacts on each
 [nightly run](../../actions/workflows/nightly.yml) (30-day retention).
@@ -245,9 +259,10 @@ accidentally-staged secrets.
   [packages.wolfi.dev](https://packages.wolfi.dev/os/) before adding.
 - The nightly workflow assumes GHCR pushes are enabled via the built-in
   `GITHUB_TOKEN` (`packages: write`). No extra secrets are required for
-  signing, provenance, or the CVE badges — the badges are plain JSON files
-  that the `publish-badges` job commits to the dedicated `badges` branch
-  after every nightly (main is protected).
+  signing, provenance, or the CVE badges — the badges are plain JSON files,
+  and the reports they link to plain Markdown, that the `publish-badges` job
+  commits to the dedicated `badges` branch after every nightly (main is
+  protected).
 - Every third-party GitHub Action is pinned to a commit SHA; Dependabot
   ([`.github/dependabot.yml`](.github/dependabot.yml)) opens PRs to bump
   them weekly.

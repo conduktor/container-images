@@ -167,9 +167,11 @@ licence is missing, which is why this is a rule rather than a check.
   per-step `if:` guards to skip images (that once needed the same condition on
   16 steps), and do not glob for melange configs inside a workflow `run:` step —
   `build-matrix.sh` owns both, so the two copies cannot drift.
-- **If a CVE gate is ever added, gate on Grype**, never Trivy alone: Trivy
-  attributes melange-built files to an APK with no advisories and reports 0
-  where `trivy rootfs` on the same binary reports findings.
+- **Never let Trivy fall back to `detection-priority: precise`** (its default).
+  It then attributes every jar and Go binary to the melange-built APK that
+  installed it, finds no advisories for a package only we publish, and reports
+  0 — a green badge over real CVEs, failing nothing. `scan-image` sets
+  `comprehensive`; `test-scan-image.sh` enforces it because nothing else would.
 - Keep the CVE comment out of the scan matrix (it would post once per image),
   and do not hand a marketplace action `pull-requests: write` on a public repo.
 
