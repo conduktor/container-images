@@ -84,7 +84,7 @@ runs:
         set -euo pipefail
         # Shared with the badge step, so the two cannot diverge. Requires
         # actions/checkout, which a repo-local action needs regardless.
-        . "${GITHUB_WORKSPACE}/.github/scripts/cve-counts.sh"
+        . "${GITHUB_WORKSPACE}/.github/scripts/cve-lib.sh"
         cve_counts trivy.json grype.json
 
         critical=$(( CVE_TRIVY_CRITICAL > CVE_GRYPE_CRITICAL ? CVE_TRIVY_CRITICAL : CVE_GRYPE_CRITICAL ))

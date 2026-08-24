@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 #
-# Publish the shields.io endpoint JSON files to a dedicated branch of the same
-# repo, so the README's badge URLs can point at a raw.githubusercontent.com URL
-# on that branch without ever needing to push to `main` (which is protected).
+# Publish the shields.io endpoint JSON files, and the Markdown reports each
+# badge links to, to a dedicated branch of the same repo — so the README can
+# point at raw.githubusercontent.com and github.com/blob URLs on that branch
+# without ever needing to push to `main` (which is protected).
 #
 # The badge branch is treated as a state-only branch: on every run we resync to
-# it (or create it orphan on first run), replace all *.json files with the fresh
-# set, and commit only if something actually changed. Older images that no
-# longer produce badges are dropped instead of lingering.
+# it (or create it orphan on first run), replace all *.json and *.md files with
+# the fresh set, and commit only if something actually changed. Older images
+# that no longer produce badges are dropped instead of lingering.
+#
+# A run with badge JSON but no Markdown is accepted — the reports are an
+# addition, and refusing would take the badges down with them.
 #
 # Usage: publish-badges.sh <src-dir> <branch>
 #
@@ -30,9 +34,10 @@ BRANCH="$2"
 [ -d "${SRC}" ] || { echo "src-dir not found: ${SRC}" >&2; exit 2; }
 
 shopt -s nullglob
-srcs=("${SRC}"/*.json)
+badges=("${SRC}"/*.json)
+srcs=("${badges[@]}" "${SRC}"/*.md)
 shopt -u nullglob
-if [ "${#srcs[@]}" -eq 0 ]; then
+if [ "${#badges[@]}" -eq 0 ]; then
   echo "no badge JSON files in ${SRC} — refusing to blank the branch" >&2
   exit 2
 fi
@@ -49,8 +54,8 @@ git -C "${work}" remote add origin "${REMOTE_URL}"
 # on the fresh orphan branch created by `git init -b`.
 if git -C "${work}" fetch --depth=1 origin "${BRANCH}" 2>/dev/null; then
   git -C "${work}" reset --hard "origin/${BRANCH}"
-  # Drop every previous badge — a removed image must stop showing.
-  find "${work}" -maxdepth 1 -name '*.json' -delete
+  # Drop every previous badge and report — a removed image must stop showing.
+  find "${work}" -maxdepth 1 \( -name '*.json' -o -name '*.md' \) -delete
 fi
 
 cp "${srcs[@]}" "${work}/"
