@@ -44,10 +44,9 @@ and its Trivy/Grype normalisation with the PR comment — see
 | `base-monitoring` | [![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-monitoring-trivy.json)](../../blob/badges/base-monitoring-trivy.md) | [![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/base-monitoring-grype.json)](../../blob/badges/base-monitoring-grype.md) |
 | `conduktor-debug` | [![trivy](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/conduktor-debug-trivy.json)](../../blob/badges/conduktor-debug-trivy.md) | [![grype](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/conduktor/container-images/badges/conduktor-debug-grype.json)](../../blob/badges/conduktor-debug-grype.md) |
 
-Trivy runs with `--ignore-unfixed`, so it lists only what a rebuild can clear,
-and it cannot see the packages we build with melange. Grype includes unfixed
-findings and every severity down to negligible. The two disagreeing is expected;
-that is why both are here.
+Trivy runs with `--ignore-unfixed`, so it lists only what a rebuild can clear.
+Grype includes unfixed findings and every severity down to negligible. The two
+disagreeing is expected; that is why both are here.
 
 Pull requests get the same per-severity table as a comment, from the same
 counting code, so a PR and a badge never report different numbers.

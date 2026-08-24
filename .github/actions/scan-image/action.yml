@@ -5,8 +5,8 @@ description: >
   Optionally fail on a severity threshold.
 
 # One definition for both workflows, so the badge and the PR summary measure the
-# same thing. Non-gating by default: a Trivy-based gate is blind to packages we
-# build with melange.
+# same thing. Non-gating by default; the two scanners still disagree on totals,
+# because Trivy is run with ignore-unfixed and Grype is not.
 
 inputs:
   image:
@@ -49,6 +49,9 @@ runs:
     # below deliberately includes unfixed, hence its larger totals.
     - name: Trivy scan
       uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+      env:
+        # https://trivy.dev/docs/latest/guide/scanner/vulnerability/#detection-priority
+        TRIVY_DETECTION_PRIORITY: comprehensive
       with:
         image-ref: ${{ inputs.tar == '' && inputs.image || '' }}
         input: ${{ inputs.tar }}
