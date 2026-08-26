@@ -27,6 +27,7 @@ Grouped as in the [`apko.yaml`](apko.yaml):
 | **LDAP** | `openldap-2.6-clients` (`ldapsearch`, `ldapwhoami`) |
 | **Kafka** | `kcat` (formerly `kafkacat`), the Apache Kafka [shell tools](https://docs.confluent.io/kafka/operations-tools/kafka-tools.html) — `kafka-topics.sh`, `kafka-consumer-groups.sh`, `kafka-configs.sh`, `kafka-acls.sh`, `kafka-reassign-partitions.sh`, `kafka-console-{consumer,producer}.sh`, … (also available without the `.sh` suffix) |
 | **PostgreSQL** | `postgresql-17-client` (`psql`, `pg_dump`, `pg_isready`), `pgcli` |
+| **Kubernetes** | `kubectl` — see [Querying the Kubernetes API from inside the pod](#querying-the-kubernetes-api-from-inside-the-pod) |
 | **Conduktor** | `conduktor` CLI ([conduktor/ctl](https://github.com/conduktor/ctl)), `cdk-*` helpers |
 | **Perf / observability** | `htop`, `sysstat` (`iostat`, `pidstat`, `mpstat`), `strace` |
 | **HTTP + JSON/YAML** | `curl`, `wget`, `jq`, `yq` |
@@ -283,6 +284,12 @@ cdk-pg psql                            # interactive session on that database
 # Console API via the Conduktor CLI
 conduktor version
 conduktor get application              # needs CDK_BASE_URL + CDK_API_KEY
+
+# Kubernetes — authenticates as the pod's service account, RBAC permitting
+kubectl auth can-i --list              # check this first
+kubectl -n conduktor get pods -o wide
+kubectl -n conduktor logs console-0 --tail=100
+kubectl -n conduktor get endpoints     # is the Service actually backed?
 ```
 
 ### The `conduktor` CLI
@@ -300,6 +307,35 @@ conduktor get application
 
 It is packaged from the upstream release tarball, pinned by SHA-256 — see
 [`melange-conduktor-ctl.yaml`](melange-conduktor-ctl.yaml) for the bump recipe.
+
+### Querying the Kubernetes API from inside the pod
+
+`kubectl` needs no kubeconfig in-cluster: it authenticates as the pod's service
+account from the token under `/var/run/secrets/kubernetes.io/serviceaccount`,
+and defaults to the pod's own namespace. So it can do exactly what that
+account's RBAC allows — and the `default` service account usually has none,
+which reads as `Forbidden` on every call. Check first:
+
+```sh
+kubectl auth can-i --list    # what this pod may actually do
+```
+
+To grant a read-only view, bind a `Role` in the product namespace to the pod's
+`serviceAccountName` — `get`/`list` on `pods`, `pods/log`, `services`,
+`endpoints`, `configmaps`, `events`. Leave `secrets` out: it would expose the
+Kafka and Postgres credentials to anyone who can exec into the sidecar, and
+`cdk-config` / `cdk-env` mask values.
+
+Two things that make `kubectl` silently useless here:
+
+- `automountServiceAccountToken: false` on the pod or service account — no
+  token to read, so every call is `Unauthorized`.
+- **`--request-timeout` makes it talk to the wrong server.** On the kubectl we
+  ship (1.36) that flag alone stops the in-cluster config from being used and
+  the call goes to `http://localhost:8080`, failing `connection refused`
+  instead of timing out against the API server. No other common flag does this.
+  `kubectl get pods -v=4 2>&1 | grep in-cluster` prints `Using in-cluster
+  configuration` when resolution is right.
 
 ### Kafka shell tools and the JVM
 
