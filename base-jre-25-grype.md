@@ -9,6 +9,13 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 0 | 0 | 0 |
+| 1 | 2 | 3 | 0 | 6 |
 
-No vulnerabilities reported.
+| Severity | ID | Package | Installed | Fixed in |
+|----------|----|---------|-----------|----------|
+| :red_circle: critical | [`CVE-2019-1010022`](https://nvd.nist.gov/vuln/detail/CVE-2019-1010022) | `glibc-2.44` | `2.44-r1` | — |
+| :orange_circle: high | [`CVE-2019-1010023`](https://nvd.nist.gov/vuln/detail/CVE-2019-1010023) | `glibc-2.44` | `2.44-r1` | — |
+| :orange_circle: high | [`CVE-2026-0861`](https://nvd.nist.gov/vuln/detail/CVE-2026-0861) | `glibc-2.44` | `2.44-r1` | — |
+| :yellow_circle: medium | [`CVE-2010-4756`](https://nvd.nist.gov/vuln/detail/CVE-2010-4756) | `glibc-2.44` | `2.44-r1` | — |
+| :yellow_circle: medium | [`CVE-2019-1010024`](https://nvd.nist.gov/vuln/detail/CVE-2019-1010024) | `glibc-2.44` | `2.44-r1` | — |
+| :yellow_circle: medium | [`CVE-2019-1010025`](https://nvd.nist.gov/vuln/detail/CVE-2019-1010025) | `glibc-2.44` | `2.44-r1` | — |

@@ -9,10 +9,13 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 17 | 10 | 0 | 28 |
+| 1 | 19 | 13 | 0 | 34 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :red_circle: critical | [`CVE-2019-1010022`](https://nvd.nist.gov/vuln/detail/CVE-2019-1010022) | `glibc-2.44` | `2.44-r1` | — |
+| :orange_circle: high | [`CVE-2019-1010023`](https://nvd.nist.gov/vuln/detail/CVE-2019-1010023) | `glibc-2.44` | `2.44-r1` | — |
+| :orange_circle: high | [`CVE-2026-0861`](https://nvd.nist.gov/vuln/detail/CVE-2026-0861) | `glibc-2.44` | `2.44-r1` | — |
 | :orange_circle: high | [`GO-2026-5942`](https://go.dev/cl/786345) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`GO-2026-5970`](https://go.dev/issue/80142) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
 | :orange_circle: high | [`GHSA-2fvj-hgj9-j2gr`](https://github.com/advisories/GHSA-2fvj-hgj9-j2gr) | `jetty-security` | `12.0.34` | `12.0.36` |
@@ -30,6 +33,9 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`GO-2026-6088`](https://go.dev/issue/80481) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6089`](https://go.dev/issue/80205) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6090`](https://go.dev/issue/80528) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
+| :yellow_circle: medium | [`CVE-2010-4756`](https://nvd.nist.gov/vuln/detail/CVE-2010-4756) | `glibc-2.44` | `2.44-r1` | — |
+| :yellow_circle: medium | [`CVE-2019-1010024`](https://nvd.nist.gov/vuln/detail/CVE-2019-1010024) | `glibc-2.44` | `2.44-r1` | — |
+| :yellow_circle: medium | [`CVE-2019-1010025`](https://nvd.nist.gov/vuln/detail/CVE-2019-1010025) | `glibc-2.44` | `2.44-r1` | — |
 | :yellow_circle: medium | [`GO-2026-5158`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-5wrp-cwcj-q835) | `go.opentelemetry.io/otel` | `v1.43.0` | `1.42.0, 1.44.0` |
 | :yellow_circle: medium | [`GHSA-7p3p-8qv8-m2vh`](https://github.com/advisories/GHSA-7p3p-8qv8-m2vh) | `jetty-server` | `12.0.34` | `12.0.35` |
 | :yellow_circle: medium | [`GHSA-f4v5-65jj-pcr2`](https://github.com/advisories/GHSA-f4v5-65jj-pcr2) | `jetty-server` | `12.0.34` | `12.0.36` |
