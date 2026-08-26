@@ -58,7 +58,7 @@ repos:
     hooks:
       - id: apko-show-config
         name: apko show-config (validate)
-        entry: bash -c 'for d in images/*/; do (cd "$d" && apko show-config apko.yaml > /dev/null) || exit 1; done'
+        entry: scripts/apko-show-config.sh
         language: system
         files: ^images/.*/apko\.yaml$
         pass_filenames: false

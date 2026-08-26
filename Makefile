@@ -94,10 +94,7 @@ lint-workflows: ## actionlint on GitHub Actions workflows
 
 .PHONY: lint-apko
 lint-apko: ## Validate every apko.yaml parses (apko has no `lint`; show-config does the same job)
-	@for img in $(IMAGES); do \
-		echo ">> apko show-config images/$$img/apko.yaml"; \
-		( cd images/$$img && apko show-config apko.yaml > /dev/null ); \
-	done
+	./scripts/apko-show-config.sh $(IMAGES)
 
 .PHONY: lint-shell
 lint-shell: ## shellcheck every shell script (scripts/, .github/scripts/, image tools/)
