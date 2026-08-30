@@ -9,10 +9,11 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 17 | 10 | 0 | 28 |
+| 0 | 18 | 10 | 0 | 29 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
 | :orange_circle: high | [`GO-2026-5942`](https://go.dev/cl/786345) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`GO-2026-5970`](https://go.dev/issue/80142) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
 | :orange_circle: high | [`GHSA-2fvj-hgj9-j2gr`](https://github.com/advisories/GHSA-2fvj-hgj9-j2gr) | `jetty-security` | `12.0.34` | `12.0.36` |

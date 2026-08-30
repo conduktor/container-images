@@ -9,16 +9,20 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 1 | 5 | 0 | 9 |
+| 0 | 4 | 5 | 1 | 13 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
 | :orange_circle: high | [`GO-2026-6107`](https://github.com/etcd-io/etcd/security/advisories/GHSA-6vch-q96h-7gc3) | `go.etcd.io/etcd/client/pkg/v3` | `v3.5.17` | `3.5.33, 3.6.14, 3.7.1` |
+| :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
+| :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
+| :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
 | :yellow_circle: medium | [`GHSA-42cj-99w8-cp2p`](https://github.com/advisories/GHSA-42cj-99w8-cp2p) | `go.opentelemetry.io/otel/bridge/opentracing` | `v1.43.0` | `1.45.0` |
-| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.15-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-15806`](https://nvd.nist.gov/vuln/detail/CVE-2026-15806) | `python-3.13` | `3.13.15-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-17084`](https://nvd.nist.gov/vuln/detail/CVE-2026-17084) | `python-3.13` | `3.13.15-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-19672`](https://nvd.nist.gov/vuln/detail/CVE-2026-19672) | `python-3.13` | `3.13.15-r2` | — |
+| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.15-r3` | — |
+| :yellow_circle: medium | [`CVE-2026-15806`](https://nvd.nist.gov/vuln/detail/CVE-2026-15806) | `python-3.13` | `3.13.15-r3` | — |
+| :yellow_circle: medium | [`CVE-2026-17084`](https://nvd.nist.gov/vuln/detail/CVE-2026-17084) | `python-3.13` | `3.13.15-r3` | — |
+| :yellow_circle: medium | [`CVE-2026-19672`](https://nvd.nist.gov/vuln/detail/CVE-2026-19672) | `python-3.13` | `3.13.15-r3` | — |
+| :white_circle: low | [`CVE-2026-15310`](https://nvd.nist.gov/vuln/detail/CVE-2026-15310) | `python-3.13` | `3.13.15-r3` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.53.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.53.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.53.0` | — |
