@@ -158,7 +158,7 @@ jobs:
           signing-key-path: ${{ github.workspace }}/images/${{ matrix.apk.dir }}/melange.rsa
 
       - name: Build local APKs with melange
-        uses: chainguard-dev/actions/melange-build-pkg@7bd1e94b2a1b7faa891392757de7d89489070c5c # v1.6.32
+        uses: chainguard-dev/actions/melange-build-pkg@0ffab11a71c1b7bd68ddf94665a8ec88b116223d # v1.6.33
         with:
           multi-config: ${{ matrix.apk.configs }}
           workdir: images/${{ matrix.apk.dir }}
