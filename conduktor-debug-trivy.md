@@ -9,10 +9,11 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 12 | 4 | 0 | 16 |
+| 1 | 12 | 4 | 0 | 17 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :red_circle: critical | [`CVE-2026-56854`](https://avd.aquasec.com/nvd/cve-2026-56854) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
 | :orange_circle: high | [`CVE-2026-46600`](https://avd.aquasec.com/nvd/cve-2026-46600) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`CVE-2026-56852`](https://avd.aquasec.com/nvd/cve-2026-56852) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
 | :orange_circle: high | [`CVE-2026-10050`](https://avd.aquasec.com/nvd/cve-2026-10050) | `org.eclipse.jetty:jetty-security` | `12.0.34` | `9.4.63, 10.0.31, 11.0.31, 12.0.36, 12.1.10` |

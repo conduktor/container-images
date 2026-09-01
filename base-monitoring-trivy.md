@@ -9,10 +9,13 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 3 | 0 | 3 |
+| 3 | 0 | 3 | 0 | 6 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :red_circle: critical | [`CVE-2026-56854`](https://avd.aquasec.com/nvd/cve-2026-56854) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
+| :red_circle: critical | [`CVE-2026-56854`](https://avd.aquasec.com/nvd/cve-2026-56854) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
+| :red_circle: critical | [`CVE-2026-56854`](https://avd.aquasec.com/nvd/cve-2026-56854) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
 | :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `0.311.2-0.20260410083055-07c6232d159b` |
 | :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `0.311.2-0.20260410083055-07c6232d159b` |
 | :yellow_circle: medium | [`CVE-2026-45404`](https://avd.aquasec.com/nvd/cve-2026-45404) | `go.opentelemetry.io/otel/bridge/opentracing` | `v1.43.0` | `1.45.0` |
