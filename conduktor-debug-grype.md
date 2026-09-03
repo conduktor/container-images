@@ -9,16 +9,17 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 18 | 10 | 0 | 29 |
+| 0 | 19 | 11 | 0 | 31 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
 | :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
 | :orange_circle: high | [`GO-2026-5942`](https://go.dev/cl/786345) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`GO-2026-5970`](https://go.dev/issue/80142) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
+| :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`GHSA-2fvj-hgj9-j2gr`](https://github.com/advisories/GHSA-2fvj-hgj9-j2gr) | `jetty-security` | `12.0.34` | `12.0.36` |
-| :orange_circle: high | [`GHSA-2r2c-cx56-8933`](https://github.com/advisories/GHSA-2r2c-cx56-8933) | `jline-remote-telnet` | `3.30.4` | `4.2.1` |
-| :orange_circle: high | [`GHSA-47qp-hqvx-6r3f`](https://github.com/advisories/GHSA-47qp-hqvx-6r3f) | `jline-remote-telnet` | `3.30.4` | `4.2.1` |
+| :orange_circle: high | [`GHSA-2r2c-cx56-8933`](https://github.com/advisories/GHSA-2r2c-cx56-8933) | `jline-remote-telnet` | `3.30.4` | `3.30.14` |
+| :orange_circle: high | [`GHSA-47qp-hqvx-6r3f`](https://github.com/advisories/GHSA-47qp-hqvx-6r3f) | `jline-remote-telnet` | `3.30.4` | `3.30.14` |
 | :orange_circle: high | [`CVE-2026-33818`](https://nvd.nist.gov/vuln/detail/CVE-2026-33818) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-46600`](https://nvd.nist.gov/vuln/detail/CVE-2026-46600) | `stdlib` | `go1.25.12` | `1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56853`](https://nvd.nist.gov/vuln/detail/CVE-2026-56853) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
@@ -31,6 +32,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`GO-2026-6088`](https://go.dev/issue/80481) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6089`](https://go.dev/issue/80205) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6090`](https://go.dev/issue/80528) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
+| :yellow_circle: medium | [`CVE-2026-18374`](https://nvd.nist.gov/vuln/detail/CVE-2026-18374) | `glibc-2.44` | `2.44-r4` | — |
 | :yellow_circle: medium | [`GO-2026-5158`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-5wrp-cwcj-q835) | `go.opentelemetry.io/otel` | `v1.43.0` | `1.42.0, 1.44.0` |
 | :yellow_circle: medium | [`GHSA-7p3p-8qv8-m2vh`](https://github.com/advisories/GHSA-7p3p-8qv8-m2vh) | `jetty-server` | `12.0.34` | `12.0.35` |
 | :yellow_circle: medium | [`GHSA-f4v5-65jj-pcr2`](https://github.com/advisories/GHSA-f4v5-65jj-pcr2) | `jetty-server` | `12.0.34` | `12.0.36` |

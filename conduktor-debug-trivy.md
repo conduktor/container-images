@@ -9,16 +9,17 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 1 | 12 | 4 | 0 | 17 |
+| 1 | 13 | 4 | 0 | 18 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
 | :red_circle: critical | [`CVE-2026-56854`](https://avd.aquasec.com/nvd/cve-2026-56854) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
 | :orange_circle: high | [`CVE-2026-46600`](https://avd.aquasec.com/nvd/cve-2026-46600) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`CVE-2026-56852`](https://avd.aquasec.com/nvd/cve-2026-56852) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
+| :orange_circle: high | [`CVE-2026-84304`](https://avd.aquasec.com/nvd/cve-2026-84304) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`CVE-2026-10050`](https://avd.aquasec.com/nvd/cve-2026-10050) | `org.eclipse.jetty:jetty-security` | `12.0.34` | `9.4.63, 10.0.31, 11.0.31, 12.0.36, 12.1.10` |
-| :orange_circle: high | [`CVE-2026-56740`](https://avd.aquasec.com/nvd/cve-2026-56740) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1` |
-| :orange_circle: high | [`CVE-2026-56741`](https://avd.aquasec.com/nvd/cve-2026-56741) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1` |
+| :orange_circle: high | [`CVE-2026-56740`](https://avd.aquasec.com/nvd/cve-2026-56740) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
+| :orange_circle: high | [`CVE-2026-56741`](https://avd.aquasec.com/nvd/cve-2026-56741) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
 | :orange_circle: high | [`CVE-2026-33818`](https://avd.aquasec.com/nvd/cve-2026-33818) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-39821`](https://avd.aquasec.com/nvd/cve-2026-39821) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56853`](https://avd.aquasec.com/nvd/cve-2026-56853) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
