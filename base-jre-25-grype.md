@@ -13,4 +13,4 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :yellow_circle: medium | [`CVE-2026-18374`](https://nvd.nist.gov/vuln/detail/CVE-2026-18374) | `glibc-2.44` | `2.44-r4` | — |
+| :yellow_circle: medium | [`CVE-2026-18374`](https://nvd.nist.gov/vuln/detail/CVE-2026-18374) | `glibc-2.44` | `2.44-r5` | — |
