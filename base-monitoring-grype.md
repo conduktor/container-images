@@ -9,10 +9,11 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 16 | 7 | 1 | 27 |
+| 0 | 17 | 7 | 1 | 28 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-82209`](https://nvd.nist.gov/vuln/detail/CVE-2026-82209) | `curl` | `8.22.0-r2` | — |
 | :orange_circle: high | [`GO-2026-6107`](https://github.com/etcd-io/etcd/security/advisories/GHSA-6vch-q96h-7gc3) | `go.etcd.io/etcd/client/pkg/v3` | `v3.5.17` | `3.5.33, 3.6.14, 3.7.1` |
 | :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
 | :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
