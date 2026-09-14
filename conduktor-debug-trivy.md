@@ -35,4 +35,4 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`CVE-2026-10051`](https://avd.aquasec.com/nvd/cve-2026-10051) | `org.eclipse.jetty:jetty-server` | `12.0.34` | `12.0.36, 12.1.10` |
 | :yellow_circle: medium | [`CVE-2026-6790`](https://avd.aquasec.com/nvd/cve-2026-6790) | `org.eclipse.jetty:jetty-server` | `12.0.34` | `12.0.35, 12.1.9` |
 | :yellow_circle: medium | [`CVE-2026-8384`](https://avd.aquasec.com/nvd/cve-2026-8384) | `org.eclipse.jetty:jetty-util` | `12.0.34` | `12.0.35, 12.1.9` |
-| :yellow_circle: medium | [`CVE-2026-85091`](https://avd.aquasec.com/nvd/cve-2026-85091) | `zlib` | `1.3.2-r5` | `1.3.3-r0` |
+| :yellow_circle: medium | [`CVE-2026-85091`](https://avd.aquasec.com/nvd/cve-2026-85091) | `zlib` | `1.3.2-r6` | `1.3.3-r0` |

@@ -9,6 +9,9 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 0 | 0 | 0 |
+| 0 | 1 | 0 | 0 | 2 |
 
-No vulnerabilities reported.
+| Severity | ID | Package | Installed | Fixed in |
+|----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-85091`](https://images.chainguard.dev/security/CVE-2026-85091) | `zlib` | `1.3.2-r6` | `1.3.3-r0` |
+| :black_circle: unknown | [`GHSA-g5fp-32jq-cfw2`](https://images.chainguard.dev/security/GHSA-g5fp-32jq-cfw2) | `zlib` | `1.3.2-r6` | `1.3.3-r0` |
