@@ -34,4 +34,4 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
-| :yellow_circle: medium | [`CVE-2026-85091`](https://avd.aquasec.com/nvd/cve-2026-85091) | `zlib` | `1.3.2-r6` | `1.3.3-r0` |
+| :yellow_circle: medium | [`CVE-2026-85091`](https://avd.aquasec.com/nvd/cve-2026-85091) | `zlib` | `1.3.2-r7` | `1.3.3-r0` |

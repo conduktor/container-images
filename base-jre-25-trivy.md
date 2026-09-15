@@ -13,4 +13,4 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :yellow_circle: medium | [`CVE-2026-85091`](https://avd.aquasec.com/nvd/cve-2026-85091) | `zlib` | `1.3.2-r6` | `1.3.3-r0` |
+| :yellow_circle: medium | [`CVE-2026-85091`](https://avd.aquasec.com/nvd/cve-2026-85091) | `zlib` | `1.3.2-r7` | `1.3.3-r0` |
