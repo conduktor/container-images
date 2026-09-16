@@ -9,7 +9,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 23 | 11 | 0 | 36 |
+| 0 | 23 | 11 | 1 | 37 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -47,5 +47,6 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`CVE-2026-56860`](https://nvd.nist.gov/vuln/detail/CVE-2026-56860) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`GO-2026-6091`](https://go.dev/issue/80435) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`GO-2026-6218`](https://go.dev/cl/803681) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
+| :white_circle: low | [`GO-2025-3547`](https://github.com/advisories/GHSA-r56h-j38w-hrqq) | `k8s.io/kubernetes` | `v1.37.0+dirty` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | — |
 | :black_circle: unknown | [`GHSA-g5fp-32jq-cfw2`](https://images.chainguard.dev/security/GHSA-g5fp-32jq-cfw2) | `zlib` | `1.3.2-r7` | `1.3.3-r0` |
