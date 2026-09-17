@@ -9,7 +9,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 17 | 6 | 1 | 28 |
+| 0 | 17 | 7 | 1 | 29 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -29,15 +29,16 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
-| :orange_circle: high | [`CVE-2026-85091`](https://images.chainguard.dev/security/CVE-2026-85091) | `zlib` | `1.3.2-r7` | `1.3.3-r0` |
+| :orange_circle: high | [`CVE-2026-85091`](https://images.chainguard.dev/security/CVE-2026-85091) | `zlib` | `1.3.2.1_rc20260601-r0` | `1.3.3-r0` |
 | :yellow_circle: medium | [`GHSA-42cj-99w8-cp2p`](https://github.com/advisories/GHSA-42cj-99w8-cp2p) | `go.opentelemetry.io/otel/bridge/opentracing` | `v1.43.0` | `1.45.0` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.15_git20260912-r0` | — |
 | :yellow_circle: medium | [`CVE-2026-19672`](https://nvd.nist.gov/vuln/detail/CVE-2026-19672) | `python-3.13` | `3.13.15_git20260912-r0` | — |
+| :yellow_circle: medium | [`CVE-2026-87910`](https://nvd.nist.gov/vuln/detail/CVE-2026-87910) | `python-3.13` | `3.13.15_git20260912-r0` | — |
 | :white_circle: low | [`CVE-2026-15310`](https://nvd.nist.gov/vuln/detail/CVE-2026-15310) | `python-3.13` | `3.13.15_git20260912-r0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.53.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.53.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.53.0` | — |
-| :black_circle: unknown | [`GHSA-g5fp-32jq-cfw2`](https://images.chainguard.dev/security/GHSA-g5fp-32jq-cfw2) | `zlib` | `1.3.2-r7` | `1.3.3-r0` |
+| :black_circle: unknown | [`GHSA-g5fp-32jq-cfw2`](https://images.chainguard.dev/security/GHSA-g5fp-32jq-cfw2) | `zlib` | `1.3.2.1_rc20260601-r0` | `1.3.3-r0` |

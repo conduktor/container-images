@@ -13,5 +13,5 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :orange_circle: high | [`CVE-2026-85091`](https://images.chainguard.dev/security/CVE-2026-85091) | `zlib` | `1.3.2-r7` | `1.3.3-r0` |
-| :black_circle: unknown | [`GHSA-g5fp-32jq-cfw2`](https://images.chainguard.dev/security/GHSA-g5fp-32jq-cfw2) | `zlib` | `1.3.2-r7` | `1.3.3-r0` |
+| :orange_circle: high | [`CVE-2026-85091`](https://images.chainguard.dev/security/CVE-2026-85091) | `zlib` | `1.3.2.1_rc20260601-r0` | `1.3.3-r0` |
+| :black_circle: unknown | [`GHSA-g5fp-32jq-cfw2`](https://images.chainguard.dev/security/GHSA-g5fp-32jq-cfw2) | `zlib` | `1.3.2.1_rc20260601-r0` | `1.3.3-r0` |
