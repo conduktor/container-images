@@ -9,7 +9,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 23 | 11 | 1 | 37 |
+| 0 | 22 | 11 | 1 | 35 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -35,7 +35,6 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`GO-2026-6088`](https://go.dev/issue/80481) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6089`](https://go.dev/issue/80205) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6090`](https://go.dev/issue/80528) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
-| :orange_circle: high | [`CVE-2026-85091`](https://images.chainguard.dev/security/CVE-2026-85091) | `zlib` | `1.3.2.1_rc20260601-r0` | `1.3.3-r0` |
 | :yellow_circle: medium | [`GO-2026-5158`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-5wrp-cwcj-q835) | `go.opentelemetry.io/otel` | `v1.43.0` | `1.42.0, 1.44.0` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`GHSA-7p3p-8qv8-m2vh`](https://github.com/advisories/GHSA-7p3p-8qv8-m2vh) | `jetty-server` | `12.0.34` | `12.0.35` |
@@ -49,4 +48,3 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`GO-2026-6218`](https://go.dev/cl/803681) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :white_circle: low | [`GO-2025-3547`](https://github.com/advisories/GHSA-r56h-j38w-hrqq) | `k8s.io/kubernetes` | `v1.37.0+dirty` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | — |
-| :black_circle: unknown | [`GHSA-g5fp-32jq-cfw2`](https://images.chainguard.dev/security/GHSA-g5fp-32jq-cfw2) | `zlib` | `1.3.2.1_rc20260601-r0` | `1.3.3-r0` |

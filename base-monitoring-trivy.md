@@ -9,7 +9,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 9 | 13 | 0 | 22 |
+| 0 | 9 | 12 | 0 | 21 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -34,4 +34,3 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
-| :yellow_circle: medium | [`CVE-2026-85091`](https://avd.aquasec.com/nvd/cve-2026-85091) | `zlib` | `1.3.2.1_rc20260601-r0` | `1.3.3-r0` |

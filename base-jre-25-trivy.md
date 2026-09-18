@@ -9,8 +9,6 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 1 | 0 | 1 |
+| 0 | 0 | 0 | 0 | 0 |
 
-| Severity | ID | Package | Installed | Fixed in |
-|----------|----|---------|-----------|----------|
-| :yellow_circle: medium | [`CVE-2026-85091`](https://avd.aquasec.com/nvd/cve-2026-85091) | `zlib` | `1.3.2.1_rc20260601-r0` | `1.3.3-r0` |
+No vulnerabilities reported.
