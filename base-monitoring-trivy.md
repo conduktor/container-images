@@ -9,7 +9,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 9 | 12 | 0 | 21 |
+| 0 | 9 | 12 | 8 | 29 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -34,3 +34,11 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
+| :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/exporters/otlp/otlptrace` | `v1.43.0` | `1.45.0` |
+| :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/exporters/otlp/otlptrace` | `v1.43.0` | `1.45.0` |
+| :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc` | `v1.43.0` | `1.45.0` |
+| :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc` | `v1.43.0` | `1.45.0` |
+| :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp` | `v1.43.0` | `1.45.0` |
+| :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp` | `v1.43.0` | `1.45.0` |
+| :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
+| :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
