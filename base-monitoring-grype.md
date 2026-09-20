@@ -9,10 +9,11 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 16 | 7 | 9 | 35 |
+| 0 | 18 | 9 | 9 | 39 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-19499`](https://nvd.nist.gov/vuln/detail/CVE-2026-19499) | `glibc-2.44` | `2.44-r6` | — |
 | :orange_circle: high | [`GO-2026-6107`](https://github.com/etcd-io/etcd/security/advisories/GHSA-6vch-q96h-7gc3) | `go.etcd.io/etcd/client/pkg/v3` | `v3.5.17` | `3.5.33, 3.6.14, 3.7.1` |
 | :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
 | :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.53.0` | `0.55.0` |
@@ -29,6 +30,9 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
+| :orange_circle: high | [`CVE-2026-82049`](https://nvd.nist.gov/vuln/detail/CVE-2026-82049) | `python-3.13` | `3.13.15_git20260918-r1` | — |
+| :yellow_circle: medium | [`CVE-2026-19542`](https://nvd.nist.gov/vuln/detail/CVE-2026-19542) | `glibc-2.44` | `2.44-r6` | — |
+| :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r6` | — |
 | :yellow_circle: medium | [`GHSA-42cj-99w8-cp2p`](https://github.com/advisories/GHSA-42cj-99w8-cp2p) | `go.opentelemetry.io/otel/bridge/opentracing` | `v1.43.0` | `1.45.0` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |

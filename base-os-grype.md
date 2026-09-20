@@ -9,6 +9,10 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 0 | 0 | 0 |
+| 0 | 1 | 2 | 0 | 3 |
 
-No vulnerabilities reported.
+| Severity | ID | Package | Installed | Fixed in |
+|----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-19499`](https://nvd.nist.gov/vuln/detail/CVE-2026-19499) | `glibc-2.44` | `2.44-r6` | — |
+| :yellow_circle: medium | [`CVE-2026-19542`](https://nvd.nist.gov/vuln/detail/CVE-2026-19542) | `glibc-2.44` | `2.44-r6` | — |
+| :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r6` | — |
