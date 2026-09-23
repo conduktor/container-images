@@ -9,13 +9,11 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 2 | 5 | 1 | 11 |
+| 0 | 1 | 4 | 1 | 9 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :orange_circle: high | [`CVE-2026-19499`](https://nvd.nist.gov/vuln/detail/CVE-2026-19499) | `glibc-2.44` | `2.44-r6` | — |
 | :orange_circle: high | [`CVE-2026-82049`](https://nvd.nist.gov/vuln/detail/CVE-2026-82049) | `python-3.13` | `3.13.15_git20260918-r1` | — |
-| :yellow_circle: medium | [`CVE-2026-19542`](https://nvd.nist.gov/vuln/detail/CVE-2026-19542) | `glibc-2.44` | `2.44-r6` | — |
 | :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r6` | — |
 | :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.15_git20260918-r1` | — |
 | :yellow_circle: medium | [`CVE-2026-19672`](https://nvd.nist.gov/vuln/detail/CVE-2026-19672) | `python-3.13` | `3.13.15_git20260918-r1` | — |
