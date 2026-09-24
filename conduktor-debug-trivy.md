@@ -9,7 +9,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 15 | 7 | 1 | 23 |
+| 0 | 16 | 9 | 1 | 26 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -19,6 +19,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`CVE-2026-84304`](https://avd.aquasec.com/nvd/cve-2026-84304) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`CVE-2026-84445`](https://avd.aquasec.com/nvd/cve-2026-84445) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2, 1.83.2, 1.85.0-dev.0.20260825072537-93e31b48545e` |
 | :orange_circle: high | [`CVE-2026-10050`](https://avd.aquasec.com/nvd/cve-2026-10050) | `org.eclipse.jetty:jetty-security` | `12.0.34` | `9.4.63, 10.0.31, 11.0.31, 12.0.36, 12.1.10` |
+| :orange_circle: high | [`CVE-2026-77422`](https://avd.aquasec.com/nvd/cve-2026-77422) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
 | :orange_circle: high | [`CVE-2026-56740`](https://avd.aquasec.com/nvd/cve-2026-56740) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
 | :orange_circle: high | [`CVE-2026-56741`](https://avd.aquasec.com/nvd/cve-2026-56741) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
 | :orange_circle: high | [`CVE-2026-33818`](https://avd.aquasec.com/nvd/cve-2026-33818) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
@@ -35,4 +36,6 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`CVE-2026-10051`](https://avd.aquasec.com/nvd/cve-2026-10051) | `org.eclipse.jetty:jetty-server` | `12.0.34` | `12.0.36, 12.1.10` |
 | :yellow_circle: medium | [`CVE-2026-6790`](https://avd.aquasec.com/nvd/cve-2026-6790) | `org.eclipse.jetty:jetty-server` | `12.0.34` | `12.0.35, 12.1.9` |
 | :yellow_circle: medium | [`CVE-2026-8384`](https://avd.aquasec.com/nvd/cve-2026-8384) | `org.eclipse.jetty:jetty-util` | `12.0.34` | `12.0.35, 12.1.9` |
+| :yellow_circle: medium | [`CVE-2026-77421`](https://avd.aquasec.com/nvd/cve-2026-77421) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
+| :yellow_circle: medium | [`CVE-2026-77420`](https://avd.aquasec.com/nvd/cve-2026-77420) | `org.jline:jline-reader` | `3.30.4` | `4.3.1, 3.30.15` |
 | :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |

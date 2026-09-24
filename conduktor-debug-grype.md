@@ -48,5 +48,5 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`GO-2026-6091`](https://go.dev/issue/80435) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`GO-2026-6218`](https://go.dev/cl/803681) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :white_circle: low | [`GHSA-8wmf-6v46-5gfg`](https://github.com/advisories/GHSA-8wmf-6v46-5gfg) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
-| :white_circle: low | [`GO-2025-3547`](https://github.com/advisories/GHSA-r56h-j38w-hrqq) | `k8s.io/kubernetes` | `v1.37.0+dirty` | — |
+| :white_circle: low | [`GO-2025-3547`](https://github.com/advisories/GHSA-r56h-j38w-hrqq) | `k8s.io/kubernetes` | `v1.37.1+dirty` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | — |
