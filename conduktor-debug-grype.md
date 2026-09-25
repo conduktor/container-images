@@ -9,7 +9,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 22 | 12 | 2 | 37 |
+| 0 | 23 | 14 | 2 | 40 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -21,6 +21,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`GHSA-2v4p-qf9q-27wj`](https://github.com/advisories/GHSA-2v4p-qf9q-27wj) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2` |
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`GHSA-2fvj-hgj9-j2gr`](https://github.com/advisories/GHSA-2fvj-hgj9-j2gr) | `jetty-security` | `12.0.34` | `12.0.36` |
+| :orange_circle: high | [`GHSA-r2xf-8xr9-62gw`](https://github.com/advisories/GHSA-r2xf-8xr9-62gw) | `jline-builtins` | `3.30.4` | `3.30.15` |
 | :orange_circle: high | [`GHSA-2r2c-cx56-8933`](https://github.com/advisories/GHSA-2r2c-cx56-8933) | `jline-remote-telnet` | `3.30.4` | `3.30.14` |
 | :orange_circle: high | [`GHSA-47qp-hqvx-6r3f`](https://github.com/advisories/GHSA-47qp-hqvx-6r3f) | `jline-remote-telnet` | `3.30.4` | `3.30.14` |
 | :orange_circle: high | [`CVE-2026-33818`](https://nvd.nist.gov/vuln/detail/CVE-2026-33818) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
@@ -41,6 +42,8 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :yellow_circle: medium | [`GHSA-7p3p-8qv8-m2vh`](https://github.com/advisories/GHSA-7p3p-8qv8-m2vh) | `jetty-server` | `12.0.34` | `12.0.35` |
 | :yellow_circle: medium | [`GHSA-f4v5-65jj-pcr2`](https://github.com/advisories/GHSA-f4v5-65jj-pcr2) | `jetty-server` | `12.0.34` | `12.0.36` |
 | :yellow_circle: medium | [`GHSA-w7x5-g22v-xqhr`](https://github.com/advisories/GHSA-w7x5-g22v-xqhr) | `jetty-util` | `12.0.34` | `12.0.35` |
+| :yellow_circle: medium | [`GHSA-ph9c-7hw9-vhhw`](https://github.com/advisories/GHSA-ph9c-7hw9-vhhw) | `jline-builtins` | `3.30.4` | `3.30.15` |
+| :yellow_circle: medium | [`GHSA-5q95-hrpc-m3w3`](https://github.com/advisories/GHSA-5q95-hrpc-m3w3) | `jline-reader` | `3.30.4` | `3.30.15` |
 | :yellow_circle: medium | [`GHSA-xx22-p4ch-683r`](https://github.com/advisories/GHSA-xx22-p4ch-683r) | `lz4-java` | `1.10.2` | `1.11.1` |
 | :yellow_circle: medium | [`CVE-2026-58058`](https://nvd.nist.gov/vuln/detail/CVE-2026-58058) | `nmap` | `7.94-r3` | — |
 | :yellow_circle: medium | [`CVE-2026-56858`](https://nvd.nist.gov/vuln/detail/CVE-2026-56858) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
