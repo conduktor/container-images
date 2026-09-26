@@ -17,7 +17,7 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`CVE-2026-46600`](https://avd.aquasec.com/nvd/cve-2026-46600) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`CVE-2026-56852`](https://avd.aquasec.com/nvd/cve-2026-56852) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
 | :orange_circle: high | [`CVE-2026-84304`](https://avd.aquasec.com/nvd/cve-2026-84304) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
-| :orange_circle: high | [`CVE-2026-84445`](https://avd.aquasec.com/nvd/cve-2026-84445) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2, 1.83.2, 1.85.0-dev.0.20260825072537-93e31b48545e` |
+| :orange_circle: high | [`CVE-2026-84445`](https://avd.aquasec.com/nvd/cve-2026-84445) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2, 1.83.2, 1.84.0-dev.0.20260825144003-d5a41119e0e3, 1.85.0-dev.0.20260825072537-93e31b48545e` |
 | :orange_circle: high | [`CVE-2026-10050`](https://avd.aquasec.com/nvd/cve-2026-10050) | `org.eclipse.jetty:jetty-security` | `12.0.34` | `9.4.63, 10.0.31, 11.0.31, 12.0.36, 12.1.10` |
 | :orange_circle: high | [`CVE-2026-77422`](https://avd.aquasec.com/nvd/cve-2026-77422) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
 | :orange_circle: high | [`CVE-2026-56740`](https://avd.aquasec.com/nvd/cve-2026-56740) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |

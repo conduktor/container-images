@@ -9,16 +9,19 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 1 | 4 | 1 | 9 |
+| 0 | 1 | 7 | 1 | 12 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :orange_circle: high | [`CVE-2026-82049`](https://nvd.nist.gov/vuln/detail/CVE-2026-82049) | `python-3.13` | `3.13.15_git20260918-r2` | — |
+| :orange_circle: high | [`CVE-2026-82049`](https://nvd.nist.gov/vuln/detail/CVE-2026-82049) | `python-3.13` | `3.13.15_git20260925-r0` | — |
+| :yellow_circle: medium | [`CVE-2026-77117`](https://nvd.nist.gov/vuln/detail/CVE-2026-77117) | `glibc-2.44` | `2.44-r6` | — |
+| :yellow_circle: medium | [`CVE-2026-80489`](https://nvd.nist.gov/vuln/detail/CVE-2026-80489) | `glibc-2.44` | `2.44-r6` | — |
+| :yellow_circle: medium | [`CVE-2026-8674`](https://nvd.nist.gov/vuln/detail/CVE-2026-8674) | `glibc-2.44` | `2.44-r6` | — |
 | :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r6` | — |
-| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.15_git20260918-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-19672`](https://nvd.nist.gov/vuln/detail/CVE-2026-19672) | `python-3.13` | `3.13.15_git20260918-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-87910`](https://nvd.nist.gov/vuln/detail/CVE-2026-87910) | `python-3.13` | `3.13.15_git20260918-r2` | — |
-| :white_circle: low | [`CVE-2026-15310`](https://nvd.nist.gov/vuln/detail/CVE-2026-15310) | `python-3.13` | `3.13.15_git20260918-r2` | — |
+| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.15_git20260925-r0` | — |
+| :yellow_circle: medium | [`CVE-2026-19672`](https://nvd.nist.gov/vuln/detail/CVE-2026-19672) | `python-3.13` | `3.13.15_git20260925-r0` | — |
+| :yellow_circle: medium | [`CVE-2026-87910`](https://nvd.nist.gov/vuln/detail/CVE-2026-87910) | `python-3.13` | `3.13.15_git20260925-r0` | — |
+| :white_circle: low | [`CVE-2026-15310`](https://nvd.nist.gov/vuln/detail/CVE-2026-15310) | `python-3.13` | `3.13.15_git20260925-r0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
