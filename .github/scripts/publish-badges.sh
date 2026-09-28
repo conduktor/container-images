@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 #
-# Publish the shields.io endpoint JSON files, and the Markdown reports each
-# badge links to, to a dedicated branch of the same repo — so the README can
-# point at raw.githubusercontent.com and github.com/blob URLs on that branch
-# without ever needing to push to `main` (which is protected).
+# Publish everything the README and its readers link to by fixed URL — the
+# shields.io endpoint JSON, the Markdown report behind each badge, and the raw
+# scanner output and SBOMs under reports/ and sbom/ — to a dedicated branch of
+# the same repo, so those URLs live on raw.githubusercontent.com without this
+# ever needing to push to `main` (which is protected).
 #
 # The badge branch is treated as a state-only branch: on every run we resync to
-# it (or create it orphan on first run), replace all *.json and *.md files with
-# the fresh set, and commit only if something actually changed. Older images
-# that no longer produce badges are dropped instead of lingering.
+# it (or create it orphan on first run), replace its entire tree with <src-dir>,
+# and commit only if something actually changed. Anything the run did not
+# produce is dropped rather than left to go stale — an image that stopped being
+# built must stop being served.
 #
-# A run with badge JSON but no Markdown is accepted — the reports are an
-# addition, and refusing would take the badges down with them.
+# A run with badge JSON but no Markdown or raw reports is accepted — those are
+# an addition, and refusing would take the badges down with them.
 #
 # Usage: publish-badges.sh <src-dir> <branch>
 #
@@ -33,9 +35,10 @@ BRANCH="$2"
 
 [ -d "${SRC}" ] || { echo "src-dir not found: ${SRC}" >&2; exit 2; }
 
+# Only the top level counts: the badges are what the README cannot do without,
+# and a raw report under reports/ must not stand in for one.
 shopt -s nullglob
 badges=("${SRC}"/*.json)
-srcs=("${badges[@]}" "${SRC}"/*.md)
 shopt -u nullglob
 if [ "${#badges[@]}" -eq 0 ]; then
   echo "no badge JSON files in ${SRC} — refusing to blank the branch" >&2
@@ -54,11 +57,12 @@ git -C "${work}" remote add origin "${REMOTE_URL}"
 # on the fresh orphan branch created by `git init -b`.
 if git -C "${work}" fetch --depth=1 origin "${BRANCH}" 2>/dev/null; then
   git -C "${work}" reset --hard "origin/${BRANCH}"
-  # Drop every previous badge and report — a removed image must stop showing.
-  find "${work}" -maxdepth 1 \( -name '*.json' -o -name '*.md' \) -delete
+  # Drop the whole previous tree — a removed image, report or SBOM must stop
+  # being served, and everything below is rewritten from <src-dir> anyway.
+  find "${work}" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 fi
 
-cp "${srcs[@]}" "${work}/"
+cp -R "${SRC}/." "${work}/"
 
 git -C "${work}" add -A
 if git -C "${work}" diff --cached --quiet; then
@@ -66,5 +70,5 @@ if git -C "${work}" diff --cached --quiet; then
   exit 0
 fi
 
-git -C "${work}" commit -q -m "ci: refresh CVE badges [skip ci]"
+git -C "${work}" commit -q -m "ci: refresh CVE badges, reports and SBOMs [skip ci]"
 git -C "${work}" push origin "${BRANCH}"

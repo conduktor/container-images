@@ -39,9 +39,11 @@ git clone -q "${BARE}" "${INSPECT}" 2>/dev/null
 git -C "${INSPECT}" config user.name  "${GIT_USER_NAME}"
 git -C "${INSPECT}" config user.email "${GIT_USER_EMAIL}"
 
+# Recursive: the raw reports and SBOMs live under reports/ and sbom/, and a
+# stale one of those has to be dropped just like a stale badge.
 inspect_ls() {
   git -C "${INSPECT}" fetch -q origin badges
-  git -C "${INSPECT}" ls-tree --name-only origin/badges | sort | tr '\n' ' ' | sed 's/ $//'
+  git -C "${INSPECT}" ls-tree -r --name-only origin/badges | sort | tr '\n' ' ' | sed 's/ $//'
 }
 
 inspect_read() {
@@ -63,11 +65,22 @@ echo '{"schemaVersion":1,"label":"grype CVEs","message":"0 high / 2 total","colo
 # The Markdown reports the badges link to ride along in the same directory.
 echo '# foo — Trivy CVE report' > "${TMP}/src1/foo-trivy.md"
 echo '# foo — Grype CVE report' > "${TMP}/src1/foo-grype.md"
+# …and the raw scanner output and SBOMs in the subtrees scan-artifacts.sh
+# stages, which consumers fetch by fixed URL.
+mkdir -p "${TMP}/src1/reports/foo" "${TMP}/src1/sbom/foo"
+echo '{"Results":[]}' > "${TMP}/src1/reports/foo/trivy.json"
+echo '{"matches":[]}' > "${TMP}/src1/reports/foo/grype.json"
+echo '{"name":"foo-index"}' > "${TMP}/src1/sbom/foo/sbom-index.spdx.json"
 
 "${SCRIPT}" "${TMP}/src1" badges > /dev/null 2>&1
 
 assert_eq "first run: files" \
-  "foo-grype.json foo-grype.md foo-trivy.json foo-trivy.md" "$(inspect_ls)"
+  "foo-grype.json foo-grype.md foo-trivy.json foo-trivy.md reports/foo/grype.json reports/foo/trivy.json sbom/foo/sbom-index.spdx.json" \
+  "$(inspect_ls)"
+assert_eq "first run: raw report content" '{"matches":[]}' \
+  "$(inspect_read reports/foo/grype.json)"
+assert_eq "first run: sbom content" '{"name":"foo-index"}' \
+  "$(inspect_read sbom/foo/sbom-index.spdx.json)"
 assert_eq "first run: report content" '# foo — Trivy CVE report' \
   "$(inspect_read foo-trivy.md)"
 assert_eq "first run: content" '{"schemaVersion":1,"label":"trivy CVEs","message":"0 high / 1 total","color":"brightgreen"}' \
@@ -86,13 +99,16 @@ echo '{"schemaVersion":1,"label":"trivy CVEs","message":"1 high / 3 total","colo
 echo '{"schemaVersion":1,"label":"trivy CVEs","message":"0 high / 0 total","color":"brightgreen"}' \
   > "${TMP}/src2/bar-trivy.json"
 # foo-*.md and foo-grype.json are gone: a stale report is worse than none, since
-# the badge would still link to it.
+# the badge would still link to it. The same holds for foo's whole subtree —
+# a fixed URL that keeps serving last month's scan is the failure mode here.
 echo '# bar — Trivy CVE report' > "${TMP}/src2/bar-trivy.md"
+mkdir -p "${TMP}/src2/reports/bar"
+echo '{"Results":[]}' > "${TMP}/src2/reports/bar/trivy.json"
 
 "${SCRIPT}" "${TMP}/src2" badges > /dev/null 2>&1
 
 assert_eq "third run: files" \
-  "bar-trivy.json bar-trivy.md foo-trivy.json" "$(inspect_ls)"
+  "bar-trivy.json bar-trivy.md foo-trivy.json reports/bar/trivy.json" "$(inspect_ls)"
 assert_eq "third run: updated content" '{"schemaVersion":1,"label":"trivy CVEs","message":"1 high / 3 total","color":"orange"}' \
   "$(inspect_read foo-trivy.json)"
 assert_eq "third run: commits advance" "2" "$(inspect_commits)"
@@ -100,8 +116,11 @@ assert_eq "third run: commits advance" "2" "$(inspect_commits)"
 # --- Refuse to blank the branch when src has no JSON -----------------------
 # Markdown alone is not enough: the badges are the thing the README cannot do
 # without, so a run that produced only reports must not wipe them.
-mkdir -p "${TMP}/empty"
+# A raw report under reports/ must not satisfy the guard either — it is the
+# top-level badge JSON the README cannot do without.
+mkdir -p "${TMP}/empty/reports/orphan"
 echo '# orphan report' > "${TMP}/empty/orphan-trivy.md"
+echo '{"Results":[]}' > "${TMP}/empty/reports/orphan/trivy.json"
 checks=$((checks + 1))
 if "${SCRIPT}" "${TMP}/empty" badges >/dev/null 2>&1; then
   echo "  FAIL src-dir with no badge JSON should exit non-zero" >&2

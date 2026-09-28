@@ -127,6 +127,12 @@ enforces this instead of review.
   image stays root so `tcpdump`/`strace` work ad-hoc.
 - `latest` and `nightly` move on every run. Downstream pins `YYYY.MM.DD` or
   `git-<sha>`.
+- **The `badges` branch layout is a published URL contract.** Each Markdown
+  report links to `reports/<image>/{trivy,grype}.json` and
+  `sbom/<image>/sbom-*.spdx.json` on that branch, keyed by the *published* name
+  rather than the directory, and readers bookmark those paths. cve-publish.sh
+  writes the files and the links together for that reason; split them and a
+  rename becomes a 404 nothing in this repo fails on.
 
 ### Licences of what we redistribute
 
