@@ -454,16 +454,25 @@ jobs:
           path: images/${{ matrix.image.dir }}/image.tar
           retention-days: 7
 
-      - name: Build CVE badge JSON and Markdown report
+      # Everything the badges branch serves for this image — badge JSON, the
+      # Markdown report, and the raw scanner output and SBOMs it links to — into
+      # one directory, so the artifact below and `merge-multiple` on the
+      # download carry the whole tree to publish-badges.sh with its layout
+      # intact.
+      - name: Build CVE badge JSON, Markdown report, raw reports and SBOMs
         if: inputs.publish
         env:
           IMAGE_NAME: ${{ matrix.image.name }}
-        run: ./.github/scripts/cve-publish.sh trivy.json grype.json "${IMAGE_NAME}" badges
+          IMAGE_DIR: ${{ matrix.image.dir }}
+        run: |
+          ./.github/scripts/cve-publish.sh trivy.json grype.json \
+            "${IMAGE_NAME}" "images/${IMAGE_DIR}" badges
 
-      - name: Upload badge JSON and report
+      - name: Upload badge JSON, reports and SBOMs
         if: inputs.publish
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: badges-${{ matrix.image.dir }}
           path: badges/
           retention-days: 30
+          if-no-files-found: error
