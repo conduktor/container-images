@@ -7,6 +7,8 @@ Grype includes unfixed vulnerabilities and every severity down to negligible, so
 
 Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see this branch's commit history for when.
 
+Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-debug/trivy.json) · [Grype JSON](reports/conduktor-debug/grype.json) · SPDX SBOM [aarch64](sbom/conduktor-debug/sbom-aarch64.spdx.json), [index](sbom/conduktor-debug/sbom-index.spdx.json), [x86_64](sbom/conduktor-debug/sbom-x86_64.spdx.json).
+
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
 | 0 | 23 | 18 | 2 | 44 |
@@ -37,10 +39,10 @@ Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see th
 | :orange_circle: high | [`GO-2026-6089`](https://go.dev/issue/80205) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6090`](https://go.dev/issue/80528) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-77117`](https://nvd.nist.gov/vuln/detail/CVE-2026-77117) | `glibc-2.44` | `2.44-r6` | — |
-| :yellow_circle: medium | [`CVE-2026-80489`](https://nvd.nist.gov/vuln/detail/CVE-2026-80489) | `glibc-2.44` | `2.44-r6` | — |
-| :yellow_circle: medium | [`CVE-2026-8674`](https://nvd.nist.gov/vuln/detail/CVE-2026-8674) | `glibc-2.44` | `2.44-r6` | — |
-| :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r6` | — |
+| :yellow_circle: medium | [`CVE-2026-77117`](https://nvd.nist.gov/vuln/detail/CVE-2026-77117) | `glibc-2.44` | `2.44-r7` | — |
+| :yellow_circle: medium | [`CVE-2026-80489`](https://nvd.nist.gov/vuln/detail/CVE-2026-80489) | `glibc-2.44` | `2.44-r7` | — |
+| :yellow_circle: medium | [`CVE-2026-8674`](https://nvd.nist.gov/vuln/detail/CVE-2026-8674) | `glibc-2.44` | `2.44-r7` | — |
+| :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`GO-2026-5158`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-5wrp-cwcj-q835) | `go.opentelemetry.io/otel` | `v1.43.0` | `1.42.0, 1.44.0` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`GHSA-7p3p-8qv8-m2vh`](https://github.com/advisories/GHSA-7p3p-8qv8-m2vh) | `jetty-server` | `12.0.34` | `12.0.35` |

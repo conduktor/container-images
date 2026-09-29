@@ -1,0 +1,1535 @@
+{
+  "matches": [
+    {
+      "vulnerability": {
+        "id": "CVE-2026-77117",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-77117",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34556",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0019"
+        ],
+        "description": "Converting crafted SHIFT_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome SHIFT_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the SHIFT_JISX0213 character set is affected, which is not commonly used.  The related defect in the EUC_JISX0213 converter is tracked separately as CVE-2026-80489.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.9,
+              "exploitabilityScore": 2.3,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-77117",
+            "epss": 0.00412,
+            "percentile": 0.32916,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-77117",
+            "cwe": "CWE-835",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.22454000000000002
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-77117",
+            "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:8077c92e2de8f595f37d1fe3cf2308a40123ef3b254e2c3c2aa9a00212814376",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-80489",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-80489",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34568",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0020"
+        ],
+        "description": "Converting crafted EUC_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome EUC_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the EUC_JISX0213 character set is affected, which is not commonly used.  The related defect in SHIFT_JISX0213 converter is tracked separately as CVE-2026-77117.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.9,
+              "exploitabilityScore": 2.3,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-80489",
+            "epss": 0.00412,
+            "percentile": 0.32915,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-80489",
+            "cwe": "CWE-835",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.22454000000000002
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-80489",
+            "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:8077c92e2de8f595f37d1fe3cf2308a40123ef3b254e2c3c2aa9a00212814376",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-8674",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-8674",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://joshua.hu/fuzzing-glibc-libresolv",
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=31026",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0021",
+          "https://sourceware.org/git/?p=glibc.git;a=commit;h=506ea57086bfb9ce3daff1c14246a1cb532aba0a",
+          "http://www.openwall.com/lists/oss-security/2026/09/17/4"
+        ],
+        "description": "Initializing the DNS stub resolver from an /etc/resolv.conf file, or a LOCALDOMAIN environment variable, whose search list contains a domain of roughly 200 characters or more in the GNU C Library version 2.26 to 2.44 results in an assertion failure which aborts the process.\n\nThe resolver truncates the search list when copying it into the fixed-size _res.defdname buffer, then asserts that the copy is consistent with the full configuration.  The consistency check compared against the wrong size and did not handle a first entry that does not fit, so a correctly truncated list failed the assertion.  Any process that resolves names through the library is affected, including long-running processes that reload /etc/resolv.conf on the next query after it changes.  Search domains are commonly written to /etc/resolv.conf from data received over DHCP or from a VPN server, so an attacker on the local network may be able to trigger this without privileges on the target system, subject to validation by the network configuration software.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 1.7,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-8674",
+            "epss": 0.00342,
+            "percentile": 0.25125,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-8674",
+            "cwe": "CWE-617",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.17612999999999998
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-8674",
+            "versionConstraint": ">= 2.26, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:8077c92e2de8f595f37d1fe3cf2308a40123ef3b254e2c3c2aa9a00212814376",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-89092",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-89092",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34624",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0016",
+          "http://www.openwall.com/lists/oss-security/2026/09/11/2"
+        ],
+        "description": "The nscd service in the GNU C Library 2.3.4 onwards may crash due to a \nstack overflow when a malicious DNS server returns too large a response \nfor a DNS query, resulting in degraded DNS resolution for the system.\n\n\n\nExploitation of this bug needs a system that has nscd enabled and using \nan untrusted DNS server for name resolution, with the compromised DNS \nserver being capable of processing records large enough to result in a \nstack overflow in an nscd thread stack.  During experimentation, bind 9 \nwas unable to handle large records, but that could change in future or \nwith a different name server.  In typical installations, nscd is \nexecuted in an isolated context as its own user without a shell, due to \nwhich any compromise of that service is isolated.\n\n\n\nThere is a remote possibility of nscd cache corruption if an attacker \nmanages to get the stack pointer into a desired point in the heap, \npotentially resulting in other caches in nscd being overwritten with \ncorrupt data through the stack overflow, until the buggy code path \neventually results in a crash.\n\n\n\nFinally, a crash in nscd may result in performance degradation when \nresolving names, but it does not result in a denial of service.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
+            "metrics": {
+              "baseScore": 4.2,
+              "exploitabilityScore": 1.7,
+              "impactScore": 2.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-89092",
+            "epss": 0.00265,
+            "percentile": 0.16552,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-89092",
+            "cwe": "CWE-789",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.12190000000000001
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-89092",
+            "versionConstraint": ">= 2.3.4, < 2.45 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:8077c92e2de8f595f37d1fe3cf2308a40123ef3b254e2c3c2aa9a00212814376",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-90781",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-90781",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/alsa-project/alsa-lib",
+          "https://github.com/alsa-project/alsa-lib/blob/v1.2.16.1/src/control/ctlparse.c#L216-L241",
+          "https://github.com/alsa-project/alsa-lib/commit/f84cd4ced7b36fddb8e4ee24404cf7c091d27020",
+          "https://lore.kernel.org/alsa-devel/CACBQ=P2FhO3M6dkv3cWuKb6Qhs92ouV+FJ3SJZ_PVBSSdJWRAQ@mail.gmail.com/",
+          "https://www.vulncheck.com/advisories/alsa-lib-through-1.2.16.1-off-by-one-stack-buffer-overflow-in-snd-ctl-ascii-elem-id-parse"
+        ],
+        "description": "alsa-lib through 1.2.16.1 contains a stack buffer overflow in the __snd_ctl_ascii_elem_id_parse() function that writes one byte past a 64-byte buffer when parsing a name= field with 64 or more characters. Attackers can supply a long control-element identifier string through saved state files or command-line arguments to overwrite adjacent stack memory and crash the calling process.",
+        "cvss": [
+          {
+            "source": "disclosure@vulncheck.com",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 4.8
+            },
+            "vendorMetadata": {}
+          },
+          {
+            "source": "disclosure@vulncheck.com",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
+            "metrics": {
+              "baseScore": 4.4,
+              "exploitabilityScore": 1.9,
+              "impactScore": 2.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-90781",
+            "epss": 0.0017,
+            "percentile": 0.05703,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-90781",
+            "cwe": "CWE-193",
+            "source": "disclosure@vulncheck.com",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.08159999999999999
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:alsa-project:alsa-lib:1.2.16.1:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "alsa-lib",
+              "version": "1.2.16.1-r2"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-90781",
+            "versionConstraint": "<= 1.2.16.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:alsa-project:alsa-lib:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "731c2f0d88087f97",
+        "name": "alsa-lib",
+        "version": "1.2.16.1-r2",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:8077c92e2de8f595f37d1fe3cf2308a40123ef3b254e2c3c2aa9a00212814376",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:alsa-project:alsa-lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa-project:alsa_lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa_project:alsa-lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa_project:alsa_lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa-lib:alsa-lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa-lib:alsa_lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa_lib:alsa-lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa_lib:alsa_lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa:alsa-lib:1.2.16.1-r2:*:*:*:*:*:*:*",
+          "cpe:2.3:a:alsa:alsa_lib:1.2.16.1-r2:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/alsa-lib@1.2.16.1-r2?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "alsa-lib"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/aserver"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libasound.so.2"
+            },
+            {
+              "path": "/usr/lib/libasound.so.2.0.0"
+            },
+            {
+              "path": "/usr/lib/libatopology.so.2"
+            },
+            {
+              "path": "/usr/lib/libatopology.so.2.0.0"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/usr/share/alsa"
+            },
+            {
+              "path": "/usr/share/alsa/alsa.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards"
+            },
+            {
+              "path": "/usr/share/alsa/cards/AACI.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ATIIXP-MODEM.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ATIIXP-SPDMA.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ATIIXP.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/AU8810.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/AU8820.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/AU8830.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/Audigy.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/Audigy2.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/Aureon51.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/Aureon71.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/CA0106.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/CMI8338-SWIEC.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/CMI8338.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/CMI8738-MC6.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/CMI8738-MC8.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/CMI8788.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/CS46xx.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/EMU10K1.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/EMU10K1X.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ENS1370.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ENS1371.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ES1968.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/Echo_Echo3G.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/FM801.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/FWSpeakers.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/FireWave.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/GUS.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/HDA-Intel.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/HdmiLpeAudio.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ICE1712.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ICE1724.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ICH-MODEM.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ICH.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/ICH4.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/Loopback.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/Maestro3.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/NFORCE.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/PC-Speaker.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/PMac.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/PMacToonie.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/PS3.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/RME9636.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/RME9652.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/SB-XFi.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/SI7018.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/TRID4DWAVENX.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/USB-Audio.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/VIA686A.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/VIA8233.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/VIA8233A.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/VIA8237.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/VX222.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/VXPocket.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/VXPocket440.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/YMF744.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/aliases.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/pistachio-card.conf"
+            },
+            {
+              "path": "/usr/share/alsa/cards/vc4-hdmi.conf"
+            },
+            {
+              "path": "/usr/share/alsa/ctl"
+            },
+            {
+              "path": "/usr/share/alsa/ctl/default.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/center_lfe.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/default.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/dmix.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/dpl.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/dsnoop.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/front.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/hdmi.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/iec958.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/modem.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/rear.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/side.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/surround21.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/surround40.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/surround41.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/surround50.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/surround51.conf"
+            },
+            {
+              "path": "/usr/share/alsa/pcm/surround71.conf"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/alsa-lib-1.2.16.1-r2.spdx.json"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "source": {
+    "type": "image",
+    "target": {
+      "userInput": "ghcr.io/conduktor/base-jre-25@sha256:efbb41d346acd2c3b58e9d1c3d00d367f07cdcc4a6c8e350fa2e39f28dee6836",
+      "imageID": "sha256:bd107f70c6902463caeefd05057b5b8a19d4a6d40837daef151f68c994b9b97f",
+      "manifestDigest": "sha256:c6ddbb6a55fd8b0b2659ab629c6eb75eb07ff47a1c3df7af44e4d545fd965615",
+      "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "tags": [],
+      "imageSize": 297515426,
+      "layers": [
+        {
+          "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+          "digest": "sha256:8077c92e2de8f595f37d1fe3cf2308a40123ef3b254e2c3c2aa9a00212814376",
+          "size": 297515426
+        }
+      ],
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTI5LCJkaWdlc3QiOiJzaGEyNTY6YmQxMDdmNzBjNjkwMjQ2M2NhZWVmZDA1MDU3YjViOGExOWQ0YTZkNDA4MzdkYWVmMTUxZjY4Yzk5NGI5Yjk3ZiJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjozMDAxMjY3MjAsImRpZ2VzdCI6InNoYTI1Njo4MDc3YzkyZTJkZThmNTk1ZjM3ZDFmZTNjZjIzMDhhNDAxMjNlZjNiMjU0ZTJjM2MyYWE5YTAwMjEyODE0Mzc2In1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTA5LTI4VDIzOjAyOjAzWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0wOS0yOFQyMzowMjowM1oiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgSlJFLTI1IGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIGJ5IENvbmR1a3RvciJ9XSwib3MiOiJsaW51eCIsInJvb3RmcyI6eyJ0eXBlIjoibGF5ZXJzIiwiZGlmZl9pZHMiOlsic2hhMjU2OjgwNzdjOTJlMmRlOGY1OTVmMzdkMWZlM2NmMjMwOGE0MDEyM2VmM2IyNTRlMmMzYzJhYTlhMDAyMTI4MTQzNzYiXX0sImNvbmZpZyI6eyJDbWQiOlsiL2Jpbi9iYXNoIl0sIkVudiI6WyJKQVZBX0hPTUU9L3Vzci9saWIvanZtL2phdmEtMjUtb3BlbmpkayIsIkxBTkc9Qy5VVEYtOCIsIlBBVEg9L3Vzci9saWIvanZtL2phdmEtMjUtb3Blbmpkay9iaW46L3Vzci9zYmluOi9zYmluOi91c3IvYmluOi9iaW4iLCJTU0xfQ0VSVF9GSUxFPS9ldGMvc3NsL2NlcnRzL2NhLWNlcnRpZmljYXRlcy5jcnQiLCJUWj1VVEMiXSwiTGFiZWxzIjp7Im9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5hdXRob3JzIjoiQ29uZHVrdG9yIFx1MDAzY3N1cHBvcnRAY29uZHVrdG9yLmlvXHUwMDNlIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmNyZWF0ZWQiOiIyMDI2LTA5LTI4VDIzOjAyOjAzWiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5kZXNjcmlwdGlvbiI6Ik1pbmltYWwgZ2xpYmMvV29sZmkgYmFzZSBpbWFnZSB3aXRoIE9wZW5KREsgMjUgSlJFIGZvciBDb25kdWt0b3IgQ29uc29sZSBhbmQgR2F0ZXdheS4iLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UubGljZW5zZXMiOiJBcGFjaGUtMi4wIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnNvdXJjZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9jb25kdWt0b3IvY29udGFpbmVyLWltYWdlcyIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS50aXRsZSI6IkNvbmR1a3RvciBKUkUtMjUgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudmVuZG9yIjoiQ29uZHVrdG9yIn19fQ==",
+      "repoDigests": [
+        "ghcr.io/conduktor/base-jre-25@sha256:efbb41d346acd2c3b58e9d1c3d00d367f07cdcc4a6c8e350fa2e39f28dee6836"
+      ],
+      "architecture": "amd64",
+      "os": "linux",
+      "labels": {
+        "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
+        "org.opencontainers.image.created": "2026-09-28T23:02:03Z",
+        "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with OpenJDK 25 JRE for Conduktor Console and Gateway.",
+        "org.opencontainers.image.licenses": "Apache-2.0",
+        "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
+        "org.opencontainers.image.title": "Conduktor JRE-25 base image (Wolfi/apko)",
+        "org.opencontainers.image.vendor": "Conduktor"
+      }
+    }
+  },
+  "distro": {
+    "name": "wolfi",
+    "version": "20230201",
+    "idLike": []
+  },
+  "descriptor": {
+    "name": "grype",
+    "version": "0.110.0",
+    "configuration": {
+      "output": [
+        "json"
+      ],
+      "file": "/tmp/grype-nn8UYC/output",
+      "pretty": false,
+      "distro": "",
+      "add-cpes-if-none": false,
+      "output-template-file": "",
+      "check-for-app-update": false,
+      "only-fixed": false,
+      "only-notfixed": false,
+      "ignore-wontfix": "",
+      "platform": "",
+      "search": {
+        "scope": "squashed",
+        "unindexed-archives": false,
+        "indexed-archives": true
+      },
+      "ignore": [
+        {
+          "vulnerability": "",
+          "include-aliases": false,
+          "reason": "",
+          "namespace": "",
+          "fix-state": "",
+          "package": {
+            "name": "kernel-headers",
+            "version": "",
+            "language": "",
+            "type": "rpm",
+            "location": "",
+            "upstream-name": "kernel"
+          },
+          "vex-status": "",
+          "vex-justification": "",
+          "match-type": "exact-indirect-match"
+        },
+        {
+          "vulnerability": "",
+          "include-aliases": false,
+          "reason": "",
+          "namespace": "",
+          "fix-state": "",
+          "package": {
+            "name": "linux(-.*)?-headers-.*",
+            "version": "",
+            "language": "",
+            "type": "deb",
+            "location": "",
+            "upstream-name": "linux.*"
+          },
+          "vex-status": "",
+          "vex-justification": "",
+          "match-type": "exact-indirect-match"
+        },
+        {
+          "vulnerability": "",
+          "include-aliases": false,
+          "reason": "",
+          "namespace": "",
+          "fix-state": "",
+          "package": {
+            "name": "linux-libc-dev",
+            "version": "",
+            "language": "",
+            "type": "deb",
+            "location": "",
+            "upstream-name": "linux"
+          },
+          "vex-status": "",
+          "vex-justification": "",
+          "match-type": "exact-indirect-match"
+        }
+      ],
+      "exclude": [],
+      "externalSources": {
+        "enable": false,
+        "maven": {
+          "searchUpstreamBySha1": true,
+          "baseUrl": "https://search.maven.org/solrsearch/select",
+          "rateLimit": 300000000
+        }
+      },
+      "match": {
+        "java": {
+          "using-cpes": false
+        },
+        "jvm": {
+          "using-cpes": true
+        },
+        "dotnet": {
+          "using-cpes": false
+        },
+        "golang": {
+          "using-cpes": false,
+          "always-use-cpe-for-stdlib": true,
+          "allow-main-module-pseudo-version-comparison": false
+        },
+        "javascript": {
+          "using-cpes": false
+        },
+        "python": {
+          "using-cpes": false
+        },
+        "ruby": {
+          "using-cpes": false
+        },
+        "rust": {
+          "using-cpes": false
+        },
+        "hex": {
+          "using-cpes": false
+        },
+        "stock": {
+          "using-cpes": true
+        },
+        "dpkg": {
+          "using-cpes": false,
+          "missing-epoch-strategy": "zero",
+          "use-cpes-for-eol": false
+        },
+        "rpm": {
+          "using-cpes": false,
+          "missing-epoch-strategy": "auto",
+          "use-cpes-for-eol": false
+        }
+      },
+      "fail-on-severity": "negligible",
+      "registry": {
+        "insecure-skip-tls-verify": false,
+        "insecure-use-http": false,
+        "ca-cert": ""
+      },
+      "show-suppressed": false,
+      "by-cve": false,
+      "SortBy": {
+        "sort-by": "risk"
+      },
+      "name": "",
+      "default-image-pull-source": "",
+      "from": null,
+      "vex-documents": [],
+      "vex-add": [],
+      "match-upstream-kernel-headers": false,
+      "fix-channel": {
+        "redhat-eus": {
+          "apply": "auto",
+          "versions": ">= 8.0"
+        }
+      },
+      "timestamp": true,
+      "alerts": {
+        "enable-eol-distro-warnings": true
+      },
+      "db": {
+        "cache-dir": "/home/runner/.cache/grype/db",
+        "update-url": "https://grype.anchore.io/databases",
+        "ca-cert": "",
+        "auto-update": true,
+        "validate-by-hash-on-start": true,
+        "validate-age": true,
+        "max-allowed-built-age": 432000000000000,
+        "require-update-check": false,
+        "update-available-timeout": 30000000000,
+        "update-download-timeout": 300000000000,
+        "max-update-check-frequency": 7200000000000
+      },
+      "exp": {},
+      "dev": {
+        "db": {
+          "debug": false
+        }
+      }
+    }
+  }
+}

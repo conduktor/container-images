@@ -1,0 +1,100 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "sbom-sha256:937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2026-09-28T23:02:03Z",
+    "creators": [
+      "Tool: apko (v1.2.30)",
+      "Organization: Chainguard, Inc"
+    ],
+    "licenseListVersion": "3.27"
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://spdx.org/spdxdocs/apko/",
+  "documentDescribes": [
+    "SPDXRef-Package-sha256-937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea"
+  ],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-sha256-937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea",
+      "name": "sha256:937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea",
+      "versionInfo": "sha256:937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea",
+      "filesAnalyzed": false,
+      "description": "Multi-arch image index",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "Organization: Chainguard, Inc.",
+      "sourceInfo": "Generated at image build time by apko",
+      "primaryPackagePurpose": "CONTAINER",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:oci/base-monitoring@sha256:937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea?mediaType=application%2Fvnd.oci.image.index.v1%2Bjson",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-sha256-2cfb8c4f7f1a9c2755882fc7650bde518a40e7e22ec6ea74f7e21612abb5a92d",
+      "name": "sha256:2cfb8c4f7f1a9c2755882fc7650bde518a40e7e22ec6ea74f7e21612abb5a92d",
+      "versionInfo": "sha256:2cfb8c4f7f1a9c2755882fc7650bde518a40e7e22ec6ea74f7e21612abb5a92d",
+      "filesAnalyzed": false,
+      "downloadLocation": "NOASSERTION",
+      "supplier": "Organization: Chainguard, Inc.",
+      "primaryPackagePurpose": "CONTAINER",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "2cfb8c4f7f1a9c2755882fc7650bde518a40e7e22ec6ea74f7e21612abb5a92d"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:oci/base-monitoring@sha256:2cfb8c4f7f1a9c2755882fc7650bde518a40e7e22ec6ea74f7e21612abb5a92d?arch=amd64\u0026mediaType=application%2Fvnd.oci.image.manifest.v1%2Bjson\u0026os=linux",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-sha256-d9e77d82b1837d95fe20515a6020df1af24cab583139122343f0c8c7d7500e58",
+      "name": "sha256:d9e77d82b1837d95fe20515a6020df1af24cab583139122343f0c8c7d7500e58",
+      "versionInfo": "sha256:d9e77d82b1837d95fe20515a6020df1af24cab583139122343f0c8c7d7500e58",
+      "filesAnalyzed": false,
+      "downloadLocation": "NOASSERTION",
+      "supplier": "Organization: Chainguard, Inc.",
+      "primaryPackagePurpose": "CONTAINER",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d9e77d82b1837d95fe20515a6020df1af24cab583139122343f0c8c7d7500e58"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:oci/base-monitoring@sha256:d9e77d82b1837d95fe20515a6020df1af24cab583139122343f0c8c7d7500e58?arch=arm64\u0026mediaType=application%2Fvnd.oci.image.manifest.v1%2Bjson\u0026os=linux",
+          "referenceType": "purl"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-Package-sha256-937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea",
+      "relationshipType": "VARIANT_OF",
+      "relatedSpdxElement": "SPDXRef-Package-sha256-2cfb8c4f7f1a9c2755882fc7650bde518a40e7e22ec6ea74f7e21612abb5a92d"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-sha256-937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea",
+      "relationshipType": "VARIANT_OF",
+      "relatedSpdxElement": "SPDXRef-Package-sha256-d9e77d82b1837d95fe20515a6020df1af24cab583139122343f0c8c7d7500e58"
+    }
+  ]
+}

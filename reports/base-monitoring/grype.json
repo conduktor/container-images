@@ -1,0 +1,2064 @@
+{
+  "matches": [
+    {
+      "vulnerability": {
+        "id": "CVE-2026-19672",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-19672",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/python/cpython/pull/156000",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/J2WT2ALRWEXQJOB3C7Q2HYWUXP3CINWO/",
+          "http://www.openwall.com/lists/oss-security/2026/08/25/10"
+        ],
+        "description": "The tarfile module's tar and data\n extraction filters created directories outside the destination for \nmembers whose name leaves the destination and returns to it, such as ../evil/../dest/sub/file. The containment check used the resolved path, but intermediate directories were created from the name as given.\n\nOnly\n empty directories are created outside the destination. Member contents \nare still extracted inside it. To return to the destination the member's\n name must contain the destination directory's own final component, so \nextraction into a secure randomised directory is not affected.\n\nThis affects POSIX platforms only. On Windows, .. components are collapsed before the path reaches the filesystem, so the directories outside the destination are never created.",
+        "cvss": [
+          {
+            "source": "cna@python.org",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 6.3
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-19672",
+            "epss": 0.00522,
+            "percentile": 0.42031,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-19672",
+            "cwe": "CWE-22",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.29492999999999997
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.15_git20260925:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.15_git20260925-r0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-19672",
+            "versionConstraint": "none (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.15_git20260925:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.15_git20260925-r0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-19672",
+            "versionConstraint": "none (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a39555846ea744d4",
+        "name": "python-3.13",
+        "version": "3.13.15_git20260925-r0",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.15_git20260925-r0?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.15_git20260925-r0.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-87910",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-87910",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/python/cpython/commit/9c17bace90f88dfba6d0e2fe23c8e7ae35f83955",
+          "https://github.com/python/cpython/commit/d9565e54b1fc6d63c5be9afd58114499128fa57b",
+          "https://github.com/python/cpython/commit/fb2f0bbc3b35264f09cc2cb2934b7987527a6bc2",
+          "https://github.com/python/cpython/issues/157265",
+          "https://github.com/python/cpython/pull/157266",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/57TBTLL2W6APMZR3A25B2YV7GL3EPTDJ/",
+          "http://www.openwall.com/lists/oss-security/2026/09/11/8"
+        ],
+        "description": "When tarfile extracts a link on a system that doesn't support links, it falls back to extracting a member from the archive. In this case, the filter function is run twice: once for the extracted member, and once with name set to the location of the link. For one of the calls, the return value was ignored. Instead, the member should be skipped if either call returns None.",
+        "cvss": [
+          {
+            "source": "cna@python.org",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:A/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 5.7
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-87910",
+            "epss": 0.00536,
+            "percentile": 0.42937,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-87910",
+            "cwe": "CWE-22",
+            "source": "cna@python.org",
+            "type": "Secondary"
+          },
+          {
+            "cve": "CVE-2026-87910",
+            "cwe": "CWE-59",
+            "source": "cna@python.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.28676
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.15_git20260925:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.15_git20260925-r0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-87910",
+            "versionConstraint": "none (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.15_git20260925:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.15_git20260925-r0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-87910",
+            "versionConstraint": "none (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a39555846ea744d4",
+        "name": "python-3.13",
+        "version": "3.13.15_git20260925-r0",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.15_git20260925-r0?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.15_git20260925-r0.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-77117",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-77117",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34556",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0019"
+        ],
+        "description": "Converting crafted SHIFT_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome SHIFT_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the SHIFT_JISX0213 character set is affected, which is not commonly used.  The related defect in the EUC_JISX0213 converter is tracked separately as CVE-2026-80489.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.9,
+              "exploitabilityScore": 2.3,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-77117",
+            "epss": 0.00412,
+            "percentile": 0.32916,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-77117",
+            "cwe": "CWE-835",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.22454000000000002
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-77117",
+            "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-80489",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-80489",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34568",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0020"
+        ],
+        "description": "Converting crafted EUC_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome EUC_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the EUC_JISX0213 character set is affected, which is not commonly used.  The related defect in SHIFT_JISX0213 converter is tracked separately as CVE-2026-77117.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.9,
+              "exploitabilityScore": 2.3,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-80489",
+            "epss": 0.00412,
+            "percentile": 0.32915,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-80489",
+            "cwe": "CWE-835",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.22454000000000002
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-80489",
+            "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2025-15367",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2025-15367",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/python/cpython/commit/b234a2b67539f787e191d2ef19a7cbdce32874e7",
+          "https://github.com/python/cpython/issues/143923",
+          "https://github.com/python/cpython/pull/143924",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/CBFBOWVGGUJFSGITQCCBZS4GEYYZ7ZNE/"
+        ],
+        "description": "The poplib module, when passed a user-controlled command, can have\nadditional commands injected using newlines. Mitigation rejects commands\ncontaining control characters.",
+        "cvss": [
+          {
+            "source": "cna@python.org",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 5.9
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2025-15367",
+            "epss": 0.00369,
+            "percentile": 0.28166,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2025-15367",
+            "cwe": "CWE-77",
+            "source": "cna@python.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.20110500000000003
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.15_git20260925:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.15_git20260925-r0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2025-15367",
+            "versionConstraint": "< 3.15.0a6 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.15_git20260925:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.15_git20260925-r0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2025-15367",
+            "versionConstraint": "< 3.15.0a6 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a39555846ea744d4",
+        "name": "python-3.13",
+        "version": "3.13.15_git20260925-r0",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.15_git20260925-r0?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.15_git20260925-r0.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-8674",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-8674",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://joshua.hu/fuzzing-glibc-libresolv",
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=31026",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0021",
+          "https://sourceware.org/git/?p=glibc.git;a=commit;h=506ea57086bfb9ce3daff1c14246a1cb532aba0a",
+          "http://www.openwall.com/lists/oss-security/2026/09/17/4"
+        ],
+        "description": "Initializing the DNS stub resolver from an /etc/resolv.conf file, or a LOCALDOMAIN environment variable, whose search list contains a domain of roughly 200 characters or more in the GNU C Library version 2.26 to 2.44 results in an assertion failure which aborts the process.\n\nThe resolver truncates the search list when copying it into the fixed-size _res.defdname buffer, then asserts that the copy is consistent with the full configuration.  The consistency check compared against the wrong size and did not handle a first entry that does not fit, so a correctly truncated list failed the assertion.  Any process that resolves names through the library is affected, including long-running processes that reload /etc/resolv.conf on the next query after it changes.  Search domains are commonly written to /etc/resolv.conf from data received over DHCP or from a VPN server, so an attacker on the local network may be able to trigger this without privileges on the target system, subject to validation by the network configuration software.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 1.7,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-8674",
+            "epss": 0.00342,
+            "percentile": 0.25125,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-8674",
+            "cwe": "CWE-617",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.17612999999999998
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-8674",
+            "versionConstraint": ">= 2.26, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-15310",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-15310",
+        "namespace": "nvd:cpe",
+        "severity": "Low",
+        "urls": [
+          "https://github.com/python/cpython/commit/1b424c0178a01e155fd0267dc28a8fc1159b33a8",
+          "https://github.com/python/cpython/commit/31980e84b9a708424a0a1dfecde3fc991e313f89",
+          "https://github.com/python/cpython/commit/9d167992b59cf5e23c66b9ed742b13f5925f7d70",
+          "https://github.com/python/cpython/commit/e2311cfb3dd518f008f312fe0631f4f7490d237a",
+          "https://github.com/python/cpython/commit/f507e6946a3194e83e1d7b8ee6e14567175e46de",
+          "https://github.com/python/cpython/commit/f897dbf2f36a5935700b7c2d94d4681d2136b7d4",
+          "https://github.com/python/cpython/issues/156002",
+          "https://github.com/python/cpython/pull/156003",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/YUHXURX2WZGKGNA4ANYBQS2VZRYQ5JNK/"
+        ],
+        "description": "When decompressing crafted zip files using the bzip/LZMA/Zstandard \n\ncompressions, Python could use an attacker-controlled size to \n\npre-allocate memory, possibly resulting in memory exhaustion.",
+        "cvss": [
+          {
+            "source": "cna@python.org",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 2.1
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-15310",
+            "epss": 0.005,
+            "percentile": 0.40391,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-15310",
+            "cwe": "CWE-400",
+            "source": "cna@python.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.1275
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.15_git20260925:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.15_git20260925-r0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-15310",
+            "versionConstraint": "< 3.15.0rc2 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.15_git20260925:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.15_git20260925-r0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-15310",
+            "versionConstraint": "< 3.15.0rc2 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a39555846ea744d4",
+        "name": "python-3.13",
+        "version": "3.13.15_git20260925-r0",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.15_git20260925-r0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.15_git20260925-r0?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.15_git20260925-r0.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-89092",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-89092",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34624",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0016",
+          "http://www.openwall.com/lists/oss-security/2026/09/11/2"
+        ],
+        "description": "The nscd service in the GNU C Library 2.3.4 onwards may crash due to a \nstack overflow when a malicious DNS server returns too large a response \nfor a DNS query, resulting in degraded DNS resolution for the system.\n\n\n\nExploitation of this bug needs a system that has nscd enabled and using \nan untrusted DNS server for name resolution, with the compromised DNS \nserver being capable of processing records large enough to result in a \nstack overflow in an nscd thread stack.  During experimentation, bind 9 \nwas unable to handle large records, but that could change in future or \nwith a different name server.  In typical installations, nscd is \nexecuted in an isolated context as its own user without a shell, due to \nwhich any compromise of that service is isolated.\n\n\n\nThere is a remote possibility of nscd cache corruption if an attacker \nmanages to get the stack pointer into a desired point in the heap, \npotentially resulting in other caches in nscd being overwritten with \ncorrupt data through the stack overflow, until the buggy code path \neventually results in a crash.\n\n\n\nFinally, a crash in nscd may result in performance degradation when \nresolving names, but it does not result in a denial of service.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
+            "metrics": {
+              "baseScore": 4.2,
+              "exploitabilityScore": 1.7,
+              "impactScore": 2.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-89092",
+            "epss": 0.00265,
+            "percentile": 0.16552,
+            "date": "2026-09-27"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-89092",
+            "cwe": "CWE-789",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.12190000000000001
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-89092",
+            "versionConstraint": ">= 2.3.4, < 2.45 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-5932",
+        "dataSource": "https://go.dev/issue/44226",
+        "namespace": "govulndb:language:go",
+        "severity": "Unknown",
+        "urls": [],
+        "description": "The golang.org/x/crypto/openpgp package is unsafe by design, has numerous known security issues, is not maintained, and should not be used.\n\nIf you are required to interoperate with OpenPGP systems and need a maintained package, consider github.com/ProtonMail/go-crypto/openpgp which is a maintained fork that aims to be a drop-in replacement for this package.",
+        "cvss": [],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/crypto",
+              "version": "v0.56.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-5932",
+            "versionConstraint": "none (unknown)"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "1975f3fbe19e3e55",
+        "name": "golang.org/x/crypto",
+        "version": "v0.56.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:go:ssh:v0.56.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/crypto@v0.56.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.8",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-5932",
+        "dataSource": "https://go.dev/issue/44226",
+        "namespace": "govulndb:language:go",
+        "severity": "Unknown",
+        "urls": [],
+        "description": "The golang.org/x/crypto/openpgp package is unsafe by design, has numerous known security issues, is not maintained, and should not be used.\n\nIf you are required to interoperate with OpenPGP systems and need a maintained package, consider github.com/ProtonMail/go-crypto/openpgp which is a maintained fork that aims to be a drop-in replacement for this package.",
+        "cvss": [],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/crypto",
+              "version": "v0.56.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-5932",
+            "versionConstraint": "none (unknown)"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "7587b201063d06ad",
+        "name": "golang.org/x/crypto",
+        "version": "v0.56.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:go:ssh:v0.56.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/crypto@v0.56.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.8",
+          "architecture": "amd64",
+          "h1Digest": "h1:GUh5Ii4J5jtcseSMiRqr1jXCNHoxjeV9Fmekc2oLy6Y=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-5932",
+        "dataSource": "https://go.dev/issue/44226",
+        "namespace": "govulndb:language:go",
+        "severity": "Unknown",
+        "urls": [],
+        "description": "The golang.org/x/crypto/openpgp package is unsafe by design, has numerous known security issues, is not maintained, and should not be used.\n\nIf you are required to interoperate with OpenPGP systems and need a maintained package, consider github.com/ProtonMail/go-crypto/openpgp which is a maintained fork that aims to be a drop-in replacement for this package.",
+        "cvss": [],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/crypto",
+              "version": "v0.56.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-5932",
+            "versionConstraint": "none (unknown)"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "f34e8aacc3c25d98",
+        "name": "golang.org/x/crypto",
+        "version": "v0.56.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:go:ssh:v0.56.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/crypto@v0.56.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.8",
+          "architecture": "amd64",
+          "h1Digest": "h1:GUh5Ii4J5jtcseSMiRqr1jXCNHoxjeV9Fmekc2oLy6Y=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    }
+  ],
+  "source": {
+    "type": "image",
+    "target": {
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea",
+      "imageID": "sha256:41edcea8db09313363c445bd1a75301a678f4b42f70d55aeae7c39724c71c3e4",
+      "manifestDigest": "sha256:7d147d19d6eac7833fd6208bac88b6c9546c770781580e680f8e9dafe2969a37",
+      "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "tags": [],
+      "imageSize": 589351694,
+      "layers": [
+        {
+          "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+          "digest": "sha256:867df20fd1a8bba32ae19bdd05e581a0261bbd62c233d9722402c4a821f0865d",
+          "size": 589351694
+        }
+      ],
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6NDFlZGNlYThkYjA5MzEzMzYzYzQ0NWJkMWE3NTMwMWE2NzhmNGI0MmY3MGQ1NWFlYWU3YzM5NzI0YzcxYzNlNCJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1OTI4OTAzNjgsImRpZ2VzdCI6InNoYTI1Njo4NjdkZjIwZmQxYThiYmEzMmFlMTliZGQwNWU1ODFhMDI2MWJiZDYyYzIzM2Q5NzIyNDAyYzRhODIxZjA4NjVkIn1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTA5LTI4VDIzOjAyOjAzWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0wOS0yOFQyMzowMjowM1oiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1Njo4NjdkZjIwZmQxYThiYmEzMmFlMTliZGQwNWU1ODFhMDI2MWJiZDYyYzIzM2Q5NzIyNDAyYzRhODIxZjA4NjVkIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0wOS0yOFQyMzowMjowM1oiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "repoDigests": [
+        "ghcr.io/conduktor/base-monitoring@sha256:937884222c33087a02c48a12e508ee5d294142ad4c9b12145b4f18fb03f175ea"
+      ],
+      "architecture": "amd64",
+      "os": "linux",
+      "labels": {
+        "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
+        "org.opencontainers.image.created": "2026-09-28T23:02:03Z",
+        "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
+        "org.opencontainers.image.licenses": "Apache-2.0",
+        "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
+        "org.opencontainers.image.title": "Conduktor monitoring base image (Wolfi/apko)",
+        "org.opencontainers.image.vendor": "Conduktor"
+      }
+    }
+  },
+  "distro": {
+    "name": "wolfi",
+    "version": "20230201",
+    "idLike": []
+  },
+  "descriptor": {
+    "name": "grype",
+    "version": "0.110.0",
+    "configuration": {
+      "output": [
+        "json"
+      ],
+      "file": "/tmp/grype-nc4tGb/output",
+      "pretty": false,
+      "distro": "",
+      "add-cpes-if-none": false,
+      "output-template-file": "",
+      "check-for-app-update": false,
+      "only-fixed": false,
+      "only-notfixed": false,
+      "ignore-wontfix": "",
+      "platform": "",
+      "search": {
+        "scope": "squashed",
+        "unindexed-archives": false,
+        "indexed-archives": true
+      },
+      "ignore": [
+        {
+          "vulnerability": "",
+          "include-aliases": false,
+          "reason": "",
+          "namespace": "",
+          "fix-state": "",
+          "package": {
+            "name": "kernel-headers",
+            "version": "",
+            "language": "",
+            "type": "rpm",
+            "location": "",
+            "upstream-name": "kernel"
+          },
+          "vex-status": "",
+          "vex-justification": "",
+          "match-type": "exact-indirect-match"
+        },
+        {
+          "vulnerability": "",
+          "include-aliases": false,
+          "reason": "",
+          "namespace": "",
+          "fix-state": "",
+          "package": {
+            "name": "linux(-.*)?-headers-.*",
+            "version": "",
+            "language": "",
+            "type": "deb",
+            "location": "",
+            "upstream-name": "linux.*"
+          },
+          "vex-status": "",
+          "vex-justification": "",
+          "match-type": "exact-indirect-match"
+        },
+        {
+          "vulnerability": "",
+          "include-aliases": false,
+          "reason": "",
+          "namespace": "",
+          "fix-state": "",
+          "package": {
+            "name": "linux-libc-dev",
+            "version": "",
+            "language": "",
+            "type": "deb",
+            "location": "",
+            "upstream-name": "linux"
+          },
+          "vex-status": "",
+          "vex-justification": "",
+          "match-type": "exact-indirect-match"
+        }
+      ],
+      "exclude": [],
+      "externalSources": {
+        "enable": false,
+        "maven": {
+          "searchUpstreamBySha1": true,
+          "baseUrl": "https://search.maven.org/solrsearch/select",
+          "rateLimit": 300000000
+        }
+      },
+      "match": {
+        "java": {
+          "using-cpes": false
+        },
+        "jvm": {
+          "using-cpes": true
+        },
+        "dotnet": {
+          "using-cpes": false
+        },
+        "golang": {
+          "using-cpes": false,
+          "always-use-cpe-for-stdlib": true,
+          "allow-main-module-pseudo-version-comparison": false
+        },
+        "javascript": {
+          "using-cpes": false
+        },
+        "python": {
+          "using-cpes": false
+        },
+        "ruby": {
+          "using-cpes": false
+        },
+        "rust": {
+          "using-cpes": false
+        },
+        "hex": {
+          "using-cpes": false
+        },
+        "stock": {
+          "using-cpes": true
+        },
+        "dpkg": {
+          "using-cpes": false,
+          "missing-epoch-strategy": "zero",
+          "use-cpes-for-eol": false
+        },
+        "rpm": {
+          "using-cpes": false,
+          "missing-epoch-strategy": "auto",
+          "use-cpes-for-eol": false
+        }
+      },
+      "fail-on-severity": "negligible",
+      "registry": {
+        "insecure-skip-tls-verify": false,
+        "insecure-use-http": false,
+        "ca-cert": ""
+      },
+      "show-suppressed": false,
+      "by-cve": false,
+      "SortBy": {
+        "sort-by": "risk"
+      },
+      "name": "",
+      "default-image-pull-source": "",
+      "from": null,
+      "vex-documents": [],
+      "vex-add": [],
+      "match-upstream-kernel-headers": false,
+      "fix-channel": {
+        "redhat-eus": {
+          "apply": "auto",
+          "versions": ">= 8.0"
+        }
+      },
+      "timestamp": true,
+      "alerts": {
+        "enable-eol-distro-warnings": true
+      },
+      "db": {
+        "cache-dir": "/home/runner/.cache/grype/db",
+        "update-url": "https://grype.anchore.io/databases",
+        "ca-cert": "",
+        "auto-update": true,
+        "validate-by-hash-on-start": true,
+        "validate-age": true,
+        "max-allowed-built-age": 432000000000000,
+        "require-update-check": false,
+        "update-available-timeout": 30000000000,
+        "update-download-timeout": 300000000000,
+        "max-update-check-frequency": 7200000000000
+      },
+      "exp": {},
+      "dev": {
+        "db": {
+          "debug": false
+        }
+      }
+    }
+  }
+}

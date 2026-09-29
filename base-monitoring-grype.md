@@ -7,16 +7,18 @@ Grype includes unfixed vulnerabilities and every severity down to negligible, so
 
 Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see this branch's commit history for when.
 
+Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitoring/trivy.json) · [Grype JSON](reports/base-monitoring/grype.json) · SPDX SBOM [aarch64](sbom/base-monitoring/sbom-aarch64.spdx.json), [index](sbom/base-monitoring/sbom-index.spdx.json), [x86_64](sbom/base-monitoring/sbom-x86_64.spdx.json).
+
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
 | 0 | 0 | 7 | 1 | 11 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :yellow_circle: medium | [`CVE-2026-77117`](https://nvd.nist.gov/vuln/detail/CVE-2026-77117) | `glibc-2.44` | `2.44-r6` | — |
-| :yellow_circle: medium | [`CVE-2026-80489`](https://nvd.nist.gov/vuln/detail/CVE-2026-80489) | `glibc-2.44` | `2.44-r6` | — |
-| :yellow_circle: medium | [`CVE-2026-8674`](https://nvd.nist.gov/vuln/detail/CVE-2026-8674) | `glibc-2.44` | `2.44-r6` | — |
-| :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r6` | — |
+| :yellow_circle: medium | [`CVE-2026-77117`](https://nvd.nist.gov/vuln/detail/CVE-2026-77117) | `glibc-2.44` | `2.44-r7` | — |
+| :yellow_circle: medium | [`CVE-2026-80489`](https://nvd.nist.gov/vuln/detail/CVE-2026-80489) | `glibc-2.44` | `2.44-r7` | — |
+| :yellow_circle: medium | [`CVE-2026-8674`](https://nvd.nist.gov/vuln/detail/CVE-2026-8674) | `glibc-2.44` | `2.44-r7` | — |
+| :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.15_git20260925-r0` | — |
 | :yellow_circle: medium | [`CVE-2026-19672`](https://nvd.nist.gov/vuln/detail/CVE-2026-19672) | `python-3.13` | `3.13.15_git20260925-r0` | — |
 | :yellow_circle: medium | [`CVE-2026-87910`](https://nvd.nist.gov/vuln/detail/CVE-2026-87910) | `python-3.13` | `3.13.15_git20260925-r0` | — |

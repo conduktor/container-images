@@ -7,6 +7,8 @@ Trivy runs with `--ignore-unfixed`, so this lists only vulnerabilities a rebuild
 
 Refreshed by the [nightly build](../../actions/workflows/nightly.yml) — see this branch's commit history for when.
 
+Same run, raw and at paths that never change: [Trivy JSON](reports/base-jre-25/trivy.json) · [Grype JSON](reports/base-jre-25/grype.json) · SPDX SBOM [aarch64](sbom/base-jre-25/sbom-aarch64.spdx.json), [index](sbom/base-jre-25/sbom-index.spdx.json), [x86_64](sbom/base-jre-25/sbom-x86_64.spdx.json).
+
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
 | 0 | 0 | 0 | 0 | 0 |
