@@ -11,10 +11,11 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 16 | 9 | 1 | 26 |
+| 0 | 17 | 11 | 1 | 29 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-68497`](https://avd.aquasec.com/nvd/cve-2026-68497) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
 | :orange_circle: high | [`CVE-2026-56854`](https://avd.aquasec.com/nvd/cve-2026-56854) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
 | :orange_circle: high | [`CVE-2026-46600`](https://avd.aquasec.com/nvd/cve-2026-46600) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`CVE-2026-56852`](https://avd.aquasec.com/nvd/cve-2026-56852) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
@@ -32,6 +33,8 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-56860`](https://avd.aquasec.com/nvd/cve-2026-56860) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56862`](https://avd.aquasec.com/nvd/cve-2026-56862) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`CVE-2026-59949`](https://avd.aquasec.com/nvd/cve-2026-59949) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.1` |
+| :yellow_circle: medium | [`CVE-2026-19032`](https://avd.aquasec.com/nvd/cve-2026-19032) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
+| :yellow_circle: medium | [`CVE-2026-83557`](https://avd.aquasec.com/nvd/cve-2026-83557) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
 | :yellow_circle: medium | [`CVE-2026-56855`](https://avd.aquasec.com/nvd/cve-2026-56855) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
 | :yellow_circle: medium | [`CVE-2026-78662`](https://avd.aquasec.com/nvd/cve-2026-78662) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
