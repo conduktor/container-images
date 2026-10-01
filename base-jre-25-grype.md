@@ -11,12 +11,16 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-jre-25/t
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 5 | 0 | 5 |
+| 0 | 0 | 8 | 1 | 9 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
 | :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r2` | — |
+| :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r2` | — |
+| :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r2` | — |
 | :yellow_circle: medium | [`CVE-2026-77117`](https://nvd.nist.gov/vuln/detail/CVE-2026-77117) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2026-80489`](https://nvd.nist.gov/vuln/detail/CVE-2026-80489) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2026-8674`](https://nvd.nist.gov/vuln/detail/CVE-2026-8674) | `glibc-2.44` | `2.44-r7` | — |
+| :yellow_circle: medium | [`CVE-2026-86805`](https://nvd.nist.gov/vuln/detail/CVE-2026-86805) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r7` | — |
+| :white_circle: low | [`CVE-2026-95818`](https://nvd.nist.gov/vuln/detail/CVE-2026-95818) | `glibc-2.44` | `2.44-r7` | — |
