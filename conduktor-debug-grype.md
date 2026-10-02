@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 24 | 23 | 3 | 51 |
+| 0 | 26 | 23 | 3 | 53 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -22,7 +22,9 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`GO-2026-5970`](https://go.dev/issue/80142) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
 | :orange_circle: high | [`GHSA-2v4p-qf9q-27wj`](https://github.com/advisories/GHSA-2v4p-qf9q-27wj) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2` |
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
+| :orange_circle: high | [`GHSA-cxp5-3px4-pw24`](https://github.com/advisories/GHSA-cxp5-3px4-pw24) | `jackson-databind` | `2.21.5` | `2.21.7` |
 | :orange_circle: high | [`GHSA-q4xh-88c3-wmh7`](https://github.com/advisories/GHSA-q4xh-88c3-wmh7) | `jackson-databind` | `2.21.5` | `2.21.6` |
+| :orange_circle: high | [`GHSA-wv8q-qhhj-9h54`](https://github.com/advisories/GHSA-wv8q-qhhj-9h54) | `jackson-databind` | `2.21.5` | `2.21.7` |
 | :orange_circle: high | [`GHSA-2fvj-hgj9-j2gr`](https://github.com/advisories/GHSA-2fvj-hgj9-j2gr) | `jetty-security` | `12.0.34` | `12.0.36` |
 | :orange_circle: high | [`GHSA-r2xf-8xr9-62gw`](https://github.com/advisories/GHSA-r2xf-8xr9-62gw) | `jline-builtins` | `3.30.4` | `3.30.15` |
 | :orange_circle: high | [`GHSA-2r2c-cx56-8933`](https://github.com/advisories/GHSA-2r2c-cx56-8933) | `jline-remote-telnet` | `3.30.4` | `3.30.14` |

@@ -2,15 +2,15 @@
   "matches": [
     {
       "vulnerability": {
-        "id": "CVE-2026-77117",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-77117",
+        "id": "CVE-2026-80489",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-80489",
         "namespace": "nvd:cpe",
         "severity": "Medium",
         "urls": [
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=34556",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0019"
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34568",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0020"
         ],
-        "description": "Converting crafted SHIFT_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome SHIFT_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the SHIFT_JISX0213 character set is affected, which is not commonly used.  The related defect in the EUC_JISX0213 converter is tracked separately as CVE-2026-80489.",
+        "description": "Converting crafted EUC_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome EUC_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the EUC_JISX0213 character set is affected, which is not commonly used.  The related defect in SHIFT_JISX0213 converter is tracked separately as CVE-2026-77117.",
         "cvss": [
           {
             "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
@@ -27,15 +27,15 @@
         ],
         "epss": [
           {
-            "cve": "CVE-2026-77117",
+            "cve": "CVE-2026-80489",
             "epss": 0.00412,
-            "percentile": 0.32947,
-            "date": "2026-09-29"
+            "percentile": 0.33048,
+            "date": "2026-09-30"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-77117",
+            "cve": "CVE-2026-80489",
             "cwe": "CWE-835",
             "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
             "type": "Secondary"
@@ -64,7 +64,7 @@
             }
           },
           "found": {
-            "vulnerabilityID": "CVE-2026-77117",
+            "vulnerabilityID": "CVE-2026-80489",
             "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
             "cpes": [
               "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
@@ -80,7 +80,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1",
+            "layerID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -225,15 +225,15 @@
     },
     {
       "vulnerability": {
-        "id": "CVE-2026-80489",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-80489",
+        "id": "CVE-2026-77117",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-77117",
         "namespace": "nvd:cpe",
         "severity": "Medium",
         "urls": [
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=34568",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0020"
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34556",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0019"
         ],
-        "description": "Converting crafted EUC_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome EUC_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the EUC_JISX0213 character set is affected, which is not commonly used.  The related defect in SHIFT_JISX0213 converter is tracked separately as CVE-2026-77117.",
+        "description": "Converting crafted SHIFT_JISX0213 input to UCS-4 or the internal wide character encoding, for example with iconv, in the GNU C Library version 2.3 to 2.44 may result in the converter making no progress, causing the calling application to hang.\n\nSome SHIFT_JISX0213 sequences decode to two code points.  If the output buffer has room for only the first one, the converter stores the second in the conversion state and returns E2BIG, but it never clears that pending character after emitting it on the next call.  The converter then keeps emitting the pending character without consuming further input, so an application that retries the conversion loops forever. The input must be attacker controlled and the application must convert it with an output buffer small enough to split the two code points. Only the SHIFT_JISX0213 character set is affected, which is not commonly used.  The related defect in the EUC_JISX0213 converter is tracked separately as CVE-2026-80489.",
         "cvss": [
           {
             "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
@@ -250,15 +250,15 @@
         ],
         "epss": [
           {
-            "cve": "CVE-2026-80489",
+            "cve": "CVE-2026-77117",
             "epss": 0.00412,
-            "percentile": 0.32946,
-            "date": "2026-09-29"
+            "percentile": 0.33045,
+            "date": "2026-09-30"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-80489",
+            "cve": "CVE-2026-77117",
             "cwe": "CWE-835",
             "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
             "type": "Secondary"
@@ -287,7 +287,7 @@
             }
           },
           "found": {
-            "vulnerabilityID": "CVE-2026-80489",
+            "vulnerabilityID": "CVE-2026-77117",
             "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
             "cpes": [
               "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
@@ -303,7 +303,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1",
+            "layerID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -478,8 +478,8 @@
           {
             "cve": "CVE-2026-8674",
             "epss": 0.00342,
-            "percentile": 0.25157,
-            "date": "2026-09-29"
+            "percentile": 0.25249,
+            "date": "2026-09-30"
           }
         ],
         "cwes": [
@@ -529,7 +529,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1",
+            "layerID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -702,8 +702,8 @@
           {
             "cve": "CVE-2026-89092",
             "epss": 0.00265,
-            "percentile": 0.16575,
-            "date": "2026-09-29"
+            "percentile": 0.16655,
+            "date": "2026-09-30"
           }
         ],
         "cwes": [
@@ -753,7 +753,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1",
+            "layerID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -925,8 +925,8 @@
           {
             "cve": "CVE-2026-86805",
             "epss": 0.00124,
-            "percentile": 0.01834,
-            "date": "2026-09-29"
+            "percentile": 0.01846,
+            "date": "2026-09-30"
           }
         ],
         "cwes": [
@@ -976,7 +976,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1",
+            "layerID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1148,8 +1148,8 @@
           {
             "cve": "CVE-2026-95818",
             "epss": 0.00129,
-            "percentile": 0.02129,
-            "date": "2026-09-29"
+            "percentile": 0.02144,
+            "date": "2026-09-30"
           }
         ],
         "cwes": [
@@ -1199,7 +1199,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1",
+            "layerID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1346,29 +1346,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-os@sha256:85cd1fe54cbc6858bbcd4a6857bef932a765bee5f6b41dbf99f4099276595861",
-      "imageID": "sha256:b803f258fd05077511376b7b25002ec5671d7a6858998933fe9150de0598a655",
-      "manifestDigest": "sha256:f7feb91854a4a05a1d95a01d6f2845ab9ce49436be92ea7b127777a31cf54c6b",
+      "userInput": "ghcr.io/conduktor/base-os@sha256:7ea4904fc472f4d31c600b1d1a8cd34a83e341a6ada0eda4077126c3cd373055",
+      "imageID": "sha256:0bd9127981817440a585423ac1fda9d1ce7d1521570fb8f7b470531ceb89ee7e",
+      "manifestDigest": "sha256:7fde87167e635dca9858005499f57b561f36fba60adc1c58e03e45f3d6b4e12e",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
       "imageSize": 10394795,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1",
+          "digest": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109",
           "size": 10394795
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMDU1LCJkaWdlc3QiOiJzaGEyNTY6YjgwM2YyNThmZDA1MDc3NTExMzc2YjdiMjUwMDJlYzU2NzFkN2E2ODU4OTk4OTMzZmU5MTUwZGUwNTk4YTY1NSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMTU3NTgwOCwiZGlnZXN0Ijoic2hhMjU2OjMwYWRlZTFjZjMzNzExMTVlNjhjMzg1YTI2MzBhNDI2OGQzOTBhMGZkMGNmMmI1ZWEwNjE3YmRjN2FjMDYzYTEifV19",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTA5LTMwVDAwOjQ3OjQyWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0wOS0zMFQwMDo0Nzo0MloiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgT1MgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykgYnkgQ29uZHVrdG9yIn1dLCJvcyI6ImxpbnV4Iiwicm9vdGZzIjp7InR5cGUiOiJsYXllcnMiLCJkaWZmX2lkcyI6WyJzaGEyNTY6MzBhZGVlMWNmMzM3MTExNWU2OGMzODVhMjYzMGE0MjY4ZDM5MGEwZmQwY2YyYjVlYTA2MTdiZGM3YWMwNjNhMSJdfSwiY29uZmlnIjp7IkNtZCI6WyIvYmluL3NoIl0sIkVudiI6WyJMQU5HPUMuVVRGLTgiLCJQQVRIPS91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0wOS0zMFQwMDo0Nzo0MloiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCB0aGUgY29uZHVrdG9yLXBsYXRmb3JtIGFjY291bnQuIE5vIEpWTSwgbm8gcGFja2FnZSBtYW5hZ2VyLiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5saWNlbnNlcyI6IkFwYWNoZS0yLjAiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2Uuc291cmNlIjoiaHR0cHM6Ly9naXRodWIuY29tL2NvbmR1a3Rvci9jb250YWluZXItaW1hZ2VzIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnRpdGxlIjoiQ29uZHVrdG9yIE9TIGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnZlbmRvciI6IkNvbmR1a3RvciJ9fX0=",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMDU1LCJkaWdlc3QiOiJzaGEyNTY6MGJkOTEyNzk4MTgxNzQ0MGE1ODU0MjNhYzFmZGE5ZDFjZTdkMTUyMTU3MGZiOGY3YjQ3MDUzMWNlYjg5ZWU3ZSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMTU3NTgwOCwiZGlnZXN0Ijoic2hhMjU2OjNiNTU3M2E2NTU2ZWI4ODM2YmVmZjFmN2MwYzMzMDEzNjMwNDc5MGE2N2U2ZTRlMTE1MjY2Y2M5ZmJmYmIxMDkifV19",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTAxVDE1OjEyOjQyWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0wMVQxNToxMjo0MloiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgT1MgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykgYnkgQ29uZHVrdG9yIn1dLCJvcyI6ImxpbnV4Iiwicm9vdGZzIjp7InR5cGUiOiJsYXllcnMiLCJkaWZmX2lkcyI6WyJzaGEyNTY6M2I1NTczYTY1NTZlYjg4MzZiZWZmMWY3YzBjMzMwMTM2MzA0NzkwYTY3ZTZlNGUxMTUyNjZjYzlmYmZiYjEwOSJdfSwiY29uZmlnIjp7IkNtZCI6WyIvYmluL3NoIl0sIkVudiI6WyJMQU5HPUMuVVRGLTgiLCJQQVRIPS91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0wMVQxNToxMjo0MloiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCB0aGUgY29uZHVrdG9yLXBsYXRmb3JtIGFjY291bnQuIE5vIEpWTSwgbm8gcGFja2FnZSBtYW5hZ2VyLiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5saWNlbnNlcyI6IkFwYWNoZS0yLjAiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2Uuc291cmNlIjoiaHR0cHM6Ly9naXRodWIuY29tL2NvbmR1a3Rvci9jb250YWluZXItaW1hZ2VzIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnRpdGxlIjoiQ29uZHVrdG9yIE9TIGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnZlbmRvciI6IkNvbmR1a3RvciJ9fX0=",
       "repoDigests": [
-        "ghcr.io/conduktor/base-os@sha256:85cd1fe54cbc6858bbcd4a6857bef932a765bee5f6b41dbf99f4099276595861"
+        "ghcr.io/conduktor/base-os@sha256:7ea4904fc472f4d31c600b1d1a8cd34a83e341a6ada0eda4077126c3cd373055"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-09-30T00:47:42Z",
+        "org.opencontainers.image.created": "2026-10-01T15:12:42Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with the conduktor-platform account. No JVM, no package manager.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -1389,7 +1389,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-l0Lr0X/output",
+      "file": "/tmp/grype-jzLKnq/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

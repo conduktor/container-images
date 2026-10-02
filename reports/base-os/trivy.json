@@ -3,8 +3,8 @@
   "Trivy": {
     "Version": "0.70.0"
   },
-  "ArtifactID": "sha256:fc922b1dfcda9c6dfdac93989fcd80e4ab3749ddd90501c77cea3bddfca6acad",
-  "ArtifactName": "ghcr.io/conduktor/base-os@sha256:85cd1fe54cbc6858bbcd4a6857bef932a765bee5f6b41dbf99f4099276595861",
+  "ArtifactID": "sha256:ec02f3ba6bcc11008fc1d58dc0514c18f1b1addf4d7c3bb12fa329ec54abd8a3",
+  "ArtifactName": "ghcr.io/conduktor/base-os@sha256:7ea4904fc472f4d31c600b1d1a8cd34a83e341a6ada0eda4077126c3cd373055",
   "ArtifactType": "container_image",
   "Metadata": {
     "Size": 11575808,
@@ -12,22 +12,22 @@
       "Family": "wolfi",
       "Name": "20230201"
     },
-    "ImageID": "sha256:b803f258fd05077511376b7b25002ec5671d7a6858998933fe9150de0598a655",
+    "ImageID": "sha256:0bd9127981817440a585423ac1fda9d1ce7d1521570fb8f7b470531ceb89ee7e",
     "DiffIDs": [
-      "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+      "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
     ],
     "RepoDigests": [
-      "ghcr.io/conduktor/base-os@sha256:85cd1fe54cbc6858bbcd4a6857bef932a765bee5f6b41dbf99f4099276595861"
+      "ghcr.io/conduktor/base-os@sha256:7ea4904fc472f4d31c600b1d1a8cd34a83e341a6ada0eda4077126c3cd373055"
     ],
-    "Reference": "ghcr.io/conduktor/base-os@sha256:85cd1fe54cbc6858bbcd4a6857bef932a765bee5f6b41dbf99f4099276595861",
+    "Reference": "ghcr.io/conduktor/base-os@sha256:7ea4904fc472f4d31c600b1d1a8cd34a83e341a6ada0eda4077126c3cd373055",
     "ImageConfig": {
       "architecture": "amd64",
       "author": "github.com/chainguard-dev/apko",
-      "created": "2026-09-30T00:47:42Z",
+      "created": "2026-10-01T15:12:42Z",
       "history": [
         {
           "author": "apko",
-          "created": "2026-09-30T00:47:42Z",
+          "created": "2026-10-01T15:12:42Z",
           "created_by": "apko",
           "comment": "Conduktor OS base image (Wolfi/apko) by Conduktor"
         }
@@ -36,7 +36,7 @@
       "rootfs": {
         "type": "layers",
         "diff_ids": [
-          "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+          "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
         ]
       },
       "config": {
@@ -51,7 +51,7 @@
         ],
         "Labels": {
           "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-          "org.opencontainers.image.created": "2026-09-30T00:47:42Z",
+          "org.opencontainers.image.created": "2026-10-01T15:12:42Z",
           "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with the conduktor-platform account. No JVM, no package manager.",
           "org.opencontainers.image.licenses": "Apache-2.0",
           "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -63,14 +63,14 @@
     "Layers": [
       {
         "Size": 11575808,
-        "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-        "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+        "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+        "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
       }
     ]
   },
   "Results": [
     {
-      "Target": "ghcr.io/conduktor/base-os@sha256:85cd1fe54cbc6858bbcd4a6857bef932a765bee5f6b41dbf99f4099276595861 (wolfi 20230201)",
+      "Target": "ghcr.io/conduktor/base-os@sha256:7ea4904fc472f4d31c600b1d1a8cd34a83e341a6ada0eda4077126c3cd373055 (wolfi 20230201)",
       "Class": "os-pkgs",
       "Type": "wolfi",
       "Packages": [
@@ -96,8 +96,8 @@
             "wolfi-baselayout@20230201-r30"
           ],
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:3e65c84bce8646a7c6875b3f809946cb74ee3661",
           "InstalledFiles": [
@@ -109,16 +109,16 @@
           "AnalyzedBy": "apk"
         },
         {
-          "ID": "ca-certificates-bundle@20260909-r1",
+          "ID": "ca-certificates-bundle@20260909-r2",
           "Name": "ca-certificates-bundle",
           "Identifier": {
-            "PURL": "pkg:apk/wolfi/ca-certificates-bundle@20260909-r1?arch=x86_64&distro=20230201",
-            "UID": "2b18231ba8533245"
+            "PURL": "pkg:apk/wolfi/ca-certificates-bundle@20260909-r2?arch=x86_64&distro=20230201",
+            "UID": "6a1c9d6ce22a0131"
           },
-          "Version": "20260909-r1",
+          "Version": "20260909-r2",
           "Arch": "x86_64",
           "SrcName": "ca-certificates",
-          "SrcVersion": "20260909-r1",
+          "SrcVersion": "20260909-r2",
           "Licenses": [
             "MPL-2.0",
             "MIT"
@@ -128,16 +128,16 @@
             "wolfi-baselayout@20230201-r30"
           ],
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
-          "Digest": "sha1:c084d667e931a93a8b84638d06e896e375627ef9",
+          "Digest": "sha1:cdbb31b944f2686b23aa355d9f68134437d9b3af",
           "InstalledFiles": [
             "etc/pki/tls/certs/ca-bundle.crt",
             "etc/ssl/cert.pem",
             "etc/ssl/certs/ca-bundle.crt",
             "etc/ssl/certs/ca-certificates.crt",
-            "var/lib/db/sbom/ca-certificates-bundle-20260909-r1.spdx.json"
+            "var/lib/db/sbom/ca-certificates-bundle-20260909-r2.spdx.json"
           ],
           "AnalyzedBy": "apk"
         },
@@ -163,8 +163,8 @@
             "wolfi-baselayout@20230201-r30"
           ],
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:33031570df60b44244b68ad742bc9daf706938dc",
           "InstalledFiles": [
@@ -212,8 +212,8 @@
             "wolfi-baselayout@20230201-r30"
           ],
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:d6684749a7ae0401c2660625c2184d4aa703e37d",
           "InstalledFiles": [
@@ -253,8 +253,8 @@
             "wolfi-baselayout@20230201-r30"
           ],
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:25a75ed5ea1a809eb7f6aa97aae9400102f0ea48",
           "InstalledFiles": [
@@ -286,8 +286,8 @@
             "wolfi-baselayout@20230201-r30"
           ],
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:80722ea823fc85aadf0fb1d181b720b702cae694",
           "InstalledFiles": [
@@ -315,8 +315,8 @@
             "ld-linux-2.44@2.44-r7"
           ],
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:92b17e208263f2393ee03daf76ed3283debc4098",
           "InstalledFiles": [
@@ -343,8 +343,8 @@
           ],
           "Maintainer": "wolfi",
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:4c299ee2dc24d60b39cdcc45232413a4ce8095e6",
           "InstalledFiles": [
@@ -370,8 +370,8 @@
           ],
           "Maintainer": "wolfi",
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:307334fab3e8b4170c5e074fd98a21fecdafa4ef",
           "InstalledFiles": [
@@ -1585,7 +1585,7 @@
           "Name": "wolfi-baselayout",
           "Identifier": {
             "PURL": "pkg:apk/wolfi/wolfi-baselayout@20230201-r30?arch=x86_64&distro=20230201",
-            "UID": "94835a32474d707f"
+            "UID": "a3228ab8374783f1"
           },
           "Version": "20230201-r30",
           "Arch": "x86_64",
@@ -1596,11 +1596,11 @@
           ],
           "Maintainer": "wolfi",
           "DependsOn": [
-            "ca-certificates-bundle@20260909-r1"
+            "ca-certificates-bundle@20260909-r2"
           ],
           "Layer": {
-            "Digest": "sha256:f989b798bf0140b664b2517c93f5a2883f1cb79e02025129211b6ea3532f38ce",
-            "DiffID": "sha256:30adee1cf3371115e68c385a2630a4268d390a0fd0cf2b5ea0617bdc7ac063a1"
+            "Digest": "sha256:f6e05090971422622cb0477556f742f3455bf79cbd8241d26aac6988234ebb13",
+            "DiffID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109"
           },
           "Digest": "sha1:ab2155d0d6404009da1e8185851c14425ce8402d",
           "InstalledFiles": [
