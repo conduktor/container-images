@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 26 | 23 | 3 | 53 |
+| 0 | 28 | 21 | 3 | 53 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -22,6 +22,8 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`GO-2026-5970`](https://go.dev/issue/80142) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
 | :orange_circle: high | [`GHSA-2v4p-qf9q-27wj`](https://github.com/advisories/GHSA-2v4p-qf9q-27wj) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2` |
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
+| :orange_circle: high | [`GHSA-7hhh-6rmp-j9qf`](https://github.com/advisories/GHSA-7hhh-6rmp-j9qf) | `jackson-core` | `2.21.5` | `2.21.7` |
+| :orange_circle: high | [`GHSA-p6pp-m3f8-5c89`](https://github.com/advisories/GHSA-p6pp-m3f8-5c89) | `jackson-core` | `2.21.5` | `2.21.7` |
 | :orange_circle: high | [`GHSA-cxp5-3px4-pw24`](https://github.com/advisories/GHSA-cxp5-3px4-pw24) | `jackson-databind` | `2.21.5` | `2.21.7` |
 | :orange_circle: high | [`GHSA-q4xh-88c3-wmh7`](https://github.com/advisories/GHSA-q4xh-88c3-wmh7) | `jackson-databind` | `2.21.5` | `2.21.6` |
 | :orange_circle: high | [`GHSA-wv8q-qhhj-9h54`](https://github.com/advisories/GHSA-wv8q-qhhj-9h54) | `jackson-databind` | `2.21.5` | `2.21.7` |
@@ -44,8 +46,6 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r2` | — |
 | :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r2` | — |
 | :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-77117`](https://nvd.nist.gov/vuln/detail/CVE-2026-77117) | `glibc-2.44` | `2.44-r7` | — |
-| :yellow_circle: medium | [`CVE-2026-80489`](https://nvd.nist.gov/vuln/detail/CVE-2026-80489) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2026-8674`](https://nvd.nist.gov/vuln/detail/CVE-2026-8674) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2026-86805`](https://nvd.nist.gov/vuln/detail/CVE-2026-86805) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r7` | — |
