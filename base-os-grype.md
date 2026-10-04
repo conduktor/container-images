@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-os/trivy
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 3 | 1 | 4 |
+| 0 | 0 | 3 | 2 | 5 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -19,3 +19,4 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-os/trivy
 | :yellow_circle: medium | [`CVE-2026-86805`](https://nvd.nist.gov/vuln/detail/CVE-2026-86805) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r7` | — |
 | :white_circle: low | [`CVE-2026-95818`](https://nvd.nist.gov/vuln/detail/CVE-2026-95818) | `glibc-2.44` | `2.44-r7` | — |
+| :white_circle: low | [`CVE-2026-97399`](https://nvd.nist.gov/vuln/detail/CVE-2026-97399) | `glibc-2.44` | `2.44-r7` | — |

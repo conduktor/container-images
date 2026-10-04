@@ -32,8 +32,8 @@
           {
             "cve": "CVE-2026-8674",
             "epss": 0.00342,
-            "percentile": 0.25288,
-            "date": "2026-10-01"
+            "percentile": 0.25373,
+            "date": "2026-10-02"
           }
         ],
         "cwes": [
@@ -256,8 +256,8 @@
           {
             "cve": "CVE-2026-89092",
             "epss": 0.00265,
-            "percentile": 0.16681,
-            "date": "2026-10-01"
+            "percentile": 0.16739,
+            "date": "2026-10-02"
           }
         ],
         "cwes": [
@@ -452,6 +452,230 @@
     },
     {
       "vulnerability": {
+        "id": "CVE-2026-97399",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97399",
+        "namespace": "nvd:cpe",
+        "severity": "Low",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34683",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0024",
+          "http://www.openwall.com/lists/oss-security/2026/09/28/7"
+        ],
+        "description": "The strncasecmp function in the GNU C Library 2.24 and later optimized for the Power8 architecture may read one byte beyond the input size limit, which may crash a program when that byte is not readable.\n\nThis condition may happen when the input strings to the strncasecmp function are attacker controlled in an application and they match all the way up to the edge of their page and the neighbouring page is either not mapped or is not readable.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 3.7,
+              "exploitabilityScore": 2.3,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-97399",
+            "epss": 0.00292,
+            "percentile": 0.19712,
+            "date": "2026-10-02"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-97399",
+            "cwe": "CWE-126",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.09781999999999998
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-97399",
+            "versionConstraint": ">= 2.24, < 2.45 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f9c6349371de084",
+        "name": "glibc-2.44",
+        "version": "2.44-r7",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:3b5573a6556eb8836beff1f7c0c330136304790a67e6e4e115266cc9fbfbb109",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r7:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r7?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r7.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
         "id": "CVE-2026-86805",
         "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-86805",
         "namespace": "nvd:cpe",
@@ -479,8 +703,8 @@
           {
             "cve": "CVE-2026-86805",
             "epss": 0.00124,
-            "percentile": 0.01843,
-            "date": "2026-10-01"
+            "percentile": 0.01855,
+            "date": "2026-10-02"
           }
         ],
         "cwes": [
@@ -702,8 +926,8 @@
           {
             "cve": "CVE-2026-95818",
             "epss": 0.00129,
-            "percentile": 0.02142,
-            "date": "2026-10-01"
+            "percentile": 0.02155,
+            "date": "2026-10-02"
           }
         ],
         "cwes": [
@@ -943,7 +1167,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-DYNZa2/output",
+      "file": "/tmp/grype-Mqg8hP/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

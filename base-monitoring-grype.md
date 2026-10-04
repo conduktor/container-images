@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 5 | 1 | 9 |
+| 0 | 0 | 5 | 2 | 10 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -19,8 +19,9 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | :yellow_circle: medium | [`CVE-2026-86805`](https://nvd.nist.gov/vuln/detail/CVE-2026-86805) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2026-89092`](https://nvd.nist.gov/vuln/detail/CVE-2026-89092) | `glibc-2.44` | `2.44-r7` | — |
 | :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.16_git20261002-r1` | — |
-| :yellow_circle: medium | [`CVE-2026-19672`](https://nvd.nist.gov/vuln/detail/CVE-2026-19672) | `python-3.13` | `3.13.16_git20261002-r1` | — |
+| :yellow_circle: medium | [`CVE-2026-12345`](https://nvd.nist.gov/vuln/detail/CVE-2026-12345) | `python-3.13` | `3.13.16_git20261002-r1` | — |
 | :white_circle: low | [`CVE-2026-95818`](https://nvd.nist.gov/vuln/detail/CVE-2026-95818) | `glibc-2.44` | `2.44-r7` | — |
+| :white_circle: low | [`CVE-2026-97399`](https://nvd.nist.gov/vuln/detail/CVE-2026-97399) | `glibc-2.44` | `2.44-r7` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
