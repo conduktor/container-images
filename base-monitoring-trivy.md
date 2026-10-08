@@ -15,5 +15,5 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `0.311.2-0.20260410083055-07c6232d159b` |
-| :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `0.311.2-0.20260410083055-07c6232d159b` |
+| :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `3.5.2, 3.11.2, 0.311.2-0.20260410083055-07c6232d159b` |
+| :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `3.5.2, 3.11.2, 0.311.2-0.20260410083055-07c6232d159b` |
