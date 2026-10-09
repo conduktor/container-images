@@ -29,8 +29,8 @@
           {
             "cve": "CVE-2025-15367",
             "epss": 0.00369,
-            "percentile": 0.2854,
-            "date": "2026-10-06"
+            "percentile": 0.28625,
+            "date": "2026-10-07"
           }
         ],
         "cwes": [
@@ -101,7 +101,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
+            "layerID": "sha256:d3f1eeaeb5a5695ff766a1886772b93282cb111d0fe6bda2fab1d0e908d55ae7",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -186,456 +186,6 @@
     },
     {
       "vulnerability": {
-        "id": "CVE-2026-8674",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-8674",
-        "namespace": "nvd:cpe",
-        "severity": "Medium",
-        "urls": [
-          "https://joshua.hu/fuzzing-glibc-libresolv",
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=31026",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0021",
-          "https://sourceware.org/git/?p=glibc.git;a=commit;h=506ea57086bfb9ce3daff1c14246a1cb532aba0a",
-          "http://www.openwall.com/lists/oss-security/2026/09/17/4"
-        ],
-        "description": "Initializing the DNS stub resolver from an /etc/resolv.conf file, or a LOCALDOMAIN environment variable, whose search list contains a domain of roughly 200 characters or more in the GNU C Library version 2.26 to 2.44 results in an assertion failure which aborts the process.\n\nThe resolver truncates the search list when copying it into the fixed-size _res.defdname buffer, then asserts that the copy is consistent with the full configuration.  The consistency check compared against the wrong size and did not handle a first entry that does not fit, so a correctly truncated list failed the assertion.  Any process that resolves names through the library is affected, including long-running processes that reload /etc/resolv.conf on the next query after it changes.  Search domains are commonly written to /etc/resolv.conf from data received over DHCP or from a VPN server, so an attacker on the local network may be able to trigger this without privileges on the target system, subject to validation by the network configuration software.",
-        "cvss": [
-          {
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 5.3,
-              "exploitabilityScore": 1.7,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-8674",
-            "epss": 0.00342,
-            "percentile": 0.25507,
-            "date": "2026-10-06"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-8674",
-            "cwe": "CWE-617",
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": ""
-        },
-        "advisories": [],
-        "risk": 0.17612999999999998
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "glibc-2.44",
-              "version": "2.44-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-8674",
-            "versionConstraint": ">= 2.26, <= 2.44 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "967d028c094e3081",
-        "name": "glibc-2.44",
-        "version": "2.44-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "LGPL-2.1-or-later"
-        ],
-        "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "glibc-2.44"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/rpc"
-            },
-            {
-              "path": "/etc/apk"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/ld.so"
-            },
-            {
-              "path": "/usr/bin/ldconfig"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/libBrokenLocale.so.1"
-            },
-            {
-              "path": "/usr/lib/libanl.so.1"
-            },
-            {
-              "path": "/usr/lib/libc.so.6"
-            },
-            {
-              "path": "/usr/lib/libc_malloc_debug.so.0"
-            },
-            {
-              "path": "/usr/lib/libdl.so.2"
-            },
-            {
-              "path": "/usr/lib/libm.so.6"
-            },
-            {
-              "path": "/usr/lib/libmemusage.so"
-            },
-            {
-              "path": "/usr/lib/libmvec.so.1"
-            },
-            {
-              "path": "/usr/lib/libnsl.so.1"
-            },
-            {
-              "path": "/usr/lib/libnss_compat.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_dns.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_files.so.2"
-            },
-            {
-              "path": "/usr/lib/libpthread.so.0"
-            },
-            {
-              "path": "/usr/lib/libresolv.so.2"
-            },
-            {
-              "path": "/usr/lib/librt.so.1"
-            },
-            {
-              "path": "/usr/lib/libthread_db.so.1"
-            },
-            {
-              "path": "/usr/lib/libutil.so.1"
-            },
-            {
-              "path": "/usr/lib/audit"
-            },
-            {
-              "path": "/usr/lib/locale"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "CVE-2026-89092",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-89092",
-        "namespace": "nvd:cpe",
-        "severity": "Medium",
-        "urls": [
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=34624",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0016",
-          "http://www.openwall.com/lists/oss-security/2026/09/11/2"
-        ],
-        "description": "The nscd service in the GNU C Library 2.3.4 onwards may crash due to a \nstack overflow when a malicious DNS server returns too large a response \nfor a DNS query, resulting in degraded DNS resolution for the system.\n\n\n\nExploitation of this bug needs a system that has nscd enabled and using \nan untrusted DNS server for name resolution, with the compromised DNS \nserver being capable of processing records large enough to result in a \nstack overflow in an nscd thread stack.  During experimentation, bind 9 \nwas unable to handle large records, but that could change in future or \nwith a different name server.  In typical installations, nscd is \nexecuted in an isolated context as its own user without a shell, due to \nwhich any compromise of that service is isolated.\n\n\n\nThere is a remote possibility of nscd cache corruption if an attacker \nmanages to get the stack pointer into a desired point in the heap, \npotentially resulting in other caches in nscd being overwritten with \ncorrupt data through the stack overflow, until the buggy code path \neventually results in a crash.\n\n\n\nFinally, a crash in nscd may result in performance degradation when \nresolving names, but it does not result in a denial of service.",
-        "cvss": [
-          {
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
-            "metrics": {
-              "baseScore": 4.2,
-              "exploitabilityScore": 1.7,
-              "impactScore": 2.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-89092",
-            "epss": 0.00265,
-            "percentile": 0.16852,
-            "date": "2026-10-06"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-89092",
-            "cwe": "CWE-789",
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.12190000000000001
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "glibc-2.44",
-              "version": "2.44-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-89092",
-            "versionConstraint": ">= 2.3.4, < 2.45 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "967d028c094e3081",
-        "name": "glibc-2.44",
-        "version": "2.44-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "LGPL-2.1-or-later"
-        ],
-        "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "glibc-2.44"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/rpc"
-            },
-            {
-              "path": "/etc/apk"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/ld.so"
-            },
-            {
-              "path": "/usr/bin/ldconfig"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/libBrokenLocale.so.1"
-            },
-            {
-              "path": "/usr/lib/libanl.so.1"
-            },
-            {
-              "path": "/usr/lib/libc.so.6"
-            },
-            {
-              "path": "/usr/lib/libc_malloc_debug.so.0"
-            },
-            {
-              "path": "/usr/lib/libdl.so.2"
-            },
-            {
-              "path": "/usr/lib/libm.so.6"
-            },
-            {
-              "path": "/usr/lib/libmemusage.so"
-            },
-            {
-              "path": "/usr/lib/libmvec.so.1"
-            },
-            {
-              "path": "/usr/lib/libnsl.so.1"
-            },
-            {
-              "path": "/usr/lib/libnss_compat.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_dns.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_files.so.2"
-            },
-            {
-              "path": "/usr/lib/libpthread.so.0"
-            },
-            {
-              "path": "/usr/lib/libresolv.so.2"
-            },
-            {
-              "path": "/usr/lib/librt.so.1"
-            },
-            {
-              "path": "/usr/lib/libthread_db.so.1"
-            },
-            {
-              "path": "/usr/lib/libutil.so.1"
-            },
-            {
-              "path": "/usr/lib/audit"
-            },
-            {
-              "path": "/usr/lib/locale"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
         "id": "CVE-2026-12345",
         "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-12345",
         "namespace": "nvd:cpe",
@@ -666,8 +216,8 @@
           {
             "cve": "CVE-2026-12345",
             "epss": 0.0018,
-            "percentile": 0.0688,
-            "date": "2026-10-06"
+            "percentile": 0.0691,
+            "date": "2026-10-07"
           }
         ],
         "cwes": [
@@ -738,7 +288,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
+            "layerID": "sha256:d3f1eeaeb5a5695ff766a1886772b93282cb111d0fe6bda2fab1d0e908d55ae7",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -823,676 +373,6 @@
     },
     {
       "vulnerability": {
-        "id": "CVE-2026-97399",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97399",
-        "namespace": "nvd:cpe",
-        "severity": "Low",
-        "urls": [
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=34683",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0024",
-          "http://www.openwall.com/lists/oss-security/2026/09/28/7"
-        ],
-        "description": "The strncasecmp function in the GNU C Library 2.24 and later optimized for the Power8 architecture may read one byte beyond the input size limit, which may crash a program when that byte is not readable.\n\nThis condition may happen when the input strings to the strncasecmp function are attacker controlled in an application and they match all the way up to the edge of their page and the neighbouring page is either not mapped or is not readable.",
-        "cvss": [
-          {
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-            "metrics": {
-              "baseScore": 3.7,
-              "exploitabilityScore": 2.3,
-              "impactScore": 1.5
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-97399",
-            "epss": 0.00292,
-            "percentile": 0.19839,
-            "date": "2026-10-06"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-97399",
-            "cwe": "CWE-126",
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.09781999999999998
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "glibc-2.44",
-              "version": "2.44-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-97399",
-            "versionConstraint": ">= 2.24, < 2.45 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "967d028c094e3081",
-        "name": "glibc-2.44",
-        "version": "2.44-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "LGPL-2.1-or-later"
-        ],
-        "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "glibc-2.44"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/rpc"
-            },
-            {
-              "path": "/etc/apk"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/ld.so"
-            },
-            {
-              "path": "/usr/bin/ldconfig"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/libBrokenLocale.so.1"
-            },
-            {
-              "path": "/usr/lib/libanl.so.1"
-            },
-            {
-              "path": "/usr/lib/libc.so.6"
-            },
-            {
-              "path": "/usr/lib/libc_malloc_debug.so.0"
-            },
-            {
-              "path": "/usr/lib/libdl.so.2"
-            },
-            {
-              "path": "/usr/lib/libm.so.6"
-            },
-            {
-              "path": "/usr/lib/libmemusage.so"
-            },
-            {
-              "path": "/usr/lib/libmvec.so.1"
-            },
-            {
-              "path": "/usr/lib/libnsl.so.1"
-            },
-            {
-              "path": "/usr/lib/libnss_compat.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_dns.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_files.so.2"
-            },
-            {
-              "path": "/usr/lib/libpthread.so.0"
-            },
-            {
-              "path": "/usr/lib/libresolv.so.2"
-            },
-            {
-              "path": "/usr/lib/librt.so.1"
-            },
-            {
-              "path": "/usr/lib/libthread_db.so.1"
-            },
-            {
-              "path": "/usr/lib/libutil.so.1"
-            },
-            {
-              "path": "/usr/lib/audit"
-            },
-            {
-              "path": "/usr/lib/locale"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "CVE-2026-86805",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-86805",
-        "namespace": "nvd:cpe",
-        "severity": "Medium",
-        "urls": [
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=34360",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0022"
-        ],
-        "description": "A time-of-check to time-of-use (TOCTOU) race condition in the dynamic loader (ld.so) of the GNU C Library (glibc) versions 2.14 through 2.44 allows a local attacker to escalate privileges. When expanding $ORIGIN in DT_RPATH for setuid/setgid (AT_SECURE) programs, glibc validates the lexically normalized search path against the trusted directories but then opens the raw, un-normalized path. On systems where the Linux fs.protected_hardlinks sysctl is disabled, a local attacker who hard-links such a program into an attacker-controlled directory and wins a race to replace an intermediate path component with a symbolic link can direct the loader outside the trusted directory, causing it to load an attacker-controlled shared object and execute arbitrary code with the elevated privileges of the program.\n\nExploitation requires an installed setuid or setgid binary whose DT_RPATH uses $ORIGIN followed by \"..\" traversal that normalizes into a trusted directory, and the ability to hard-link that binary and win the race by swapping a path component for a symbolic link. Major Linux-based OS distributions ship with fs.protected_hardlinks enabled by default and mitigate the vulnerability.",
-        "cvss": [
-          {
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:L",
-            "metrics": {
-              "baseScore": 6.3,
-              "exploitabilityScore": 0.8,
-              "impactScore": 5.5
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-86805",
-            "epss": 0.00124,
-            "percentile": 0.01877,
-            "date": "2026-10-06"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-86805",
-            "cwe": "CWE-367",
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.07005999999999998
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "glibc-2.44",
-              "version": "2.44-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-86805",
-            "versionConstraint": ">= 2.14, < 2.45 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "967d028c094e3081",
-        "name": "glibc-2.44",
-        "version": "2.44-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "LGPL-2.1-or-later"
-        ],
-        "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "glibc-2.44"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/rpc"
-            },
-            {
-              "path": "/etc/apk"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/ld.so"
-            },
-            {
-              "path": "/usr/bin/ldconfig"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/libBrokenLocale.so.1"
-            },
-            {
-              "path": "/usr/lib/libanl.so.1"
-            },
-            {
-              "path": "/usr/lib/libc.so.6"
-            },
-            {
-              "path": "/usr/lib/libc_malloc_debug.so.0"
-            },
-            {
-              "path": "/usr/lib/libdl.so.2"
-            },
-            {
-              "path": "/usr/lib/libm.so.6"
-            },
-            {
-              "path": "/usr/lib/libmemusage.so"
-            },
-            {
-              "path": "/usr/lib/libmvec.so.1"
-            },
-            {
-              "path": "/usr/lib/libnsl.so.1"
-            },
-            {
-              "path": "/usr/lib/libnss_compat.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_dns.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_files.so.2"
-            },
-            {
-              "path": "/usr/lib/libpthread.so.0"
-            },
-            {
-              "path": "/usr/lib/libresolv.so.2"
-            },
-            {
-              "path": "/usr/lib/librt.so.1"
-            },
-            {
-              "path": "/usr/lib/libthread_db.so.1"
-            },
-            {
-              "path": "/usr/lib/libutil.so.1"
-            },
-            {
-              "path": "/usr/lib/audit"
-            },
-            {
-              "path": "/usr/lib/locale"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "CVE-2026-95818",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-95818",
-        "namespace": "nvd:cpe",
-        "severity": "Low",
-        "urls": [
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=34360",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0023"
-        ],
-        "description": "A stack-based buffer overflow in the dynamic loader (ld.so) of the GNU C Library (glibc) versions 2.14 through 2.44 allows a local attacker to crash or corrupt the memory of setuid/setgid (AT_SECURE) programs.\n\nWhen such a program's DT_RPATH or DT_RUNPATH begins with $ORIGIN and is followed by NUL or '/' the loader both reads past the end of the path buffer and writes past the end of a stack-allocated internal buffer. The corrupted loader stack can lead to a loader crash (denial of service) and limited disclosure of process memory.",
-        "cvss": [
-          {
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
-            "metrics": {
-              "baseScore": 3.6,
-              "exploitabilityScore": 1.1,
-              "impactScore": 2.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-95818",
-            "epss": 0.00129,
-            "percentile": 0.02175,
-            "date": "2026-10-06"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-95818",
-            "cwe": "CWE-121",
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.04257
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "glibc-2.44",
-              "version": "2.44-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-95818",
-            "versionConstraint": ">= 2.14, < 2.45 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "967d028c094e3081",
-        "name": "glibc-2.44",
-        "version": "2.44-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "LGPL-2.1-or-later"
-        ],
-        "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "glibc-2.44"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/rpc"
-            },
-            {
-              "path": "/etc/apk"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/ld.so"
-            },
-            {
-              "path": "/usr/bin/ldconfig"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/libBrokenLocale.so.1"
-            },
-            {
-              "path": "/usr/lib/libanl.so.1"
-            },
-            {
-              "path": "/usr/lib/libc.so.6"
-            },
-            {
-              "path": "/usr/lib/libc_malloc_debug.so.0"
-            },
-            {
-              "path": "/usr/lib/libdl.so.2"
-            },
-            {
-              "path": "/usr/lib/libm.so.6"
-            },
-            {
-              "path": "/usr/lib/libmemusage.so"
-            },
-            {
-              "path": "/usr/lib/libmvec.so.1"
-            },
-            {
-              "path": "/usr/lib/libnsl.so.1"
-            },
-            {
-              "path": "/usr/lib/libnss_compat.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_dns.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_files.so.2"
-            },
-            {
-              "path": "/usr/lib/libpthread.so.0"
-            },
-            {
-              "path": "/usr/lib/libresolv.so.2"
-            },
-            {
-              "path": "/usr/lib/librt.so.1"
-            },
-            {
-              "path": "/usr/lib/libthread_db.so.1"
-            },
-            {
-              "path": "/usr/lib/libutil.so.1"
-            },
-            {
-              "path": "/usr/lib/audit"
-            },
-            {
-              "path": "/usr/lib/locale"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
         "id": "GO-2026-5932",
         "dataSource": "https://go.dev/issue/44226",
         "namespace": "govulndb:language:go",
@@ -1527,14 +407,14 @@
         }
       ],
       "artifact": {
-        "id": "1975f3fbe19e3e55",
+        "id": "c6275560542d1db6",
         "name": "golang.org/x/crypto",
         "version": "v0.56.0",
         "type": "go-module",
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
+            "layerID": "sha256:d3f1eeaeb5a5695ff766a1886772b93282cb111d0fe6bda2fab1d0e908d55ae7",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -1550,7 +430,7 @@
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.8",
+          "goCompiledVersion": "go1.26.9",
           "architecture": "amd64",
           "mainModule": "github.com/cortexproject/cortex"
         }
@@ -1592,14 +472,14 @@
         }
       ],
       "artifact": {
-        "id": "7587b201063d06ad",
+        "id": "9103e58fb36ed4b7",
         "name": "golang.org/x/crypto",
         "version": "v0.56.0",
         "type": "go-module",
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
+            "layerID": "sha256:d3f1eeaeb5a5695ff766a1886772b93282cb111d0fe6bda2fab1d0e908d55ae7",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -1615,7 +495,7 @@
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.8",
+          "goCompiledVersion": "go1.26.9",
           "architecture": "amd64",
           "h1Digest": "h1:GUh5Ii4J5jtcseSMiRqr1jXCNHoxjeV9Fmekc2oLy6Y=",
           "mainModule": "github.com/prometheus/prometheus"
@@ -1658,14 +538,14 @@
         }
       ],
       "artifact": {
-        "id": "f34e8aacc3c25d98",
+        "id": "0e42e65f5495c986",
         "name": "golang.org/x/crypto",
         "version": "v0.56.0",
         "type": "go-module",
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
+            "layerID": "sha256:d3f1eeaeb5a5695ff766a1886772b93282cb111d0fe6bda2fab1d0e908d55ae7",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -1681,7 +561,7 @@
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.8",
+          "goCompiledVersion": "go1.26.9",
           "architecture": "amd64",
           "h1Digest": "h1:GUh5Ii4J5jtcseSMiRqr1jXCNHoxjeV9Fmekc2oLy6Y=",
           "mainModule": "github.com/prometheus/prometheus"
@@ -1692,29 +572,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:8a6623fa67bc319f6f0b970d9d4abf81e00a2eb0f8d7d729a4b20c8ed30b5a27",
-      "imageID": "sha256:feaa6b61f3cb470dd40310aa7f4aff36dd9e1ffa0263bc402bb8c56f9d967841",
-      "manifestDigest": "sha256:9df32acc42a85108d5a6f00fb17a2f7e6ed4b7d4dab68e297e268e41ada20e2e",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:b47724ff227b0870fa68d18b7a24d7b4c0fb6a9daa1134163475edd2fc310d06",
+      "imageID": "sha256:e6ef80acf3ae5d65e8e0e474333e73f036e67d6c50f9db343ef5627bcb0975c1",
+      "manifestDigest": "sha256:ec3d244971f67759198a80806ca38712565ab7307986a61e46e32b521f5adfd2",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 582001570,
+      "imageSize": 582063110,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:c83ff5f1385f77c350586761b9bd6ce22366b809257c62bbfab25fba607a0b08",
-          "size": 582001570
+          "digest": "sha256:d3f1eeaeb5a5695ff766a1886772b93282cb111d0fe6bda2fab1d0e908d55ae7",
+          "size": 582063110
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6ZmVhYTZiNjFmM2NiNDcwZGQ0MDMxMGFhN2Y0YWZmMzZkZDllMWZmYTAyNjNiYzQwMmJiOGM1NmY5ZDk2Nzg0MSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODU1Mzg1NjAsImRpZ2VzdCI6InNoYTI1NjpjODNmZjVmMTM4NWY3N2MzNTA1ODY3NjFiOWJkNmNlMjIzNjZiODA5MjU3YzYyYmJmYWIyNWZiYTYwN2EwYjA4In1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTA3VDIyOjA4OjU5WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0wN1QyMjowODo1OVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjpjODNmZjVmMTM4NWY3N2MzNTA1ODY3NjFiOWJkNmNlMjIzNjZiODA5MjU3YzYyYmJmYWIyNWZiYTYwN2EwYjA4Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0wN1QyMjowODo1OVoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6ZTZlZjgwYWNmM2FlNWQ2NWU4ZTBlNDc0MzMzZTczZjAzNmU2N2Q2YzUwZjlkYjM0M2VmNTYyN2JjYjA5NzVjMSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODU2MDA1MTIsImRpZ2VzdCI6InNoYTI1NjpkM2YxZWVhZWI1YTU2OTVmZjc2NmExODg2NzcyYjkzMjgyY2IxMTFkMGZlNmJkYTJmYWIxZDBlOTA4ZDU1YWU3In1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTA4VDIyOjMyOjIxWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0wOFQyMjozMjoyMVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjpkM2YxZWVhZWI1YTU2OTVmZjc2NmExODg2NzcyYjkzMjgyY2IxMTFkMGZlNmJkYTJmYWIxZDBlOTA4ZDU1YWU3Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0wOFQyMjozMjoyMVoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:8a6623fa67bc319f6f0b970d9d4abf81e00a2eb0f8d7d729a4b20c8ed30b5a27"
+        "ghcr.io/conduktor/base-monitoring@sha256:b47724ff227b0870fa68d18b7a24d7b4c0fb6a9daa1134163475edd2fc310d06"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-10-07T22:08:59Z",
+        "org.opencontainers.image.created": "2026-10-08T22:32:21Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -1735,7 +615,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-iArN6j/output",
+      "file": "/tmp/grype-BzUU0z/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

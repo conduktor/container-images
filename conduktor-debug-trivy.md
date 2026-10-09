@@ -11,10 +11,11 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 21 | 11 | 1 | 33 |
+| 0 | 22 | 14 | 2 | 38 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-106451`](https://avd.aquasec.com/nvd/cve-2026-106451) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.4` |
 | :orange_circle: high | [`CVE-2026-89407`](https://avd.aquasec.com/nvd/cve-2026-89407) | `com.fasterxml.jackson.core:jackson-core` | `2.21.5` | `2.18.11, 2.21.7, 2.22.3` |
 | :orange_circle: high | [`CVE-2026-89425`](https://avd.aquasec.com/nvd/cve-2026-89425) | `com.fasterxml.jackson.core:jackson-core` | `2.21.5` | `2.21.7, 2.22.3, 2.18.11` |
 | :orange_circle: high | [`CVE-2026-68497`](https://avd.aquasec.com/nvd/cve-2026-68497) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
@@ -36,6 +37,9 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-56859`](https://avd.aquasec.com/nvd/cve-2026-56859) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56860`](https://avd.aquasec.com/nvd/cve-2026-56860) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56862`](https://avd.aquasec.com/nvd/cve-2026-56862) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
+| :yellow_circle: medium | [`CVE-2026-106450`](https://avd.aquasec.com/nvd/cve-2026-106450) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.4` |
+| :yellow_circle: medium | [`CVE-2026-106452`](https://avd.aquasec.com/nvd/cve-2026-106452) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.2` |
+| :yellow_circle: medium | [`CVE-2026-106453`](https://avd.aquasec.com/nvd/cve-2026-106453) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.2` |
 | :yellow_circle: medium | [`CVE-2026-59949`](https://avd.aquasec.com/nvd/cve-2026-59949) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.1` |
 | :yellow_circle: medium | [`CVE-2026-19032`](https://avd.aquasec.com/nvd/cve-2026-19032) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
 | :yellow_circle: medium | [`CVE-2026-83557`](https://avd.aquasec.com/nvd/cve-2026-83557) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
@@ -47,4 +51,5 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-8384`](https://avd.aquasec.com/nvd/cve-2026-8384) | `org.eclipse.jetty:jetty-util` | `12.0.34` | `12.0.35, 12.1.9` |
 | :yellow_circle: medium | [`CVE-2026-77421`](https://avd.aquasec.com/nvd/cve-2026-77421) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
 | :yellow_circle: medium | [`CVE-2026-77420`](https://avd.aquasec.com/nvd/cve-2026-77420) | `org.jline:jline-reader` | `3.30.4` | `4.3.1, 3.30.15` |
+| :white_circle: low | [`CVE-2026-106449`](https://avd.aquasec.com/nvd/cve-2026-106449) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.4` |
 | :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
