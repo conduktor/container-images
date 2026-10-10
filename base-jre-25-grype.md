@@ -15,6 +15,6 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-jre-25/t
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r2` | — |
+| :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r3` | — |
+| :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r3` | — |
+| :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r3` | — |

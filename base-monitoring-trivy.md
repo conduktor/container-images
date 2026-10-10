@@ -11,9 +11,18 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 2 | 0 | 2 |
+| 0 | 3 | 8 | 0 | 11 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-78669`](https://avd.aquasec.com/nvd/cve-2026-78669) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :orange_circle: high | [`CVE-2026-78669`](https://avd.aquasec.com/nvd/cve-2026-78669) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :orange_circle: high | [`CVE-2026-78669`](https://avd.aquasec.com/nvd/cve-2026-78669) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
 | :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `3.5.2, 3.11.2, 0.311.2-0.20260410083055-07c6232d159b` |
 | :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `3.5.2, 3.11.2, 0.311.2-0.20260410083055-07c6232d159b` |
+| :yellow_circle: medium | [`CVE-2026-78663`](https://avd.aquasec.com/nvd/cve-2026-78663) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-78663`](https://avd.aquasec.com/nvd/cve-2026-78663) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-78663`](https://avd.aquasec.com/nvd/cve-2026-78663) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |

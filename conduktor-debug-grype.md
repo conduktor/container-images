@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 29 | 21 | 3 | 55 |
+| 0 | 30 | 21 | 3 | 78 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -20,6 +20,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`GO-2026-6355`](https://go.dev/issue/81317) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
 | :orange_circle: high | [`GO-2026-5942`](https://go.dev/cl/786345) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`GO-2026-5970`](https://go.dev/issue/80142) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
+| :orange_circle: high | [`GO-2026-6629`](https://go.dev/cl/793360) | `golang.org/x/text` | `v0.37.0` | `0.41.0` |
 | :orange_circle: high | [`GHSA-2v4p-qf9q-27wj`](https://github.com/advisories/GHSA-2v4p-qf9q-27wj) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2` |
 | :orange_circle: high | [`GHSA-vp52-pcj8-j9qc`](https://github.com/advisories/GHSA-vp52-pcj8-j9qc) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`GHSA-7hhh-6rmp-j9qf`](https://github.com/advisories/GHSA-7hhh-6rmp-j9qf) | `jackson-core` | `2.21.5` | `2.21.7` |
@@ -44,9 +45,9 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`GO-2026-6088`](https://go.dev/issue/80481) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6089`](https://go.dev/issue/80205) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6090`](https://go.dev/issue/80528) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
-| :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r2` | — |
+| :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r3` | — |
+| :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r3` | — |
+| :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r3` | — |
 | :yellow_circle: medium | [`GO-2026-5158`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-5wrp-cwcj-q835) | `go.opentelemetry.io/otel` | `v1.43.0` | `1.42.0, 1.44.0` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`GHSA-gx83-3vf8-gh7j`](https://github.com/advisories/GHSA-gx83-3vf8-gh7j) | `jackson-databind` | `2.21.5` | `2.21.6` |
@@ -69,4 +70,26 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :white_circle: low | [`GO-2025-3547`](https://github.com/advisories/GHSA-r56h-j38w-hrqq) | `k8s.io/kubernetes` | `v1.37.1+dirty` | — |
 | :white_circle: low | [`GHSA-343h-94h5-c4wr`](https://github.com/advisories/GHSA-343h-94h5-c4wr) | `lz4-java` | `1.10.2` | `1.11.4` |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | — |
-| :black_circle: unknown | [`GO-2026-6629`](https://go.dev/cl/793360) | `golang.org/x/text` | `v0.37.0` | `0.41.0` |
+| :black_circle: unknown | [`GO-2026-6603`](https://go.dev/cl/847185) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6603`](https://go.dev/cl/847185) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6610`](https://go.dev/cl/835145) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6610`](https://go.dev/cl/835145) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6611`](https://go.dev/cl/847186) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6611`](https://go.dev/cl/847186) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6612`](https://go.dev/cl/847187) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6612`](https://go.dev/cl/847187) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6617`](https://go.dev/cl/847188) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6617`](https://go.dev/cl/847188) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6599`](https://go.dev/cl/839866) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`GO-2026-6600`](https://go.dev/cl/840925) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`GO-2026-6603`](https://go.dev/cl/847185) | `stdlib` | `go1.25.12` | `1.26.9` |
+| :black_circle: unknown | [`GO-2026-6604`](https://go.dev/cl/847305) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`GO-2026-6605`](https://go.dev/cl/847306) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`GO-2026-6607`](https://go.dev/cl/847312) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`GO-2026-6608`](https://go.dev/cl/847307) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`GO-2026-6609`](https://go.dev/cl/847309) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`GO-2026-6610`](https://go.dev/cl/835145) | `stdlib` | `go1.25.12` | `1.26.9` |
+| :black_circle: unknown | [`GO-2026-6611`](https://go.dev/cl/847186) | `stdlib` | `go1.25.12` | `1.26.9` |
+| :black_circle: unknown | [`GO-2026-6612`](https://go.dev/cl/847187) | `stdlib` | `go1.25.12` | `1.26.9` |
+| :black_circle: unknown | [`GO-2026-6613`](https://go.dev/cl/847311) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`GO-2026-6617`](https://go.dev/cl/847188) | `stdlib` | `go1.25.12` | `1.26.9` |

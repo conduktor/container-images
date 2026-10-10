@@ -11,12 +11,27 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 2 | 0 | 5 |
+| 0 | 0 | 2 | 0 | 20 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.16_git20261002-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-12345`](https://nvd.nist.gov/vuln/detail/CVE-2026-12345) | `python-3.13` | `3.13.16_git20261002-r2` | — |
+| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.16_git20261009-r0` | — |
+| :yellow_circle: medium | [`CVE-2026-12345`](https://nvd.nist.gov/vuln/detail/CVE-2026-12345) | `python-3.13` | `3.13.16_git20261009-r0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.56.0` | — |
+| :black_circle: unknown | [`GO-2026-6603`](https://go.dev/cl/847185) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6603`](https://go.dev/cl/847185) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6603`](https://go.dev/cl/847185) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6610`](https://go.dev/cl/835145) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6610`](https://go.dev/cl/835145) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6610`](https://go.dev/cl/835145) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6611`](https://go.dev/cl/847186) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6611`](https://go.dev/cl/847186) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6611`](https://go.dev/cl/847186) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6612`](https://go.dev/cl/847187) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6612`](https://go.dev/cl/847187) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6612`](https://go.dev/cl/847187) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6617`](https://go.dev/cl/847188) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6617`](https://go.dev/cl/847188) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
+| :black_circle: unknown | [`GO-2026-6617`](https://go.dev/cl/847188) | `golang.org/x/net` | `v0.58.0` | `0.60.0` |
