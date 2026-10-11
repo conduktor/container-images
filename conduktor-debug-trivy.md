@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 28 | 25 | 3 | 56 |
+| 0 | 28 | 26 | 3 | 57 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -58,6 +58,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
 | :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
+| :yellow_circle: medium | [`CVE-2026-58058`](https://avd.aquasec.com/nvd/cve-2026-58058) | `nmap` | `7.94-r3` | `7.991-r0` |
 | :yellow_circle: medium | [`CVE-2026-10051`](https://avd.aquasec.com/nvd/cve-2026-10051) | `org.eclipse.jetty:jetty-server` | `12.0.34` | `12.0.36, 12.1.10` |
 | :yellow_circle: medium | [`CVE-2026-6790`](https://avd.aquasec.com/nvd/cve-2026-6790) | `org.eclipse.jetty:jetty-server` | `12.0.34` | `12.0.35, 12.1.9` |
 | :yellow_circle: medium | [`CVE-2026-8384`](https://avd.aquasec.com/nvd/cve-2026-8384) | `org.eclipse.jetty:jetty-util` | `12.0.34` | `12.0.35, 12.1.9` |
