@@ -30,9 +30,9 @@
         "epss": [
           {
             "cve": "CVE-2026-78663",
-            "epss": 0.00248,
-            "percentile": 0.14768,
-            "date": "2026-10-09"
+            "epss": 0.00574,
+            "percentile": 0.45743,
+            "date": "2026-10-10"
           }
         ],
         "cwes": [
@@ -57,7 +57,7 @@
           ]
         },
         "advisories": [],
-        "risk": 0.22444
+        "risk": 0.51947
       },
       "relatedVulnerabilities": [
         {
@@ -91,9 +91,166 @@
           "epss": [
             {
               "cve": "CVE-2026-78663",
-              "epss": 0.00248,
-              "percentile": 0.14768,
-              "date": "2026-10-09"
+              "epss": 0.00574,
+              "percentile": 0.45743,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78663",
+              "cwe": "CWE-675",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6612",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "fe200b729ebcd01a",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6612",
+        "dataSource": "https://go.dev/cl/847187",
+        "namespace": "govulndb:language:go",
+        "severity": "Critical",
+        "urls": [
+          "https://go.dev/cl/847310",
+          "https://go.dev/issue/81743",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
+        ],
+        "description": "The HTTP/2 server can refund connection-level flow control twice for the same data: Once when a client resets a stream (refunding data for any sent-but-unread portion of the stream), and again when a request handler reads the buffered data. A malicious client can exploit this to bypass the configured connection-level flow control limit (MaxReceiveBufferPerConnection). Total buffered data is still limited by the concurrent stream limit and stream-level flow control.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+            "metrics": {
+              "baseScore": 9.1,
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.2
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78663",
+            "epss": 0.00574,
+            "percentile": 0.45743,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78663",
+            "cwe": "CWE-675",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.51947
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78663",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78663",
+          "namespace": "nvd:cpe",
+          "severity": "Critical",
+          "urls": [
+            "https://go.dev/cl/847187",
+            "https://go.dev/cl/847310",
+            "https://go.dev/issue/81743",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
+            "https://pkg.go.dev/vuln/GO-2026-6612"
+          ],
+          "description": "The HTTP/2 server can refund connection-level flow control twice for the same data: Once when a client resets a stream (refunding data for any sent-but-unread portion of the stream), and again when a request handler reads the buffered data. A malicious client can exploit this to bypass the configured connection-level flow control limit (MaxReceiveBufferPerConnection). Total buffered data is still limited by the concurrent stream limit and stream-level flow control.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+              "metrics": {
+                "baseScore": 9.1,
+                "exploitabilityScore": 3.9,
+                "impactScore": 5.2
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78663",
+              "epss": 0.00574,
+              "percentile": 0.45743,
+              "date": "2026-10-10"
             }
           ],
           "cwes": [
@@ -135,7 +292,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -188,9 +345,9 @@
         "epss": [
           {
             "cve": "CVE-2026-78663",
-            "epss": 0.00248,
-            "percentile": 0.14768,
-            "date": "2026-10-09"
+            "epss": 0.00574,
+            "percentile": 0.45743,
+            "date": "2026-10-10"
           }
         ],
         "cwes": [
@@ -215,7 +372,7 @@
           ]
         },
         "advisories": [],
-        "risk": 0.22444
+        "risk": 0.51947
       },
       "relatedVulnerabilities": [
         {
@@ -249,9 +406,9 @@
           "epss": [
             {
               "cve": "CVE-2026-78663",
-              "epss": 0.00248,
-              "percentile": 0.14768,
-              "date": "2026-10-09"
+              "epss": 0.00574,
+              "percentile": 0.45743,
+              "date": "2026-10-10"
             }
           ],
           "cwes": [
@@ -293,7 +450,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -318,43 +475,43 @@
     },
     {
       "vulnerability": {
-        "id": "GO-2026-6612",
-        "dataSource": "https://go.dev/cl/847187",
+        "id": "GO-2026-6603",
+        "dataSource": "https://go.dev/cl/847185",
         "namespace": "govulndb:language:go",
-        "severity": "Critical",
+        "severity": "High",
         "urls": [
-          "https://go.dev/cl/847310",
-          "https://go.dev/issue/81743",
+          "https://go.dev/cl/847314",
+          "https://go.dev/issue/81857",
           "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
           "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
         ],
-        "description": "The HTTP/2 server can refund connection-level flow control twice for the same data: Once when a client resets a stream (refunding data for any sent-but-unread portion of the stream), and again when a request handler reads the buffered data. A malicious client can exploit this to bypass the configured connection-level flow control limit (MaxReceiveBufferPerConnection). Total buffered data is still limited by the concurrent stream limit and stream-level flow control.",
+        "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
         "cvss": [
           {
             "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary",
             "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
             "metrics": {
-              "baseScore": 9.1,
+              "baseScore": 7.5,
               "exploitabilityScore": 3.9,
-              "impactScore": 5.2
+              "impactScore": 3.6
             },
             "vendorMetadata": {}
           }
         ],
         "epss": [
           {
-            "cve": "CVE-2026-78663",
-            "epss": 0.00248,
-            "percentile": 0.14768,
-            "date": "2026-10-09"
+            "cve": "CVE-2026-78659",
+            "epss": 0.0057,
+            "percentile": 0.45555,
+            "date": "2026-10-10"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-78663",
-            "cwe": "CWE-675",
+            "cve": "CVE-2026-78659",
+            "cwe": "CWE-405",
             "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary"
           }
@@ -373,49 +530,49 @@
           ]
         },
         "advisories": [],
-        "risk": 0.22444
+        "risk": 0.4275
       },
       "relatedVulnerabilities": [
         {
-          "id": "CVE-2026-78663",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78663",
+          "id": "CVE-2026-78659",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78659",
           "namespace": "nvd:cpe",
-          "severity": "Critical",
+          "severity": "High",
           "urls": [
-            "https://go.dev/cl/847187",
-            "https://go.dev/cl/847310",
-            "https://go.dev/issue/81743",
+            "https://go.dev/cl/847185",
+            "https://go.dev/cl/847314",
+            "https://go.dev/issue/81857",
             "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
             "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
-            "https://pkg.go.dev/vuln/GO-2026-6612"
+            "https://pkg.go.dev/vuln/GO-2026-6603"
           ],
-          "description": "The HTTP/2 server can refund connection-level flow control twice for the same data: Once when a client resets a stream (refunding data for any sent-but-unread portion of the stream), and again when a request handler reads the buffered data. A malicious client can exploit this to bypass the configured connection-level flow control limit (MaxReceiveBufferPerConnection). Total buffered data is still limited by the concurrent stream limit and stream-level flow control.",
+          "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
           "cvss": [
             {
               "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
               "type": "Secondary",
               "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
               "metrics": {
-                "baseScore": 9.1,
+                "baseScore": 7.5,
                 "exploitabilityScore": 3.9,
-                "impactScore": 5.2
+                "impactScore": 3.6
               },
               "vendorMetadata": {}
             }
           ],
           "epss": [
             {
-              "cve": "CVE-2026-78663",
-              "epss": 0.00248,
-              "percentile": 0.14768,
-              "date": "2026-10-09"
+              "cve": "CVE-2026-78659",
+              "epss": 0.0057,
+              "percentile": 0.45555,
+              "date": "2026-10-10"
             }
           ],
           "cwes": [
             {
-              "cve": "CVE-2026-78663",
-              "cwe": "CWE-675",
+              "cve": "CVE-2026-78659",
+              "cwe": "CWE-405",
               "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
               "type": "Secondary"
             }
@@ -435,7 +592,7 @@
             }
           },
           "found": {
-            "vulnerabilityID": "GO-2026-6612",
+            "vulnerabilityID": "GO-2026-6603",
             "versionConstraint": "<0.60.0 (go)"
           },
           "fix": {
@@ -451,7 +608,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -470,6 +627,1262 @@
           "goCompiledVersion": "go1.26.9",
           "architecture": "amd64",
           "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6603",
+        "dataSource": "https://go.dev/cl/847185",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/cl/847314",
+          "https://go.dev/issue/81857",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
+        ],
+        "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78659",
+            "epss": 0.0057,
+            "percentile": 0.45555,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78659",
+            "cwe": "CWE-405",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.4275
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78659",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78659",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/847185",
+            "https://go.dev/cl/847314",
+            "https://go.dev/issue/81857",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
+            "https://pkg.go.dev/vuln/GO-2026-6603"
+          ],
+          "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78659",
+              "epss": 0.0057,
+              "percentile": 0.45555,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78659",
+              "cwe": "CWE-405",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6603",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "d22f287fc3d837ca",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6603",
+        "dataSource": "https://go.dev/cl/847185",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/cl/847314",
+          "https://go.dev/issue/81857",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
+        ],
+        "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78659",
+            "epss": 0.0057,
+            "percentile": 0.45555,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78659",
+            "cwe": "CWE-405",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.4275
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78659",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78659",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/847185",
+            "https://go.dev/cl/847314",
+            "https://go.dev/issue/81857",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
+            "https://pkg.go.dev/vuln/GO-2026-6603"
+          ],
+          "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78659",
+              "epss": 0.0057,
+              "percentile": 0.45555,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78659",
+              "cwe": "CWE-405",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6603",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "141f4ea550d88d87",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6611",
+        "dataSource": "https://go.dev/cl/847186",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/cl/847308",
+          "https://go.dev/issue/81742",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
+        ],
+        "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78669",
+            "epss": 0.00568,
+            "percentile": 0.45405,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78669",
+            "cwe": "CWE-405",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.426
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78669",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78669",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/847186",
+            "https://go.dev/cl/847308",
+            "https://go.dev/issue/81742",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
+            "https://pkg.go.dev/vuln/GO-2026-6611"
+          ],
+          "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78669",
+              "epss": 0.00568,
+              "percentile": 0.45405,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78669",
+              "cwe": "CWE-405",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6611",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "fe200b729ebcd01a",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6611",
+        "dataSource": "https://go.dev/cl/847186",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/cl/847308",
+          "https://go.dev/issue/81742",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
+        ],
+        "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78669",
+            "epss": 0.00568,
+            "percentile": 0.45405,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78669",
+            "cwe": "CWE-405",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.426
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78669",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78669",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/847186",
+            "https://go.dev/cl/847308",
+            "https://go.dev/issue/81742",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
+            "https://pkg.go.dev/vuln/GO-2026-6611"
+          ],
+          "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78669",
+              "epss": 0.00568,
+              "percentile": 0.45405,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78669",
+              "cwe": "CWE-405",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6611",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "141f4ea550d88d87",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6611",
+        "dataSource": "https://go.dev/cl/847186",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/cl/847308",
+          "https://go.dev/issue/81742",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
+        ],
+        "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78669",
+            "epss": 0.00568,
+            "percentile": 0.45405,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78669",
+            "cwe": "CWE-405",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.426
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78669",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78669",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/847186",
+            "https://go.dev/cl/847308",
+            "https://go.dev/issue/81742",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
+            "https://pkg.go.dev/vuln/GO-2026-6611"
+          ],
+          "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78669",
+              "epss": 0.00568,
+              "percentile": 0.45405,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78669",
+              "cwe": "CWE-405",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6611",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "d22f287fc3d837ca",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6610",
+        "dataSource": "https://go.dev/cl/835145",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/cl/836385",
+          "https://go.dev/issue/81115",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI"
+        ],
+        "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78660",
+            "epss": 0.00303,
+            "percentile": 0.21188,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78660",
+            "cwe": "CWE-444",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.22725
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78660",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78660",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/835145",
+            "https://go.dev/cl/836385",
+            "https://go.dev/issue/81115",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://pkg.go.dev/vuln/GO-2026-6610"
+          ],
+          "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78660",
+              "epss": 0.00303,
+              "percentile": 0.21188,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78660",
+              "cwe": "CWE-444",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6610",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "fe200b729ebcd01a",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6610",
+        "dataSource": "https://go.dev/cl/835145",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/cl/836385",
+          "https://go.dev/issue/81115",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI"
+        ],
+        "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78660",
+            "epss": 0.00303,
+            "percentile": 0.21188,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78660",
+            "cwe": "CWE-444",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.22725
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78660",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78660",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/835145",
+            "https://go.dev/cl/836385",
+            "https://go.dev/issue/81115",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://pkg.go.dev/vuln/GO-2026-6610"
+          ],
+          "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78660",
+              "epss": 0.00303,
+              "percentile": 0.21188,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78660",
+              "cwe": "CWE-444",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6610",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "141f4ea550d88d87",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6610",
+        "dataSource": "https://go.dev/cl/835145",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/cl/836385",
+          "https://go.dev/issue/81115",
+          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI"
+        ],
+        "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78660",
+            "epss": 0.00303,
+            "percentile": 0.21188,
+            "date": "2026-10-10"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78660",
+            "cwe": "CWE-444",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.60.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.60.0",
+              "date": "2026-10-08",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.22725
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78660",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78660",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/835145",
+            "https://go.dev/cl/836385",
+            "https://go.dev/issue/81115",
+            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
+            "https://pkg.go.dev/vuln/GO-2026-6610"
+          ],
+          "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78660",
+              "epss": 0.00303,
+              "percentile": 0.21188,
+              "date": "2026-10-10"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78660",
+              "cwe": "CWE-444",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.58.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6610",
+            "versionConstraint": "<0.60.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.60.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "d22f287fc3d837ca",
+        "name": "golang.org/x/net",
+        "version": "v0.58.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.9",
+          "architecture": "amd64",
+          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
+          "mainModule": "github.com/prometheus/prometheus"
         }
       }
     },
@@ -502,8 +1915,8 @@
           {
             "cve": "CVE-2025-15367",
             "epss": 0.00369,
-            "percentile": 0.28696,
-            "date": "2026-10-09"
+            "percentile": 0.28736,
+            "date": "2026-10-10"
           }
         ],
         "cwes": [
@@ -574,7 +1987,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -659,1419 +2072,6 @@
     },
     {
       "vulnerability": {
-        "id": "GO-2026-6611",
-        "dataSource": "https://go.dev/cl/847186",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/847308",
-          "https://go.dev/issue/81742",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
-        ],
-        "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78669",
-            "epss": 0.00227,
-            "percentile": 0.12384,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78669",
-            "cwe": "CWE-405",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.17025
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78669",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78669",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/847186",
-            "https://go.dev/cl/847308",
-            "https://go.dev/issue/81742",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
-            "https://pkg.go.dev/vuln/GO-2026-6611"
-          ],
-          "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78669",
-              "epss": 0.00227,
-              "percentile": 0.12384,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78669",
-              "cwe": "CWE-405",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6611",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "fe200b729ebcd01a",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6611",
-        "dataSource": "https://go.dev/cl/847186",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/847308",
-          "https://go.dev/issue/81742",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
-        ],
-        "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78669",
-            "epss": 0.00227,
-            "percentile": 0.12384,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78669",
-            "cwe": "CWE-405",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.17025
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78669",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78669",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/847186",
-            "https://go.dev/cl/847308",
-            "https://go.dev/issue/81742",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
-            "https://pkg.go.dev/vuln/GO-2026-6611"
-          ],
-          "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78669",
-              "epss": 0.00227,
-              "percentile": 0.12384,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78669",
-              "cwe": "CWE-405",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6611",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "141f4ea550d88d87",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6611",
-        "dataSource": "https://go.dev/cl/847186",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/847308",
-          "https://go.dev/issue/81742",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
-        ],
-        "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78669",
-            "epss": 0.00227,
-            "percentile": 0.12384,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78669",
-            "cwe": "CWE-405",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.17025
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78669",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78669",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/847186",
-            "https://go.dev/cl/847308",
-            "https://go.dev/issue/81742",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
-            "https://pkg.go.dev/vuln/GO-2026-6611"
-          ],
-          "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78669",
-              "epss": 0.00227,
-              "percentile": 0.12384,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78669",
-              "cwe": "CWE-405",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6611",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "d22f287fc3d837ca",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/prometheus/prometheus",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6603",
-        "dataSource": "https://go.dev/cl/847185",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/847314",
-          "https://go.dev/issue/81857",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
-        ],
-        "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78659",
-            "epss": 0.00227,
-            "percentile": 0.12359,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78659",
-            "cwe": "CWE-405",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.17025
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78659",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78659",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/847185",
-            "https://go.dev/cl/847314",
-            "https://go.dev/issue/81857",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
-            "https://pkg.go.dev/vuln/GO-2026-6603"
-          ],
-          "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78659",
-              "epss": 0.00227,
-              "percentile": 0.12359,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78659",
-              "cwe": "CWE-405",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6603",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "fe200b729ebcd01a",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6603",
-        "dataSource": "https://go.dev/cl/847185",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/847314",
-          "https://go.dev/issue/81857",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
-        ],
-        "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78659",
-            "epss": 0.00227,
-            "percentile": 0.12359,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78659",
-            "cwe": "CWE-405",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.17025
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78659",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78659",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/847185",
-            "https://go.dev/cl/847314",
-            "https://go.dev/issue/81857",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
-            "https://pkg.go.dev/vuln/GO-2026-6603"
-          ],
-          "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78659",
-              "epss": 0.00227,
-              "percentile": 0.12359,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78659",
-              "cwe": "CWE-405",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6603",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "141f4ea550d88d87",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6603",
-        "dataSource": "https://go.dev/cl/847185",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/847314",
-          "https://go.dev/issue/81857",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-          "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs"
-        ],
-        "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78659",
-            "epss": 0.00227,
-            "percentile": 0.12359,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78659",
-            "cwe": "CWE-405",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.17025
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78659",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78659",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/847185",
-            "https://go.dev/cl/847314",
-            "https://go.dev/issue/81857",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://groups.google.com/g/golang-announce/c/ZPwCyRUuGBs",
-            "https://pkg.go.dev/vuln/GO-2026-6603"
-          ],
-          "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78659",
-              "epss": 0.00227,
-              "percentile": 0.12359,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78659",
-              "cwe": "CWE-405",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6603",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "d22f287fc3d837ca",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/prometheus/prometheus",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6610",
-        "dataSource": "https://go.dev/cl/835145",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/836385",
-          "https://go.dev/issue/81115",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI"
-        ],
-        "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78660",
-            "epss": 0.00188,
-            "percentile": 0.07727,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78660",
-            "cwe": "CWE-444",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.14100000000000001
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78660",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78660",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/835145",
-            "https://go.dev/cl/836385",
-            "https://go.dev/issue/81115",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://pkg.go.dev/vuln/GO-2026-6610"
-          ],
-          "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78660",
-              "epss": 0.00188,
-              "percentile": 0.07727,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78660",
-              "cwe": "CWE-444",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6610",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "fe200b729ebcd01a",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6610",
-        "dataSource": "https://go.dev/cl/835145",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/836385",
-          "https://go.dev/issue/81115",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI"
-        ],
-        "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78660",
-            "epss": 0.00188,
-            "percentile": 0.07727,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78660",
-            "cwe": "CWE-444",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.14100000000000001
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78660",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78660",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/835145",
-            "https://go.dev/cl/836385",
-            "https://go.dev/issue/81115",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://pkg.go.dev/vuln/GO-2026-6610"
-          ],
-          "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78660",
-              "epss": 0.00188,
-              "percentile": 0.07727,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78660",
-              "cwe": "CWE-444",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6610",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "d22f287fc3d837ca",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/prometheus/prometheus",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6610",
-        "dataSource": "https://go.dev/cl/835145",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/cl/836385",
-          "https://go.dev/issue/81115",
-          "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI"
-        ],
-        "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78660",
-            "epss": 0.00188,
-            "percentile": 0.07727,
-            "date": "2026-10-09"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78660",
-            "cwe": "CWE-444",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.60.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.60.0",
-              "date": "2026-10-08",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.14100000000000001
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78660",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78660",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/835145",
-            "https://go.dev/cl/836385",
-            "https://go.dev/issue/81115",
-            "https://groups.google.com/g/golang-announce/c/U2fTuyDJznI",
-            "https://pkg.go.dev/vuln/GO-2026-6610"
-          ],
-          "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78660",
-              "epss": 0.00188,
-              "percentile": 0.07727,
-              "date": "2026-10-09"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78660",
-              "cwe": "CWE-444",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.58.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6610",
-            "versionConstraint": "<0.60.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.60.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "141f4ea550d88d87",
-        "name": "golang.org/x/net",
-        "version": "v0.58.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.58.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.58.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.9",
-          "architecture": "amd64",
-          "h1Digest": "h1:ynWG7rqYi4ccpTEuPZ2QGWHktVEM9DMCj9yzDE0Q7To=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
         "id": "CVE-2026-12345",
         "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-12345",
         "namespace": "nvd:cpe",
@@ -2079,6 +2079,7 @@
         "urls": [
           "https://github.com/python/cpython/commit/06ef3d43fdaf4da97af12fa694b4886092c4b970",
           "https://github.com/python/cpython/commit/458e7134a5af7f86aee9d21b51cf499b41aa4420",
+          "https://github.com/python/cpython/commit/58ed0259cae509a19138795df302fe60b544dc74",
           "https://github.com/python/cpython/commit/5c20517a4fc56683efe63a7751020db9573f538d",
           "https://github.com/python/cpython/commit/e1f3590f155c6d66007e958c98c9d69316551993",
           "https://github.com/python/cpython/issues/157579",
@@ -2102,8 +2103,8 @@
           {
             "cve": "CVE-2026-12345",
             "epss": 0.0018,
-            "percentile": 0.06928,
-            "date": "2026-10-09"
+            "percentile": 0.06949,
+            "date": "2026-10-10"
           }
         ],
         "cwes": [
@@ -2174,7 +2175,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2275,8 +2276,8 @@
           {
             "cve": "CVE-2026-97032",
             "epss": 0.00181,
-            "percentile": 0.07068,
-            "date": "2026-10-09"
+            "percentile": 0.07088,
+            "date": "2026-10-10"
           }
         ],
         "fix": {
@@ -2315,8 +2316,8 @@
             {
               "cve": "CVE-2026-97032",
               "epss": 0.00181,
-              "percentile": 0.07068,
-              "date": "2026-10-09"
+              "percentile": 0.07088,
+              "date": "2026-10-10"
             }
           ]
         }
@@ -2350,7 +2351,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -2390,8 +2391,8 @@
           {
             "cve": "CVE-2026-97032",
             "epss": 0.00181,
-            "percentile": 0.07068,
-            "date": "2026-10-09"
+            "percentile": 0.07088,
+            "date": "2026-10-10"
           }
         ],
         "fix": {
@@ -2430,8 +2431,8 @@
             {
               "cve": "CVE-2026-97032",
               "epss": 0.00181,
-              "percentile": 0.07068,
-              "date": "2026-10-09"
+              "percentile": 0.07088,
+              "date": "2026-10-10"
             }
           ]
         }
@@ -2465,7 +2466,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -2506,8 +2507,8 @@
           {
             "cve": "CVE-2026-97032",
             "epss": 0.00181,
-            "percentile": 0.07068,
-            "date": "2026-10-09"
+            "percentile": 0.07088,
+            "date": "2026-10-10"
           }
         ],
         "fix": {
@@ -2546,8 +2547,8 @@
             {
               "cve": "CVE-2026-97032",
               "epss": 0.00181,
-              "percentile": 0.07068,
-              "date": "2026-10-09"
+              "percentile": 0.07088,
+              "date": "2026-10-10"
             }
           ]
         }
@@ -2581,7 +2582,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -2647,7 +2648,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -2713,7 +2714,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -2779,7 +2780,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
+            "layerID": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -2805,29 +2806,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:1b2b3e535635a55bcb10491e6437db84ee247c1158cbae9d69d4786d8081ab4d",
-      "imageID": "sha256:65d05c34c32cb1ef27d0cb6501cd7bcc9d61f747338384a1c71adeaad1c8ac29",
-      "manifestDigest": "sha256:c07d9345fe04d34ad9a945d1a122b3a4fdbb7b240b3f396706eb4ab92b84af09",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:3e633e09350bd8f63418b8edb23fa6e5e57308e736a8518179a361db33161b6c",
+      "imageID": "sha256:18a2a9287751f5370b78d8f864b5728621a1a28d69a445a12156e7badb0030d4",
+      "manifestDigest": "sha256:c47b26370817b3c6bb85964d8e6e42ea83663326b7f91945765810a0dc65eef8",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 582617860,
+      "imageSize": 582621956,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:e189fa1bad25242299067d299685a649a741b7fc8ccce978b5929b58eac96bc6",
-          "size": 582617860
+          "digest": "sha256:d45c3582b48afb5cf39b1596084d8f419a7341b8060c8e702dda1d9560d7b455",
+          "size": 582621956
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6NjVkMDVjMzRjMzJjYjFlZjI3ZDBjYjY1MDFjZDdiY2M5ZDYxZjc0NzMzODM4NGExYzcxYWRlYWFkMWM4YWMyOSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODYxNjA2NDAsImRpZ2VzdCI6InNoYTI1NjplMTg5ZmExYmFkMjUyNDIyOTkwNjdkMjk5Njg1YTY0OWE3NDFiN2ZjOGNjY2U5NzhiNTkyOWI1OGVhYzk2YmM2In1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTEwVDIxOjI2OjE3WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0xMFQyMToyNjoxN1oiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjplMTg5ZmExYmFkMjUyNDIyOTkwNjdkMjk5Njg1YTY0OWE3NDFiN2ZjOGNjY2U5NzhiNTkyOWI1OGVhYzk2YmM2Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0xMFQyMToyNjoxN1oiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6MThhMmE5Mjg3NzUxZjUzNzBiNzhkOGY4NjRiNTcyODYyMWExYTI4ZDY5YTQ0NWExMjE1NmU3YmFkYjAwMzBkNCJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODYxNjQ3MzYsImRpZ2VzdCI6InNoYTI1NjpkNDVjMzU4MmI0OGFmYjVjZjM5YjE1OTYwODRkOGY0MTlhNzM0MWI4MDYwYzhlNzAyZGRhMWQ5NTYwZDdiNDU1In1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTExVDIyOjU1OjIwWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0xMVQyMjo1NToyMFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjpkNDVjMzU4MmI0OGFmYjVjZjM5YjE1OTYwODRkOGY0MTlhNzM0MWI4MDYwYzhlNzAyZGRhMWQ5NTYwZDdiNDU1Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0xMVQyMjo1NToyMFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:1b2b3e535635a55bcb10491e6437db84ee247c1158cbae9d69d4786d8081ab4d"
+        "ghcr.io/conduktor/base-monitoring@sha256:3e633e09350bd8f63418b8edb23fa6e5e57308e736a8518179a361db33161b6c"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-10-10T21:26:17Z",
+        "org.opencontainers.image.created": "2026-10-11T22:55:20Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -2848,7 +2849,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-roLgNU/output",
+      "file": "/tmp/grype-4EIfp0/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,
