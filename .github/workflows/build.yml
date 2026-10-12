@@ -175,7 +175,7 @@ jobs:
       # The whole packages/ tree, so the arch subdirectory is preserved and the
       # build job can merge every arch into one local repository.
       - name: Upload local APKs
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: apks-${{ matrix.apk.dir }}-${{ matrix.apk.arch }}
           path: images/${{ matrix.apk.dir }}/packages
@@ -428,7 +428,7 @@ jobs:
           fail-on: none
 
       - name: Upload scan artifacts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: scans-${{ matrix.image.dir }}
           path: |
@@ -439,7 +439,7 @@ jobs:
 
       # On a PR this is the only copy; publishing runs also attest it above.
       - name: Upload the apko lock
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: lock-${{ matrix.image.dir }}
           path: ${{ runner.temp }}/apko.lock.json
@@ -448,7 +448,7 @@ jobs:
 
       - name: Upload image tar
         if: ${{ !inputs.publish }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: image-${{ matrix.image.dir }}
           path: images/${{ matrix.image.dir }}/image.tar
@@ -470,7 +470,7 @@ jobs:
 
       - name: Upload badge JSON, reports and SBOMs
         if: inputs.publish
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: badges-${{ matrix.image.dir }}
           path: badges/
