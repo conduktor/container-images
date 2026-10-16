@@ -11,11 +11,12 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 3 | 41 | 21 | 3 | 74 |
+| 4 | 49 | 21 | 3 | 88 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
 | :red_circle: critical | [`GO-2026-6612`](https://go.dev/cl/847187) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :red_circle: critical | [`CVE-2026-78663`](https://nvd.nist.gov/vuln/detail/CVE-2026-78663) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :red_circle: critical | [`GO-2026-6604`](https://go.dev/cl/847305) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :red_circle: critical | [`GO-2026-6612`](https://go.dev/cl/847187) | `stdlib` | `go1.25.12` | `1.26.9` |
 | :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
@@ -46,6 +47,14 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-56862`](https://nvd.nist.gov/vuln/detail/CVE-2026-56862) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56864`](https://nvd.nist.gov/vuln/detail/CVE-2026-56864) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56865`](https://nvd.nist.gov/vuln/detail/CVE-2026-56865) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
+| :orange_circle: high | [`CVE-2026-56866`](https://nvd.nist.gov/vuln/detail/CVE-2026-56866) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :orange_circle: high | [`CVE-2026-78659`](https://nvd.nist.gov/vuln/detail/CVE-2026-78659) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :orange_circle: high | [`CVE-2026-78660`](https://nvd.nist.gov/vuln/detail/CVE-2026-78660) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :orange_circle: high | [`CVE-2026-78667`](https://nvd.nist.gov/vuln/detail/CVE-2026-78667) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :orange_circle: high | [`CVE-2026-78669`](https://nvd.nist.gov/vuln/detail/CVE-2026-78669) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :orange_circle: high | [`CVE-2026-94439`](https://nvd.nist.gov/vuln/detail/CVE-2026-94439) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :orange_circle: high | [`CVE-2026-94440`](https://nvd.nist.gov/vuln/detail/CVE-2026-94440) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :orange_circle: high | [`CVE-2026-97031`](https://nvd.nist.gov/vuln/detail/CVE-2026-97031) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :orange_circle: high | [`GO-2026-5026`](https://go.dev/cl/767220) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-5972`](https://go.dev/issue/80405) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6088`](https://go.dev/issue/80481) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
@@ -86,6 +95,11 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | — |
 | :black_circle: unknown | [`GO-2026-6617`](https://go.dev/cl/847188) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
 | :black_circle: unknown | [`GHSA-wxvj-hc4r-fq45`](https://images.chainguard.dev/security/GHSA-wxvj-hc4r-fq45) | `nmap` | `7.94-r3` | `7.991-r0` |
+| :black_circle: unknown | [`CVE-2026-94444`](https://nvd.nist.gov/vuln/detail/CVE-2026-94444) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`CVE-2026-94447`](https://nvd.nist.gov/vuln/detail/CVE-2026-94447) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`CVE-2026-94448`](https://nvd.nist.gov/vuln/detail/CVE-2026-94448) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`CVE-2026-97030`](https://nvd.nist.gov/vuln/detail/CVE-2026-97030) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :black_circle: unknown | [`CVE-2026-97032`](https://nvd.nist.gov/vuln/detail/CVE-2026-97032) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :black_circle: unknown | [`GO-2026-6599`](https://go.dev/cl/839866) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :black_circle: unknown | [`GO-2026-6600`](https://go.dev/cl/840925) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :black_circle: unknown | [`GO-2026-6617`](https://go.dev/cl/847188) | `stdlib` | `go1.25.12` | `1.26.9` |
