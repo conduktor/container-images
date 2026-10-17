@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 28 | 26 | 3 | 57 |
+| 0 | 28 | 35 | 3 | 66 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -51,6 +51,12 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-83557`](https://avd.aquasec.com/nvd/cve-2026-83557) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
 | :yellow_circle: medium | [`CVE-2026-56855`](https://avd.aquasec.com/nvd/cve-2026-56855) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
 | :yellow_circle: medium | [`CVE-2026-78662`](https://avd.aquasec.com/nvd/cve-2026-78662) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
+| :yellow_circle: medium | [`CVE-2026-78659`](https://avd.aquasec.com/nvd/cve-2026-78659) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-78659`](https://avd.aquasec.com/nvd/cve-2026-78659) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-78659`](https://avd.aquasec.com/nvd/cve-2026-78659) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-78660`](https://avd.aquasec.com/nvd/cve-2026-78660) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-78660`](https://avd.aquasec.com/nvd/cve-2026-78660) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
+| :yellow_circle: medium | [`CVE-2026-78660`](https://avd.aquasec.com/nvd/cve-2026-78660) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
 | :yellow_circle: medium | [`CVE-2026-78663`](https://avd.aquasec.com/nvd/cve-2026-78663) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
 | :yellow_circle: medium | [`CVE-2026-78663`](https://avd.aquasec.com/nvd/cve-2026-78663) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
 | :yellow_circle: medium | [`CVE-2026-78663`](https://avd.aquasec.com/nvd/cve-2026-78663) | `golang.org/x/net` | `v0.59.0` | `0.60.0` |
@@ -65,8 +71,11 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-77421`](https://avd.aquasec.com/nvd/cve-2026-77421) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
 | :yellow_circle: medium | [`CVE-2026-77420`](https://avd.aquasec.com/nvd/cve-2026-77420) | `org.jline:jline-reader` | `3.30.4` | `4.3.1, 3.30.15` |
 | :yellow_circle: medium | [`CVE-2026-56866`](https://avd.aquasec.com/nvd/cve-2026-56866) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
+| :yellow_circle: medium | [`CVE-2026-78659`](https://avd.aquasec.com/nvd/cve-2026-78659) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
+| :yellow_circle: medium | [`CVE-2026-78660`](https://avd.aquasec.com/nvd/cve-2026-78660) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-78663`](https://avd.aquasec.com/nvd/cve-2026-78663) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-94439`](https://avd.aquasec.com/nvd/cve-2026-94439) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
+| :yellow_circle: medium | [`CVE-2026-94440`](https://avd.aquasec.com/nvd/cve-2026-94440) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-94448`](https://avd.aquasec.com/nvd/cve-2026-94448) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :white_circle: low | [`CVE-2026-106449`](https://avd.aquasec.com/nvd/cve-2026-106449) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.4` |
