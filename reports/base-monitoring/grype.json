@@ -29,8 +29,8 @@
           {
             "cve": "CVE-2025-15367",
             "epss": 0.00377,
-            "percentile": 0.30112,
-            "date": "2026-10-18"
+            "percentile": 0.30201,
+            "date": "2026-10-19"
           }
         ],
         "cwes": [
@@ -56,32 +56,11 @@
           "searchedBy": {
             "namespace": "nvd:cpe",
             "cpes": [
-              "cpe:2.3:a:python_software_foundation:python:3.13.16_git20261016:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "python-3.13",
-              "version": "3.13.16_git20261016-r0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2025-15367",
-            "versionConstraint": "< 3.15.0a6 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
-            ]
-          }
-        },
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
               "cpe:2.3:a:python:python:3.13.16_git20261016:*:*:*:*:*:*:*"
             ],
             "package": {
               "name": "python-3.13",
-              "version": "3.13.16_git20261016-r0"
+              "version": "3.13.16_git20261016-r1"
             }
           },
           "found": {
@@ -91,17 +70,38 @@
               "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
             ]
           }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.16_git20261016:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.16_git20261016-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2025-15367",
+            "versionConstraint": "< 3.15.0a6 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
         }
       ],
       "artifact": {
-        "id": "8d65c2ad614a386e",
+        "id": "1b8ce24b82818963",
         "name": "python-3.13",
-        "version": "3.13.16_git20261016-r0",
+        "version": "3.13.16_git20261016-r1",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:046c2258c4de6c4ba6b016c8ffc5e9c307f39318ca1ff743e1b4ee744101ff31",
+            "layerID": "sha256:40ba328c75a36050f4581b9d56904159121624788cc4fe6c12634899e0f61db9",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -113,29 +113,29 @@
           "PSF-2.0"
         ],
         "cpes": [
-          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software-foundation:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software_foundation:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-3.13:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-3.13:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_3.13:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_3.13:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-3.13:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_3.13:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*"
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/python-3.13@3.13.16_git20261016-r0?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.16_git20261016-r1?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "python-3.13"
@@ -178,7 +178,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/python-3.13-3.13.16_git20261016-r0.spdx.json"
+              "path": "/var/lib/db/sbom/python-3.13-3.13.16_git20261016-r1.spdx.json"
             }
           ]
         }
@@ -217,8 +217,8 @@
           {
             "cve": "CVE-2026-12345",
             "epss": 0.0018,
-            "percentile": 0.0705,
-            "date": "2026-10-18"
+            "percentile": 0.07104,
+            "date": "2026-10-19"
           }
         ],
         "cwes": [
@@ -244,32 +244,11 @@
           "searchedBy": {
             "namespace": "nvd:cpe",
             "cpes": [
-              "cpe:2.3:a:python_software_foundation:python:3.13.16_git20261016:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "python-3.13",
-              "version": "3.13.16_git20261016-r0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-12345",
-            "versionConstraint": "< 3.15.0rc3 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
-            ]
-          }
-        },
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
               "cpe:2.3:a:python:python:3.13.16_git20261016:*:*:*:*:*:*:*"
             ],
             "package": {
               "name": "python-3.13",
-              "version": "3.13.16_git20261016-r0"
+              "version": "3.13.16_git20261016-r1"
             }
           },
           "found": {
@@ -279,17 +258,38 @@
               "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
             ]
           }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.16_git20261016:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.16_git20261016-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-12345",
+            "versionConstraint": "< 3.15.0rc3 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
         }
       ],
       "artifact": {
-        "id": "8d65c2ad614a386e",
+        "id": "1b8ce24b82818963",
         "name": "python-3.13",
-        "version": "3.13.16_git20261016-r0",
+        "version": "3.13.16_git20261016-r1",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:046c2258c4de6c4ba6b016c8ffc5e9c307f39318ca1ff743e1b4ee744101ff31",
+            "layerID": "sha256:40ba328c75a36050f4581b9d56904159121624788cc4fe6c12634899e0f61db9",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -301,29 +301,29 @@
           "PSF-2.0"
         ],
         "cpes": [
-          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software-foundation:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software_foundation:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-3.13:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-3.13:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_3.13:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_3.13:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-software:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_software:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python-3.13:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python:python-3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python:python_3.13:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python_3.13:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*",
-          "cpe:2.3:a:python:python:3.13.16_git20261016-r0:*:*:*:*:*:*:*"
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.16_git20261016-r1:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/python-3.13@3.13.16_git20261016-r0?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.16_git20261016-r1?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "python-3.13"
@@ -366,7 +366,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/python-3.13-3.13.16_git20261016-r0.spdx.json"
+              "path": "/var/lib/db/sbom/python-3.13-3.13.16_git20261016-r1.spdx.json"
             }
           ]
         }
@@ -408,14 +408,14 @@
         }
       ],
       "artifact": {
-        "id": "43a5377ccd2c4a84",
+        "id": "71764c7edef9a48c",
         "name": "golang.org/x/crypto",
         "version": "v0.58.0",
         "type": "go-module",
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:046c2258c4de6c4ba6b016c8ffc5e9c307f39318ca1ff743e1b4ee744101ff31",
+            "layerID": "sha256:40ba328c75a36050f4581b9d56904159121624788cc4fe6c12634899e0f61db9",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -431,7 +431,7 @@
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.9",
+          "goCompiledVersion": "go1.26.10",
           "architecture": "amd64",
           "mainModule": "github.com/cortexproject/cortex"
         }
@@ -473,14 +473,14 @@
         }
       ],
       "artifact": {
-        "id": "ce3d158185028f81",
+        "id": "a300885ce0c80030",
         "name": "golang.org/x/crypto",
         "version": "v0.58.0",
         "type": "go-module",
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:046c2258c4de6c4ba6b016c8ffc5e9c307f39318ca1ff743e1b4ee744101ff31",
+            "layerID": "sha256:40ba328c75a36050f4581b9d56904159121624788cc4fe6c12634899e0f61db9",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -496,7 +496,7 @@
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.9",
+          "goCompiledVersion": "go1.26.10",
           "architecture": "amd64",
           "h1Digest": "h1:COkYLr4k7nDI4r6QtMML2AfzeIswWHAJthLS6K/M/54=",
           "mainModule": "github.com/prometheus/prometheus"
@@ -539,14 +539,14 @@
         }
       ],
       "artifact": {
-        "id": "fd123d29d9405f65",
+        "id": "a0d8a3f293e6a728",
         "name": "golang.org/x/crypto",
         "version": "v0.58.0",
         "type": "go-module",
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:046c2258c4de6c4ba6b016c8ffc5e9c307f39318ca1ff743e1b4ee744101ff31",
+            "layerID": "sha256:40ba328c75a36050f4581b9d56904159121624788cc4fe6c12634899e0f61db9",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -562,7 +562,7 @@
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.9",
+          "goCompiledVersion": "go1.26.10",
           "architecture": "amd64",
           "h1Digest": "h1:COkYLr4k7nDI4r6QtMML2AfzeIswWHAJthLS6K/M/54=",
           "mainModule": "github.com/prometheus/prometheus"
@@ -573,29 +573,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:d2a638bcae1e1487bed2e83443a7c6dcb9b760ef320fa488afbbd2faf4b57d9e",
-      "imageID": "sha256:b73a11eb79bb9e9fa6d4104b3d8280445dfe8af578346b1fba5ce61579e328e0",
-      "manifestDigest": "sha256:40cd9285ecb2adb5059db930b3c8744faf58141028d6d36059b62ead9446dd9c",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:a47b64b71bfa3e6839c8785f35ac5a15f1bb7fcf0041973baed9c6246d8c8b98",
+      "imageID": "sha256:9b357f78ba33dcbfd5fee6b8dc1497abb518279abd2c60ab1677dd082b9d7fc7",
+      "manifestDigest": "sha256:f1529ceb5eb649d26a83c8510e3557f84f428067f9016b38ad50888e046120ae",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 582732737,
+      "imageSize": 582746123,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:046c2258c4de6c4ba6b016c8ffc5e9c307f39318ca1ff743e1b4ee744101ff31",
-          "size": 582732737
+          "digest": "sha256:40ba328c75a36050f4581b9d56904159121624788cc4fe6c12634899e0f61db9",
+          "size": 582746123
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6YjczYTExZWI3OWJiOWU5ZmE2ZDQxMDRiM2Q4MjgwNDQ1ZGZlOGFmNTc4MzQ2YjFmYmE1Y2U2MTU3OWUzMjhlMCJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODYyNzQ4MTYsImRpZ2VzdCI6InNoYTI1NjowNDZjMjI1OGM0ZGU2YzRiYTZiMDE2YzhmZmM1ZTljMzA3ZjM5MzE4Y2ExZmY3NDNlMWI0ZWU3NDQxMDFmZjMxIn1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTE5VDIyOjAzOjQwWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0xOVQyMjowMzo0MFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjowNDZjMjI1OGM0ZGU2YzRiYTZiMDE2YzhmZmM1ZTljMzA3ZjM5MzE4Y2ExZmY3NDNlMWI0ZWU3NDQxMDFmZjMxIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0xOVQyMjowMzo0MFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6OWIzNTdmNzhiYTMzZGNiZmQ1ZmVlNmI4ZGMxNDk3YWJiNTE4Mjc5YWJkMmM2MGFiMTY3N2RkMDgyYjlkN2ZjNyJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODYyODgxMjgsImRpZ2VzdCI6InNoYTI1Njo0MGJhMzI4Yzc1YTM2MDUwZjQ1ODFiOWQ1NjkwNDE1OTEyMTYyNDc4OGNjNGZlNmMxMjYzNDg5OWUwZjYxZGI5In1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTIxVDAwOjExOjQ0WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0yMVQwMDoxMTo0NFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1Njo0MGJhMzI4Yzc1YTM2MDUwZjQ1ODFiOWQ1NjkwNDE1OTEyMTYyNDc4OGNjNGZlNmMxMjYzNDg5OWUwZjYxZGI5Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0yMVQwMDoxMTo0NFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:d2a638bcae1e1487bed2e83443a7c6dcb9b760ef320fa488afbbd2faf4b57d9e"
+        "ghcr.io/conduktor/base-monitoring@sha256:a47b64b71bfa3e6839c8785f35ac5a15f1bb7fcf0041973baed9c6246d8c8b98"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-10-19T22:03:40Z",
+        "org.opencontainers.image.created": "2026-10-21T00:11:44Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -616,7 +616,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-C93DOY/output",
+      "file": "/tmp/grype-1ULUjm/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,
