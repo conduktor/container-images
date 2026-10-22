@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 27 | 28 | 3 | 58 |
+| 0 | 28 | 28 | 3 | 59 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -32,6 +32,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-77422`](https://avd.aquasec.com/nvd/cve-2026-77422) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
 | :orange_circle: high | [`CVE-2026-56740`](https://avd.aquasec.com/nvd/cve-2026-56740) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
 | :orange_circle: high | [`CVE-2026-56741`](https://avd.aquasec.com/nvd/cve-2026-56741) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
+| :orange_circle: high | [`CVE-2026-111943`](https://avd.aquasec.com/nvd/cve-2026-111943) | `stdlib` | `v1.25.12` | `1.26.10, 1.27.3` |
 | :orange_circle: high | [`CVE-2026-33818`](https://avd.aquasec.com/nvd/cve-2026-33818) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-39821`](https://avd.aquasec.com/nvd/cve-2026-39821) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56853`](https://avd.aquasec.com/nvd/cve-2026-56853) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
