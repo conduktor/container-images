@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 54 | 25 | 3 | 88 |
+| 4 | 54 | 25 | 3 | 89 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -103,3 +103,4 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :white_circle: low | [`GHSA-343h-94h5-c4wr`](https://github.com/advisories/GHSA-343h-94h5-c4wr) | `lz4-java` | `1.10.2` | `1.11.4` |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | — |
 | :black_circle: unknown | [`GHSA-wxvj-hc4r-fq45`](https://images.chainguard.dev/security/GHSA-wxvj-hc4r-fq45) | `nmap` | `7.94-r3` | `7.991-r0` |
+| :black_circle: unknown | [`GO-2026-6809`](https://go.dev/cl/851047) | `stdlib` | `go1.25.12` | `1.26.10, 1.27.3` |
