@@ -29,8 +29,8 @@
           {
             "cve": "CVE-2025-15367",
             "epss": 0.00377,
-            "percentile": 0.30479,
-            "date": "2026-10-22"
+            "percentile": 0.30496,
+            "date": "2026-10-23"
           }
         ],
         "cwes": [
@@ -101,7 +101,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:ae9c2ad172fffe66ff2ec32e53107130994e169f660dded5bc1529c67087a50b",
+            "layerID": "sha256:cba4a523296cc0c610f0a6f099078bfacc9dd112df39ed7616c7b92855818564",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -217,8 +217,8 @@
           {
             "cve": "CVE-2026-12345",
             "epss": 0.0018,
-            "percentile": 0.07166,
-            "date": "2026-10-22"
+            "percentile": 0.07167,
+            "date": "2026-10-23"
           }
         ],
         "cwes": [
@@ -289,7 +289,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:ae9c2ad172fffe66ff2ec32e53107130994e169f660dded5bc1529c67087a50b",
+            "layerID": "sha256:cba4a523296cc0c610f0a6f099078bfacc9dd112df39ed7616c7b92855818564",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -374,6 +374,172 @@
     },
     {
       "vulnerability": {
+        "id": "GHSA-j6qf-3m9c-vwj3",
+        "dataSource": "https://github.com/advisories/GHSA-j6qf-3m9c-vwj3",
+        "namespace": "github:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/go-chi/chi/security/advisories/GHSA-j6qf-3m9c-vwj3",
+          "https://nvd.nist.gov/vuln/detail/CVE-2026-114437",
+          "https://github.com/go-chi/chi/pull/1214",
+          "https://github.com/go-chi/chi/commit/7f9b7448f51d28804fac98c0a17bc2a7cec1079f",
+          "https://github.com/go-chi/chi/releases/tag/v5.4.0",
+          "https://www.tenable.com/security/research/tra-2026-66"
+        ],
+        "description": "chi: Client IP spoofing in ClientIPFromXFF via X-Forwarded-For",
+        "cvss": [
+          {
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+            "metrics": {
+              "baseScore": 4.8,
+              "exploitabilityScore": 2.3,
+              "impactScore": 2.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-114437",
+            "epss": 0.00126,
+            "percentile": 0.021,
+            "date": "2026-10-23"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-114437",
+            "cwe": "CWE-348",
+            "source": "vulnreport@tenable.com",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "5.4.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "5.4.0",
+              "date": "2026-10-24",
+              "kind": "first-observed"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.06174
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-114437",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-114437",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/go-chi/chi/security/advisories/GHSA-j6qf-3m9c-vwj3",
+            "https://www.tenable.com/security/research/tra-2026-66"
+          ],
+          "description": "In the Golang Chi web framework, the ClientIPFromXFF middleware skips any X-Forwarded-For entry in a configured trusted CIDR but never verifies that the direct TCP peer in http.Request.RemoteAddr belongs to that CIDR. A client that can reach the Go server directly can therefore append a trusted-looking proxy address and choose the client IP returned by middleware.GetClientIP.\n\nThis issue affects chi before 5.4.0.",
+          "cvss": [
+            {
+              "source": "vulnreport@tenable.com",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 6.3
+              },
+              "vendorMetadata": {}
+            },
+            {
+              "source": "vulnreport@tenable.com",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+              "metrics": {
+                "baseScore": 4.8,
+                "exploitabilityScore": 2.3,
+                "impactScore": 2.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-114437",
+              "epss": 0.00126,
+              "percentile": 0.021,
+              "date": "2026-10-23"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-114437",
+              "cwe": "CWE-348",
+              "source": "vulnreport@tenable.com",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "github:language:go",
+            "package": {
+              "name": "github.com/go-chi/chi/v5",
+              "version": "v5.3.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GHSA-j6qf-3m9c-vwj3",
+            "versionConstraint": "<=5.3.2 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "5.4.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "f7af37d0f48d5ecf",
+        "name": "github.com/go-chi/chi/v5",
+        "version": "v5.3.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:cba4a523296cc0c610f0a6f099078bfacc9dd112df39ed7616c7b92855818564",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:go-chi:chi\\/v5:v5.3.0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:go_chi:chi\\/v5:v5.3.0:*:*:*:*:*:*:*",
+          "cpe:2.3:a:go:chi\\/v5:v5.3.0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/github.com/go-chi/chi/v5@v5.3.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
         "id": "GO-2026-5932",
         "dataSource": "https://go.dev/issue/44226",
         "namespace": "govulndb:language:go",
@@ -415,7 +581,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:ae9c2ad172fffe66ff2ec32e53107130994e169f660dded5bc1529c67087a50b",
+            "layerID": "sha256:cba4a523296cc0c610f0a6f099078bfacc9dd112df39ed7616c7b92855818564",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -480,7 +646,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:ae9c2ad172fffe66ff2ec32e53107130994e169f660dded5bc1529c67087a50b",
+            "layerID": "sha256:cba4a523296cc0c610f0a6f099078bfacc9dd112df39ed7616c7b92855818564",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -546,7 +712,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:ae9c2ad172fffe66ff2ec32e53107130994e169f660dded5bc1529c67087a50b",
+            "layerID": "sha256:cba4a523296cc0c610f0a6f099078bfacc9dd112df39ed7616c7b92855818564",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -573,29 +739,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:70fd368411539cbe0d26c364b1e16ceffe18e7b563eccd7adaca4485550008ca",
-      "imageID": "sha256:8add27bd80837cc8d0809788d96c274afd621115f26772bcb404a63ef5e7e764",
-      "manifestDigest": "sha256:103dbc618fe39b0a3e4ba636c05c1e5dbb9789a91ff7b750d742cae9509b01d7",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:1ac4a8feff47fecf870df8c5f6e88e080e6907bbf9f28722be6eec69ab721e58",
+      "imageID": "sha256:eb7a4ac2dd0f5b76462c3dd8eb989ad812a6eefda6d3d09507d273146d54235b",
+      "manifestDigest": "sha256:66b1002b596a2be99621328824bf73b30321dd5f9d364819c3a1879e0eb5cc4b",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 582754805,
+      "imageSize": 582777183,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:ae9c2ad172fffe66ff2ec32e53107130994e169f660dded5bc1529c67087a50b",
-          "size": 582754805
+          "digest": "sha256:cba4a523296cc0c610f0a6f099078bfacc9dd112df39ed7616c7b92855818564",
+          "size": 582777183
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6OGFkZDI3YmQ4MDgzN2NjOGQwODA5Nzg4ZDk2YzI3NGFmZDYyMTExNWYyNjc3MmJjYjQwNGE2M2VmNWU3ZTc2NCJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODYyOTYzMjAsImRpZ2VzdCI6InNoYTI1NjphZTljMmFkMTcyZmZmZTY2ZmYyZWMzMmU1MzEwNzEzMDk5NGUxNjlmNjYwZGRlZDViYzE1MjljNjcwODdhNTBiIn1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTIzVDE3OjEzOjEwWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0yM1QxNzoxMzoxMFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjphZTljMmFkMTcyZmZmZTY2ZmYyZWMzMmU1MzEwNzEzMDk5NGUxNjlmNjYwZGRlZDViYzE1MjljNjcwODdhNTBiIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0yM1QxNzoxMzoxMFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6ZWI3YTRhYzJkZDBmNWI3NjQ2MmMzZGQ4ZWI5ODlhZDgxMmE2ZWVmZGE2ZDNkMDk1MDdkMjczMTQ2ZDU0MjM1YiJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODYzMTk4NzIsImRpZ2VzdCI6InNoYTI1NjpjYmE0YTUyMzI5NmNjMGM2MTBmMGE2ZjA5OTA3OGJmYWNjOWRkMTEyZGYzOWVkNzYxNmM3YjkyODU1ODE4NTY0In1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTI0VDIzOjIwOjQzWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0yNFQyMzoyMDo0M1oiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjpjYmE0YTUyMzI5NmNjMGM2MTBmMGE2ZjA5OTA3OGJmYWNjOWRkMTEyZGYzOWVkNzYxNmM3YjkyODU1ODE4NTY0Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0yNFQyMzoyMDo0M1oiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:70fd368411539cbe0d26c364b1e16ceffe18e7b563eccd7adaca4485550008ca"
+        "ghcr.io/conduktor/base-monitoring@sha256:1ac4a8feff47fecf870df8c5f6e88e080e6907bbf9f28722be6eec69ab721e58"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-10-23T17:13:10Z",
+        "org.opencontainers.image.created": "2026-10-24T23:20:43Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -616,7 +782,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-RV0LzH/output",
+      "file": "/tmp/grype-9xUzjS/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,
