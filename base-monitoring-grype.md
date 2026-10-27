@@ -16,8 +16,8 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
 | :yellow_circle: medium | [`GHSA-j6qf-3m9c-vwj3`](https://github.com/advisories/GHSA-j6qf-3m9c-vwj3) | `github.com/go-chi/chi/v5` | `v5.3.0` | `5.4.0` |
-| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.16_git20261016-r2` | — |
-| :yellow_circle: medium | [`CVE-2026-12345`](https://nvd.nist.gov/vuln/detail/CVE-2026-12345) | `python-3.13` | `3.13.16_git20261016-r2` | — |
+| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.17_git20261023-r1` | — |
+| :yellow_circle: medium | [`CVE-2026-12345`](https://nvd.nist.gov/vuln/detail/CVE-2026-12345) | `python-3.13` | `3.13.17_git20261023-r1` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | — |
