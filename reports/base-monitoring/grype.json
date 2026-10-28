@@ -29,8 +29,8 @@
           {
             "cve": "CVE-2025-15367",
             "epss": 0.00377,
-            "percentile": 0.31406,
-            "date": "2026-10-25"
+            "percentile": 0.31438,
+            "date": "2026-10-26"
           }
         ],
         "cwes": [
@@ -101,7 +101,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:9d213b8d680300cc3dac4bc88b919170b2c9aeedc115064a8a82c24a900a7402",
+            "layerID": "sha256:5a23a8021d02f61a71831134215d59d7b8c36a4f8bc8ae0e6696b100c169fecb",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -191,10 +191,12 @@
         "namespace": "nvd:cpe",
         "severity": "Medium",
         "urls": [
+          "https://github.com/python/cpython/commit/0478b52788117db4b831b3efd648f56b777628aa",
           "https://github.com/python/cpython/commit/06ef3d43fdaf4da97af12fa694b4886092c4b970",
           "https://github.com/python/cpython/commit/458e7134a5af7f86aee9d21b51cf499b41aa4420",
           "https://github.com/python/cpython/commit/58ed0259cae509a19138795df302fe60b544dc74",
           "https://github.com/python/cpython/commit/5c20517a4fc56683efe63a7751020db9573f538d",
+          "https://github.com/python/cpython/commit/c39b52d00b42200aaadff679e2fe3f1006d57c58",
           "https://github.com/python/cpython/commit/e1f3590f155c6d66007e958c98c9d69316551993",
           "https://github.com/python/cpython/issues/157579",
           "https://github.com/python/cpython/pull/157580",
@@ -216,9 +218,9 @@
         "epss": [
           {
             "cve": "CVE-2026-12345",
-            "epss": 0.00316,
-            "percentile": 0.24259,
-            "date": "2026-10-25"
+            "epss": 0.00344,
+            "percentile": 0.27688,
+            "date": "2026-10-26"
           }
         ],
         "cwes": [
@@ -234,7 +236,7 @@
           "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.17222
+        "risk": 0.18748
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -289,7 +291,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:9d213b8d680300cc3dac4bc88b919170b2c9aeedc115064a8a82c24a900a7402",
+            "layerID": "sha256:5a23a8021d02f61a71831134215d59d7b8c36a4f8bc8ae0e6696b100c169fecb",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -404,8 +406,8 @@
           {
             "cve": "CVE-2026-114437",
             "epss": 0.00129,
-            "percentile": 0.02558,
-            "date": "2026-10-25"
+            "percentile": 0.0256,
+            "date": "2026-10-26"
           }
         ],
         "cwes": [
@@ -471,8 +473,8 @@
             {
               "cve": "CVE-2026-114437",
               "epss": 0.00129,
-              "percentile": 0.02558,
-              "date": "2026-10-25"
+              "percentile": 0.0256,
+              "date": "2026-10-26"
             }
           ],
           "cwes": [
@@ -514,7 +516,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:9d213b8d680300cc3dac4bc88b919170b2c9aeedc115064a8a82c24a900a7402",
+            "layerID": "sha256:5a23a8021d02f61a71831134215d59d7b8c36a4f8bc8ae0e6696b100c169fecb",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -581,7 +583,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:9d213b8d680300cc3dac4bc88b919170b2c9aeedc115064a8a82c24a900a7402",
+            "layerID": "sha256:5a23a8021d02f61a71831134215d59d7b8c36a4f8bc8ae0e6696b100c169fecb",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -646,7 +648,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:9d213b8d680300cc3dac4bc88b919170b2c9aeedc115064a8a82c24a900a7402",
+            "layerID": "sha256:5a23a8021d02f61a71831134215d59d7b8c36a4f8bc8ae0e6696b100c169fecb",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -712,7 +714,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:9d213b8d680300cc3dac4bc88b919170b2c9aeedc115064a8a82c24a900a7402",
+            "layerID": "sha256:5a23a8021d02f61a71831134215d59d7b8c36a4f8bc8ae0e6696b100c169fecb",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -739,29 +741,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:8b2174e9dff067d6cfc91250b5abb35c0cc52f97c1f23f992c34e1fad5baf536",
-      "imageID": "sha256:ea34813651cda98dba387462685e7a630891b84216007b346cba38013b381623",
-      "manifestDigest": "sha256:6587fb9d98ece5e6a8e80d8bcea759b25107314bad987e2a7591f47f12e7ac40",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:7e6ff63e9a3474b2655049e3c021cfffa1061ef1ef4e10e24d588f87314e0db3",
+      "imageID": "sha256:4924e0ada94cce722fd0c121208c2fa771164c8791c0f0f8deb60fa158803b5e",
+      "manifestDigest": "sha256:058aa6bdd4aac6f03687b933374e165c53a6ae9327a6bf4d44b0d1b40f3621bc",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 582786883,
+      "imageSize": 582786255,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:9d213b8d680300cc3dac4bc88b919170b2c9aeedc115064a8a82c24a900a7402",
-          "size": 582786883
+          "digest": "sha256:5a23a8021d02f61a71831134215d59d7b8c36a4f8bc8ae0e6696b100c169fecb",
+          "size": 582786255
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6ZWEzNDgxMzY1MWNkYTk4ZGJhMzg3NDYyNjg1ZTdhNjMwODkxYjg0MjE2MDA3YjM0NmNiYTM4MDEzYjM4MTYyMyJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODYzMzAxMTIsImRpZ2VzdCI6InNoYTI1Njo5ZDIxM2I4ZDY4MDMwMGNjM2RhYzRiYzg4YjkxOTE3MGIyYzlhZWVkYzExNTA2NGE4YTgyYzI0YTkwMGE3NDAyIn1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTI2VDIyOjIxOjA1WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0yNlQyMjoyMTowNVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1Njo5ZDIxM2I4ZDY4MDMwMGNjM2RhYzRiYzg4YjkxOTE3MGIyYzlhZWVkYzExNTA2NGE4YTgyYzI0YTkwMGE3NDAyIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0yNlQyMjoyMTowNVoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6NDkyNGUwYWRhOTRjY2U3MjJmZDBjMTIxMjA4YzJmYTc3MTE2NGM4NzkxYzBmMGY4ZGViNjBmYTE1ODgwM2I1ZSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODYzMjk2MDAsImRpZ2VzdCI6InNoYTI1Njo1YTIzYTgwMjFkMDJmNjFhNzE4MzExMzQyMTVkNTlkN2I4YzM2YTRmOGJjOGFlMGU2Njk2YjEwMGMxNjlmZWNiIn1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTEwLTI3VDE3OjEwOjQ1WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMC0yN1QxNzoxMDo0NVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1Njo1YTIzYTgwMjFkMDJmNjFhNzE4MzExMzQyMTVkNTlkN2I4YzM2YTRmOGJjOGFlMGU2Njk2YjEwMGMxNjlmZWNiIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMC0yN1QxNzoxMDo0NVoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:8b2174e9dff067d6cfc91250b5abb35c0cc52f97c1f23f992c34e1fad5baf536"
+        "ghcr.io/conduktor/base-monitoring@sha256:7e6ff63e9a3474b2655049e3c021cfffa1061ef1ef4e10e24d588f87314e0db3"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-10-26T22:21:05Z",
+        "org.opencontainers.image.created": "2026-10-27T17:10:45Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -782,7 +784,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-zr299S/output",
+      "file": "/tmp/grype-WpEnQR/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,
