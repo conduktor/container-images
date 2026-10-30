@@ -11,11 +11,10 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 1 | 31 | 29 | 2 | 63 |
+| 0 | 79 | 52 | 9 | 140 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :red_circle: critical | [`CVE-2026-56857`](https://avd.aquasec.com/nvd/cve-2026-56857) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :orange_circle: high | [`CVE-2026-106451`](https://avd.aquasec.com/nvd/cve-2026-106451) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.4` |
 | :orange_circle: high | [`CVE-2026-89407`](https://avd.aquasec.com/nvd/cve-2026-89407) | `com.fasterxml.jackson.core:jackson-core` | `2.21.5` | `2.18.11, 2.21.7, 2.22.3` |
 | :orange_circle: high | [`CVE-2026-89425`](https://avd.aquasec.com/nvd/cve-2026-89425) | `com.fasterxml.jackson.core:jackson-core` | `2.21.5` | `2.21.7, 2.22.3, 2.18.11` |
@@ -30,12 +29,60 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-56852`](https://avd.aquasec.com/nvd/cve-2026-56852) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
 | :orange_circle: high | [`CVE-2026-84304`](https://avd.aquasec.com/nvd/cve-2026-84304) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :orange_circle: high | [`CVE-2026-84445`](https://avd.aquasec.com/nvd/cve-2026-84445) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2, 1.83.2, 1.84.0-dev.0.20260825144003-d5a41119e0e3, 1.85.0-dev.0.20260825072537-93e31b48545e` |
+| :orange_circle: high | [`CVE-2026-14662`](https://avd.aquasec.com/nvd/cve-2026-14662) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14664`](https://avd.aquasec.com/nvd/cve-2026-14664) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14668`](https://avd.aquasec.com/nvd/cve-2026-14668) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14669`](https://avd.aquasec.com/nvd/cve-2026-14669) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14670`](https://avd.aquasec.com/nvd/cve-2026-14670) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14671`](https://avd.aquasec.com/nvd/cve-2026-14671) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14677`](https://avd.aquasec.com/nvd/cve-2026-14677) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14679`](https://avd.aquasec.com/nvd/cve-2026-14679) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14680`](https://avd.aquasec.com/nvd/cve-2026-14680) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-15741`](https://avd.aquasec.com/nvd/cve-2026-15741) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-15742`](https://avd.aquasec.com/nvd/cve-2026-15742) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-16239`](https://avd.aquasec.com/nvd/cve-2026-16239) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-18408`](https://avd.aquasec.com/nvd/cve-2026-18408) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-19385`](https://avd.aquasec.com/nvd/cve-2026-19385) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-6464`](https://avd.aquasec.com/nvd/cve-2026-6464) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-6471`](https://avd.aquasec.com/nvd/cve-2026-6471) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`CVE-2026-10050`](https://avd.aquasec.com/nvd/cve-2026-10050) | `org.eclipse.jetty:jetty-security` | `12.0.34` | `9.4.63, 10.0.31, 11.0.31, 12.0.36, 12.1.10` |
 | :orange_circle: high | [`CVE-2026-77422`](https://avd.aquasec.com/nvd/cve-2026-77422) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
 | :orange_circle: high | [`CVE-2026-56740`](https://avd.aquasec.com/nvd/cve-2026-56740) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
 | :orange_circle: high | [`CVE-2026-56741`](https://avd.aquasec.com/nvd/cve-2026-56741) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
 | :orange_circle: high | [`CVE-2026-108106`](https://avd.aquasec.com/nvd/cve-2026-108106) | `org.xerial.snappy:snappy-java` | `1.1.10.7` | `1.1.10.9` |
 | :orange_circle: high | [`CVE-2026-93451`](https://avd.aquasec.com/nvd/cve-2026-93451) | `org.xerial.snappy:snappy-java` | `1.1.10.7` | `1.1.10.9` |
+| :orange_circle: high | [`CVE-2026-14662`](https://avd.aquasec.com/nvd/cve-2026-14662) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14664`](https://avd.aquasec.com/nvd/cve-2026-14664) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14668`](https://avd.aquasec.com/nvd/cve-2026-14668) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14669`](https://avd.aquasec.com/nvd/cve-2026-14669) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14670`](https://avd.aquasec.com/nvd/cve-2026-14670) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14671`](https://avd.aquasec.com/nvd/cve-2026-14671) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14677`](https://avd.aquasec.com/nvd/cve-2026-14677) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14679`](https://avd.aquasec.com/nvd/cve-2026-14679) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14680`](https://avd.aquasec.com/nvd/cve-2026-14680) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-15741`](https://avd.aquasec.com/nvd/cve-2026-15741) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-15742`](https://avd.aquasec.com/nvd/cve-2026-15742) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-16239`](https://avd.aquasec.com/nvd/cve-2026-16239) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-18408`](https://avd.aquasec.com/nvd/cve-2026-18408) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-19385`](https://avd.aquasec.com/nvd/cve-2026-19385) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-6464`](https://avd.aquasec.com/nvd/cve-2026-6464) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-6471`](https://avd.aquasec.com/nvd/cve-2026-6471) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14662`](https://avd.aquasec.com/nvd/cve-2026-14662) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14664`](https://avd.aquasec.com/nvd/cve-2026-14664) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14668`](https://avd.aquasec.com/nvd/cve-2026-14668) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14669`](https://avd.aquasec.com/nvd/cve-2026-14669) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14670`](https://avd.aquasec.com/nvd/cve-2026-14670) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14671`](https://avd.aquasec.com/nvd/cve-2026-14671) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14677`](https://avd.aquasec.com/nvd/cve-2026-14677) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14679`](https://avd.aquasec.com/nvd/cve-2026-14679) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-14680`](https://avd.aquasec.com/nvd/cve-2026-14680) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-15741`](https://avd.aquasec.com/nvd/cve-2026-15741) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-15742`](https://avd.aquasec.com/nvd/cve-2026-15742) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-16239`](https://avd.aquasec.com/nvd/cve-2026-16239) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-18408`](https://avd.aquasec.com/nvd/cve-2026-18408) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-19385`](https://avd.aquasec.com/nvd/cve-2026-19385) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-6464`](https://avd.aquasec.com/nvd/cve-2026-6464) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :orange_circle: high | [`CVE-2026-6471`](https://avd.aquasec.com/nvd/cve-2026-6471) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`CVE-2026-111943`](https://avd.aquasec.com/nvd/cve-2026-111943) | `stdlib` | `v1.25.12` | `1.26.10, 1.27.3` |
 | :orange_circle: high | [`CVE-2026-33818`](https://avd.aquasec.com/nvd/cve-2026-33818) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-39821`](https://avd.aquasec.com/nvd/cve-2026-39821) | `stdlib` | `v1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
@@ -53,6 +100,8 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-59949`](https://avd.aquasec.com/nvd/cve-2026-59949) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.1` |
 | :yellow_circle: medium | [`CVE-2026-19032`](https://avd.aquasec.com/nvd/cve-2026-19032) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
 | :yellow_circle: medium | [`CVE-2026-83557`](https://avd.aquasec.com/nvd/cve-2026-83557) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.18.10, 2.21.6, 2.22.2` |
+| :yellow_circle: medium | [`CVE-2026-116585`](https://avd.aquasec.com/nvd/cve-2026-116585) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
+| :yellow_circle: medium | [`CVE-2026-116586`](https://avd.aquasec.com/nvd/cve-2026-116586) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`CVE-2026-56855`](https://avd.aquasec.com/nvd/cve-2026-56855) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
 | :yellow_circle: medium | [`CVE-2026-78662`](https://avd.aquasec.com/nvd/cve-2026-78662) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
 | :yellow_circle: medium | [`CVE-2026-78659`](https://avd.aquasec.com/nvd/cve-2026-78659) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
@@ -60,6 +109,13 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-78663`](https://avd.aquasec.com/nvd/cve-2026-78663) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
 | :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
 | :yellow_circle: medium | [`CVE-2026-84303`](https://avd.aquasec.com/nvd/cve-2026-84303) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
+| :yellow_circle: medium | [`CVE-2026-14663`](https://avd.aquasec.com/nvd/cve-2026-14663) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14666`](https://avd.aquasec.com/nvd/cve-2026-14666) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14672`](https://avd.aquasec.com/nvd/cve-2026-14672) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14678`](https://avd.aquasec.com/nvd/cve-2026-14678) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14681`](https://avd.aquasec.com/nvd/cve-2026-14681) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-18024`](https://avd.aquasec.com/nvd/cve-2026-18024) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-6470`](https://avd.aquasec.com/nvd/cve-2026-6470) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :yellow_circle: medium | [`CVE-2026-58058`](https://avd.aquasec.com/nvd/cve-2026-58058) | `nmap` | `7.94-r3` | `7.991-r0` |
 | :yellow_circle: medium | [`CVE-2026-10051`](https://avd.aquasec.com/nvd/cve-2026-10051) | `org.eclipse.jetty:jetty-server` | `12.0.34` | `12.0.36, 12.1.10` |
 | :yellow_circle: medium | [`CVE-2026-6790`](https://avd.aquasec.com/nvd/cve-2026-6790) | `org.eclipse.jetty:jetty-server` | `12.0.34` | `12.0.35, 12.1.9` |
@@ -67,6 +123,20 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-77421`](https://avd.aquasec.com/nvd/cve-2026-77421) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
 | :yellow_circle: medium | [`CVE-2026-77420`](https://avd.aquasec.com/nvd/cve-2026-77420) | `org.jline:jline-reader` | `3.30.4` | `4.3.1, 3.30.15` |
 | :yellow_circle: medium | [`CVE-2026-116590`](https://avd.aquasec.com/nvd/cve-2026-116590) | `org.xerial.snappy:snappy-java` | `1.1.10.7` | `1.1.10.9` |
+| :yellow_circle: medium | [`CVE-2026-14663`](https://avd.aquasec.com/nvd/cve-2026-14663) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14666`](https://avd.aquasec.com/nvd/cve-2026-14666) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14672`](https://avd.aquasec.com/nvd/cve-2026-14672) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14678`](https://avd.aquasec.com/nvd/cve-2026-14678) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14681`](https://avd.aquasec.com/nvd/cve-2026-14681) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-18024`](https://avd.aquasec.com/nvd/cve-2026-18024) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-6470`](https://avd.aquasec.com/nvd/cve-2026-6470) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14663`](https://avd.aquasec.com/nvd/cve-2026-14663) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14666`](https://avd.aquasec.com/nvd/cve-2026-14666) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14672`](https://avd.aquasec.com/nvd/cve-2026-14672) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14678`](https://avd.aquasec.com/nvd/cve-2026-14678) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-14681`](https://avd.aquasec.com/nvd/cve-2026-14681) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-18024`](https://avd.aquasec.com/nvd/cve-2026-18024) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :yellow_circle: medium | [`CVE-2026-6470`](https://avd.aquasec.com/nvd/cve-2026-6470) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :yellow_circle: medium | [`CVE-2026-56866`](https://avd.aquasec.com/nvd/cve-2026-56866) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-78659`](https://avd.aquasec.com/nvd/cve-2026-78659) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-78660`](https://avd.aquasec.com/nvd/cve-2026-78660) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
@@ -78,3 +148,10 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :white_circle: low | [`CVE-2026-106449`](https://avd.aquasec.com/nvd/cve-2026-106449) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.4` |
 | :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
+| :white_circle: low | [`CVE-2026-16241`](https://avd.aquasec.com/nvd/cve-2026-16241) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :white_circle: low | [`CVE-2026-6469`](https://avd.aquasec.com/nvd/cve-2026-6469) | `libpq-17` | `17.10-r1` | `17.11-r0` |
+| :white_circle: low | [`CVE-2026-16241`](https://avd.aquasec.com/nvd/cve-2026-16241) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :white_circle: low | [`CVE-2026-6469`](https://avd.aquasec.com/nvd/cve-2026-6469) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
+| :white_circle: low | [`CVE-2026-16241`](https://avd.aquasec.com/nvd/cve-2026-16241) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :white_circle: low | [`CVE-2026-6469`](https://avd.aquasec.com/nvd/cve-2026-6469) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
+| :white_circle: low | [`CVE-2026-56857`](https://avd.aquasec.com/nvd/cve-2026-56857) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
