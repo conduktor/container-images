@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 105 | 49 | 9 | 248 |
+| 4 | 105 | 51 | 9 | 248 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -165,6 +165,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-18024`](https://images.chainguard.dev/security/CVE-2026-18024) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :yellow_circle: medium | [`CVE-2026-6470`](https://images.chainguard.dev/security/CVE-2026-6470) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :yellow_circle: medium | [`GHSA-xqrx-qh46-34m7`](https://github.com/advisories/GHSA-xqrx-qh46-34m7) | `snappy-java` | `1.1.10.7` | `1.1.10.9` |
+| :yellow_circle: medium | [`CVE-2026-111943`](https://nvd.nist.gov/vuln/detail/CVE-2026-111943) | `stdlib` | `go1.25.12` | `1.26.10, 1.27.3` |
 | :yellow_circle: medium | [`CVE-2026-56858`](https://nvd.nist.gov/vuln/detail/CVE-2026-56858) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`CVE-2026-56860`](https://nvd.nist.gov/vuln/detail/CVE-2026-56860) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`CVE-2026-94448`](https://nvd.nist.gov/vuln/detail/CVE-2026-94448) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
@@ -173,6 +174,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`GO-2026-6218`](https://go.dev/cl/803681) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`GO-2026-6599`](https://go.dev/cl/839866) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`GO-2026-6600`](https://go.dev/cl/840925) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :yellow_circle: medium | [`GO-2026-6809`](https://go.dev/cl/851047) | `stdlib` | `go1.25.12` | `1.26.10, 1.27.3` |
 | :white_circle: low | [`GHSA-8wmf-6v46-5gfg`](https://github.com/advisories/GHSA-8wmf-6v46-5gfg) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
 | :white_circle: low | [`GO-2025-3547`](https://github.com/advisories/GHSA-r56h-j38w-hrqq) | `k8s.io/kubernetes` | `v1.37.2+dirty` | — |
 | :white_circle: low | [`CVE-2026-16241`](https://images.chainguard.dev/security/CVE-2026-16241) | `libpq-17` | `17.10-r1` | `17.11-r0` |
@@ -261,5 +263,3 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :black_circle: unknown | [`GHSA-v5vg-62mg-4ccv`](https://images.chainguard.dev/security/GHSA-v5vg-62mg-4ccv) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :black_circle: unknown | [`GHSA-v76f-gmv6-95jw`](https://images.chainguard.dev/security/GHSA-v76f-gmv6-95jw) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :black_circle: unknown | [`GHSA-xxfm-85xf-vx5m`](https://images.chainguard.dev/security/GHSA-xxfm-85xf-vx5m) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
-| :black_circle: unknown | [`CVE-2026-111943`](https://nvd.nist.gov/vuln/detail/CVE-2026-111943) | `stdlib` | `go1.25.12` | `1.26.10, 1.27.3` |
-| :black_circle: unknown | [`GO-2026-6809`](https://go.dev/cl/851047) | `stdlib` | `go1.25.12` | `1.26.10, 1.27.3` |
