@@ -184,7 +184,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :white_circle: low | [`CVE-2026-6469`](https://images.chainguard.dev/security/CVE-2026-6469) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
 | :white_circle: low | [`CVE-2026-16241`](https://images.chainguard.dev/security/CVE-2026-16241) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :white_circle: low | [`CVE-2026-6469`](https://images.chainguard.dev/security/CVE-2026-6469) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
-| :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | — |
+| :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
 | :black_circle: unknown | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.55.0` | `0.62.0` |
 | :black_circle: unknown | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.55.0` | `0.62.0` |
 | :black_circle: unknown | [`GHSA-2pm8-9426-243p`](https://images.chainguard.dev/security/GHSA-2pm8-9426-243p) | `libpq-17` | `17.10-r1` | `17.11-r0` |

@@ -21,9 +21,9 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | :yellow_circle: medium | [`GHSA-vvm8-gf78-28g4`](https://github.com/advisories/GHSA-vvm8-gf78-28g4) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.18_git20261030-r0` | — |
 | :white_circle: low | [`CVE-2026-103995`](https://nvd.nist.gov/vuln/detail/CVE-2026-103995) | `python-3.13` | `3.13.18_git20261030-r0` | — |
-| :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | — |
-| :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | — |
-| :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | — |
+| :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
+| :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
+| :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
 | :black_circle: unknown | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :black_circle: unknown | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :black_circle: unknown | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
