@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 105 | 51 | 9 | 248 |
+| 4 | 106 | 51 | 9 | 249 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -92,6 +92,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-6471`](https://images.chainguard.dev/security/CVE-2026-6471) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`GHSA-gwq9-9ffj-mvrv`](https://github.com/advisories/GHSA-gwq9-9ffj-mvrv) | `snappy-java` | `1.1.10.7` | `1.1.10.9` |
 | :orange_circle: high | [`GHSA-q233-g92q-qxp6`](https://github.com/advisories/GHSA-q233-g92q-qxp6) | `snappy-java` | `1.1.10.7` | `1.1.10.9` |
+| :orange_circle: high | [`CVE-2026-119586`](https://nvd.nist.gov/vuln/detail/CVE-2026-119586) | `sqlite-libs` | `3.54.1-r0` | — |
 | :orange_circle: high | [`CVE-2026-33818`](https://nvd.nist.gov/vuln/detail/CVE-2026-33818) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-46600`](https://nvd.nist.gov/vuln/detail/CVE-2026-46600) | `stdlib` | `go1.25.12` | `1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`CVE-2026-56853`](https://nvd.nist.gov/vuln/detail/CVE-2026-56853) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
