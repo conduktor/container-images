@@ -11,6 +11,8 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-os/trivy
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 0 | 0 | 0 | 0 |
+| 0 | 1 | 0 | 0 | 1 |
 
-No vulnerabilities reported.
+| Severity | ID | Package | Installed | Fixed in |
+|----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-84243`](https://nvd.nist.gov/vuln/detail/CVE-2026-84243) | `glibc-2.44` | `2.44-r13` | — |

@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 106 | 51 | 9 | 249 |
+| 4 | 108 | 52 | 9 | 250 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -20,6 +20,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :red_circle: critical | [`GO-2026-6604`](https://go.dev/cl/847305) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :red_circle: critical | [`GO-2026-6612`](https://go.dev/cl/847187) | `stdlib` | `go1.25.12` | `1.26.9` |
 | :orange_circle: high | [`GHSA-mgcc-cww5-fp2q`](https://github.com/advisories/GHSA-mgcc-cww5-fp2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.6` |
+| :orange_circle: high | [`CVE-2026-84243`](https://nvd.nist.gov/vuln/detail/CVE-2026-84243) | `glibc-2.44` | `2.44-r13` | — |
 | :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
 | :orange_circle: high | [`GO-2026-6354`](https://go.dev/issue/81316) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
 | :orange_circle: high | [`GO-2026-6355`](https://go.dev/issue/81317) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
@@ -28,6 +29,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`GO-2026-6610`](https://go.dev/cl/835145) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
 | :orange_circle: high | [`GO-2026-6611`](https://go.dev/cl/847186) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
 | :orange_circle: high | [`GO-2026-6617`](https://go.dev/cl/847188) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
+| :orange_circle: high | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.55.0` | `0.62.0` |
 | :orange_circle: high | [`GO-2026-5970`](https://go.dev/issue/80142) | `golang.org/x/text` | `v0.37.0` | `0.39.0` |
 | :orange_circle: high | [`GO-2026-6629`](https://go.dev/cl/793360) | `golang.org/x/text` | `v0.37.0` | `0.41.0` |
 | :orange_circle: high | [`GHSA-2v4p-qf9q-27wj`](https://github.com/advisories/GHSA-2v4p-qf9q-27wj) | `google.golang.org/grpc` | `v1.82.1` | `1.82.2` |
@@ -131,6 +133,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`GHSA-4w3g-jfj2-cw2q`](https://github.com/advisories/GHSA-4w3g-jfj2-cw2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`GHSA-vvm8-gf78-28g4`](https://github.com/advisories/GHSA-vvm8-gf78-28g4) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`GO-2026-5158`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-5wrp-cwcj-q835) | `go.opentelemetry.io/otel` | `v1.43.0` | `1.42.0, 1.44.0` |
+| :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.55.0` | `0.62.0` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`GHSA-gx83-3vf8-gh7j`](https://github.com/advisories/GHSA-gx83-3vf8-gh7j) | `jackson-databind` | `2.21.5` | `2.21.6` |
 | :yellow_circle: medium | [`GHSA-wjgm-6hv5-3cvf`](https://github.com/advisories/GHSA-wjgm-6hv5-3cvf) | `jackson-databind` | `2.21.5` | `2.21.6` |
@@ -186,8 +189,6 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :white_circle: low | [`CVE-2026-16241`](https://images.chainguard.dev/security/CVE-2026-16241) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :white_circle: low | [`CVE-2026-6469`](https://images.chainguard.dev/security/CVE-2026-6469) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.52.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
-| :black_circle: unknown | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.55.0` | `0.62.0` |
-| :black_circle: unknown | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.55.0` | `0.62.0` |
 | :black_circle: unknown | [`GHSA-2pm8-9426-243p`](https://images.chainguard.dev/security/GHSA-2pm8-9426-243p) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :black_circle: unknown | [`GHSA-3v2h-jgrj-9jmm`](https://images.chainguard.dev/security/GHSA-3v2h-jgrj-9jmm) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :black_circle: unknown | [`GHSA-4g6h-pg6m-qwgx`](https://images.chainguard.dev/security/GHSA-4g6h-pg6m-qwgx) | `libpq-17` | `17.10-r1` | `17.11-r0` |

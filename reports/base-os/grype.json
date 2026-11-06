@@ -1,31 +1,256 @@
 {
-  "matches": [],
+  "matches": [
+    {
+      "vulnerability": {
+        "id": "CVE-2026-84243",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-84243",
+        "namespace": "nvd:cpe",
+        "severity": "High",
+        "urls": [
+          "https://inbox.sourceware.org/libc-alpha/20261012112453.47383-1-avinal.xlvii@gmail.com",
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=17142",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0025"
+        ],
+        "description": "The gettext family of functions in the GNU C Library version 2.0 and later accept LANGUAGE environment variable entries that contain '/' or that are equal to \"..\", unless the program is setuid or setgid (AT_SECURE).  An attacker who can set LANGUAGE in the environment of a program that uses gettext can make it load a message catalog (.mo file) from an arbitrary location in the file system.  A crafted .mo file can crash the program through out-of-range offsets, or supply translations whose format directives do not match the arguments passed by the program.  That causes undefined behaviour in the printf family of functions and may allow arbitrary code execution with the privileges of the program.  The safety of message catalogs relies on them being installed in trusted, read-only locations, and the directory traversal bypasses this.\n\nThe fix for CVE-2014-0475 rejects \"..\" path components in locale names passed to setlocale or taken from the LC_ALL, LC_* and LANG environment variables.  gettext reads LANGUAGE directly and appends each colon-separated entry to the message catalog directory, so that fix did not cover LANGUAGE.\n\nLANGUAGE is only used when the LC_MESSAGES locale is not \"C\", \"C.<encoding>\" or \"POSIX\", so the attacker must also be able to select another installed locale, for example through LANG or LC_ALL.  Exploitation also requires that the attacker can place the crafted file in a location readable by the target program, and that the environment crosses a trust boundary without the program running as AT_SECURE.  An example is an SSH server that accepts LANGUAGE and LANG from clients through the AcceptEnv directive and restricts an account to a forced command; the attacker may use this to escape the restriction.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "metrics": {
+              "baseScore": 7,
+              "exploitabilityScore": 1.1,
+              "impactScore": 5.9
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-84243",
+            "epss": 0.00297,
+            "percentile": 0.22554,
+            "date": "2026-11-04"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-84243",
+            "cwe": "CWE-22",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.215325
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r13"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-84243",
+            "versionConstraint": ">= 2.0, < 2.45 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "64d346490e3a785f",
+        "name": "glibc-2.44",
+        "version": "2.44-r13",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:160608c23ae5fead2976d88749d7d5651349b6a3f476106f8c455a4d9f72acd9",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r13:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r13:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r13?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r13.spdx.json"
+            }
+          ]
+        }
+      }
+    }
+  ],
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-os@sha256:ba8d624ee89f5164c7d86904dd657137fbf49aa0348989370db2ea884ff9a781",
-      "imageID": "sha256:f88a37694d153a86d8799520ed79e2ad722ab483acb225b5af6a2156caa58857",
-      "manifestDigest": "sha256:b346a0c31b3d0609fda977725be02884dc8b91d686e881ee40a63e8d0cb25403",
+      "userInput": "ghcr.io/conduktor/base-os@sha256:399378f741c57a5b098f87d765a826bf2f184251b1bf669b913e6692c8e26a4c",
+      "imageID": "sha256:6a2d517809f39e40d2aadddb56e4d9f1769185ea71732b76624b2d49cc0c13af",
+      "manifestDigest": "sha256:0efab7f7b5c70534e813c4126e9ed738a9e4505be4ff36c105813b698b482842",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
       "imageSize": 9652295,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:30796fa5a604c96f0368a4bd3529fe8b901fe62ce94baf3a2d3171c8f90f4ef1",
+          "digest": "sha256:160608c23ae5fead2976d88749d7d5651349b6a3f476106f8c455a4d9f72acd9",
           "size": 9652295
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMDU1LCJkaWdlc3QiOiJzaGEyNTY6Zjg4YTM3Njk0ZDE1M2E4NmQ4Nzk5NTIwZWQ3OWUyYWQ3MjJhYjQ4M2FjYjIyNWI1YWY2YTIxNTZjYWE1ODg1NyJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDY5NTY4MCwiZGlnZXN0Ijoic2hhMjU2OjMwNzk2ZmE1YTYwNGM5NmYwMzY4YTRiZDM1MjlmZThiOTAxZmU2MmNlOTRiYWYzYTJkMzE3MWM4ZjkwZjRlZjEifV19",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTAyVDIxOjQ2OjEwWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0wMlQyMTo0NjoxMFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgT1MgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykgYnkgQ29uZHVrdG9yIn1dLCJvcyI6ImxpbnV4Iiwicm9vdGZzIjp7InR5cGUiOiJsYXllcnMiLCJkaWZmX2lkcyI6WyJzaGEyNTY6MzA3OTZmYTVhNjA0Yzk2ZjAzNjhhNGJkMzUyOWZlOGI5MDFmZTYyY2U5NGJhZjNhMmQzMTcxYzhmOTBmNGVmMSJdfSwiY29uZmlnIjp7IkNtZCI6WyIvYmluL3NoIl0sIkVudiI6WyJMQU5HPUMuVVRGLTgiLCJQQVRIPS91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0wMlQyMTo0NjoxMFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCB0aGUgY29uZHVrdG9yLXBsYXRmb3JtIGFjY291bnQuIE5vIEpWTSwgbm8gcGFja2FnZSBtYW5hZ2VyLiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5saWNlbnNlcyI6IkFwYWNoZS0yLjAiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2Uuc291cmNlIjoiaHR0cHM6Ly9naXRodWIuY29tL2NvbmR1a3Rvci9jb250YWluZXItaW1hZ2VzIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnRpdGxlIjoiQ29uZHVrdG9yIE9TIGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnZlbmRvciI6IkNvbmR1a3RvciJ9fX0=",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMDU1LCJkaWdlc3QiOiJzaGEyNTY6NmEyZDUxNzgwOWYzOWU0MGQyYWFkZGRiNTZlNGQ5ZjE3NjkxODVlYTcxNzMyYjc2NjI0YjJkNDljYzBjMTNhZiJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDY5NTY4MCwiZGlnZXN0Ijoic2hhMjU2OjE2MDYwOGMyM2FlNWZlYWQyOTc2ZDg4NzQ5ZDdkNTY1MTM0OWI2YTNmNDc2MTA2ZjhjNDU1YTRkOWY3MmFjZDkifV19",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTA1VDE5OjExOjM4WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0wNVQxOToxMTozOFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgT1MgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykgYnkgQ29uZHVrdG9yIn1dLCJvcyI6ImxpbnV4Iiwicm9vdGZzIjp7InR5cGUiOiJsYXllcnMiLCJkaWZmX2lkcyI6WyJzaGEyNTY6MTYwNjA4YzIzYWU1ZmVhZDI5NzZkODg3NDlkN2Q1NjUxMzQ5YjZhM2Y0NzYxMDZmOGM0NTVhNGQ5ZjcyYWNkOSJdfSwiY29uZmlnIjp7IkNtZCI6WyIvYmluL3NoIl0sIkVudiI6WyJMQU5HPUMuVVRGLTgiLCJQQVRIPS91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0wNVQxOToxMTozOFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCB0aGUgY29uZHVrdG9yLXBsYXRmb3JtIGFjY291bnQuIE5vIEpWTSwgbm8gcGFja2FnZSBtYW5hZ2VyLiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5saWNlbnNlcyI6IkFwYWNoZS0yLjAiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2Uuc291cmNlIjoiaHR0cHM6Ly9naXRodWIuY29tL2NvbmR1a3Rvci9jb250YWluZXItaW1hZ2VzIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnRpdGxlIjoiQ29uZHVrdG9yIE9TIGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnZlbmRvciI6IkNvbmR1a3RvciJ9fX0=",
       "repoDigests": [
-        "ghcr.io/conduktor/base-os@sha256:ba8d624ee89f5164c7d86904dd657137fbf49aa0348989370db2ea884ff9a781"
+        "ghcr.io/conduktor/base-os@sha256:399378f741c57a5b098f87d765a826bf2f184251b1bf669b913e6692c8e26a4c"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-11-02T21:46:10Z",
+        "org.opencontainers.image.created": "2026-11-05T19:11:38Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with the conduktor-platform account. No JVM, no package manager.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -46,7 +271,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-Qk1Cvd/output",
+      "file": "/tmp/grype-gXwE2c/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,
