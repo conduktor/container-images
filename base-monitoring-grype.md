@@ -11,11 +11,15 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 6 | 8 | 1 | 18 |
+| 1 | 9 | 8 | 1 | 22 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :red_circle: critical | [`GO-2026-6888`](https://github.com/andybalholm/brotli/security/advisories/GHSA-c9gr-gmg4-2vqv) | `github.com/andybalholm/brotli` | `v1.1.1` | `1.2.7` |
 | :orange_circle: high | [`GHSA-mgcc-cww5-fp2q`](https://github.com/advisories/GHSA-mgcc-cww5-fp2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.6` |
+| :orange_circle: high | [`GO-2026-6865`](https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8) | `github.com/klauspost/compress` | `v1.18.7` | `1.20.2` |
+| :orange_circle: high | [`GO-2026-6865`](https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8) | `github.com/klauspost/compress` | `v1.18.7` | `1.20.2` |
+| :orange_circle: high | [`GO-2026-6865`](https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8) | `github.com/klauspost/compress` | `v1.18.7` | `1.20.2` |
 | :orange_circle: high | [`CVE-2026-84243`](https://nvd.nist.gov/vuln/detail/CVE-2026-84243) | `glibc-2.44` | `2.44-r13` | — |
 | :orange_circle: high | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :orange_circle: high | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |

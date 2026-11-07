@@ -2,6 +2,246 @@
   "matches": [
     {
       "vulnerability": {
+        "id": "GO-2026-6888",
+        "dataSource": "https://github.com/andybalholm/brotli/security/advisories/GHSA-c9gr-gmg4-2vqv",
+        "namespace": "govulndb:language:go",
+        "severity": "Critical",
+        "urls": [
+          "https://github.com/andybalholm/brotli/commit/33c2a9884269798192b5ecf171288f98939dbe42",
+          "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
+          "https://github.com/google/brotli/commit/0ed4268a4401abcb4472096340477cf4af7d1a2b"
+        ],
+        "description": "In github.com/andybalholm/brotli before v1.2.7, the decompressor allocates memory for Huffman tables and block-type trees on every meta-block header without bounding the cumulative allocations relative to the input size. A small crafted brotli stream containing many empty meta-blocks with new Huffman trees can trigger hundreds of megabytes of allocations per kilobyte of input, leading to denial of service.",
+        "cvss": [
+          {
+            "source": "nvd@nist.gov",
+            "type": "Primary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "metrics": {
+              "baseScore": 9.8,
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "knownExploited": [
+          {
+            "cve": "CVE-2026-111497",
+            "vendorProject": "Google",
+            "product": "Brotli",
+            "dateAdded": "2026-10-27",
+            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+            "dueDate": "2026-11-10",
+            "knownRansomwareCampaignUse": "unknown",
+            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/google/brotli/releases/tag/v1.2.1; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk",
+            "urls": [
+              "https://nvd.nist.gov/vuln/detail/CVE-2026-111497"
+            ],
+            "cwes": [
+              "CWE-252",
+              "CWE-787"
+            ]
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-111497",
+            "epss": 0.82641,
+            "percentile": 0.99668,
+            "date": "2026-11-05"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-111497",
+            "cwe": "CWE-252",
+            "source": "cve-coordination@google.com",
+            "type": "Secondary"
+          },
+          {
+            "cve": "CVE-2026-111497",
+            "cwe": "CWE-787",
+            "source": "cve-coordination@google.com",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.2.7"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.2.7",
+              "date": "2026-10-23",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 98.70000000000002
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-111497",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+          "namespace": "nvd:cpe",
+          "severity": "Critical",
+          "urls": [
+            "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
+            "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high",
+            "http://www.openwall.com/lists/oss-security/2026/10/23/25",
+            "http://www.openwall.com/lists/oss-security/2026/10/24/6",
+            "http://www.openwall.com/lists/oss-security/2026/10/26/12",
+            "http://www.openwall.com/lists/oss-security/2026/10/26/13",
+            "http://www.openwall.com/lists/oss-security/2026/10/26/16",
+            "http://www.openwall.com/lists/oss-security/2026/11/03/2",
+            "https://broccoli2shell.com",
+            "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
+            "https://github.com/dotnet/announcements/issues/494",
+            "https://github.com/google/brotli/releases/tag/v1.0.10",
+            "https://github.com/google/brotli/releases/tag/v1.1.1",
+            "https://github.com/google/brotli/releases/tag/v1.2.1",
+            "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html",
+            "https://patchtheplanet.org/brotli",
+            "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
+            "https://cert-portal.siemens.com/productcert/html/ssa-045512.html",
+            "https://cert-portal.siemens.com/productcert/html/ssa-443410.html",
+            "https://cert-portal.siemens.com/productcert/html/ssa-898633.html",
+            "https://ellio.tech/en/blog/node2shell-cve-2026-111497-rce-on-stock-nodejs-builds/",
+            "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111497"
+          ],
+          "description": "A buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.\n\n\n\n\n\nUsers need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.",
+          "cvss": [
+            {
+              "source": "nvd@nist.gov",
+              "type": "Primary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "metrics": {
+                "baseScore": 9.8,
+                "exploitabilityScore": 3.9,
+                "impactScore": 5.9
+              },
+              "vendorMetadata": {}
+            },
+            {
+              "source": "cve-coordination@google.com",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 9.2
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "knownExploited": [
+            {
+              "cve": "CVE-2026-111497",
+              "vendorProject": "Google",
+              "product": "Brotli",
+              "dateAdded": "2026-10-27",
+              "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
+              "dueDate": "2026-11-10",
+              "knownRansomwareCampaignUse": "unknown",
+              "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/google/brotli/releases/tag/v1.2.1; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk",
+              "urls": [
+                "https://nvd.nist.gov/vuln/detail/CVE-2026-111497"
+              ],
+              "cwes": [
+                "CWE-252",
+                "CWE-787"
+              ]
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-111497",
+              "epss": 0.82641,
+              "percentile": 0.99668,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-111497",
+              "cwe": "CWE-252",
+              "source": "cve-coordination@google.com",
+              "type": "Secondary"
+            },
+            {
+              "cve": "CVE-2026-111497",
+              "cwe": "CWE-787",
+              "source": "cve-coordination@google.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        {
+          "id": "GHSA-c9gr-gmg4-2vqv",
+          "dataSource": "github",
+          "namespace": "github:language:go",
+          "severity": "Unknown",
+          "urls": [],
+          "cvss": []
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "github.com/andybalholm/brotli",
+              "version": "v1.1.1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6888",
+            "versionConstraint": "<1.2.7 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.2.7"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "ad17a4fe0e3ce1a1",
+        "name": "github.com/andybalholm/brotli",
+        "version": "v1.1.1",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:andybalholm:brotli:v1.1.1:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/github.com/andybalholm/brotli@v1.1.1",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
         "id": "CVE-2026-119586",
         "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-119586",
         "namespace": "nvd:cpe",
@@ -42,8 +282,8 @@
           {
             "cve": "CVE-2026-119586",
             "epss": 0.01545,
-            "percentile": 0.75057,
-            "date": "2026-11-04"
+            "percentile": 0.75075,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -93,7 +333,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -154,6 +394,467 @@
     },
     {
       "vulnerability": {
+        "id": "GO-2026-6860",
+        "dataSource": "https://go.dev/cl/849365",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/issue/82224",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
+        ],
+        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78661",
+            "epss": 0.00409,
+            "percentile": 0.35329,
+            "date": "2026-11-05"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78661",
+            "cwe": "CWE-407",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.62.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.62.0",
+              "date": "2026-10-27",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.30674999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78661",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/849365",
+            "https://go.dev/issue/82224",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6860"
+          ],
+          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78661",
+              "epss": 0.00409,
+              "percentile": 0.35329,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78661",
+              "cwe": "CWE-407",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6860",
+            "versionConstraint": "<0.62.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.62.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a5e661aa75c8f244",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6860",
+        "dataSource": "https://go.dev/cl/849365",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/issue/82224",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
+        ],
+        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78661",
+            "epss": 0.00409,
+            "percentile": 0.35329,
+            "date": "2026-11-05"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78661",
+            "cwe": "CWE-407",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.62.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.62.0",
+              "date": "2026-10-27",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.30674999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78661",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/849365",
+            "https://go.dev/issue/82224",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6860"
+          ],
+          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78661",
+              "epss": 0.00409,
+              "percentile": 0.35329,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78661",
+              "cwe": "CWE-407",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6860",
+            "versionConstraint": "<0.62.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.62.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "9c31f40a15cbf30b",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6860",
+        "dataSource": "https://go.dev/cl/849365",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/issue/82224",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
+        ],
+        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78661",
+            "epss": 0.00409,
+            "percentile": 0.35329,
+            "date": "2026-11-05"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78661",
+            "cwe": "CWE-407",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.62.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.62.0",
+              "date": "2026-10-27",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.30674999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78661",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/849365",
+            "https://go.dev/issue/82224",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6860"
+          ],
+          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78661",
+              "epss": 0.00409,
+              "percentile": 0.35329,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78661",
+              "cwe": "CWE-407",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6860",
+            "versionConstraint": "<0.62.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.62.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "9fe0aa35ea16153f",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
         "id": "GHSA-mgcc-cww5-fp2q",
         "dataSource": "https://github.com/advisories/GHSA-mgcc-cww5-fp2q",
         "namespace": "github:language:go",
@@ -183,7 +884,7 @@
             "cve": "CVE-2026-116587",
             "epss": 0.00366,
             "percentile": 0.30633,
-            "date": "2026-11-04"
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -247,7 +948,7 @@
               "cve": "CVE-2026-116587",
               "epss": 0.00366,
               "percentile": 0.30633,
-              "date": "2026-11-04"
+              "date": "2026-11-05"
             }
           ],
           "cwes": [
@@ -295,7 +996,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -313,6 +1014,572 @@
           "cpe:2.3:a:go:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*"
         ],
         "purl": "pkg:golang/github.com/go-jose/go-jose/v4@v4.1.4",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6865",
+        "dataSource": "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+          "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+        ],
+        "description": "Panic on two-block frames in github.com/klauspost/compress",
+        "cvss": [
+          {
+            "source": "security-advisories@github.com",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 8.7
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-116591",
+            "epss": 0.00333,
+            "percentile": 0.26611,
+            "date": "2026-11-05"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-116591",
+            "cwe": "CWE-190",
+            "source": "security-advisories@github.com",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.20.2"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.20.2",
+              "date": "2026-10-12",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.26972999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-116591",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+            "https://github.com/klauspost/compress/releases/tag/v1.20.2",
+            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8"
+          ],
+          "description": "compress provides various compression algorithms. Prior to 1.20.2, the zstd DecodeAll and streaming decoder paths can panic when a crafted two-block frame reaches huff0.ReadTable with an FSE normalized count of 32768 that readNCount stores in int16 as -32768. The wrapped count allows buildDtable to retain stale fse.Scratch decode-table state from the prior block, and nextFast then derives an out-of-range state and indexes beyond the table instead of returning a decode error. Both blocks are required to preserve and then reuse the stale state, allowing untrusted zstd input to crash an application. This issue is fixed in version 1.20.2.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 8.7
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-116591",
+              "epss": 0.00333,
+              "percentile": 0.26611,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-116591",
+              "cwe": "CWE-190",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        {
+          "id": "GHSA-fpmh-frq8-7rj8",
+          "dataSource": "https://github.com/advisories/GHSA-fpmh-frq8-7rj8",
+          "namespace": "github:language:go",
+          "severity": "High",
+          "urls": [
+            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+            "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+          ],
+          "description": "compress zstd: Panic on two-block frames",
+          "cvss": [
+            {
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "metrics": {
+                "baseScore": 8.7
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-116591",
+              "epss": 0.00333,
+              "percentile": 0.26611,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-116591",
+              "cwe": "CWE-190",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "github.com/klauspost/compress",
+              "version": "v1.18.7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6865",
+            "versionConstraint": "<1.20.2 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.20.2"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "2939cd4f6caa7b41",
+        "name": "github.com/klauspost/compress",
+        "version": "v1.18.7",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:klauspost:compress:v1.18.7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/github.com/klauspost/compress@v1.18.7",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "h1Digest": "h1:aUyZsS4kH3QTKurYhAOwAHxllVPnOthb3vPfnF1Ehjw=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6865",
+        "dataSource": "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+          "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+        ],
+        "description": "Panic on two-block frames in github.com/klauspost/compress",
+        "cvss": [
+          {
+            "source": "security-advisories@github.com",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 8.7
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-116591",
+            "epss": 0.00333,
+            "percentile": 0.26611,
+            "date": "2026-11-05"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-116591",
+            "cwe": "CWE-190",
+            "source": "security-advisories@github.com",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.20.2"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.20.2",
+              "date": "2026-10-12",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.26972999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-116591",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+            "https://github.com/klauspost/compress/releases/tag/v1.20.2",
+            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8"
+          ],
+          "description": "compress provides various compression algorithms. Prior to 1.20.2, the zstd DecodeAll and streaming decoder paths can panic when a crafted two-block frame reaches huff0.ReadTable with an FSE normalized count of 32768 that readNCount stores in int16 as -32768. The wrapped count allows buildDtable to retain stale fse.Scratch decode-table state from the prior block, and nextFast then derives an out-of-range state and indexes beyond the table instead of returning a decode error. Both blocks are required to preserve and then reuse the stale state, allowing untrusted zstd input to crash an application. This issue is fixed in version 1.20.2.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 8.7
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-116591",
+              "epss": 0.00333,
+              "percentile": 0.26611,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-116591",
+              "cwe": "CWE-190",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        {
+          "id": "GHSA-fpmh-frq8-7rj8",
+          "dataSource": "https://github.com/advisories/GHSA-fpmh-frq8-7rj8",
+          "namespace": "github:language:go",
+          "severity": "High",
+          "urls": [
+            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+            "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+          ],
+          "description": "compress zstd: Panic on two-block frames",
+          "cvss": [
+            {
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "metrics": {
+                "baseScore": 8.7
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-116591",
+              "epss": 0.00333,
+              "percentile": 0.26611,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-116591",
+              "cwe": "CWE-190",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "github.com/klauspost/compress",
+              "version": "v1.18.7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6865",
+            "versionConstraint": "<1.20.2 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.20.2"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a37a264a73cc9424",
+        "name": "github.com/klauspost/compress",
+        "version": "v1.18.7",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:klauspost:compress:v1.18.7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/github.com/klauspost/compress@v1.18.7",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "h1Digest": "h1:aUyZsS4kH3QTKurYhAOwAHxllVPnOthb3vPfnF1Ehjw=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6865",
+        "dataSource": "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+          "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+        ],
+        "description": "Panic on two-block frames in github.com/klauspost/compress",
+        "cvss": [
+          {
+            "source": "security-advisories@github.com",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 8.7
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-116591",
+            "epss": 0.00333,
+            "percentile": 0.26611,
+            "date": "2026-11-05"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-116591",
+            "cwe": "CWE-190",
+            "source": "security-advisories@github.com",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.20.2"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.20.2",
+              "date": "2026-10-12",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.26972999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-116591",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+            "https://github.com/klauspost/compress/releases/tag/v1.20.2",
+            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8"
+          ],
+          "description": "compress provides various compression algorithms. Prior to 1.20.2, the zstd DecodeAll and streaming decoder paths can panic when a crafted two-block frame reaches huff0.ReadTable with an FSE normalized count of 32768 that readNCount stores in int16 as -32768. The wrapped count allows buildDtable to retain stale fse.Scratch decode-table state from the prior block, and nextFast then derives an out-of-range state and indexes beyond the table instead of returning a decode error. Both blocks are required to preserve and then reuse the stale state, allowing untrusted zstd input to crash an application. This issue is fixed in version 1.20.2.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 8.7
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-116591",
+              "epss": 0.00333,
+              "percentile": 0.26611,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-116591",
+              "cwe": "CWE-190",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        {
+          "id": "GHSA-fpmh-frq8-7rj8",
+          "dataSource": "https://github.com/advisories/GHSA-fpmh-frq8-7rj8",
+          "namespace": "github:language:go",
+          "severity": "High",
+          "urls": [
+            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+            "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+          ],
+          "description": "compress zstd: Panic on two-block frames",
+          "cvss": [
+            {
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "metrics": {
+                "baseScore": 8.7
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-116591",
+              "epss": 0.00333,
+              "percentile": 0.26611,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-116591",
+              "cwe": "CWE-190",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "github.com/klauspost/compress",
+              "version": "v1.18.7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6865",
+            "versionConstraint": "<1.20.2 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.20.2"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "2c36739fca154b4e",
+        "name": "github.com/klauspost/compress",
+        "version": "v1.18.7",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:klauspost:compress:v1.18.7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/github.com/klauspost/compress@v1.18.7",
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
@@ -352,8 +1619,8 @@
           {
             "cve": "CVE-2026-84243",
             "epss": 0.00297,
-            "percentile": 0.22554,
-            "date": "2026-11-04"
+            "percentile": 0.2255,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -403,7 +1670,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -575,8 +1842,8 @@
           {
             "cve": "CVE-2025-15367",
             "epss": 0.00377,
-            "percentile": 0.31852,
-            "date": "2026-11-04"
+            "percentile": 0.31857,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -647,7 +1914,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -759,8 +2026,8 @@
           {
             "cve": "CVE-2026-116586",
             "epss": 0.00292,
-            "percentile": 0.21866,
-            "date": "2026-11-04"
+            "percentile": 0.21857,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -816,8 +2083,8 @@
             {
               "cve": "CVE-2026-116586",
               "epss": 0.00292,
-              "percentile": 0.21866,
-              "date": "2026-11-04"
+              "percentile": 0.21857,
+              "date": "2026-11-05"
             }
           ],
           "cwes": [
@@ -859,7 +2126,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -916,8 +2183,8 @@
           {
             "cve": "CVE-2026-116585",
             "epss": 0.00264,
-            "percentile": 0.18441,
-            "date": "2026-11-04"
+            "percentile": 0.18422,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -974,8 +2241,8 @@
             {
               "cve": "CVE-2026-116585",
               "epss": 0.00264,
-              "percentile": 0.18441,
-              "date": "2026-11-04"
+              "percentile": 0.18422,
+              "date": "2026-11-05"
             }
           ],
           "cwes": [
@@ -1017,7 +2284,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -1046,41 +2313,41 @@
     },
     {
       "vulnerability": {
-        "id": "GO-2026-6860",
-        "dataSource": "https://go.dev/cl/849365",
+        "id": "GO-2026-6866",
+        "dataSource": "https://go.dev/cl/855121",
         "namespace": "govulndb:language:go",
-        "severity": "High",
+        "severity": "Medium",
         "urls": [
-          "https://go.dev/issue/82224",
+          "https://go.dev/issue/82622",
           "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
         ],
-        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+        "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output.\n\nContinue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
         "cvss": [
           {
             "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary",
             "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
             "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
+              "baseScore": 6.1,
+              "exploitabilityScore": 2.9,
+              "impactScore": 2.8
             },
             "vendorMetadata": {}
           }
         ],
         "epss": [
           {
-            "cve": "CVE-2026-78661",
-            "epss": 0.00185,
-            "percentile": 0.08136,
-            "date": "2026-11-04"
+            "cve": "CVE-2026-97045",
+            "epss": 0.00267,
+            "percentile": 0.18955,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-78661",
-            "cwe": "CWE-407",
+            "cve": "CVE-2026-97045",
+            "cwe": "CWE-79",
             "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary"
           }
@@ -1099,47 +2366,47 @@
           ]
         },
         "advisories": [],
-        "risk": 0.13875
+        "risk": 0.14818499999999998
       },
       "relatedVulnerabilities": [
         {
-          "id": "CVE-2026-78661",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
+          "id": "CVE-2026-97045",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97045",
           "namespace": "nvd:cpe",
-          "severity": "High",
+          "severity": "Medium",
           "urls": [
-            "https://go.dev/cl/849365",
-            "https://go.dev/issue/82224",
+            "https://go.dev/cl/855121",
+            "https://go.dev/issue/82622",
             "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6860"
+            "https://pkg.go.dev/vuln/GO-2026-6866"
           ],
-          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+          "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
           "cvss": [
             {
               "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
               "type": "Secondary",
               "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
               "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
+                "baseScore": 6.1,
+                "exploitabilityScore": 2.9,
+                "impactScore": 2.8
               },
               "vendorMetadata": {}
             }
           ],
           "epss": [
             {
-              "cve": "CVE-2026-78661",
-              "epss": 0.00185,
-              "percentile": 0.08136,
-              "date": "2026-11-04"
+              "cve": "CVE-2026-97045",
+              "epss": 0.00267,
+              "percentile": 0.18955,
+              "date": "2026-11-05"
             }
           ],
           "cwes": [
             {
-              "cve": "CVE-2026-78661",
-              "cwe": "CWE-407",
+              "cve": "CVE-2026-97045",
+              "cwe": "CWE-79",
               "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
               "type": "Secondary"
             }
@@ -1159,7 +2426,160 @@
             }
           },
           "found": {
-            "vulnerabilityID": "GO-2026-6860",
+            "vulnerabilityID": "GO-2026-6866",
+            "versionConstraint": "<0.62.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.62.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a5e661aa75c8f244",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.10",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6866",
+        "dataSource": "https://go.dev/cl/855121",
+        "namespace": "govulndb:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://go.dev/issue/82622",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
+        ],
+        "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output.\n\nContinue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+            "metrics": {
+              "baseScore": 6.1,
+              "exploitabilityScore": 2.9,
+              "impactScore": 2.8
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-97045",
+            "epss": 0.00267,
+            "percentile": 0.18955,
+            "date": "2026-11-05"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-97045",
+            "cwe": "CWE-79",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.62.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.62.0",
+              "date": "2026-10-27",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.14818499999999998
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-97045",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97045",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://go.dev/cl/855121",
+            "https://go.dev/issue/82622",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6866"
+          ],
+          "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+              "metrics": {
+                "baseScore": 6.1,
+                "exploitabilityScore": 2.9,
+                "impactScore": 2.8
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-97045",
+              "epss": 0.00267,
+              "percentile": 0.18955,
+              "date": "2026-11-05"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-97045",
+              "cwe": "CWE-79",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6866",
             "versionConstraint": "<0.62.0 (go)"
           },
           "fix": {
@@ -1175,7 +2595,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -1200,41 +2620,41 @@
     },
     {
       "vulnerability": {
-        "id": "GO-2026-6860",
-        "dataSource": "https://go.dev/cl/849365",
+        "id": "GO-2026-6866",
+        "dataSource": "https://go.dev/cl/855121",
         "namespace": "govulndb:language:go",
-        "severity": "High",
+        "severity": "Medium",
         "urls": [
-          "https://go.dev/issue/82224",
+          "https://go.dev/issue/82622",
           "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
         ],
-        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+        "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output.\n\nContinue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
         "cvss": [
           {
             "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary",
             "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
             "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
+              "baseScore": 6.1,
+              "exploitabilityScore": 2.9,
+              "impactScore": 2.8
             },
             "vendorMetadata": {}
           }
         ],
         "epss": [
           {
-            "cve": "CVE-2026-78661",
-            "epss": 0.00185,
-            "percentile": 0.08136,
-            "date": "2026-11-04"
+            "cve": "CVE-2026-97045",
+            "epss": 0.00267,
+            "percentile": 0.18955,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-78661",
-            "cwe": "CWE-407",
+            "cve": "CVE-2026-97045",
+            "cwe": "CWE-79",
             "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary"
           }
@@ -1253,47 +2673,47 @@
           ]
         },
         "advisories": [],
-        "risk": 0.13875
+        "risk": 0.14818499999999998
       },
       "relatedVulnerabilities": [
         {
-          "id": "CVE-2026-78661",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
+          "id": "CVE-2026-97045",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97045",
           "namespace": "nvd:cpe",
-          "severity": "High",
+          "severity": "Medium",
           "urls": [
-            "https://go.dev/cl/849365",
-            "https://go.dev/issue/82224",
+            "https://go.dev/cl/855121",
+            "https://go.dev/issue/82622",
             "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6860"
+            "https://pkg.go.dev/vuln/GO-2026-6866"
           ],
-          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+          "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
           "cvss": [
             {
               "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
               "type": "Secondary",
               "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
               "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
+                "baseScore": 6.1,
+                "exploitabilityScore": 2.9,
+                "impactScore": 2.8
               },
               "vendorMetadata": {}
             }
           ],
           "epss": [
             {
-              "cve": "CVE-2026-78661",
-              "epss": 0.00185,
-              "percentile": 0.08136,
-              "date": "2026-11-04"
+              "cve": "CVE-2026-97045",
+              "epss": 0.00267,
+              "percentile": 0.18955,
+              "date": "2026-11-05"
             }
           ],
           "cwes": [
             {
-              "cve": "CVE-2026-78661",
-              "cwe": "CWE-407",
+              "cve": "CVE-2026-97045",
+              "cwe": "CWE-79",
               "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
               "type": "Secondary"
             }
@@ -1313,7 +2733,7 @@
             }
           },
           "found": {
-            "vulnerabilityID": "GO-2026-6860",
+            "vulnerabilityID": "GO-2026-6866",
             "versionConstraint": "<0.62.0 (go)"
           },
           "fix": {
@@ -1329,7 +2749,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -1349,159 +2769,6 @@
           "architecture": "amd64",
           "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
           "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6860",
-        "dataSource": "https://go.dev/cl/849365",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/issue/82224",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78661",
-            "epss": 0.00185,
-            "percentile": 0.08136,
-            "date": "2026-11-04"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78661",
-            "cwe": "CWE-407",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.13875
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78661",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/849365",
-            "https://go.dev/issue/82224",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6860"
-          ],
-          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78661",
-              "epss": 0.00185,
-              "percentile": 0.08136,
-              "date": "2026-11-04"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78661",
-              "cwe": "CWE-407",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6860",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "a5e661aa75c8f244",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.10",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
         }
       }
     },
@@ -1535,8 +2802,8 @@
           {
             "cve": "CVE-2026-116566",
             "epss": 0.00259,
-            "percentile": 0.17757,
-            "date": "2026-11-04"
+            "percentile": 0.17734,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -1607,7 +2874,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1692,467 +2959,6 @@
     },
     {
       "vulnerability": {
-        "id": "GO-2026-6866",
-        "dataSource": "https://go.dev/cl/855121",
-        "namespace": "govulndb:language:go",
-        "severity": "Medium",
-        "urls": [
-          "https://go.dev/issue/82622",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output.\n\nContinue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-            "metrics": {
-              "baseScore": 6.1,
-              "exploitabilityScore": 2.9,
-              "impactScore": 2.8
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-97045",
-            "epss": 0.00202,
-            "percentile": 0.10195,
-            "date": "2026-11-04"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-97045",
-            "cwe": "CWE-79",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.11210999999999999
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-97045",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97045",
-          "namespace": "nvd:cpe",
-          "severity": "Medium",
-          "urls": [
-            "https://go.dev/cl/855121",
-            "https://go.dev/issue/82622",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6866"
-          ],
-          "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-              "metrics": {
-                "baseScore": 6.1,
-                "exploitabilityScore": 2.9,
-                "impactScore": 2.8
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-97045",
-              "epss": 0.00202,
-              "percentile": 0.10195,
-              "date": "2026-11-04"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-97045",
-              "cwe": "CWE-79",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6866",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "9c31f40a15cbf30b",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.10",
-          "architecture": "amd64",
-          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6866",
-        "dataSource": "https://go.dev/cl/855121",
-        "namespace": "govulndb:language:go",
-        "severity": "Medium",
-        "urls": [
-          "https://go.dev/issue/82622",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output.\n\nContinue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-            "metrics": {
-              "baseScore": 6.1,
-              "exploitabilityScore": 2.9,
-              "impactScore": 2.8
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-97045",
-            "epss": 0.00202,
-            "percentile": 0.10195,
-            "date": "2026-11-04"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-97045",
-            "cwe": "CWE-79",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.11210999999999999
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-97045",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97045",
-          "namespace": "nvd:cpe",
-          "severity": "Medium",
-          "urls": [
-            "https://go.dev/cl/855121",
-            "https://go.dev/issue/82622",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6866"
-          ],
-          "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-              "metrics": {
-                "baseScore": 6.1,
-                "exploitabilityScore": 2.9,
-                "impactScore": 2.8
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-97045",
-              "epss": 0.00202,
-              "percentile": 0.10195,
-              "date": "2026-11-04"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-97045",
-              "cwe": "CWE-79",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6866",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "9fe0aa35ea16153f",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
-            "accessPath": "/opt/monitoring/prometheus/prometheus",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.10",
-          "architecture": "amd64",
-          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6866",
-        "dataSource": "https://go.dev/cl/855121",
-        "namespace": "govulndb:language:go",
-        "severity": "Medium",
-        "urls": [
-          "https://go.dev/issue/82622",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output.\n\nContinue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-            "metrics": {
-              "baseScore": 6.1,
-              "exploitabilityScore": 2.9,
-              "impactScore": 2.8
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-97045",
-            "epss": 0.00202,
-            "percentile": 0.10195,
-            "date": "2026-11-04"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-97045",
-            "cwe": "CWE-79",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.11210999999999999
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-97045",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97045",
-          "namespace": "nvd:cpe",
-          "severity": "Medium",
-          "urls": [
-            "https://go.dev/cl/855121",
-            "https://go.dev/issue/82622",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6866"
-          ],
-          "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-              "metrics": {
-                "baseScore": 6.1,
-                "exploitabilityScore": 2.9,
-                "impactScore": 2.8
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-97045",
-              "epss": 0.00202,
-              "percentile": 0.10195,
-              "date": "2026-11-04"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-97045",
-              "cwe": "CWE-79",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6866",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "a5e661aa75c8f244",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.10",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
         "id": "CVE-2026-103995",
         "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-103995",
         "namespace": "nvd:cpe",
@@ -2180,8 +2986,8 @@
           {
             "cve": "CVE-2026-103995",
             "epss": 0.0036,
-            "percentile": 0.29916,
-            "date": "2026-11-04"
+            "percentile": 0.29917,
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -2252,7 +3058,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2368,7 +3174,7 @@
             "cve": "CVE-2026-114437",
             "epss": 0.00129,
             "percentile": 0.026,
-            "date": "2026-11-04"
+            "date": "2026-11-05"
           }
         ],
         "cwes": [
@@ -2435,7 +3241,7 @@
               "cve": "CVE-2026-114437",
               "epss": 0.00129,
               "percentile": 0.026,
-              "date": "2026-11-04"
+              "date": "2026-11-05"
             }
           ],
           "cwes": [
@@ -2477,7 +3283,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -2558,7 +3364,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -2638,7 +3444,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -2718,7 +3524,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
+            "layerID": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -2744,23 +3550,23 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:b9d87714ac813bb8da043b687046186f3f406a204a6d14d472ca71e87c35510c",
-      "imageID": "sha256:797ee94a929cba2ee502f3ebcc011cacc08e08e280e2ad0cec6a8eb8b4fcb904",
-      "manifestDigest": "sha256:0964c6da0517dd94f4e7f53123b812f2425448c7fd1a7f4f0bf6c23a154cb392",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:b163896b4481c220b29de4e61a3dbbaebba44b2fcc9092b09f743b0120b3306e",
+      "imageID": "sha256:1f175c1a59e814177cc9a10bcbbaa89b561f96b3d705906a1cc5f5cffca8a953",
+      "manifestDigest": "sha256:7fd104f608ca6c2d00d6968cc7c6045537a80a8948c4a9ca36d928416502b636",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 582160037,
+      "imageSize": 582159985,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:01fadb6c817872c25d77c8fa2881874da27d19a11288e2e5d022410799615029",
-          "size": 582160037
+          "digest": "sha256:a7aa34ef84392953c4f880c289b79a24ddbda2ea75369a683109310199a92eac",
+          "size": 582159985
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6Nzk3ZWU5NGE5MjljYmEyZWU1MDJmM2ViY2MwMTFjYWNjMDhlMDhlMjgwZTJhZDBjZWM2YThlYjhiNGZjYjkwNCJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODU1NjE2MDAsImRpZ2VzdCI6InNoYTI1NjowMWZhZGI2YzgxNzg3MmMyNWQ3N2M4ZmEyODgxODc0ZGEyN2QxOWExMTI4OGUyZTVkMDIyNDEwNzk5NjE1MDI5In1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTA1VDIxOjIzOjU4WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0wNVQyMToyMzo1OFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjowMWZhZGI2YzgxNzg3MmMyNWQ3N2M4ZmEyODgxODc0ZGEyN2QxOWExMTI4OGUyZTVkMDIyNDEwNzk5NjE1MDI5Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0wNVQyMToyMzo1OFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6MWYxNzVjMWE1OWU4MTQxNzdjYzlhMTBiY2JiYWE4OWI1NjFmOTZiM2Q3MDU5MDZhMWNjNWY1Y2ZmY2E4YTk1MyJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjo1ODU1NjE2MDAsImRpZ2VzdCI6InNoYTI1NjphN2FhMzRlZjg0MzkyOTUzYzRmODgwYzI4OWI3OWEyNGRkYmRhMmVhNzUzNjlhNjgzMTA5MzEwMTk5YTkyZWFjIn1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTA1VDIxOjIzOjU4WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0wNVQyMToyMzo1OFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjphN2FhMzRlZjg0MzkyOTUzYzRmODgwYzI4OWI3OWEyNGRkYmRhMmVhNzUzNjlhNjgzMTA5MzEwMTk5YTkyZWFjIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0wNVQyMToyMzo1OFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:b9d87714ac813bb8da043b687046186f3f406a204a6d14d472ca71e87c35510c"
+        "ghcr.io/conduktor/base-monitoring@sha256:b163896b4481c220b29de4e61a3dbbaebba44b2fcc9092b09f743b0120b3306e"
       ],
       "architecture": "amd64",
       "os": "linux",
@@ -2787,7 +3593,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-BRQAEx/output",
+      "file": "/tmp/grype-t7tEET/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

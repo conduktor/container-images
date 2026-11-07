@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 108 | 52 | 9 | 250 |
+| 4 | 109 | 52 | 9 | 251 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -60,6 +60,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-6464`](https://images.chainguard.dev/security/CVE-2026-6464) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`CVE-2026-6471`](https://images.chainguard.dev/security/CVE-2026-6471) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`GHSA-mcr4-qmvw-px4g`](https://github.com/advisories/GHSA-mcr4-qmvw-px4g) | `lz4-java` | `1.10.2` | `1.11.4` |
+| :orange_circle: high | [`CVE-2026-0011`](https://nvd.nist.gov/vuln/detail/CVE-2026-0011) | `nmap` | `7.94-r3` | — |
 | :orange_circle: high | [`CVE-2026-14662`](https://images.chainguard.dev/security/CVE-2026-14662) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`CVE-2026-14664`](https://images.chainguard.dev/security/CVE-2026-14664) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`CVE-2026-14668`](https://images.chainguard.dev/security/CVE-2026-14668) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
