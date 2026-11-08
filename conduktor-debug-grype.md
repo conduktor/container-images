@@ -20,7 +20,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :red_circle: critical | [`GO-2026-6604`](https://go.dev/cl/847305) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :red_circle: critical | [`GO-2026-6612`](https://go.dev/cl/847187) | `stdlib` | `go1.25.12` | `1.26.9` |
 | :orange_circle: high | [`GHSA-mgcc-cww5-fp2q`](https://github.com/advisories/GHSA-mgcc-cww5-fp2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.6` |
-| :orange_circle: high | [`CVE-2026-84243`](https://nvd.nist.gov/vuln/detail/CVE-2026-84243) | `glibc-2.44` | `2.44-r13` | — |
+| :orange_circle: high | [`CVE-2026-84243`](https://nvd.nist.gov/vuln/detail/CVE-2026-84243) | `glibc-2.44` | `2.44-r14` | — |
 | :orange_circle: high | [`GO-2026-6303`](https://go.dev/issue/80213) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
 | :orange_circle: high | [`GO-2026-6354`](https://go.dev/issue/81316) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |
 | :orange_circle: high | [`GO-2026-6355`](https://go.dev/issue/81317) | `golang.org/x/crypto` | `v0.52.0` | `0.56.0` |

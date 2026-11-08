@@ -30,8 +30,8 @@
           {
             "cve": "CVE-2026-84243",
             "epss": 0.00297,
-            "percentile": 0.2255,
-            "date": "2026-11-05"
+            "percentile": 0.22537,
+            "date": "2026-11-06"
           }
         ],
         "cwes": [
@@ -61,7 +61,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r13"
+              "version": "2.44-r14"
             }
           },
           "found": {
@@ -74,14 +74,14 @@
         }
       ],
       "artifact": {
-        "id": "64d346490e3a785f",
+        "id": "eee57c1527dba05a",
         "name": "glibc-2.44",
-        "version": "2.44-r13",
+        "version": "2.44-r14",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:160608c23ae5fead2976d88749d7d5651349b6a3f476106f8c455a4d9f72acd9",
+            "layerID": "sha256:0da29c80bb426f7388c925e43151336410dfc42b81458ab810398db208bb5b4f",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -93,20 +93,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r13:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r13:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r14:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r14:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r13?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r14?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -218,7 +218,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r13.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r14.spdx.json"
             }
           ]
         }
@@ -228,29 +228,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-os@sha256:399378f741c57a5b098f87d765a826bf2f184251b1bf669b913e6692c8e26a4c",
-      "imageID": "sha256:6a2d517809f39e40d2aadddb56e4d9f1769185ea71732b76624b2d49cc0c13af",
-      "manifestDigest": "sha256:0efab7f7b5c70534e813c4126e9ed738a9e4505be4ff36c105813b698b482842",
+      "userInput": "ghcr.io/conduktor/base-os@sha256:a5254de00cd47a9a1789ad19d368ffbfdc04cfe6abec8a9009ca79b87e698b1f",
+      "imageID": "sha256:1a81365a67ccec7ba498919da79b1ee1dca1c1222aefe53b0434ae0003b86096",
+      "manifestDigest": "sha256:4f1b92b424af49e2c9be902ddf06e3c9db1ea4a41b0438ecbef2cd4177f790bb",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 9652295,
+      "imageSize": 9652296,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:160608c23ae5fead2976d88749d7d5651349b6a3f476106f8c455a4d9f72acd9",
-          "size": 9652295
+          "digest": "sha256:0da29c80bb426f7388c925e43151336410dfc42b81458ab810398db208bb5b4f",
+          "size": 9652296
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMDU1LCJkaWdlc3QiOiJzaGEyNTY6NmEyZDUxNzgwOWYzOWU0MGQyYWFkZGRiNTZlNGQ5ZjE3NjkxODVlYTcxNzMyYjc2NjI0YjJkNDljYzBjMTNhZiJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDY5NTY4MCwiZGlnZXN0Ijoic2hhMjU2OjE2MDYwOGMyM2FlNWZlYWQyOTc2ZDg4NzQ5ZDdkNTY1MTM0OWI2YTNmNDc2MTA2ZjhjNDU1YTRkOWY3MmFjZDkifV19",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTA1VDE5OjExOjM4WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0wNVQxOToxMTozOFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgT1MgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykgYnkgQ29uZHVrdG9yIn1dLCJvcyI6ImxpbnV4Iiwicm9vdGZzIjp7InR5cGUiOiJsYXllcnMiLCJkaWZmX2lkcyI6WyJzaGEyNTY6MTYwNjA4YzIzYWU1ZmVhZDI5NzZkODg3NDlkN2Q1NjUxMzQ5YjZhM2Y0NzYxMDZmOGM0NTVhNGQ5ZjcyYWNkOSJdfSwiY29uZmlnIjp7IkNtZCI6WyIvYmluL3NoIl0sIkVudiI6WyJMQU5HPUMuVVRGLTgiLCJQQVRIPS91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0wNVQxOToxMTozOFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCB0aGUgY29uZHVrdG9yLXBsYXRmb3JtIGFjY291bnQuIE5vIEpWTSwgbm8gcGFja2FnZSBtYW5hZ2VyLiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5saWNlbnNlcyI6IkFwYWNoZS0yLjAiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2Uuc291cmNlIjoiaHR0cHM6Ly9naXRodWIuY29tL2NvbmR1a3Rvci9jb250YWluZXItaW1hZ2VzIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnRpdGxlIjoiQ29uZHVrdG9yIE9TIGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnZlbmRvciI6IkNvbmR1a3RvciJ9fX0=",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMDU1LCJkaWdlc3QiOiJzaGEyNTY6MWE4MTM2NWE2N2NjZWM3YmE0OTg5MTlkYTc5YjFlZTFkY2ExYzEyMjJhZWZlNTNiMDQzNGFlMDAwM2I4NjA5NiJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDY5NTY4MCwiZGlnZXN0Ijoic2hhMjU2OjBkYTI5YzgwYmI0MjZmNzM4OGM5MjVlNDMxNTEzMzY0MTBkZmM0MmI4MTQ1OGFiODEwMzk4ZGIyMDhiYjViNGYifV19",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTA3VDAzOjI3OjM5WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0wN1QwMzoyNzozOVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgT1MgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykgYnkgQ29uZHVrdG9yIn1dLCJvcyI6ImxpbnV4Iiwicm9vdGZzIjp7InR5cGUiOiJsYXllcnMiLCJkaWZmX2lkcyI6WyJzaGEyNTY6MGRhMjljODBiYjQyNmY3Mzg4YzkyNWU0MzE1MTMzNjQxMGRmYzQyYjgxNDU4YWI4MTAzOThkYjIwOGJiNWI0ZiJdfSwiY29uZmlnIjp7IkNtZCI6WyIvYmluL3NoIl0sIkVudiI6WyJMQU5HPUMuVVRGLTgiLCJQQVRIPS91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0wN1QwMzoyNzozOVoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCB0aGUgY29uZHVrdG9yLXBsYXRmb3JtIGFjY291bnQuIE5vIEpWTSwgbm8gcGFja2FnZSBtYW5hZ2VyLiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5saWNlbnNlcyI6IkFwYWNoZS0yLjAiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2Uuc291cmNlIjoiaHR0cHM6Ly9naXRodWIuY29tL2NvbmR1a3Rvci9jb250YWluZXItaW1hZ2VzIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnRpdGxlIjoiQ29uZHVrdG9yIE9TIGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnZlbmRvciI6IkNvbmR1a3RvciJ9fX0=",
       "repoDigests": [
-        "ghcr.io/conduktor/base-os@sha256:399378f741c57a5b098f87d765a826bf2f184251b1bf669b913e6692c8e26a4c"
+        "ghcr.io/conduktor/base-os@sha256:a5254de00cd47a9a1789ad19d368ffbfdc04cfe6abec8a9009ca79b87e698b1f"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-11-05T19:11:38Z",
+        "org.opencontainers.image.created": "2026-11-07T03:27:39Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with the conduktor-platform account. No JVM, no package manager.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -271,7 +271,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-5kxUBC/output",
+      "file": "/tmp/grype-ixEVY4/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,
