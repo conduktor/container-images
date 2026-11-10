@@ -1,9 +1,9 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "sbom-sha256:60f97e20cbae748743008301856c4d483076b1e96657b688d99938f6e8c4dd6c",
+  "name": "sbom-sha256:a47fbe3e83fe4ebe49c34b1adf1acdd67995cd18f61549e5c638b54a322c1932",
   "spdxVersion": "SPDX-2.3",
   "creationInfo": {
-    "created": "2026-11-07T03:27:39Z",
+    "created": "2026-11-09T20:44:16Z",
     "creators": [
       "Tool: apko (v1.2.30)",
       "Organization: Chainguard, Inc"
@@ -13,13 +13,13 @@
   "dataLicense": "CC0-1.0",
   "documentNamespace": "https://spdx.org/spdxdocs/apko/",
   "documentDescribes": [
-    "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2"
+    "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065"
   ],
   "packages": [
     {
-      "SPDXID": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
-      "name": "sha256:634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
-      "versionInfo": "sha256:634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "SPDXID": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
+      "name": "sha256:e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
+      "versionInfo": "sha256:e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "filesAnalyzed": false,
       "description": "apko container image",
       "downloadLocation": "NOASSERTION",
@@ -28,20 +28,20 @@
       "checksums": [
         {
           "algorithm": "SHA256",
-          "checksumValue": "634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2"
+          "checksumValue": "e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065"
         }
       ],
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:oci/base-os@sha256:634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2?arch=arm64\u0026mediaType=application%2Fvnd.oci.image.manifest.v1%2Bjson\u0026os=linux",
+          "referenceLocator": "pkg:oci/base-os@sha256:e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065?arch=arm64\u0026mediaType=application%2Fvnd.oci.image.manifest.v1%2Bjson\u0026os=linux",
           "referenceType": "purl"
         }
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-ImageLayer-sha256-60f97e20cbae748743008301856c4d483076b1e96657b688d99938f6e8c4dd6c",
-      "name": "sha256:60f97e20cbae748743008301856c4d483076b1e96657b688d99938f6e8c4dd6c",
+      "SPDXID": "SPDXRef-Package-ImageLayer-sha256-a47fbe3e83fe4ebe49c34b1adf1acdd67995cd18f61549e5c638b54a322c1932",
+      "name": "sha256:a47fbe3e83fe4ebe49c34b1adf1acdd67995cd18f61549e5c638b54a322c1932",
       "versionInfo": "20230201",
       "filesAnalyzed": false,
       "description": "apko operating system layer",
@@ -51,7 +51,7 @@
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:oci/base-os@sha256:60f97e20cbae748743008301856c4d483076b1e96657b688d99938f6e8c4dd6c?arch=arm64\u0026mediaType=application%2Fvnd.oci.image.layer.v1.tar%2Bgzip\u0026os=linux",
+          "referenceLocator": "pkg:oci/base-os@sha256:a47fbe3e83fe4ebe49c34b1adf1acdd67995cd18f61549e5c638b54a322c1932?arch=arm64\u0026mediaType=application%2Fvnd.oci.image.layer.v1.tar%2Bgzip\u0026os=linux",
           "referenceType": "purl"
         }
       ]
@@ -231,9 +231,9 @@
       "primaryPackagePurpose": "FILE"
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r14",
+      "SPDXID": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r15",
       "name": "ld-linux-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
@@ -245,7 +245,7 @@
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/ld-linux-2.44@2.44-r14?arch=aarch64\u0026distro=wolfi",
+          "referenceLocator": "pkg:apk/wolfi/ld-linux-2.44@2.44-r15?arch=aarch64\u0026distro=wolfi",
           "referenceType": "purl"
         },
         {
@@ -256,9 +256,9 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-Melange-glibc-2.44.yaml-86ee3612cb47379928ac34ad99dfbfd45d138ff9",
+      "SPDXID": "SPDXRef-Package-Melange-glibc-2.44.yaml-f903916d7bbf6d7dc87dd9e05b827df096b22255",
       "name": "glibc-2.44.yaml",
-      "versionInfo": "86ee3612cb47379928ac34ad99dfbfd45d138ff9",
+      "versionInfo": "f903916d7bbf6d7dc87dd9e05b827df096b22255",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "Apache-2.0",
@@ -269,34 +269,34 @@
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:github/chainguard-dev/stereo@86ee3612cb47379928ac34ad99dfbfd45d138ff9#glibc-2.44.yaml",
+          "referenceLocator": "pkg:github/chainguard-dev/stereo@f903916d7bbf6d7dc87dd9e05b827df096b22255#glibc-2.44.yaml",
           "referenceType": "purl"
         }
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c-0",
+      "SPDXID": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-47e2b570410fab606de29f550534a721184852c3-0",
       "name": "gnutools/glibc",
-      "versionInfo": "c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c",
+      "versionInfo": "47e2b570410fab606de29f550534a721184852c3",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
-      "downloadLocation": "https://tarballs.cgr.dev/g/9390037ac2ec26cf74ce7c6709d852e0ce67205355e04fbdb9b9549f47a5bb40-c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c.tar.gz",
+      "downloadLocation": "https://tarballs.cgr.dev/g/9390037ac2ec26cf74ce7c6709d852e0ce67205355e04fbdb9b9549f47a5bb40-47e2b570410fab606de29f550534a721184852c3.tar.gz",
       "originator": "Organization: Wolfi",
       "supplier": "Organization: Wolfi",
       "primaryPackagePurpose": "SOURCE",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:generic/gnutools%2Fglibc@c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c?vcs_url=git%2Bhttps:%2F%2Fgitlab.com%2Fgnutools%2Fglibc.git%40c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c",
+          "referenceLocator": "pkg:generic/gnutools%2Fglibc@47e2b570410fab606de29f550534a721184852c3?vcs_url=git%2Bhttps:%2F%2Fgitlab.com%2Fgnutools%2Fglibc.git%4047e2b570410fab606de29f550534a721184852c3",
           "referenceType": "purl"
         }
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-ld-linux-2.44-7fd0b6ac1f498b59",
+      "SPDXID": "SPDXRef-Package-apk-ld-linux-2.44-0758def42e65ad42",
       "name": "ld-linux-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
@@ -309,12 +309,12 @@
       "externalRefs": [
         {
           "referenceCategory": "SECURITY",
-          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.44-r14:*:*:*:*:*:*:*",
+          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.44-r15:*:*:*:*:*:*:*",
           "referenceType": "cpe23Type"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/ld-linux-2.44@2.44-r14?arch=aarch64\u0026origin=glibc-2.44",
+          "referenceLocator": "pkg:apk/wolfi/ld-linux-2.44@2.44-r15?arch=aarch64\u0026origin=glibc-2.44",
           "referenceType": "purl"
         }
       ]
@@ -322,7 +322,7 @@
     {
       "SPDXID": "SPDXRef-DocumentRoot-Directory-ld-linux-2.44",
       "name": "ld-linux-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
@@ -333,9 +333,9 @@
       "primaryPackagePurpose": "FILE"
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r14",
+      "SPDXID": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r15",
       "name": "glibc-2.44-locale-posix",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
@@ -347,7 +347,7 @@
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/glibc-2.44-locale-posix@2.44-r14?arch=aarch64\u0026distro=wolfi",
+          "referenceLocator": "pkg:apk/wolfi/glibc-2.44-locale-posix@2.44-r15?arch=aarch64\u0026distro=wolfi",
           "referenceType": "purl"
         },
         {
@@ -358,9 +358,9 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-glibc-2.44-locale-posix-e2c2b3125b2659a5",
+      "SPDXID": "SPDXRef-Package-apk-glibc-2.44-locale-posix-662d452b2ea361dc",
       "name": "glibc-2.44-locale-posix",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
@@ -373,12 +373,12 @@
       "externalRefs": [
         {
           "referenceCategory": "SECURITY",
-          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.44-r14:*:*:*:*:*:*:*",
+          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.44-r15:*:*:*:*:*:*:*",
           "referenceType": "cpe23Type"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/glibc-2.44-locale-posix@2.44-r14?arch=aarch64\u0026origin=glibc-2.44",
+          "referenceLocator": "pkg:apk/wolfi/glibc-2.44-locale-posix@2.44-r15?arch=aarch64\u0026origin=glibc-2.44",
           "referenceType": "purl"
         }
       ]
@@ -386,7 +386,7 @@
     {
       "SPDXID": "SPDXRef-DocumentRoot-Directory-glibc-2.44-locale-posix",
       "name": "glibc-2.44-locale-posix",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
@@ -397,9 +397,9 @@
       "primaryPackagePurpose": "FILE"
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-libgcc-16.2.0-r2",
+      "SPDXID": "SPDXRef-Package-apk-libgcc-16.2.0-r3",
       "name": "libgcc",
-      "versionInfo": "16.2.0-r2",
+      "versionInfo": "16.2.0-r3",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "GPL-3.0-or-later WITH GCC-exception-3.1",
@@ -411,15 +411,15 @@
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/libgcc@16.2.0-r2?arch=aarch64\u0026distro=wolfi",
+          "referenceLocator": "pkg:apk/wolfi/libgcc@16.2.0-r3?arch=aarch64\u0026distro=wolfi",
           "referenceType": "purl"
         }
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-Melange-gcc.yaml-1a8a06e57ab63d92834a9467dd0eaa5d54ade3b0",
+      "SPDXID": "SPDXRef-Package-Melange-gcc.yaml-4d188060cbd00821a95f1ef60605da4817e781bb",
       "name": "gcc.yaml",
-      "versionInfo": "1a8a06e57ab63d92834a9467dd0eaa5d54ade3b0",
+      "versionInfo": "4d188060cbd00821a95f1ef60605da4817e781bb",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "Apache-2.0",
@@ -430,7 +430,7 @@
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:github/chainguard-dev/stereo@1a8a06e57ab63d92834a9467dd0eaa5d54ade3b0#gcc.yaml",
+          "referenceLocator": "pkg:github/chainguard-dev/stereo@4d188060cbd00821a95f1ef60605da4817e781bb#gcc.yaml",
           "referenceType": "purl"
         }
       ]
@@ -455,9 +455,9 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-libgcc-d1744af9ff15349b",
+      "SPDXID": "SPDXRef-Package-apk-libgcc-6f0563db807ae406",
       "name": "libgcc",
-      "versionInfo": "16.2.0-r2",
+      "versionInfo": "16.2.0-r3",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "(GPL-3.0-or-later WITH GCC-exception-3.1)",
@@ -475,7 +475,7 @@
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/libgcc@16.2.0-r2?arch=aarch64\u0026origin=gcc",
+          "referenceLocator": "pkg:apk/wolfi/libgcc@16.2.0-r3?arch=aarch64\u0026origin=gcc",
           "referenceType": "purl"
         }
       ]
@@ -483,7 +483,7 @@
     {
       "SPDXID": "SPDXRef-DocumentRoot-Directory-libgcc",
       "name": "libgcc",
-      "versionInfo": "16.2.0-r2",
+      "versionInfo": "16.2.0-r3",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
@@ -494,9 +494,9 @@
       "primaryPackagePurpose": "FILE"
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-glibc-2.44-2.44-r14",
+      "SPDXID": "SPDXRef-Package-apk-glibc-2.44-2.44-r15",
       "name": "glibc-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
@@ -508,7 +508,7 @@
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/glibc-2.44@2.44-r14?arch=aarch64\u0026distro=wolfi",
+          "referenceLocator": "pkg:apk/wolfi/glibc-2.44@2.44-r15?arch=aarch64\u0026distro=wolfi",
           "referenceType": "purl"
         },
         {
@@ -519,9 +519,9 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-glibc-2.44-94bbc3326135f6b7",
+      "SPDXID": "SPDXRef-Package-apk-glibc-2.44-09050f0de1709b32",
       "name": "glibc-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
@@ -534,12 +534,12 @@
       "externalRefs": [
         {
           "referenceCategory": "SECURITY",
-          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.44-r14:*:*:*:*:*:*:*",
+          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.44-r15:*:*:*:*:*:*:*",
           "referenceType": "cpe23Type"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/glibc-2.44@2.44-r14?arch=aarch64\u0026origin=glibc-2.44",
+          "referenceLocator": "pkg:apk/wolfi/glibc-2.44@2.44-r15?arch=aarch64\u0026origin=glibc-2.44",
           "referenceType": "purl"
         }
       ]
@@ -547,7 +547,7 @@
     {
       "SPDXID": "SPDXRef-DocumentRoot-Directory-glibc-2.44",
       "name": "glibc-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
@@ -650,9 +650,9 @@
       "primaryPackagePurpose": "FILE"
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r14",
+      "SPDXID": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r15",
       "name": "libcrypt1-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
@@ -664,7 +664,7 @@
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/libcrypt1-2.44@2.44-r14?arch=aarch64\u0026distro=wolfi",
+          "referenceLocator": "pkg:apk/wolfi/libcrypt1-2.44@2.44-r15?arch=aarch64\u0026distro=wolfi",
           "referenceType": "purl"
         },
         {
@@ -675,9 +675,9 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Package-apk-libcrypt1-2.44-07e91cda91134f6e",
+      "SPDXID": "SPDXRef-Package-apk-libcrypt1-2.44-0f2dc656dd485ddc",
       "name": "libcrypt1-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "LGPL-2.1-or-later",
@@ -690,12 +690,12 @@
       "externalRefs": [
         {
           "referenceCategory": "SECURITY",
-          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.44-r14:*:*:*:*:*:*:*",
+          "referenceLocator": "cpe:2.3:a:gnu:glibc:2.44-r15:*:*:*:*:*:*:*",
           "referenceType": "cpe23Type"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:apk/wolfi/libcrypt1-2.44@2.44-r14?arch=aarch64\u0026origin=glibc-2.44",
+          "referenceLocator": "pkg:apk/wolfi/libcrypt1-2.44@2.44-r15?arch=aarch64\u0026origin=glibc-2.44",
           "referenceType": "purl"
         }
       ]
@@ -703,7 +703,7 @@
     {
       "SPDXID": "SPDXRef-DocumentRoot-Directory-libcrypt1-2.44",
       "name": "libcrypt1-2.44",
-      "versionInfo": "2.44-r14",
+      "versionInfo": "2.44-r15",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
@@ -900,9 +900,9 @@
   ],
   "relationships": [
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-ImageLayer-sha256-60f97e20cbae748743008301856c4d483076b1e96657b688d99938f6e8c4dd6c"
+      "relatedSpdxElement": "SPDXRef-Package-ImageLayer-sha256-a47fbe3e83fe4ebe49c34b1adf1acdd67995cd18f61549e5c638b54a322c1932"
     },
     {
       "spdxElementId": "SPDXRef-Package-apk-wolfi-baselayout-20230201-r31",
@@ -920,7 +920,7 @@
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-wolfi-baselayout"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-Package-apk-wolfi-baselayout-20230201-r31"
     },
@@ -945,109 +945,109 @@
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-ca-certificates-bundle"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-Package-apk-ca-certificates-bundle-20261020-r0"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r15",
       "relationshipType": "DESCRIBED_BY",
-      "relatedSpdxElement": "SPDXRef-Package-Melange-glibc-2.44.yaml-86ee3612cb47379928ac34ad99dfbfd45d138ff9"
+      "relatedSpdxElement": "SPDXRef-Package-Melange-glibc-2.44.yaml-f903916d7bbf6d7dc87dd9e05b827df096b22255"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r15",
       "relationshipType": "GENERATED_FROM",
-      "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c-0"
+      "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-47e2b570410fab606de29f550534a721184852c3-0"
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-ld-linux-2.44",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-ld-linux-2.44-7fd0b6ac1f498b59"
+      "relatedSpdxElement": "SPDXRef-Package-apk-ld-linux-2.44-0758def42e65ad42"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r15",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-ld-linux-2.44"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r14"
+      "relatedSpdxElement": "SPDXRef-Package-apk-ld-linux-2.44-2.44-r15"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r15",
       "relationshipType": "DESCRIBED_BY",
-      "relatedSpdxElement": "SPDXRef-Package-Melange-glibc-2.44.yaml-86ee3612cb47379928ac34ad99dfbfd45d138ff9"
+      "relatedSpdxElement": "SPDXRef-Package-Melange-glibc-2.44.yaml-f903916d7bbf6d7dc87dd9e05b827df096b22255"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r15",
       "relationshipType": "GENERATED_FROM",
-      "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c-0"
+      "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-47e2b570410fab606de29f550534a721184852c3-0"
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-glibc-2.44-locale-posix",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-glibc-2.44-locale-posix-e2c2b3125b2659a5"
+      "relatedSpdxElement": "SPDXRef-Package-apk-glibc-2.44-locale-posix-662d452b2ea361dc"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r15",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-glibc-2.44-locale-posix"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r14"
+      "relatedSpdxElement": "SPDXRef-Package-apk-glibc-2.44-locale-posix-2.44-r15"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-libgcc-16.2.0-r2",
+      "spdxElementId": "SPDXRef-Package-apk-libgcc-16.2.0-r3",
       "relationshipType": "DESCRIBED_BY",
-      "relatedSpdxElement": "SPDXRef-Package-Melange-gcc.yaml-1a8a06e57ab63d92834a9467dd0eaa5d54ade3b0"
+      "relatedSpdxElement": "SPDXRef-Package-Melange-gcc.yaml-4d188060cbd00821a95f1ef60605da4817e781bb"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-libgcc-16.2.0-r2",
+      "spdxElementId": "SPDXRef-Package-apk-libgcc-16.2.0-r3",
       "relationshipType": "GENERATED_FROM",
       "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-gcc.git-releases-gcc-16.2.0-78d4ac73dd391005b895a6148cd9831e28e1208b-0"
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-libgcc",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-libgcc-d1744af9ff15349b"
+      "relatedSpdxElement": "SPDXRef-Package-apk-libgcc-6f0563db807ae406"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-libgcc-16.2.0-r2",
+      "spdxElementId": "SPDXRef-Package-apk-libgcc-16.2.0-r3",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-libgcc"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-libgcc-16.2.0-r2"
+      "relatedSpdxElement": "SPDXRef-Package-apk-libgcc-16.2.0-r3"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-2.44-r15",
       "relationshipType": "DESCRIBED_BY",
-      "relatedSpdxElement": "SPDXRef-Package-Melange-glibc-2.44.yaml-86ee3612cb47379928ac34ad99dfbfd45d138ff9"
+      "relatedSpdxElement": "SPDXRef-Package-Melange-glibc-2.44.yaml-f903916d7bbf6d7dc87dd9e05b827df096b22255"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-2.44-r15",
       "relationshipType": "GENERATED_FROM",
-      "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c-0"
+      "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-47e2b570410fab606de29f550534a721184852c3-0"
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-glibc-2.44",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-glibc-2.44-94bbc3326135f6b7"
+      "relatedSpdxElement": "SPDXRef-Package-apk-glibc-2.44-09050f0de1709b32"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-glibc-2.44-2.44-r15",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-glibc-2.44"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-glibc-2.44-2.44-r14"
+      "relatedSpdxElement": "SPDXRef-Package-apk-glibc-2.44-2.44-r15"
     },
     {
       "spdxElementId": "SPDXRef-Package-apk-libxcrypt-4.5.2-r8",
@@ -1070,34 +1070,34 @@
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-libxcrypt"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-Package-apk-libxcrypt-4.5.2-r8"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r15",
       "relationshipType": "DESCRIBED_BY",
-      "relatedSpdxElement": "SPDXRef-Package-Melange-glibc-2.44.yaml-86ee3612cb47379928ac34ad99dfbfd45d138ff9"
+      "relatedSpdxElement": "SPDXRef-Package-Melange-glibc-2.44.yaml-f903916d7bbf6d7dc87dd9e05b827df096b22255"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r15",
       "relationshipType": "GENERATED_FROM",
-      "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-c5c6fc6f449dbc95e3a68cacd61852dc0a48e57c-0"
+      "relatedSpdxElement": "SPDXRef-Package-Source-gitlab.com-gnutools-glibc.git-release-2.44-master-47e2b570410fab606de29f550534a721184852c3-0"
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-libcrypt1-2.44",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-libcrypt1-2.44-07e91cda91134f6e"
+      "relatedSpdxElement": "SPDXRef-Package-apk-libcrypt1-2.44-0f2dc656dd485ddc"
     },
     {
-      "spdxElementId": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r14",
+      "spdxElementId": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r15",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-libcrypt1-2.44"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r14"
+      "relatedSpdxElement": "SPDXRef-Package-apk-libcrypt1-2.44-2.44-r15"
     },
     {
       "spdxElementId": "SPDXRef-Package-apk-busybox-1.38.0-r3",
@@ -1120,7 +1120,7 @@
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-busybox"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-Package-apk-busybox-1.38.0-r3"
     },
@@ -1145,7 +1145,7 @@
       "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-tzdata"
     },
     {
-      "spdxElementId": "SPDXRef-Package-Image-sha256-634a515d6695bc7d586bd7e97b97c6509a68e8fced162a0fba5673f8151b1ef2",
+      "spdxElementId": "SPDXRef-Package-Image-sha256-e9269ca1e250eca5af57cbf96fb8d8bebf48a85f70462dd1ac9e1407ac6e2065",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-Package-apk-tzdata-2026f-r0"
     }
