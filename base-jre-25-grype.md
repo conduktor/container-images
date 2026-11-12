@@ -11,12 +11,11 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-jre-25/t
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 2 | 3 | 0 | 5 |
+| 0 | 1 | 3 | 0 | 4 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
 | :orange_circle: high | [`CVE-2026-84243`](https://nvd.nist.gov/vuln/detail/CVE-2026-84243) | `glibc-2.44` | `2.44-r16` | — |
-| :orange_circle: high | [`CVE-2026-119586`](https://nvd.nist.gov/vuln/detail/CVE-2026-119586) | `sqlite-libs` | `3.54.1-r0` | — |
 | :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r5` | — |
 | :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r5` | — |
 | :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r5` | — |
