@@ -137,16 +137,16 @@ jobs:
         uses: ./.github/actions/setup-bubblewrap
 
       # melange never writes to its own cache, so a miss must be filled here.
+      # The cache is runner-owned, and the build writes GOCACHE into it as root
+      # inside bwrap. Ubuntu 26.04's bwrap profile denies CAP_DAC_OVERRIDE there,
+      # so root must own the tree rather than override its permissions.
       - name: Prefetch melange sources
         env:
           DIR: ${{ matrix.apk.dir }}
-        run: ./scripts/melange-sources.sh "${DIR}" --prefetch "${{ runner.temp }}/melange-cache"
-
-      # The restored cache is runner-owned, and the build writes GOCACHE into it as
-      # root inside bwrap. Ubuntu 26.04's bwrap profile denies CAP_DAC_OVERRIDE
-      # there, so root must own the tree rather than override its permissions.
-      - name: Hand the melange cache to root
-        run: sudo chown -R 0:0 "${{ runner.temp }}/melange-cache"
+          CACHE_DIR: ${{ runner.temp }}/melange-cache
+        run: |
+          ./scripts/melange-sources.sh "${DIR}" --prefetch "${CACHE_DIR}"
+          sudo chown -R 0:0 "${CACHE_DIR}"
 
       # These two rather than the melange-build wrapper around them: that wrapper
       # starts with setup-melange, which apt-installs a Go toolchain and qemu on
