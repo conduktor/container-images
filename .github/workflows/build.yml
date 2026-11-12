@@ -168,6 +168,7 @@ jobs:
         with:
           multi-config: ${{ matrix.apk.configs }}
           workdir: images/${{ matrix.apk.dir }}
+          source-dir: ${{ github.workspace }}/images/${{ matrix.apk.dir }}
           archs: ${{ matrix.apk.arch }}
           sign-with-key: true
           # Trivy skips packages whose PURL namespace doesn't match the image's
