@@ -8,8 +8,15 @@ use its default Linux runner, and nothing else.
 melange resolves an empty `--runner` to bubblewrap on Linux, and then requires
 `bwrap` on `PATH` plus a working `bwrap --unshare-user` before it will build.
 Neither holds on a stock `ubuntu-24.04` runner: bubblewrap is not in the image,
-and 24.04 blocks unprivileged user namespaces through apparmor
-([melange#1508](https://github.com/chainguard-dev/melange/issues/1508)).
+and apparmor blocks unprivileged user namespaces
+([melange#1508](https://github.com/chainguard-dev/melange/issues/1508)), so the
+script adds a `local-bwrap` profile. `ubuntu-26.04` ships both bubblewrap and its
+own bwrap profile, and adding ours on top is what breaks it (`setting up uid map:
+Permission denied`), so the profile is only added when `bwrap` does not already
+work — the same fix upstream made in
+[chainguard-dev/actions#1130](https://github.com/chainguard-dev/actions/pull/1130).
+That branch exists for the `ubuntu-latest` migration window and for
+`ubuntu-24.04-arm`; drop it once no runner label resolves to 24.04.
 
 `chainguard-dev/actions/setup-melange` fixes both, but also installs a Go
 toolchain, `build-essential` and `qemu-user-static`, and finishes by
