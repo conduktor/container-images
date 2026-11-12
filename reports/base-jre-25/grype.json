@@ -2,230 +2,6 @@
   "matches": [
     {
       "vulnerability": {
-        "id": "CVE-2026-84243",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-84243",
-        "namespace": "nvd:cpe",
-        "severity": "High",
-        "urls": [
-          "https://inbox.sourceware.org/libc-alpha/20261012112453.47383-1-avinal.xlvii@gmail.com",
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=17142",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0025"
-        ],
-        "description": "The gettext family of functions in the GNU C Library version 2.0 and later accept LANGUAGE environment variable entries that contain '/' or that are equal to \"..\", unless the program is setuid or setgid (AT_SECURE).  An attacker who can set LANGUAGE in the environment of a program that uses gettext can make it load a message catalog (.mo file) from an arbitrary location in the file system.  A crafted .mo file can crash the program through out-of-range offsets, or supply translations whose format directives do not match the arguments passed by the program.  That causes undefined behaviour in the printf family of functions and may allow arbitrary code execution with the privileges of the program.  The safety of message catalogs relies on them being installed in trusted, read-only locations, and the directory traversal bypasses this.\n\nThe fix for CVE-2014-0475 rejects \"..\" path components in locale names passed to setlocale or taken from the LC_ALL, LC_* and LANG environment variables.  gettext reads LANGUAGE directly and appends each colon-separated entry to the message catalog directory, so that fix did not cover LANGUAGE.\n\nLANGUAGE is only used when the LC_MESSAGES locale is not \"C\", \"C.<encoding>\" or \"POSIX\", so the attacker must also be able to select another installed locale, for example through LANG or LC_ALL.  Exploitation also requires that the attacker can place the crafted file in a location readable by the target program, and that the environment crosses a trust boundary without the program running as AT_SECURE.  An example is an SSH server that accepts LANGUAGE and LANG from clients through the AcceptEnv directive and restricts an account to a forced command; the attacker may use this to escape the restriction.",
-        "cvss": [
-          {
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-            "metrics": {
-              "baseScore": 7,
-              "exploitabilityScore": 1.1,
-              "impactScore": 5.9
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-84243",
-            "epss": 0.00297,
-            "percentile": 0.22605,
-            "date": "2026-11-10"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-84243",
-            "cwe": "CWE-22",
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.215325
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "glibc-2.44",
-              "version": "2.44-r16"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-84243",
-            "versionConstraint": ">= 2.0, < 2.45 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "9d4e04846df70329",
-        "name": "glibc-2.44",
-        "version": "2.44-r16",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:655ad73cd4be6fe9e4f96eabcc97afd2da30b15b397292a83503bdcc84b7ae15",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "LGPL-2.1-or-later"
-        ],
-        "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r16:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r16:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r16?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "glibc-2.44"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/rpc"
-            },
-            {
-              "path": "/etc/apk"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/ld.so"
-            },
-            {
-              "path": "/usr/bin/ldconfig"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/libBrokenLocale.so.1"
-            },
-            {
-              "path": "/usr/lib/libanl.so.1"
-            },
-            {
-              "path": "/usr/lib/libc.so.6"
-            },
-            {
-              "path": "/usr/lib/libc_malloc_debug.so.0"
-            },
-            {
-              "path": "/usr/lib/libdl.so.2"
-            },
-            {
-              "path": "/usr/lib/libm.so.6"
-            },
-            {
-              "path": "/usr/lib/libmemusage.so"
-            },
-            {
-              "path": "/usr/lib/libmvec.so.1"
-            },
-            {
-              "path": "/usr/lib/libnsl.so.1"
-            },
-            {
-              "path": "/usr/lib/libnss_compat.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_dns.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_files.so.2"
-            },
-            {
-              "path": "/usr/lib/libpthread.so.0"
-            },
-            {
-              "path": "/usr/lib/libresolv.so.2"
-            },
-            {
-              "path": "/usr/lib/librt.so.1"
-            },
-            {
-              "path": "/usr/lib/libthread_db.so.1"
-            },
-            {
-              "path": "/usr/lib/libutil.so.1"
-            },
-            {
-              "path": "/usr/lib/audit"
-            },
-            {
-              "path": "/usr/lib/locale"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r16.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
         "id": "CVE-2026-90781",
         "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-90781",
         "namespace": "nvd:cpe",
@@ -266,8 +42,8 @@
           {
             "cve": "CVE-2026-90781",
             "epss": 0.00179,
-            "percentile": 0.07545,
-            "date": "2026-11-10"
+            "percentile": 0.0757,
+            "date": "2026-11-11"
           }
         ],
         "cwes": [
@@ -684,8 +460,8 @@
           {
             "cve": "CVE-2026-96674",
             "epss": 0.00115,
-            "percentile": 0.01569,
-            "date": "2026-11-10"
+            "percentile": 0.01575,
+            "date": "2026-11-11"
           }
         ],
         "cwes": [
@@ -1100,8 +876,8 @@
           {
             "cve": "CVE-2026-96675",
             "epss": 0.00111,
-            "percentile": 0.01322,
-            "date": "2026-11-10"
+            "percentile": 0.01323,
+            "date": "2026-11-11"
           }
         ],
         "cwes": [
@@ -1522,7 +1298,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-GT9nNg/output",
+      "file": "/tmp/grype-6dk8w3/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,
