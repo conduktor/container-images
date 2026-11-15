@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 1 | 7 | 8 | 1 | 20 |
+| 1 | 7 | 13 | 1 | 25 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -26,6 +26,11 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | :yellow_circle: medium | [`GHSA-j6qf-3m9c-vwj3`](https://github.com/advisories/GHSA-j6qf-3m9c-vwj3) | `github.com/go-chi/chi/v5` | `v5.3.0` | `5.4.0` |
 | :yellow_circle: medium | [`GHSA-4w3g-jfj2-cw2q`](https://github.com/advisories/GHSA-4w3g-jfj2-cw2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`GHSA-vvm8-gf78-28g4`](https://github.com/advisories/GHSA-vvm8-gf78-28g4) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
+| :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/sdk` | `v1.45.0` | `1.47.0` |
+| :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/sdk` | `v1.45.0` | `1.47.0` |
+| :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/trace` | `v1.45.0` | `1.47.0` |
+| :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/trace` | `v1.45.0` | `1.47.0` |
+| :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/trace` | `v1.45.0` | `1.47.0` |
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |

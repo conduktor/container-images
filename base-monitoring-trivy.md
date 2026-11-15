@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 4 | 8 | 0 | 12 |
+| 0 | 4 | 13 | 0 | 17 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -24,6 +24,11 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | :yellow_circle: medium | [`CVE-2026-116586`](https://avd.aquasec.com/nvd/cve-2026-116586) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `3.5.2, 3.11.2, 0.311.2-0.20260410083055-07c6232d159b` |
 | :yellow_circle: medium | [`CVE-2026-40179`](https://avd.aquasec.com/nvd/cve-2026-40179) | `github.com/prometheus/prometheus` | `3.8.1` | `3.5.2, 3.11.2, 0.311.2-0.20260410083055-07c6232d159b` |
+| :yellow_circle: medium | [`CVE-2026-128085`](https://avd.aquasec.com/nvd/cve-2026-128085) | `go.opentelemetry.io/otel/sdk` | `v1.45.0` | `1.47.0` |
+| :yellow_circle: medium | [`CVE-2026-128085`](https://avd.aquasec.com/nvd/cve-2026-128085) | `go.opentelemetry.io/otel/sdk` | `v1.45.0` | `1.47.0` |
+| :yellow_circle: medium | [`CVE-2026-128085`](https://avd.aquasec.com/nvd/cve-2026-128085) | `go.opentelemetry.io/otel/trace` | `v1.45.0` | `1.47.0` |
+| :yellow_circle: medium | [`CVE-2026-128085`](https://avd.aquasec.com/nvd/cve-2026-128085) | `go.opentelemetry.io/otel/trace` | `v1.45.0` | `1.47.0` |
+| :yellow_circle: medium | [`CVE-2026-128085`](https://avd.aquasec.com/nvd/cve-2026-128085) | `go.opentelemetry.io/otel/trace` | `v1.45.0` | `1.47.0` |
 | :yellow_circle: medium | [`CVE-2026-97045`](https://avd.aquasec.com/nvd/cve-2026-97045) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :yellow_circle: medium | [`CVE-2026-97045`](https://avd.aquasec.com/nvd/cve-2026-97045) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :yellow_circle: medium | [`CVE-2026-97045`](https://avd.aquasec.com/nvd/cve-2026-97045) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |

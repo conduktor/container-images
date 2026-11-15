@@ -50,7 +50,7 @@
             "cve": "CVE-2026-111497",
             "epss": 0.82641,
             "percentile": 0.99672,
-            "date": "2026-11-12"
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -164,7 +164,7 @@
               "cve": "CVE-2026-111497",
               "epss": 0.82641,
               "percentile": 0.99672,
-              "date": "2026-11-12"
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -220,7 +220,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -272,8 +272,8 @@
           {
             "cve": "CVE-2026-116587",
             "epss": 0.00489,
-            "percentile": 0.4261,
-            "date": "2026-11-12"
+            "percentile": 0.4266,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -336,8 +336,8 @@
             {
               "cve": "CVE-2026-116587",
               "epss": 0.00489,
-              "percentile": 0.4261,
-              "date": "2026-11-12"
+              "percentile": 0.4266,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -385,7 +385,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -441,8 +441,8 @@
           {
             "cve": "CVE-2026-78661",
             "epss": 0.00409,
-            "percentile": 0.35646,
-            "date": "2026-11-12"
+            "percentile": 0.3568,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -500,161 +500,8 @@
             {
               "cve": "CVE-2026-78661",
               "epss": 0.00409,
-              "percentile": 0.35646,
-              "date": "2026-11-12"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78661",
-              "cwe": "CWE-407",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6860",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "fb64896702246c55",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6860",
-        "dataSource": "https://go.dev/cl/849365",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/issue/82224",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78661",
-            "epss": 0.00409,
-            "percentile": 0.35646,
-            "date": "2026-11-12"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78661",
-            "cwe": "CWE-407",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.30674999999999997
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78661",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/849365",
-            "https://go.dev/issue/82224",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6860"
-          ],
-          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78661",
-              "epss": 0.00409,
-              "percentile": 0.35646,
-              "date": "2026-11-12"
+              "percentile": 0.3568,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -696,7 +543,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -748,8 +595,8 @@
           {
             "cve": "CVE-2026-78661",
             "epss": 0.00409,
-            "percentile": 0.35646,
-            "date": "2026-11-12"
+            "percentile": 0.3568,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -807,8 +654,161 @@
             {
               "cve": "CVE-2026-78661",
               "epss": 0.00409,
-              "percentile": 0.35646,
-              "date": "2026-11-12"
+              "percentile": 0.3568,
+              "date": "2026-11-13"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78661",
+              "cwe": "CWE-407",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6860",
+            "versionConstraint": "<0.62.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.62.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "fb64896702246c55",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6860",
+        "dataSource": "https://go.dev/cl/849365",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/issue/82224",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
+        ],
+        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78661",
+            "epss": 0.00409,
+            "percentile": 0.3568,
+            "date": "2026-11-13"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78661",
+            "cwe": "CWE-407",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.62.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.62.0",
+              "date": "2026-10-27",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.30674999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78661",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/849365",
+            "https://go.dev/issue/82224",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6860"
+          ],
+          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78661",
+              "epss": 0.00409,
+              "percentile": 0.3568,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -850,7 +850,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -900,8 +900,8 @@
           {
             "cve": "CVE-2026-116591",
             "epss": 0.00333,
-            "percentile": 0.26839,
-            "date": "2026-11-12"
+            "percentile": 0.26849,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -956,8 +956,8 @@
             {
               "cve": "CVE-2026-116591",
               "epss": 0.00333,
-              "percentile": 0.26839,
-              "date": "2026-11-12"
+              "percentile": 0.26849,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -996,8 +996,8 @@
             {
               "cve": "CVE-2026-116591",
               "epss": 0.00333,
-              "percentile": 0.26839,
-              "date": "2026-11-12"
+              "percentile": 0.26849,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -1032,15 +1032,203 @@
         }
       ],
       "artifact": {
-        "id": "6af43e7237bdbe43",
+        "id": "a66a7bfa8cd25997",
         "name": "github.com/klauspost/compress",
         "version": "v1.18.7",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:klauspost:compress:v1.18.7:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/github.com/klauspost/compress@v1.18.7",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6865",
+        "dataSource": "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+          "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+        ],
+        "description": "Panic on two-block frames in github.com/klauspost/compress",
+        "cvss": [
+          {
+            "source": "security-advisories@github.com",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 8.7
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-116591",
+            "epss": 0.00333,
+            "percentile": 0.26849,
+            "date": "2026-11-13"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-116591",
+            "cwe": "CWE-190",
+            "source": "security-advisories@github.com",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.20.2"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.20.2",
+              "date": "2026-10-12",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.26972999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-116591",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+            "https://github.com/klauspost/compress/releases/tag/v1.20.2",
+            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8"
+          ],
+          "description": "compress provides various compression algorithms. Prior to 1.20.2, the zstd DecodeAll and streaming decoder paths can panic when a crafted two-block frame reaches huff0.ReadTable with an FSE normalized count of 32768 that readNCount stores in int16 as -32768. The wrapped count allows buildDtable to retain stale fse.Scratch decode-table state from the prior block, and nextFast then derives an out-of-range state and indexes beyond the table instead of returning a decode error. Both blocks are required to preserve and then reuse the stale state, allowing untrusted zstd input to crash an application. This issue is fixed in version 1.20.2.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 8.7
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-116591",
+              "epss": 0.00333,
+              "percentile": 0.26849,
+              "date": "2026-11-13"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-116591",
+              "cwe": "CWE-190",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        {
+          "id": "GHSA-fpmh-frq8-7rj8",
+          "dataSource": "https://github.com/advisories/GHSA-fpmh-frq8-7rj8",
+          "namespace": "github:language:go",
+          "severity": "High",
+          "urls": [
+            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
+            "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+          ],
+          "description": "compress zstd: Panic on two-block frames",
+          "cvss": [
+            {
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "metrics": {
+                "baseScore": 8.7
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-116591",
+              "epss": 0.00333,
+              "percentile": 0.26849,
+              "date": "2026-11-13"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-116591",
+              "cwe": "CWE-190",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "github.com/klauspost/compress",
+              "version": "v1.18.7"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6865",
+            "versionConstraint": "<1.20.2 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.20.2"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "62f5fb9da918f146",
+        "name": "github.com/klauspost/compress",
+        "version": "v1.18.7",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
             }
@@ -1089,8 +1277,8 @@
           {
             "cve": "CVE-2026-116591",
             "epss": 0.00333,
-            "percentile": 0.26839,
-            "date": "2026-11-12"
+            "percentile": 0.26849,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -1145,8 +1333,8 @@
             {
               "cve": "CVE-2026-116591",
               "epss": 0.00333,
-              "percentile": 0.26839,
-              "date": "2026-11-12"
+              "percentile": 0.26849,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -1185,8 +1373,8 @@
             {
               "cve": "CVE-2026-116591",
               "epss": 0.00333,
-              "percentile": 0.26839,
-              "date": "2026-11-12"
+              "percentile": 0.26849,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -1221,203 +1409,15 @@
         }
       ],
       "artifact": {
-        "id": "a66a7bfa8cd25997",
+        "id": "6af43e7237bdbe43",
         "name": "github.com/klauspost/compress",
         "version": "v1.18.7",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:klauspost:compress:v1.18.7:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:golang/github.com/klauspost/compress@v1.18.7",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6865",
-        "dataSource": "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-          "https://github.com/klauspost/compress/releases/tag/v1.20.2"
-        ],
-        "description": "Panic on two-block frames in github.com/klauspost/compress",
-        "cvss": [
-          {
-            "source": "security-advisories@github.com",
-            "type": "Secondary",
-            "version": "4.0",
-            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-            "metrics": {
-              "baseScore": 8.7
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-116591",
-            "epss": 0.00333,
-            "percentile": 0.26839,
-            "date": "2026-11-12"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-116591",
-            "cwe": "CWE-190",
-            "source": "security-advisories@github.com",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "1.20.2"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "1.20.2",
-              "date": "2026-10-12",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.26972999999999997
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-116591",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-            "https://github.com/klauspost/compress/releases/tag/v1.20.2",
-            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8"
-          ],
-          "description": "compress provides various compression algorithms. Prior to 1.20.2, the zstd DecodeAll and streaming decoder paths can panic when a crafted two-block frame reaches huff0.ReadTable with an FSE normalized count of 32768 that readNCount stores in int16 as -32768. The wrapped count allows buildDtable to retain stale fse.Scratch decode-table state from the prior block, and nextFast then derives an out-of-range state and indexes beyond the table instead of returning a decode error. Both blocks are required to preserve and then reuse the stale state, allowing untrusted zstd input to crash an application. This issue is fixed in version 1.20.2.",
-          "cvss": [
-            {
-              "source": "security-advisories@github.com",
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-              "metrics": {
-                "baseScore": 8.7
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116591",
-              "epss": 0.00333,
-              "percentile": 0.26839,
-              "date": "2026-11-12"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116591",
-              "cwe": "CWE-190",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        },
-        {
-          "id": "GHSA-fpmh-frq8-7rj8",
-          "dataSource": "https://github.com/advisories/GHSA-fpmh-frq8-7rj8",
-          "namespace": "github:language:go",
-          "severity": "High",
-          "urls": [
-            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
-            "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
-            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-            "https://github.com/klauspost/compress/releases/tag/v1.20.2"
-          ],
-          "description": "compress zstd: Panic on two-block frames",
-          "cvss": [
-            {
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
-              "metrics": {
-                "baseScore": 8.7
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116591",
-              "epss": 0.00333,
-              "percentile": 0.26839,
-              "date": "2026-11-12"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116591",
-              "cwe": "CWE-190",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "github.com/klauspost/compress",
-              "version": "v1.18.7"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6865",
-            "versionConstraint": "<1.20.2 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "1.20.2"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "62f5fb9da918f146",
-        "name": "github.com/klauspost/compress",
-        "version": "v1.18.7",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
-            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
             }
@@ -1468,8 +1468,8 @@
           {
             "cve": "CVE-2025-15367",
             "epss": 0.00377,
-            "percentile": 0.32138,
-            "date": "2026-11-12"
+            "percentile": 0.32168,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -1540,7 +1540,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1652,8 +1652,8 @@
           {
             "cve": "CVE-2026-116586",
             "epss": 0.00292,
-            "percentile": 0.22019,
-            "date": "2026-11-12"
+            "percentile": 0.22008,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -1709,8 +1709,8 @@
             {
               "cve": "CVE-2026-116586",
               "epss": 0.00292,
-              "percentile": 0.22019,
-              "date": "2026-11-12"
+              "percentile": 0.22008,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -1752,7 +1752,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -1809,8 +1809,8 @@
           {
             "cve": "CVE-2026-116585",
             "epss": 0.00264,
-            "percentile": 0.185,
-            "date": "2026-11-12"
+            "percentile": 0.18488,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -1867,8 +1867,8 @@
             {
               "cve": "CVE-2026-116585",
               "epss": 0.00264,
-              "percentile": 0.185,
-              "date": "2026-11-12"
+              "percentile": 0.18488,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -1910,7 +1910,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -1966,8 +1966,8 @@
           {
             "cve": "CVE-2026-97045",
             "epss": 0.00267,
-            "percentile": 0.19047,
-            "date": "2026-11-12"
+            "percentile": 0.19035,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -2025,161 +2025,8 @@
             {
               "cve": "CVE-2026-97045",
               "epss": 0.00267,
-              "percentile": 0.19047,
-              "date": "2026-11-12"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-97045",
-              "cwe": "CWE-79",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6866",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "fb64896702246c55",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6866",
-        "dataSource": "https://go.dev/cl/855121",
-        "namespace": "govulndb:language:go",
-        "severity": "Medium",
-        "urls": [
-          "https://go.dev/issue/82622",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output.\n\nContinue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-            "metrics": {
-              "baseScore": 6.1,
-              "exploitabilityScore": 2.9,
-              "impactScore": 2.8
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-97045",
-            "epss": 0.00267,
-            "percentile": 0.19047,
-            "date": "2026-11-12"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-97045",
-            "cwe": "CWE-79",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.14818499999999998
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-97045",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97045",
-          "namespace": "nvd:cpe",
-          "severity": "Medium",
-          "urls": [
-            "https://go.dev/cl/855121",
-            "https://go.dev/issue/82622",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6866"
-          ],
-          "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-              "metrics": {
-                "baseScore": 6.1,
-                "exploitabilityScore": 2.9,
-                "impactScore": 2.8
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-97045",
-              "epss": 0.00267,
-              "percentile": 0.19047,
-              "date": "2026-11-12"
+              "percentile": 0.19035,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -2221,7 +2068,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -2273,8 +2120,8 @@
           {
             "cve": "CVE-2026-97045",
             "epss": 0.00267,
-            "percentile": 0.19047,
-            "date": "2026-11-12"
+            "percentile": 0.19035,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -2332,8 +2179,161 @@
             {
               "cve": "CVE-2026-97045",
               "epss": 0.00267,
-              "percentile": 0.19047,
-              "date": "2026-11-12"
+              "percentile": 0.19035,
+              "date": "2026-11-13"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-97045",
+              "cwe": "CWE-79",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6866",
+            "versionConstraint": "<0.62.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.62.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "fb64896702246c55",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6866",
+        "dataSource": "https://go.dev/cl/855121",
+        "namespace": "govulndb:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://go.dev/issue/82622",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
+        ],
+        "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output.\n\nContinue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+            "metrics": {
+              "baseScore": 6.1,
+              "exploitabilityScore": 2.9,
+              "impactScore": 2.8
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-97045",
+            "epss": 0.00267,
+            "percentile": 0.19035,
+            "date": "2026-11-13"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-97045",
+            "cwe": "CWE-79",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.62.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.62.0",
+              "date": "2026-10-27",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.14818499999999998
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-97045",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-97045",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://go.dev/cl/855121",
+            "https://go.dev/issue/82622",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6866"
+          ],
+          "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+              "metrics": {
+                "baseScore": 6.1,
+                "exploitabilityScore": 2.9,
+                "impactScore": 2.8
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-97045",
+              "epss": 0.00267,
+              "percentile": 0.19035,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -2375,7 +2375,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -2428,8 +2428,8 @@
           {
             "cve": "CVE-2026-116566",
             "epss": 0.00259,
-            "percentile": 0.17806,
-            "date": "2026-11-12"
+            "percentile": 0.17795,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -2500,7 +2500,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2612,8 +2612,8 @@
           {
             "cve": "CVE-2026-103995",
             "epss": 0.0036,
-            "percentile": 0.30181,
-            "date": "2026-11-12"
+            "percentile": 0.30199,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -2684,7 +2684,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2799,8 +2799,8 @@
           {
             "cve": "CVE-2026-114437",
             "epss": 0.00129,
-            "percentile": 0.02632,
-            "date": "2026-11-12"
+            "percentile": 0.0264,
+            "date": "2026-11-13"
           }
         ],
         "cwes": [
@@ -2866,8 +2866,8 @@
             {
               "cve": "CVE-2026-114437",
               "epss": 0.00129,
-              "percentile": 0.02632,
-              "date": "2026-11-12"
+              "percentile": 0.0264,
+              "date": "2026-11-13"
             }
           ],
           "cwes": [
@@ -2909,7 +2909,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -2924,6 +2924,769 @@
           "cpe:2.3:a:go:chi\\/v5:v5.3.0:*:*:*:*:*:*:*"
         ],
         "purl": "pkg:golang/github.com/go-chi/chi/v5@v5.3.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GHSA-q7gw-24fr-5p69",
+        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
+        "namespace": "github:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
+          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
+        ],
+        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
+        "cvss": [
+          {
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 3.9,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-135",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          },
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-770",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.47.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.47.0",
+              "date": "2026-11-14",
+              "kind": "first-observed"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-128085",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
+          ],
+          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "metrics": {
+                "baseScore": 5.3,
+                "exploitabilityScore": 3.9,
+                "impactScore": 1.5
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-135",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            },
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-770",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "github:language:go",
+            "package": {
+              "name": "go.opentelemetry.io/otel/sdk",
+              "version": "v1.45.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
+            "versionConstraint": ">=1.33.0,<1.47.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.47.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "77ac17c501e35dd7",
+        "name": "go.opentelemetry.io/otel/sdk",
+        "version": "v1.45.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:otel:sdk:v1.45.0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/go.opentelemetry.io/otel/sdk@v1.45.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GHSA-q7gw-24fr-5p69",
+        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
+        "namespace": "github:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
+          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
+        ],
+        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
+        "cvss": [
+          {
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 3.9,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-135",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          },
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-770",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.47.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.47.0",
+              "date": "2026-11-14",
+              "kind": "first-observed"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-128085",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
+          ],
+          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "metrics": {
+                "baseScore": 5.3,
+                "exploitabilityScore": 3.9,
+                "impactScore": 1.5
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-135",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            },
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-770",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "github:language:go",
+            "package": {
+              "name": "go.opentelemetry.io/otel/sdk",
+              "version": "v1.45.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
+            "versionConstraint": ">=1.33.0,<1.47.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.47.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "4cc793b374432f77",
+        "name": "go.opentelemetry.io/otel/sdk",
+        "version": "v1.45.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:otel:sdk:v1.45.0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/go.opentelemetry.io/otel/sdk@v1.45.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "h1Digest": "h1:4VVSMgQ83dUgW2aoX5f6JgLvHwIvzcuLnF9lUdCSpCw=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GHSA-q7gw-24fr-5p69",
+        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
+        "namespace": "github:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
+          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
+        ],
+        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
+        "cvss": [
+          {
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 3.9,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-135",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          },
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-770",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.47.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.47.0",
+              "date": "2026-11-14",
+              "kind": "first-observed"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-128085",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
+          ],
+          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "metrics": {
+                "baseScore": 5.3,
+                "exploitabilityScore": 3.9,
+                "impactScore": 1.5
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-135",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            },
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-770",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "github:language:go",
+            "package": {
+              "name": "go.opentelemetry.io/otel/trace",
+              "version": "v1.45.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
+            "versionConstraint": ">=1.35.0,<1.47.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.47.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "966875bf3af59a2e",
+        "name": "go.opentelemetry.io/otel/trace",
+        "version": "v1.45.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:otel:trace:v1.45.0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/go.opentelemetry.io/otel/trace@v1.45.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "h1Digest": "h1:l/mP6Uv7oNO7/TblbhpbgMidxhq1uO/rPsikOyVhxag=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GHSA-q7gw-24fr-5p69",
+        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
+        "namespace": "github:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
+          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
+        ],
+        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
+        "cvss": [
+          {
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 3.9,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-135",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          },
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-770",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.47.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.47.0",
+              "date": "2026-11-14",
+              "kind": "first-observed"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-128085",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
+          ],
+          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "metrics": {
+                "baseScore": 5.3,
+                "exploitabilityScore": 3.9,
+                "impactScore": 1.5
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-135",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            },
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-770",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "github:language:go",
+            "package": {
+              "name": "go.opentelemetry.io/otel/trace",
+              "version": "v1.45.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
+            "versionConstraint": ">=1.35.0,<1.47.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.47.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "1280ca00fb015037",
+        "name": "go.opentelemetry.io/otel/trace",
+        "version": "v1.45.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:otel:trace:v1.45.0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/go.opentelemetry.io/otel/trace@v1.45.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "h1Digest": "h1:l/mP6Uv7oNO7/TblbhpbgMidxhq1uO/rPsikOyVhxag=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GHSA-q7gw-24fr-5p69",
+        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
+        "namespace": "github:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
+          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
+        ],
+        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
+        "cvss": [
+          {
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 3.9,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-135",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          },
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-770",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.47.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.47.0",
+              "date": "2026-11-14",
+              "kind": "first-observed"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-128085",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
+          ],
+          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "metrics": {
+                "baseScore": 5.3,
+                "exploitabilityScore": 3.9,
+                "impactScore": 1.5
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-135",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            },
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-770",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "github:language:go",
+            "package": {
+              "name": "go.opentelemetry.io/otel/trace",
+              "version": "v1.45.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
+            "versionConstraint": ">=1.35.0,<1.47.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.47.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "180d5333498579f1",
+        "name": "go.opentelemetry.io/otel/trace",
+        "version": "v1.45.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:otel:trace:v1.45.0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/go.opentelemetry.io/otel/trace@v1.45.0",
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
@@ -2990,7 +3753,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -3070,7 +3833,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -3150,7 +3913,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
+            "layerID": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -3176,29 +3939,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:766ab9b552b1504b2289d7318174fccea8cdc3cea1c9ebfc1aa4276301d9de4e",
-      "imageID": "sha256:a1767e7a2345263b391b174e5c909803a4e9330236c855a0e309ed60984167ad",
-      "manifestDigest": "sha256:93b39d72ec6be3f88242d1a92acef902b564c77fce3256312ff74311956acf81",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:54a01be99b97f8719a46608f428160e27da65919426a0763071a35107740edf7",
+      "imageID": "sha256:00d6829ab672a260b5a3de04b62188768c82ef6689c07948366586c0daec902a",
+      "manifestDigest": "sha256:7f9c7770ba5c5451582fdc056750ba23f0e07f1234819f650127149594cc908b",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 580840658,
+      "imageSize": 580840775,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:3b6d3bcc97240494d691a4819ede4b8294c319e35cbf41fca4813d963ba6946e",
-          "size": 580840658
+          "digest": "sha256:417cc7c7d622170cabb3bb809f9345fba3743e321157426dd56061bb179d9705",
+          "size": 580840775
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6YTE3NjdlN2EyMzQ1MjYzYjM5MWIxNzRlNWM5MDk4MDNhNGU5MzMwMjM2Yzg1NWEwZTMwOWVkNjA5ODQxNjdhZCJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoyMTUzMjQ5NTQsImRpZ2VzdCI6InNoYTI1NjozYjZkM2JjYzk3MjQwNDk0ZDY5MWE0ODE5ZWRlNGI4Mjk0YzMxOWUzNWNiZjQxZmNhNDgxM2Q5NjNiYTY5NDZlIn1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTEzVDIyOjQ1OjU4WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0xM1QyMjo0NTo1OFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjozYjZkM2JjYzk3MjQwNDk0ZDY5MWE0ODE5ZWRlNGI4Mjk0YzMxOWUzNWNiZjQxZmNhNDgxM2Q5NjNiYTY5NDZlIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0xM1QyMjo0NTo1OFoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6MDBkNjgyOWFiNjcyYTI2MGI1YTNkZTA0YjYyMTg4NzY4YzgyZWY2Njg5YzA3OTQ4MzY2NTg2YzBkYWVjOTAyYSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoyMTUzMjQ2MTMsImRpZ2VzdCI6InNoYTI1Njo0MTdjYzdjN2Q2MjIxNzBjYWJiM2JiODA5ZjkzNDVmYmEzNzQzZTMyMTE1NzQyNmRkNTYwNjFiYjE3OWQ5NzA1In1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTE0VDIzOjUyOjU5WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0xNFQyMzo1Mjo1OVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1Njo0MTdjYzdjN2Q2MjIxNzBjYWJiM2JiODA5ZjkzNDVmYmEzNzQzZTMyMTE1NzQyNmRkNTYwNjFiYjE3OWQ5NzA1Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0xNFQyMzo1Mjo1OVoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:766ab9b552b1504b2289d7318174fccea8cdc3cea1c9ebfc1aa4276301d9de4e"
+        "ghcr.io/conduktor/base-monitoring@sha256:54a01be99b97f8719a46608f428160e27da65919426a0763071a35107740edf7"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-11-13T22:45:58Z",
+        "org.opencontainers.image.created": "2026-11-14T23:52:59Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -3219,7 +3982,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-5Zbx7v/output",
+      "file": "/tmp/grype-H1AgYO/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

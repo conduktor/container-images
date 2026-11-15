@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 106 | 52 | 8 | 248 |
+| 4 | 106 | 54 | 8 | 250 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -131,6 +131,8 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`GHSA-4w3g-jfj2-cw2q`](https://github.com/advisories/GHSA-4w3g-jfj2-cw2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`GHSA-vvm8-gf78-28g4`](https://github.com/advisories/GHSA-vvm8-gf78-28g4) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`GO-2026-5158`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-5wrp-cwcj-q835) | `go.opentelemetry.io/otel` | `v1.43.0` | `1.42.0, 1.44.0` |
+| :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.47.0` |
+| :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/trace` | `v1.43.0` | `1.47.0` |
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.55.0` | `0.62.0` |
 | :yellow_circle: medium | [`GHSA-qc2q-p7wx-3px3`](https://github.com/advisories/GHSA-qc2q-p7wx-3px3) | `google.golang.org/grpc` | `v1.82.1` | `1.83.1` |
 | :yellow_circle: medium | [`GHSA-gx83-3vf8-gh7j`](https://github.com/advisories/GHSA-gx83-3vf8-gh7j) | `jackson-databind` | `2.21.5` | `2.21.6` |
