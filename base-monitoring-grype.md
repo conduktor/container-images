@@ -34,9 +34,9 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
-| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.18_git20261115-r0` | — |
-| :yellow_circle: medium | [`CVE-2026-116566`](https://nvd.nist.gov/vuln/detail/CVE-2026-116566) | `python-3.13` | `3.13.18_git20261115-r0` | — |
-| :white_circle: low | [`CVE-2026-103995`](https://nvd.nist.gov/vuln/detail/CVE-2026-103995) | `python-3.13` | `3.13.18_git20261115-r0` | — |
+| :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.18_git20261115-r1` | — |
+| :yellow_circle: medium | [`CVE-2026-116566`](https://nvd.nist.gov/vuln/detail/CVE-2026-116566) | `python-3.13` | `3.13.18_git20261115-r1` | — |
+| :white_circle: low | [`CVE-2026-103995`](https://nvd.nist.gov/vuln/detail/CVE-2026-103995) | `python-3.13` | `3.13.18_git20261115-r1` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
