@@ -2,413 +2,175 @@
   "matches": [
     {
       "vulnerability": {
-        "id": "GO-2026-6888",
-        "dataSource": "https://github.com/andybalholm/brotli/security/advisories/GHSA-c9gr-gmg4-2vqv",
-        "namespace": "govulndb:language:go",
-        "severity": "Critical",
+        "id": "CVE-2026-95692",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-95692",
+        "namespace": "nvd:cpe",
+        "severity": "High",
         "urls": [
-          "https://github.com/andybalholm/brotli/commit/33c2a9884269798192b5ecf171288f98939dbe42",
-          "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
-          "https://github.com/google/brotli/commit/0ed4268a4401abcb4472096340477cf4af7d1a2b"
+          "https://github.com/openssl/openssl/commit/257a3427aa0ef8d9dd2ef5b3e2d1c021a221b116",
+          "https://github.com/openssl/openssl/commit/510872388f5d145cf870868b3d288a23822cb776",
+          "https://github.com/openssl/openssl/commit/70a47ac78b6f3be1b22fb1551bd0bfcff4f29613",
+          "https://openssl-library.org/news/secadv/20261110.txt"
         ],
-        "description": "In github.com/andybalholm/brotli before v1.2.7, the decompressor allocates memory for Huffman tables and block-type trees on every meta-block header without bounding the cumulative allocations relative to the input size. A small crafted brotli stream containing many empty meta-blocks with new Huffman trees can trigger hundreds of megabytes of allocations per kilobyte of input, leading to denial of service.",
+        "description": "Issue summary: Setting an AES-GCM-SIV IV shorter than the expected nonce\nlength via EVP_CipherInit_ex() may trigger a heap out-of-bounds read.\nSupplying a longer IV is silently truncated instead of rejected.\n\nImpact summary: An application passing a caller-supplied IV of the wrong\nlength may crash or read beyond its buffer. Because trailing IV bytes are\nignored, an attacker who knows one message and tag may forge messages under a\ndifferent IV.\n\nCWE: CWE-125: Out-of-bounds Read\n\nDescription: AES-GCM-SIV copies the caller-supplied IV or nonce into its\ninternal state using a copy whose length is taken from the expected nonce size\nrather than from the length the caller actually provided. When the caller\npasses a shorter IV, the copy reads past the end of the caller's buffer;\nAddressSanitizer confirms a heap out-of-bounds read reached through\nEVP_CipherInit_ex() into ossl_aes_gcm_siv_init(). When the caller passes a\nlonger IV, the implementation silently discards the trailing bytes instead of\nrejecting the length.\n\nThe truncation breaks the binding between the IV and the computed\nauthentication tag. An attacker who has observed a message and its tag under\none IV can produce a message and tag that verify under a different IV whose\nfirst bytes match, since the surplus bytes never influence the computation.\nThe message itself is unchanged, so this is a failure of IV commitment rather\nthan a classic existential forgery.\n\nOnly applications that call EVP_CipherInit_ex() (or the equivalent provider\ncipher initialization) with an IV length other than the standard 12 bytes for\nAES-GCM-SIV are affected. The severity is limited because the out-of-bounds\nread is small and attacker-controlled only in length, and the forgery requires\nan unusual IV length choice by the application.\n\nFIPS impact: no\nThe FIPS modules are not affected by this issue, as AES-GCM-SIV is not an\napproved algorithm.",
         "cvss": [
           {
-            "source": "nvd@nist.gov",
-            "type": "Primary",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
             "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
             "metrics": {
-              "baseScore": 9.8,
+              "baseScore": 7.5,
               "exploitabilityScore": 3.9,
-              "impactScore": 5.9
+              "impactScore": 3.6
             },
             "vendorMetadata": {}
           }
         ],
-        "knownExploited": [
+        "epss": [
           {
-            "cve": "CVE-2026-111497",
-            "vendorProject": "Google",
-            "product": "Brotli",
-            "dateAdded": "2026-10-27",
-            "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
-            "dueDate": "2026-11-10",
-            "knownRansomwareCampaignUse": "unknown",
-            "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/google/brotli/releases/tag/v1.2.1; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk",
-            "urls": [
-              "https://nvd.nist.gov/vuln/detail/CVE-2026-111497"
+            "cve": "CVE-2026-95692",
+            "epss": 0.00449,
+            "percentile": 0.3958,
+            "date": "2026-11-17"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-95692",
+            "cwe": "CWE-125",
+            "source": "openssl-security@openssl.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.33675
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
             ],
-            "cwes": [
-              "CWE-252",
-              "CWE-787"
+            "package": {
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-95692",
+            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
             ]
           }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-111497",
-            "epss": 0.82641,
-            "percentile": 0.99673,
-            "date": "2026-11-16"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-111497",
-            "cwe": "CWE-252",
-            "source": "cve-coordination@google.com",
-            "type": "Secondary"
-          },
-          {
-            "cve": "CVE-2026-111497",
-            "cwe": "CWE-787",
-            "source": "cve-coordination@google.com",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "1.2.7"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "1.2.7",
-              "date": "2026-10-23",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 98.70000000000002
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-111497",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
-          "namespace": "nvd:cpe",
-          "severity": "Critical",
-          "urls": [
-            "https://github.com/andybalholm/brotli/releases/tag/v1.2.7",
-            "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high",
-            "http://www.openwall.com/lists/oss-security/2026/10/23/25",
-            "http://www.openwall.com/lists/oss-security/2026/10/24/6",
-            "http://www.openwall.com/lists/oss-security/2026/10/26/12",
-            "http://www.openwall.com/lists/oss-security/2026/10/26/13",
-            "http://www.openwall.com/lists/oss-security/2026/10/26/16",
-            "http://www.openwall.com/lists/oss-security/2026/11/03/2",
-            "https://broccoli2shell.com",
-            "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
-            "https://github.com/dotnet/announcements/issues/494",
-            "https://github.com/google/brotli/releases/tag/v1.0.10",
-            "https://github.com/google/brotli/releases/tag/v1.1.1",
-            "https://github.com/google/brotli/releases/tag/v1.2.1",
-            "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html",
-            "https://patchtheplanet.org/brotli",
-            "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
-            "https://cert-portal.siemens.com/productcert/html/ssa-045512.html",
-            "https://cert-portal.siemens.com/productcert/html/ssa-242944.html",
-            "https://cert-portal.siemens.com/productcert/html/ssa-443410.html",
-            "https://cert-portal.siemens.com/productcert/html/ssa-678870.html",
-            "https://cert-portal.siemens.com/productcert/html/ssa-898633.html",
-            "https://ellio.tech/en/blog/node2shell-cve-2026-111497-rce-on-stock-nodejs-builds/",
-            "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111497"
-          ],
-          "description": "A buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.\n\n\n\n\n\nUsers need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.",
-          "cvss": [
-            {
-              "source": "nvd@nist.gov",
-              "type": "Primary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "metrics": {
-                "baseScore": 9.8,
-                "exploitabilityScore": 3.9,
-                "impactScore": 5.9
-              },
-              "vendorMetadata": {}
-            },
-            {
-              "source": "cve-coordination@google.com",
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-              "metrics": {
-                "baseScore": 9.2
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "knownExploited": [
-            {
-              "cve": "CVE-2026-111497",
-              "vendorProject": "Google",
-              "product": "Brotli",
-              "dateAdded": "2026-10-27",
-              "requiredAction": "Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA’s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA’s “Forensics Triage Requirements” (see URL in Notes). Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines.",
-              "dueDate": "2026-11-10",
-              "knownRansomwareCampaignUse": "unknown",
-              "notes": "This vulnerability affects an open-source component, third-party library, protocol, or proprietary implementation that could be used by different products. For more information, please see: https://github.com/google/brotli/releases/tag/v1.2.1; BOD 26-04: https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk; Forensics Triage Requirements: https://www.cisa.gov/news-events/directives/bod-26-04-implementation-guidance-prioritizing-security-updates-based-risk",
-              "urls": [
-                "https://nvd.nist.gov/vuln/detail/CVE-2026-111497"
-              ],
-              "cwes": [
-                "CWE-252",
-                "CWE-787"
-              ]
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-111497",
-              "epss": 0.82641,
-              "percentile": 0.99673,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-111497",
-              "cwe": "CWE-252",
-              "source": "cve-coordination@google.com",
-              "type": "Secondary"
-            },
-            {
-              "cve": "CVE-2026-111497",
-              "cwe": "CWE-787",
-              "source": "cve-coordination@google.com",
-              "type": "Secondary"
-            }
-          ]
-        },
-        {
-          "id": "GHSA-c9gr-gmg4-2vqv",
-          "dataSource": "github",
-          "namespace": "github:language:go",
-          "severity": "Unknown",
-          "urls": [],
-          "cvss": []
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "github.com/andybalholm/brotli",
-              "version": "v1.1.1"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6888",
-            "versionConstraint": "<1.2.7 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "1.2.7"
-          }
         }
       ],
       "artifact": {
-        "id": "64953d6322d16fcc",
-        "name": "github.com/andybalholm/brotli",
-        "version": "v1.1.1",
-        "type": "go-module",
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
         "locations": [
           {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/cortex/cortex",
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
             }
           }
         ],
-        "language": "go",
-        "licenses": [],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
         "cpes": [
-          "cpe:2.3:a:andybalholm:brotli:v1.1.1:*:*:*:*:*:*:*"
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:golang/github.com/andybalholm/brotli@v1.1.1",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GHSA-mgcc-cww5-fp2q",
-        "dataSource": "https://github.com/advisories/GHSA-mgcc-cww5-fp2q",
-        "namespace": "github:language:go",
-        "severity": "High",
-        "urls": [
-          "https://github.com/go-jose/go-jose/security/advisories/GHSA-mgcc-cww5-fp2q",
-          "https://nvd.nist.gov/vuln/detail/CVE-2026-116587",
-          "https://github.com/go-jose/go-jose/commit/a0111f82742fa92bceec9ede40845e73319e6230",
-          "https://github.com/go-jose/go-jose/releases/tag/v4.1.6"
-        ],
-        "description": "Go JOSE: DoS when parsing JWKs that contain RSA keys",
-        "cvss": [
-          {
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-116587",
-            "epss": 0.00489,
-            "percentile": 0.42657,
-            "date": "2026-11-16"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-116587",
-            "cwe": "CWE-407",
-            "source": "security-advisories@github.com",
-            "type": "Secondary"
-          },
-          {
-            "cve": "CVE-2026-116587",
-            "cwe": "CWE-770",
-            "source": "security-advisories@github.com",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "4.1.6"
-          ],
-          "state": "fixed",
-          "available": [
+          "files": [
             {
-              "version": "4.1.6",
-              "date": "2026-10-28",
-              "kind": "first-observed"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.36675
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-116587",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116587",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://github.com/go-jose/go-jose/commit/a0111f82742fa92bceec9ede40845e73319e6230",
-            "https://github.com/go-jose/go-jose/releases/tag/v4.1.6",
-            "https://github.com/go-jose/go-jose/security/advisories/GHSA-mgcc-cww5-fp2q"
-          ],
-          "description": "Go JOSE provides an implementation of the Javascript Object Signing and Encryption set of standards in Go, including support for JSON Web Encryption (JWE), JSON Web Signature (JWS), and JSON Web Token (JWT) standards. Prior to 4.1.6, go-jose parses attacker-controlled RSA modulus and prime values from JWKs without enforcing size and consistency bounds before passing them to crypto/rsa.PrivateKey.Validate. On Go 1.24 and later, crafted large or degenerate RSA parameters can make that validation consume cubic CPU time, allowing remote denial of service in applications that parse JWKs from untrusted sources. This issue is fixed in version 4.1.6.",
-          "cvss": [
-            {
-              "source": "security-advisories@github.com",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116587",
-              "epss": 0.00489,
-              "percentile": 0.42657,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116587",
-              "cwe": "CWE-407",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
+              "path": "/etc"
             },
             {
-              "cve": "CVE-2026-116587",
-              "cwe": "CWE-770",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
             }
           ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "github:language:go",
-            "package": {
-              "name": "github.com/go-jose/go-jose/v4",
-              "version": "v4.1.4"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GHSA-mgcc-cww5-fp2q",
-            "versionConstraint": "<=4.1.5 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "4.1.6"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "67e2843644e2bcb9",
-        "name": "github.com/go-jose/go-jose/v4",
-        "version": "v4.1.4",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:go-jose:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go-jose:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go_jose:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go_jose:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:golang/github.com/go-jose/go-jose/v4@v4.1.4",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
         }
       }
     },
@@ -441,8 +203,8 @@
           {
             "cve": "CVE-2026-78661",
             "epss": 0.00409,
-            "percentile": 0.35699,
-            "date": "2026-11-16"
+            "percentile": 0.35723,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -500,315 +262,8 @@
             {
               "cve": "CVE-2026-78661",
               "epss": 0.00409,
-              "percentile": 0.35699,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78661",
-              "cwe": "CWE-407",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6860",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "fb64896702246c55",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6860",
-        "dataSource": "https://go.dev/cl/849365",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/issue/82224",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78661",
-            "epss": 0.00409,
-            "percentile": 0.35699,
-            "date": "2026-11-16"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78661",
-            "cwe": "CWE-407",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.30674999999999997
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78661",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/849365",
-            "https://go.dev/issue/82224",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6860"
-          ],
-          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78661",
-              "epss": 0.00409,
-              "percentile": 0.35699,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78661",
-              "cwe": "CWE-407",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6860",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "d3d8a33d2e9ce5e3",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6860",
-        "dataSource": "https://go.dev/cl/849365",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/issue/82224",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78661",
-            "epss": 0.00409,
-            "percentile": 0.35699,
-            "date": "2026-11-16"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78661",
-            "cwe": "CWE-407",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.30674999999999997
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78661",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/849365",
-            "https://go.dev/issue/82224",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6860"
-          ],
-          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78661",
-              "epss": 0.00409,
-              "percentile": 0.35699,
-              "date": "2026-11-16"
+              "percentile": 0.35723,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -850,7 +305,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -875,136 +330,101 @@
     },
     {
       "vulnerability": {
-        "id": "GO-2026-6865",
-        "dataSource": "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
+        "id": "GO-2026-6860",
+        "dataSource": "https://go.dev/cl/849365",
         "namespace": "govulndb:language:go",
         "severity": "High",
         "urls": [
-          "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-          "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+          "https://go.dev/issue/82224",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
         ],
-        "description": "Panic on two-block frames in github.com/klauspost/compress",
+        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
         "cvss": [
           {
-            "source": "security-advisories@github.com",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary",
-            "version": "4.0",
-            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
             "metrics": {
-              "baseScore": 8.7
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
             },
             "vendorMetadata": {}
           }
         ],
         "epss": [
           {
-            "cve": "CVE-2026-116591",
-            "epss": 0.00333,
-            "percentile": 0.26861,
-            "date": "2026-11-16"
+            "cve": "CVE-2026-78661",
+            "epss": 0.00409,
+            "percentile": 0.35723,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-116591",
-            "cwe": "CWE-190",
-            "source": "security-advisories@github.com",
+            "cve": "CVE-2026-78661",
+            "cwe": "CWE-407",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary"
           }
         ],
         "fix": {
           "versions": [
-            "1.20.2"
+            "0.62.0"
           ],
           "state": "fixed",
           "available": [
             {
-              "version": "1.20.2",
-              "date": "2026-10-12",
+              "version": "0.62.0",
+              "date": "2026-10-27",
               "kind": "release"
             }
           ]
         },
         "advisories": [],
-        "risk": 0.26972999999999997
+        "risk": 0.30674999999999997
       },
       "relatedVulnerabilities": [
         {
-          "id": "CVE-2026-116591",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
+          "id": "CVE-2026-78661",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
           "namespace": "nvd:cpe",
           "severity": "High",
           "urls": [
-            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-            "https://github.com/klauspost/compress/releases/tag/v1.20.2",
-            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8"
+            "https://go.dev/cl/849365",
+            "https://go.dev/issue/82224",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6860"
           ],
-          "description": "compress provides various compression algorithms. Prior to 1.20.2, the zstd DecodeAll and streaming decoder paths can panic when a crafted two-block frame reaches huff0.ReadTable with an FSE normalized count of 32768 that readNCount stores in int16 as -32768. The wrapped count allows buildDtable to retain stale fse.Scratch decode-table state from the prior block, and nextFast then derives an out-of-range state and indexes beyond the table instead of returning a decode error. Both blocks are required to preserve and then reuse the stale state, allowing untrusted zstd input to crash an application. This issue is fixed in version 1.20.2.",
+          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
           "cvss": [
             {
-              "source": "security-advisories@github.com",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
               "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
               "metrics": {
-                "baseScore": 8.7
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
               },
               "vendorMetadata": {}
             }
           ],
           "epss": [
             {
-              "cve": "CVE-2026-116591",
-              "epss": 0.00333,
-              "percentile": 0.26861,
-              "date": "2026-11-16"
+              "cve": "CVE-2026-78661",
+              "epss": 0.00409,
+              "percentile": 0.35723,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
             {
-              "cve": "CVE-2026-116591",
-              "cwe": "CWE-190",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        },
-        {
-          "id": "GHSA-fpmh-frq8-7rj8",
-          "dataSource": "https://github.com/advisories/GHSA-fpmh-frq8-7rj8",
-          "namespace": "github:language:go",
-          "severity": "High",
-          "urls": [
-            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
-            "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
-            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-            "https://github.com/klauspost/compress/releases/tag/v1.20.2"
-          ],
-          "description": "compress zstd: Panic on two-block frames",
-          "cvss": [
-            {
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
-              "metrics": {
-                "baseScore": 8.7
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116591",
-              "epss": 0.00333,
-              "percentile": 0.26861,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116591",
-              "cwe": "CWE-190",
-              "source": "security-advisories@github.com",
+              "cve": "CVE-2026-78661",
+              "cwe": "CWE-407",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
               "type": "Secondary"
             }
           ]
@@ -1018,28 +438,181 @@
             "language": "go",
             "namespace": "govulndb:language:go",
             "package": {
-              "name": "github.com/klauspost/compress",
-              "version": "v1.18.7"
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
             }
           },
           "found": {
-            "vulnerabilityID": "GO-2026-6865",
-            "versionConstraint": "<1.20.2 (go)"
+            "vulnerabilityID": "GO-2026-6860",
+            "versionConstraint": "<0.62.0 (go)"
           },
           "fix": {
-            "suggestedVersion": "1.20.2"
+            "suggestedVersion": "0.62.0"
           }
         }
       ],
       "artifact": {
-        "id": "6af43e7237bdbe43",
-        "name": "github.com/klauspost/compress",
-        "version": "v1.18.7",
+        "id": "fb64896702246c55",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6860",
+        "dataSource": "https://go.dev/cl/849365",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/issue/82224",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
+        ],
+        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78661",
+            "epss": 0.00409,
+            "percentile": 0.35723,
+            "date": "2026-11-17"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78661",
+            "cwe": "CWE-407",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.62.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.62.0",
+              "date": "2026-10-27",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.30674999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78661",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/849365",
+            "https://go.dev/issue/82224",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6860"
+          ],
+          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78661",
+              "epss": 0.00409,
+              "percentile": 0.35723,
+              "date": "2026-11-17"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78661",
+              "cwe": "CWE-407",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6860",
+            "versionConstraint": "<0.62.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.62.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "d3d8a33d2e9ce5e3",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
         "type": "go-module",
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -1049,393 +622,190 @@
         "language": "go",
         "licenses": [],
         "cpes": [
-          "cpe:2.3:a:klauspost:compress:v1.18.7:*:*:*:*:*:*:*"
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
         ],
-        "purl": "pkg:golang/github.com/klauspost/compress@v1.18.7",
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
-          "h1Digest": "h1:aUyZsS4kH3QTKurYhAOwAHxllVPnOthb3vPfnF1Ehjw=",
+          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
           "mainModule": "github.com/prometheus/prometheus"
         }
       }
     },
     {
       "vulnerability": {
-        "id": "GO-2026-6865",
-        "dataSource": "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
-        "namespace": "govulndb:language:go",
+        "id": "CVE-2026-107496",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-107496",
+        "namespace": "nvd:cpe",
         "severity": "High",
         "urls": [
-          "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-          "https://github.com/klauspost/compress/releases/tag/v1.20.2"
+          "https://github.com/openssl/openssl/commit/36e15b618decdff1b116eead6747718e6e729ad2",
+          "https://github.com/openssl/openssl/commit/a0051cfe699bf5a047bc1c4faef65f80f7987366",
+          "https://github.com/openssl/openssl/commit/a8531368ddb1f86d2a2782a8b693926bb67b59e7",
+          "https://openssl-library.org/news/secadv/20261110.txt"
         ],
-        "description": "Panic on two-block frames in github.com/klauspost/compress",
+        "description": "Issue summary: Encrypting a CMS message to an EC certificate whose group order\nis 1 may cause CMS_encrypt() or CMS_encrypt_ex() to loop indefinitely.\n\nImpact summary: An attacker able to supply the recipient certificate to an\napplication performing CMS encryption can cause that application to loop\nindefinitely, consuming CPU and resulting in Denial of Service.\n\nCWE: CWE-835: Loop with Unreachable Exit Condition ('Infinite Loop')\n\nDescription: CMS_encrypt() and CMS_encrypt_ex() encrypt a message to one or\nmore recipient certificates and, for an EC recipient, generate an ephemeral\nkey in the recipient's group. If the certificate declares a group order of 1,\nrandom scalar generation can only produce zero. The key generation routine\nthen retries without limit while waiting for a nonzero private scalar, so the\ncall never returns.\n\nThe OpenSSL TLS and QUIC implementations do not use this path. An application\nis exposed only if it calls CMS_encrypt() or CMS_encrypt_ex() with a recipient\ncertificate whose EC parameters are attacker-controlled. Certificates with\nnormal EC group orders do not trigger the loop.\n\nOpenSSL 4.0 and later reject unknown explicit EC groups in default builds.\nThese versions are affected only when configured with the\nenable-ec_explicit_curves option.\n\nThe result is a hang that consumes a CPU core until the process is\ninterrupted, a Denial of Service. The severity is Low because the attacker\nmust supply the recipient certificate and the application must choose to\nencrypt to it; ordinary CMS encryption to trusted recipients is unaffected.\n\nThe fix makes EC key generation fail when the group has no valid nonzero\nprivate scalar, instead of retrying indefinitely.\n\nFIPS impact: no\nThe FIPS modules in 4.1, 4.0, 3.5 and 3.0 are not affected. The FIPS provider\ndoes not support arbitrary explicit EC domain parameters, so an order-1 group\nis rejected during key import before the vulnerable key generation path is\nreached.",
         "cvss": [
           {
-            "source": "security-advisories@github.com",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary",
-            "version": "4.0",
-            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
             "metrics": {
-              "baseScore": 8.7
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
             },
             "vendorMetadata": {}
           }
         ],
         "epss": [
           {
-            "cve": "CVE-2026-116591",
-            "epss": 0.00333,
-            "percentile": 0.26861,
-            "date": "2026-11-16"
+            "cve": "CVE-2026-107496",
+            "epss": 0.00336,
+            "percentile": 0.27426,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-116591",
-            "cwe": "CWE-190",
-            "source": "security-advisories@github.com",
+            "cve": "CVE-2026-107496",
+            "cwe": "CWE-835",
+            "source": "openssl-security@openssl.org",
             "type": "Secondary"
           }
         ],
         "fix": {
-          "versions": [
-            "1.20.2"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "1.20.2",
-              "date": "2026-10-12",
-              "kind": "release"
-            }
-          ]
+          "versions": [],
+          "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.26972999999999997
+        "risk": 0.252
       },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-116591",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-            "https://github.com/klauspost/compress/releases/tag/v1.20.2",
-            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8"
-          ],
-          "description": "compress provides various compression algorithms. Prior to 1.20.2, the zstd DecodeAll and streaming decoder paths can panic when a crafted two-block frame reaches huff0.ReadTable with an FSE normalized count of 32768 that readNCount stores in int16 as -32768. The wrapped count allows buildDtable to retain stale fse.Scratch decode-table state from the prior block, and nextFast then derives an out-of-range state and indexes beyond the table instead of returning a decode error. Both blocks are required to preserve and then reuse the stale state, allowing untrusted zstd input to crash an application. This issue is fixed in version 1.20.2.",
-          "cvss": [
-            {
-              "source": "security-advisories@github.com",
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-              "metrics": {
-                "baseScore": 8.7
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116591",
-              "epss": 0.00333,
-              "percentile": 0.26861,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116591",
-              "cwe": "CWE-190",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        },
-        {
-          "id": "GHSA-fpmh-frq8-7rj8",
-          "dataSource": "https://github.com/advisories/GHSA-fpmh-frq8-7rj8",
-          "namespace": "github:language:go",
-          "severity": "High",
-          "urls": [
-            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
-            "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
-            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-            "https://github.com/klauspost/compress/releases/tag/v1.20.2"
-          ],
-          "description": "compress zstd: Panic on two-block frames",
-          "cvss": [
-            {
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
-              "metrics": {
-                "baseScore": 8.7
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116591",
-              "epss": 0.00333,
-              "percentile": 0.26861,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116591",
-              "cwe": "CWE-190",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
+      "relatedVulnerabilities": [],
       "matchDetails": [
         {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
           "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
             "package": {
-              "name": "github.com/klauspost/compress",
-              "version": "v1.18.7"
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
             }
           },
           "found": {
-            "vulnerabilityID": "GO-2026-6865",
-            "versionConstraint": "<1.20.2 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "1.20.2"
+            "vulnerabilityID": "CVE-2026-107496",
+            "versionConstraint": ">= 1.0.2, < 1.0.2zt,>= 1.1.1, < 1.1.1zk,>= 3.0.0, < 3.0.24,>= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
           }
         }
       ],
       "artifact": {
-        "id": "62f5fb9da918f146",
-        "name": "github.com/klauspost/compress",
-        "version": "v1.18.7",
-        "type": "go-module",
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
         "locations": [
           {
-            "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/prometheus/prometheus",
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
             }
           }
         ],
-        "language": "go",
-        "licenses": [],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
         "cpes": [
-          "cpe:2.3:a:klauspost:compress:v1.18.7:*:*:*:*:*:*:*"
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:golang/github.com/klauspost/compress@v1.18.7",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "h1Digest": "h1:aUyZsS4kH3QTKurYhAOwAHxllVPnOthb3vPfnF1Ehjw=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6865",
-        "dataSource": "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-          "https://github.com/klauspost/compress/releases/tag/v1.20.2"
-        ],
-        "description": "Panic on two-block frames in github.com/klauspost/compress",
-        "cvss": [
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
           {
-            "source": "security-advisories@github.com",
-            "type": "Secondary",
-            "version": "4.0",
-            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-            "metrics": {
-              "baseScore": 8.7
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
             },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-116591",
-            "epss": 0.00333,
-            "percentile": 0.26861,
-            "date": "2026-11-16"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-116591",
-            "cwe": "CWE-190",
-            "source": "security-advisories@github.com",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "1.20.2"
-          ],
-          "state": "fixed",
-          "available": [
             {
-              "version": "1.20.2",
-              "date": "2026-10-12",
-              "kind": "release"
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
             }
           ]
-        },
-        "advisories": [],
-        "risk": 0.26972999999999997
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-116591",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-            "https://github.com/klauspost/compress/releases/tag/v1.20.2",
-            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8"
-          ],
-          "description": "compress provides various compression algorithms. Prior to 1.20.2, the zstd DecodeAll and streaming decoder paths can panic when a crafted two-block frame reaches huff0.ReadTable with an FSE normalized count of 32768 that readNCount stores in int16 as -32768. The wrapped count allows buildDtable to retain stale fse.Scratch decode-table state from the prior block, and nextFast then derives an out-of-range state and indexes beyond the table instead of returning a decode error. Both blocks are required to preserve and then reuse the stale state, allowing untrusted zstd input to crash an application. This issue is fixed in version 1.20.2.",
-          "cvss": [
-            {
-              "source": "security-advisories@github.com",
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-              "metrics": {
-                "baseScore": 8.7
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116591",
-              "epss": 0.00333,
-              "percentile": 0.26861,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116591",
-              "cwe": "CWE-190",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        },
-        {
-          "id": "GHSA-fpmh-frq8-7rj8",
-          "dataSource": "https://github.com/advisories/GHSA-fpmh-frq8-7rj8",
-          "namespace": "github:language:go",
-          "severity": "High",
-          "urls": [
-            "https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8",
-            "https://nvd.nist.gov/vuln/detail/CVE-2026-116591",
-            "https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d",
-            "https://github.com/klauspost/compress/releases/tag/v1.20.2"
-          ],
-          "description": "compress zstd: Panic on two-block frames",
-          "cvss": [
-            {
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
-              "metrics": {
-                "baseScore": 8.7
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116591",
-              "epss": 0.00333,
-              "percentile": 0.26861,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116591",
-              "cwe": "CWE-190",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "github.com/klauspost/compress",
-              "version": "v1.18.7"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6865",
-            "versionConstraint": "<1.20.2 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "1.20.2"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "a66a7bfa8cd25997",
-        "name": "github.com/klauspost/compress",
-        "version": "v1.18.7",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:klauspost:compress:v1.18.7:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:golang/github.com/klauspost/compress@v1.18.7",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
         }
       }
     },
@@ -1470,8 +840,8 @@
           {
             "cve": "CVE-2026-128085",
             "epss": 0.00469,
-            "percentile": 0.41099,
-            "date": "2026-11-16"
+            "percentile": 0.41124,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -1536,176 +906,8 @@
             {
               "cve": "CVE-2026-128085",
               "epss": 0.00469,
-              "percentile": 0.41099,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-128085",
-              "cwe": "CWE-135",
-              "source": "security-advisories@github.com",
-              "type": "Primary"
-            },
-            {
-              "cve": "CVE-2026-128085",
-              "cwe": "CWE-770",
-              "source": "security-advisories@github.com",
-              "type": "Primary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "github:language:go",
-            "package": {
-              "name": "go.opentelemetry.io/otel/sdk",
-              "version": "v1.45.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
-            "versionConstraint": ">=1.33.0,<1.47.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "1.47.0"
-          }
-        }
-      ],
-      "artifact": {
-        "id": "77ac17c501e35dd7",
-        "name": "go.opentelemetry.io/otel/sdk",
-        "version": "v1.45.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/cortex/cortex",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:otel:sdk:v1.45.0:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:golang/go.opentelemetry.io/otel/sdk@v1.45.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GHSA-q7gw-24fr-5p69",
-        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
-        "namespace": "github:language:go",
-        "severity": "Medium",
-        "urls": [
-          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
-          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
-          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
-          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
-          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
-        ],
-        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
-        "cvss": [
-          {
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-            "metrics": {
-              "baseScore": 5.3,
-              "exploitabilityScore": 3.9,
-              "impactScore": 1.5
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-128085",
-            "epss": 0.00469,
-            "percentile": 0.41099,
-            "date": "2026-11-16"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-128085",
-            "cwe": "CWE-135",
-            "source": "security-advisories@github.com",
-            "type": "Primary"
-          },
-          {
-            "cve": "CVE-2026-128085",
-            "cwe": "CWE-770",
-            "source": "security-advisories@github.com",
-            "type": "Primary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "1.47.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "1.47.0",
-              "date": "2026-11-14",
-              "kind": "first-observed"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.241535
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-128085",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
-          "namespace": "nvd:cpe",
-          "severity": "Medium",
-          "urls": [
-            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
-            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
-            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
-            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
-            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
-          ],
-          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
-          "cvss": [
-            {
-              "source": "security-advisories@github.com",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-              "metrics": {
-                "baseScore": 5.3,
-                "exploitabilityScore": 3.9,
-                "impactScore": 1.5
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-128085",
-              "epss": 0.00469,
-              "percentile": 0.41099,
-              "date": "2026-11-16"
+              "percentile": 0.41124,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -1753,7 +955,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -1807,8 +1009,8 @@
           {
             "cve": "CVE-2026-128085",
             "epss": 0.00469,
-            "percentile": 0.41099,
-            "date": "2026-11-16"
+            "percentile": 0.41124,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -1873,8 +1075,176 @@
             {
               "cve": "CVE-2026-128085",
               "epss": 0.00469,
-              "percentile": 0.41099,
-              "date": "2026-11-16"
+              "percentile": 0.41124,
+              "date": "2026-11-17"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-135",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            },
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-770",
+              "source": "security-advisories@github.com",
+              "type": "Primary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "github:language:go",
+            "package": {
+              "name": "go.opentelemetry.io/otel/sdk",
+              "version": "v1.45.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
+            "versionConstraint": ">=1.33.0,<1.47.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.47.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "77ac17c501e35dd7",
+        "name": "go.opentelemetry.io/otel/sdk",
+        "version": "v1.45.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/opt/monitoring/cortex/cortex",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:otel:sdk:v1.45.0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/go.opentelemetry.io/otel/sdk@v1.45.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GHSA-q7gw-24fr-5p69",
+        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
+        "namespace": "github:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
+          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
+        ],
+        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
+        "cvss": [
+          {
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 3.9,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-128085",
+            "epss": 0.00469,
+            "percentile": 0.41124,
+            "date": "2026-11-17"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-135",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          },
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-770",
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.47.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.47.0",
+              "date": "2026-11-14",
+              "kind": "first-observed"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.241535
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-128085",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
+          ],
+          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "metrics": {
+                "baseScore": 5.3,
+                "exploitabilityScore": 3.9,
+                "impactScore": 1.5
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-128085",
+              "epss": 0.00469,
+              "percentile": 0.41124,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -1922,7 +1292,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -1976,8 +1346,8 @@
           {
             "cve": "CVE-2026-128085",
             "epss": 0.00469,
-            "percentile": 0.41099,
-            "date": "2026-11-16"
+            "percentile": 0.41124,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -2042,8 +1412,8 @@
             {
               "cve": "CVE-2026-128085",
               "epss": 0.00469,
-              "percentile": 0.41099,
-              "date": "2026-11-16"
+              "percentile": 0.41124,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -2091,7 +1461,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -2145,8 +1515,8 @@
           {
             "cve": "CVE-2026-128085",
             "epss": 0.00469,
-            "percentile": 0.41099,
-            "date": "2026-11-16"
+            "percentile": 0.41124,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -2211,8 +1581,8 @@
             {
               "cve": "CVE-2026-128085",
               "epss": 0.00469,
-              "percentile": 0.41099,
-              "date": "2026-11-16"
+              "percentile": 0.41124,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -2260,7 +1630,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -2279,6 +1649,180 @@
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
           "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-95691",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-95691",
+        "namespace": "nvd:cpe",
+        "severity": "High",
+        "urls": [
+          "https://github.com/openssl/openssl/commit/dd90ceb99a3c2ddba336bb4a00be9ebabd84c2a1",
+          "https://github.com/openssl/openssl/commit/ec9d4de9d03989b29db5a3d7efdb4c285deaf386",
+          "https://github.com/openssl/openssl/commit/f6244675833e097c2429a40d1b206d95385bd42f",
+          "https://openssl-library.org/news/secadv/20261110.txt"
+        ],
+        "description": "Issue summary: A retransmitted QUIC CRYPTO frame can release packet storage\nwhile the TLS record layer retains a direct pointer into that storage causing\nuse after free.\n\nImpact summary: A malicious QUIC server can cause a heap-use-after-free read\nin the OpenSSL QUIC client. The server can also identify one allocator-adjacent\nbyte through the client's protected Handshake response.\n\nCWE: CWE-416: Use After Free\n\nDescription: During CRYPTO stream processing, a pointer into the first frame's\nmemory on the stream is lent to the TLS handshake processing. The memory\nmust remain stable until it is processed and released. However the processing\nof retransmitted CRYPTO frames could release the memory if the retransmitted\nframe fully overlapped the existing frame. This then causes use-after-free read\nwhen the TLS handshake processing continues.\n\nThe use-after-free read can lead to a Denial-of-Service of the client\napplication or a minor leak of information about the heap memory contents\nthat might be overwritten with other data, subsequently allocated by\nthe application, to the peer.\n\nFIPS impact: no\nThe FIPS module is not affected as the QUIC implementation is outside of\nthe OpenSSL FIPS module boundary.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H",
+            "metrics": {
+              "baseScore": 8.1,
+              "exploitabilityScore": 2.9,
+              "impactScore": 5.2
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-95691",
+            "epss": 0.00284,
+            "percentile": 0.21203,
+            "date": "2026-11-17"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-95691",
+            "cwe": "CWE-416",
+            "source": "openssl-security@openssl.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.22152
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-95691",
+            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
+            }
+          ]
         }
       }
     },
@@ -2311,8 +1855,8 @@
           {
             "cve": "CVE-2025-15367",
             "epss": 0.00377,
-            "percentile": 0.32187,
-            "date": "2026-11-16"
+            "percentile": 0.32207,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -2383,7 +1927,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2468,315 +2012,536 @@
     },
     {
       "vulnerability": {
-        "id": "GHSA-vvm8-gf78-28g4",
-        "dataSource": "https://github.com/advisories/GHSA-vvm8-gf78-28g4",
-        "namespace": "github:language:go",
-        "severity": "Medium",
+        "id": "CVE-2026-88823",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-88823",
+        "namespace": "nvd:cpe",
+        "severity": "High",
         "urls": [
-          "https://github.com/go-jose/go-jose/security/advisories/GHSA-vvm8-gf78-28g4",
-          "https://nvd.nist.gov/vuln/detail/CVE-2026-116586",
-          "https://github.com/go-jose/go-jose/pull/290",
-          "https://github.com/go-jose/go-jose/commit/a31af25836222f4c45d366d6e8f9b1049dd9935a",
-          "https://github.com/go-jose/go-jose/releases/tag/v4.1.5"
+          "https://github.com/openssl/openssl/commit/159e1de0c448d7b9f09ad768c8e141def4aa1eb4",
+          "https://github.com/openssl/openssl/commit/2f5fc833ff9b5bfe00b32f8b5c74f73c5773c682",
+          "https://github.com/openssl/openssl/commit/6747b1a278816dd7db46438040a70b0b5e5e0a90",
+          "https://openssl-library.org/news/secadv/20261110.txt"
         ],
-        "description": "Go JOSE: Panics in JSON parsing",
+        "description": "Issue summary: The AES-GCM-SIV implementation treats a zero-length Additional\nAuthenticated Data (AAD) update as a reset of all the AAD supplied so far,\ninstead of leaving the AAD unchanged. An application that supplies its AAD in\nseveral fragments, one of which is empty, therefore produces or verifies\nmessages whose authentication tag does not cover the AAD supplied before\nthe empty fragment.\n\nImpact summary: Data an application intended to authenticate alongside a\nmessage is silently left unauthenticated. An attacker can forge the AAD of such\na message.\n\nCWE: CWE-325: Missing Cryptographic Step\n\nDescription: An application passing AAD in multiple chunks of which some have\nzero length will have the previous AAD chunks effectively unauthenticated. Also,\non context re-initialisation, the AAD was not reset, which meant that any AAD\naccumulated from the previous context usage were also included in the AAD of the\nnew message.\n\nThe fix makes a zero-length AAD update a no-op and clears any accumulated AAD\nwhenever the context is re-initialised with a key or a nonce.\nA re-initialisation that only changes parameters keeps the AAD.\n\nFIPS impact: no\nThe FIPS modules are not affected, as AES-GCM-SIV is not a FIPS approved\nalgorithm and is implemented only in the default provider, outside the\nOpenSSL FIPS module boundary.",
         "cvss": [
           {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
             "type": "Secondary",
-            "version": "4.0",
-            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
             "metrics": {
-              "baseScore": 6.9
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
             },
             "vendorMetadata": {}
           }
         ],
         "epss": [
           {
-            "cve": "CVE-2026-116586",
-            "epss": 0.00292,
-            "percentile": 0.22018,
-            "date": "2026-11-16"
+            "cve": "CVE-2026-88823",
+            "epss": 0.00267,
+            "percentile": 0.18989,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-116586",
-            "cwe": "CWE-674",
-            "source": "security-advisories@github.com",
+            "cve": "CVE-2026-88823",
+            "cwe": "CWE-325",
+            "source": "openssl-security@openssl.org",
             "type": "Secondary"
           }
         ],
         "fix": {
-          "versions": [
-            "4.1.5"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "4.1.5",
-              "date": "2026-10-29",
-              "kind": "first-observed"
-            }
-          ]
+          "versions": [],
+          "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.17373999999999998
+        "risk": 0.20024999999999998
       },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-116586",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116586",
-          "namespace": "nvd:cpe",
-          "severity": "Medium",
-          "urls": [
-            "https://github.com/go-jose/go-jose/commit/a31af25836222f4c45d366d6e8f9b1049dd9935a",
-            "https://github.com/go-jose/go-jose/pull/290",
-            "https://github.com/go-jose/go-jose/releases/tag/v4.1.5",
-            "https://github.com/go-jose/go-jose/security/advisories/GHSA-vvm8-gf78-28g4"
-          ],
-          "description": "Go JOSE provides an implementation of the Javascript Object Signing and Encryption set of standards in Go, including support for JSON Web Encryption (JWE), JSON Web Signature (JWS), and JSON Web Token (JWT) standards. Prior to 4.1.5, parsing attacker-controlled JSON through go-jose allows deeply nested arrays or objects to exceed Go's stack limit. The resulting stack overflow crashes the application and permits denial of service in applications that parse untrusted JSON through go-jose. This issue is fixed in version 4.1.5.",
-          "cvss": [
-            {
-              "source": "security-advisories@github.com",
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-              "metrics": {
-                "baseScore": 6.9
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116586",
-              "epss": 0.00292,
-              "percentile": 0.22018,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116586",
-              "cwe": "CWE-674",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
+      "relatedVulnerabilities": [],
       "matchDetails": [
         {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
           "searchedBy": {
-            "language": "go",
-            "namespace": "github:language:go",
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
             "package": {
-              "name": "github.com/go-jose/go-jose/v4",
-              "version": "v4.1.4"
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
             }
           },
           "found": {
-            "vulnerabilityID": "GHSA-vvm8-gf78-28g4",
-            "versionConstraint": "<4.1.5 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "4.1.5"
+            "vulnerabilityID": "CVE-2026-88823",
+            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
           }
         }
       ],
       "artifact": {
-        "id": "67e2843644e2bcb9",
-        "name": "github.com/go-jose/go-jose/v4",
-        "version": "v4.1.4",
-        "type": "go-module",
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
         "locations": [
           {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/cortex/cortex",
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
             }
           }
         ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:go-jose:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go-jose:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go_jose:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go_jose:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*"
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
         ],
-        "purl": "pkg:golang/github.com/go-jose/go-jose/v4@v4.1.4",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
+        "cpes": [
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
+            }
+          ]
         }
       }
     },
     {
       "vulnerability": {
-        "id": "GHSA-4w3g-jfj2-cw2q",
-        "dataSource": "https://github.com/advisories/GHSA-4w3g-jfj2-cw2q",
-        "namespace": "github:language:go",
+        "id": "CVE-2026-124249",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-124249",
+        "namespace": "nvd:cpe",
         "severity": "Medium",
         "urls": [
-          "https://github.com/go-jose/go-jose/security/advisories/GHSA-4w3g-jfj2-cw2q",
-          "https://nvd.nist.gov/vuln/detail/CVE-2026-116585",
-          "https://github.com/go-jose/go-jose/pull/292",
-          "https://github.com/go-jose/go-jose/commit/35883f7999e87cbd1b1f4cda07fdad8cd71c3dd6",
-          "https://github.com/go-jose/go-jose/commit/74114c2fa22669a2b2a296746eaa82e15566fd54",
-          "https://github.com/go-jose/go-jose/releases/tag/v4.1.5"
+          "https://github.com/python/cpython/commit/4e9d037f1cfc8e29efcb1f67bc668e06ff2b6643",
+          "https://github.com/python/cpython/commit/8eb3d2c1c41ca7ce628554413981c1eb763a1494",
+          "https://github.com/python/cpython/commit/ac1d49f4fbb33941475c5aa3cb663ab39d64cb73",
+          "https://github.com/python/cpython/issues/161569",
+          "https://github.com/python/cpython/pull/161570",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/Y6IKNZ2VZUS2L6CLQICSFUEMCLT7OLTY/",
+          "http://www.openwall.com/lists/oss-security/2026/11/09/24"
         ],
-        "description": "Go JOSE: Panic during CBC-HMAC processing",
+        "description": "http.cookiejar.CookieJar deleted a stored cookie when a response carried an\nalready expired Set-Cookie header for it, using the Domain and Path\nattributes from the header without consulting the cookie policy. A server\ncould therefore delete cookies belonging to other domains from a shared\ncookie jar, such as the one used by urllib's HTTPCookieProcessor. The fix\nconsults the cookie policy before an expired cookie may delete an existing\none, as required by RFC 6265 section 5.3.",
         "cvss": [
           {
+            "source": "cna@python.org",
             "type": "Secondary",
             "version": "4.0",
-            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
             "metrics": {
-              "baseScore": 6.9
+              "baseScore": 6.3
             },
             "vendorMetadata": {}
           }
         ],
         "epss": [
           {
-            "cve": "CVE-2026-116585",
-            "epss": 0.00264,
-            "percentile": 0.18468,
-            "date": "2026-11-16"
+            "cve": "CVE-2026-124249",
+            "epss": 0.00272,
+            "percentile": 0.19768,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-116585",
-            "cwe": "CWE-129",
-            "source": "security-advisories@github.com",
+            "cve": "CVE-2026-124249",
+            "cwe": "CWE-346",
+            "source": "cna@python.org",
             "type": "Secondary"
           }
         ],
         "fix": {
-          "versions": [
-            "4.1.5"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "4.1.5",
-              "date": "2026-10-29",
-              "kind": "first-observed"
-            }
-          ]
+          "versions": [],
+          "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.15708
+        "risk": 0.15368
       },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-116585",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-116585",
-          "namespace": "nvd:cpe",
-          "severity": "Medium",
-          "urls": [
-            "https://github.com/go-jose/go-jose/commit/35883f7999e87cbd1b1f4cda07fdad8cd71c3dd6",
-            "https://github.com/go-jose/go-jose/commit/74114c2fa22669a2b2a296746eaa82e15566fd54",
-            "https://github.com/go-jose/go-jose/pull/292",
-            "https://github.com/go-jose/go-jose/releases/tag/v4.1.5",
-            "https://github.com/go-jose/go-jose/security/advisories/GHSA-4w3g-jfj2-cw2q"
-          ],
-          "description": "Go JOSE provides an implementation of the Javascript Object Signing and Encryption set of standards in Go, including support for JSON Web Encryption (JWE), JSON Web Signature (JWS), and JSON Web Token (JWT) standards. Prior to 4.1.5, decrypting untrusted JWE ciphertext with A128CBC-HS256, A192CBC-HS384, or A256CBC-HS512 can pass an empty ciphertext buffer to CBC-HMAC unpadding. Insufficient validation allows the empty buffer to be indexed, causing a panic and denial of service. Applications that decrypt attacker-controlled ciphertext with one of these content-encryption algorithms are affected. This issue is fixed in version 4.1.5.",
-          "cvss": [
-            {
-              "source": "security-advisories@github.com",
-              "type": "Secondary",
-              "version": "4.0",
-              "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-              "metrics": {
-                "baseScore": 6.9
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-116585",
-              "epss": 0.00264,
-              "percentile": 0.18468,
-              "date": "2026-11-16"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-116585",
-              "cwe": "CWE-129",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
+      "relatedVulnerabilities": [],
       "matchDetails": [
         {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
           "searchedBy": {
-            "language": "go",
-            "namespace": "github:language:go",
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
             "package": {
-              "name": "github.com/go-jose/go-jose/v4",
-              "version": "v4.1.4"
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
             }
           },
           "found": {
-            "vulnerabilityID": "GHSA-4w3g-jfj2-cw2q",
-            "versionConstraint": "<4.1.5 (go)"
+            "vulnerabilityID": "CVE-2026-124249",
+            "versionConstraint": "< 3.16.0a2 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
           },
-          "fix": {
-            "suggestedVersion": "4.1.5"
+          "found": {
+            "vulnerabilityID": "CVE-2026-124249",
+            "versionConstraint": "< 3.16.0a2 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
           }
         }
       ],
       "artifact": {
-        "id": "67e2843644e2bcb9",
-        "name": "github.com/go-jose/go-jose/v4",
-        "version": "v4.1.4",
-        "type": "go-module",
+        "id": "a471f3688313bf27",
+        "name": "python-3.13",
+        "version": "3.13.18_git20261115-r1",
+        "type": "apk",
         "locations": [
           {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/cortex/cortex",
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
             }
           }
         ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:go-jose:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go-jose:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go_jose:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go_jose:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go:go-jose\\/v4:v4.1.4:*:*:*:*:*:*:*",
-          "cpe:2.3:a:go:go_jose\\/v4:v4.1.4:*:*:*:*:*:*:*"
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
         ],
-        "purl": "pkg:golang/github.com/go-jose/go-jose/v4@v4.1.4",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.18_git20261115-r1?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
         "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.18_git20261115-r1.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-88822",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-88822",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/openssl/openssl/commit/1a73dc590cbad62d6f0329ea4779eadaa8d8fd75",
+          "https://github.com/openssl/openssl/commit/7b4f5344aa0401e7b777640050b5257ed2a70e88",
+          "https://github.com/openssl/openssl/commit/911eee8eb7550b95a206f1ad8cbdb986098982f3",
+          "https://openssl-library.org/news/secadv/20261110.txt"
+        ],
+        "description": "Issue summary: QUIC, when performing automated peer detection, may allow\nuninitialized stack data to leak into the received address which is then used\nas the destination for outgoing packets.\n\nImpact summary: Applications using QUIC's automated peer detection mechanism\nmay receive an invalid address, leading to connection loss and disclosure of\nuninitialized stack data to an attacker observing the outgoing network traffic.\n\nCWE: CWE-457 (Use of Uninitialized Variable)\n\nDescription: The OpenSSL QUIC stack contains a feature in which, when using an\nalready connected socket, it will auto-detect the peer address during the SSL\nhandshake.  This feature uses the getpeername() function, passing a buffer of\nsufficient length to hold any supported address family, but passes a buffer\nlength that is only sized such that larger addresses, such as IPv6, cannot be\nretrieved. The getpeername() function however, still returns the full address\nlength, which is accepted as the valid input buffer length, leading to the\naddress buffer containing uninitialized stack data instead of the actual peer\naddress. The invalid peer address is then used as destination for the outgoing\npackets which leads to a connectivity breakage and a leakage of the\nuninitialized stack data to passive network observers.\n\nFIPS impact: no\nThe FIPS modules in 4.0, 3.6, 3.5, 3.4, and 3.0 are not affected by this CVE as\nthe affected protocol is not implemented in the FIPS module.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "metrics": {
+              "baseScore": 6.5,
+              "exploitabilityScore": 2.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-88822",
+            "epss": 0.00259,
+            "percentile": 0.17774,
+            "date": "2026-11-17"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-88822",
+            "cwe": "CWE-457",
+            "source": "openssl-security@openssl.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.148925
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-88822",
+            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
+            }
+          ]
         }
       }
     },
@@ -2809,8 +2574,8 @@
           {
             "cve": "CVE-2026-97045",
             "epss": 0.00267,
-            "percentile": 0.19019,
-            "date": "2026-11-16"
+            "percentile": 0.19022,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -2868,8 +2633,8 @@
             {
               "cve": "CVE-2026-97045",
               "epss": 0.00267,
-              "percentile": 0.19019,
-              "date": "2026-11-16"
+              "percentile": 0.19022,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -2904,15 +2669,15 @@
         }
       ],
       "artifact": {
-        "id": "fb64896702246c55",
+        "id": "d3d8a33d2e9ce5e3",
         "name": "golang.org/x/net",
         "version": "v0.61.0",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/cortex/cortex",
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
             }
@@ -2929,7 +2694,8 @@
         "metadata": {
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
+          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
+          "mainModule": "github.com/prometheus/prometheus"
         }
       }
     },
@@ -2962,8 +2728,8 @@
           {
             "cve": "CVE-2026-97045",
             "epss": 0.00267,
-            "percentile": 0.19019,
-            "date": "2026-11-16"
+            "percentile": 0.19022,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -3021,8 +2787,8 @@
             {
               "cve": "CVE-2026-97045",
               "epss": 0.00267,
-              "percentile": 0.19019,
-              "date": "2026-11-16"
+              "percentile": 0.19022,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -3064,7 +2830,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -3116,8 +2882,8 @@
           {
             "cve": "CVE-2026-97045",
             "epss": 0.00267,
-            "percentile": 0.19019,
-            "date": "2026-11-16"
+            "percentile": 0.19022,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -3175,8 +2941,8 @@
             {
               "cve": "CVE-2026-97045",
               "epss": 0.00267,
-              "percentile": 0.19019,
-              "date": "2026-11-16"
+              "percentile": 0.19022,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -3211,15 +2977,15 @@
         }
       ],
       "artifact": {
-        "id": "d3d8a33d2e9ce5e3",
+        "id": "fb64896702246c55",
         "name": "golang.org/x/net",
         "version": "v0.61.0",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
             }
@@ -3236,8 +3002,7 @@
         "metadata": {
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
-          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
-          "mainModule": "github.com/prometheus/prometheus"
+          "mainModule": "github.com/cortexproject/cortex"
         }
       }
     },
@@ -3271,8 +3036,8 @@
           {
             "cve": "CVE-2026-116566",
             "epss": 0.00259,
-            "percentile": 0.17776,
-            "date": "2026-11-16"
+            "percentile": 0.1778,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -3343,7 +3108,190 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.18_git20261115-r1?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.18_git20261115-r1.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-115559",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-115559",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/python/cpython/issues/160369",
+          "https://github.com/python/cpython/pull/160370",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/LVAGFOFG26QVXEM6VXXPRMMOZBHM4CVB/"
+        ],
+        "description": "IMAP4.starttls() wraps the socket in TLS but leaves self._readbuf, imaplib's own read-ahead buffer, untouched. Any plaintext bytes that arrived in the same recv() as the tagged OK to STARTTLS are returned by readline() after the handshake, so the client treats them as the first responses on the protected channel. A network attacker who cannot break TLS can append forged lines after the server's OK, let the handshake complete with the real server and a valid certificate, and have the client accept the forged CAPABILITY and the forged tagged completion of the next command. This is the STARTTLS command/response injection class of CVE-2011-0411.",
+        "cvss": [
+          {
+            "source": "cna@python.org",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 6.3
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-115559",
+            "epss": 0.00188,
+            "percentile": 0.08464,
+            "date": "2026-11-17"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-115559",
+            "cwe": "CWE-319",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.10622
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-115559",
+            "versionConstraint": "< 3.16.0 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-115559",
+            "versionConstraint": "< 3.16.0 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a471f3688313bf27",
+        "name": "python-3.13",
+        "version": "3.13.18_git20261115-r1",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3455,8 +3403,8 @@
           {
             "cve": "CVE-2026-103995",
             "epss": 0.0036,
-            "percentile": 0.30213,
-            "date": "2026-11-16"
+            "percentile": 0.30235,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -3527,7 +3475,191 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.18_git20261115-r1?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.18_git20261115-r1.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-115791",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-115791",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/python/cpython/issues/161705",
+          "https://github.com/python/cpython/pull/161706",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/ZKKA4Q7B35JEHSDIJNZ6TYKRDQJUHDAG/",
+          "http://www.openwall.com/lists/oss-security/2026/11/10/30"
+        ],
+        "description": "When tarfile or zipfile command line interface (CLI) is used to\n\ndecompress an archive, a Python script shadowing the stdlib can be\n\ncreated. Then if an error occurs during decompressing the next file,\n\nthe newly created Python script is executed. This is especially true\n\nif the created Python is called traceback.py. The problem is that\n\nPython adds the current directory to sys.path when python -m MODULE is\n\nrun, and the archive is also decompressed in the current directory.\n\n\n\nThe fix removes sys.path[0] in gzip, tarfile and zipfile command line\n\ninterface to prevent shadowing standard library modules from extracted\n\nfiles.",
+        "cvss": [
+          {
+            "source": "cna@python.org",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 5.3
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-115791",
+            "epss": 0.00162,
+            "percentile": 0.05369,
+            "date": "2026-11-17"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-115791",
+            "cwe": "CWE-829",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.08342999999999999
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-115791",
+            "versionConstraint": "< 3.16.0 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-115791",
+            "versionConstraint": "< 3.16.0 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a471f3688313bf27",
+        "name": "python-3.13",
+        "version": "3.13.18_git20261115-r1",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3642,8 +3774,8 @@
           {
             "cve": "CVE-2026-114437",
             "epss": 0.00129,
-            "percentile": 0.02641,
-            "date": "2026-11-16"
+            "percentile": 0.02645,
+            "date": "2026-11-17"
           }
         ],
         "cwes": [
@@ -3709,8 +3841,8 @@
             {
               "cve": "CVE-2026-114437",
               "epss": 0.00129,
-              "percentile": 0.02641,
-              "date": "2026-11-16"
+              "percentile": 0.02645,
+              "date": "2026-11-17"
             }
           ],
           "cwes": [
@@ -3752,7 +3884,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -3773,6 +3905,191 @@
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
           "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-19552",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-19552",
+        "namespace": "nvd:cpe",
+        "severity": "Negligible",
+        "urls": [
+          "https://github.com/python/cpython/commit/8dde46eaa6baf5f027a7234845b20d50b509624e",
+          "https://github.com/python/cpython/issues/161503",
+          "https://github.com/python/cpython/pull/161507",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/SXBD6BGHDBTGM4KSUMQEWYIQ5RO4BQ76/",
+          "http://www.openwall.com/lists/oss-security/2026/11/09/25"
+        ],
+        "description": "When ca_certs parameter was supplied to ssl.get_server_certificate() function, the identity of the certificate is not checked.",
+        "cvss": [
+          {
+            "source": "cna@python.org",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 0
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-19552",
+            "epss": 0.00302,
+            "percentile": 0.23248,
+            "date": "2026-11-17"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-19552",
+            "cwe": "CWE-295",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.0151
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-19552",
+            "versionConstraint": "< 3.16.0a2 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-19552",
+            "versionConstraint": "< 3.16.0a2 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a471f3688313bf27",
+        "name": "python-3.13",
+        "version": "3.13.18_git20261115-r1",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.18_git20261115-r1?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.18_git20261115-r1.spdx.json"
+            }
+          ]
         }
       }
     },
@@ -3833,7 +4150,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
@@ -3913,7 +4230,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -3993,7 +4310,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
+            "layerID": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -4019,29 +4336,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:8af7400f69e6445176855efabb6371661544c3b22f115363507f01a3aa3d1166",
-      "imageID": "sha256:d93891b98192185145995517488c8d25b09b89ee0f1b9763511b637a9bf8d882",
-      "manifestDigest": "sha256:835179191660103684791a8a0004097ed2148a1f2270400df2c15f260e6fcc3b",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:5380407fe7d27aaa9bca2c67056afd7dbae68de8f5db802a50ec29516d7f7260",
+      "imageID": "sha256:df993fadb1c8ca1d9208d490e4d57b1ccb099919f37be58e0485a7ca0c5eaa01",
+      "manifestDigest": "sha256:631118861df5e2b9f4b07240ffaa800776bee6329c8ce4e54d22db186f88a857",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 580868903,
+      "imageSize": 581093235,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:592dae971f8407d9ef9b8184f90154e0d3d5bb30ea35da5ba5740c6599d20448",
-          "size": 580868903
+          "digest": "sha256:07e548334043f4f18b6358ac4a9a65a8902cbe96851fd08480cfd25a0bad462e",
+          "size": 581093235
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6ZDkzODkxYjk4MTkyMTg1MTQ1OTk1NTE3NDg4YzhkMjViMDliODllZTBmMWI5NzYzNTExYjYzN2E5YmY4ZDg4MiJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoyMTUxODgzNzQsImRpZ2VzdCI6InNoYTI1Njo1OTJkYWU5NzFmODQwN2Q5ZWY5YjgxODRmOTAxNTRlMGQzZDViYjMwZWEzNWRhNWJhNTc0MGM2NTk5ZDIwNDQ4In1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTE3VDIxOjIzOjU2WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0xN1QyMToyMzo1NloiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1Njo1OTJkYWU5NzFmODQwN2Q5ZWY5YjgxODRmOTAxNTRlMGQzZDViYjMwZWEzNWRhNWJhNTc0MGM2NTk5ZDIwNDQ4Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0xN1QyMToyMzo1NloiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6ZGY5OTNmYWRiMWM4Y2ExZDkyMDhkNDkwZTRkNTdiMWNjYjA5OTkxOWYzN2JlNThlMDQ4NWE3Y2EwYzVlYWEwMSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoyMTU0MzI4MzEsImRpZ2VzdCI6InNoYTI1NjowN2U1NDgzMzQwNDNmNGYxOGI2MzU4YWM0YTlhNjVhODkwMmNiZTk2ODUxZmQwODQ4MGNmZDI1YTBiYWQ0NjJlIn1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTE4VDE1OjAxOjU5WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0xOFQxNTowMTo1OVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1NjowN2U1NDgzMzQwNDNmNGYxOGI2MzU4YWM0YTlhNjVhODkwMmNiZTk2ODUxZmQwODQ4MGNmZDI1YTBiYWQ0NjJlIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0xOFQxNTowMTo1OVoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:8af7400f69e6445176855efabb6371661544c3b22f115363507f01a3aa3d1166"
+        "ghcr.io/conduktor/base-monitoring@sha256:5380407fe7d27aaa9bca2c67056afd7dbae68de8f5db802a50ec29516d7f7260"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-11-17T21:23:56Z",
+        "org.opencontainers.image.created": "2026-11-18T15:01:59Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -4062,7 +4379,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-a1guks/output",
+      "file": "/tmp/grype-wV43H5/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

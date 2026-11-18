@@ -11,21 +11,18 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 1 | 7 | 13 | 1 | 25 |
+| 0 | 7 | 15 | 1 | 27 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :red_circle: critical | [`GO-2026-6888`](https://github.com/andybalholm/brotli/security/advisories/GHSA-c9gr-gmg4-2vqv) | `github.com/andybalholm/brotli` | `v1.1.1` | `1.2.7` |
-| :orange_circle: high | [`GHSA-mgcc-cww5-fp2q`](https://github.com/advisories/GHSA-mgcc-cww5-fp2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.6` |
-| :orange_circle: high | [`GO-2026-6865`](https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8) | `github.com/klauspost/compress` | `v1.18.7` | `1.20.2` |
-| :orange_circle: high | [`GO-2026-6865`](https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8) | `github.com/klauspost/compress` | `v1.18.7` | `1.20.2` |
-| :orange_circle: high | [`GO-2026-6865`](https://github.com/klauspost/compress/security/advisories/GHSA-fpmh-frq8-7rj8) | `github.com/klauspost/compress` | `v1.18.7` | `1.20.2` |
 | :orange_circle: high | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :orange_circle: high | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :orange_circle: high | [`GO-2026-6860`](https://go.dev/cl/849365) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
+| :orange_circle: high | [`CVE-2026-107496`](https://nvd.nist.gov/vuln/detail/CVE-2026-107496) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-88823`](https://nvd.nist.gov/vuln/detail/CVE-2026-88823) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-95691`](https://nvd.nist.gov/vuln/detail/CVE-2026-95691) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-95692`](https://nvd.nist.gov/vuln/detail/CVE-2026-95692) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`GHSA-j6qf-3m9c-vwj3`](https://github.com/advisories/GHSA-j6qf-3m9c-vwj3) | `github.com/go-chi/chi/v5` | `v5.3.0` | `5.4.0` |
-| :yellow_circle: medium | [`GHSA-4w3g-jfj2-cw2q`](https://github.com/advisories/GHSA-4w3g-jfj2-cw2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
-| :yellow_circle: medium | [`GHSA-vvm8-gf78-28g4`](https://github.com/advisories/GHSA-vvm8-gf78-28g4) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/sdk` | `v1.45.0` | `1.47.0` |
 | :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/sdk` | `v1.45.0` | `1.47.0` |
 | :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/trace` | `v1.45.0` | `1.47.0` |
@@ -34,9 +31,14 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
 | :yellow_circle: medium | [`GO-2026-6866`](https://go.dev/cl/855121) | `golang.org/x/net` | `v0.61.0` | `0.62.0` |
+| :yellow_circle: medium | [`CVE-2026-88822`](https://nvd.nist.gov/vuln/detail/CVE-2026-88822) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`CVE-2025-15367`](https://nvd.nist.gov/vuln/detail/CVE-2025-15367) | `python-3.13` | `3.13.18_git20261115-r1` | — |
+| :yellow_circle: medium | [`CVE-2026-115559`](https://nvd.nist.gov/vuln/detail/CVE-2026-115559) | `python-3.13` | `3.13.18_git20261115-r1` | — |
+| :yellow_circle: medium | [`CVE-2026-115791`](https://nvd.nist.gov/vuln/detail/CVE-2026-115791) | `python-3.13` | `3.13.18_git20261115-r1` | — |
 | :yellow_circle: medium | [`CVE-2026-116566`](https://nvd.nist.gov/vuln/detail/CVE-2026-116566) | `python-3.13` | `3.13.18_git20261115-r1` | — |
+| :yellow_circle: medium | [`CVE-2026-124249`](https://nvd.nist.gov/vuln/detail/CVE-2026-124249) | `python-3.13` | `3.13.18_git20261115-r1` | — |
 | :white_circle: low | [`CVE-2026-103995`](https://nvd.nist.gov/vuln/detail/CVE-2026-103995) | `python-3.13` | `3.13.18_git20261115-r1` | — |
+| :black_circle: negligible | [`CVE-2026-19552`](https://nvd.nist.gov/vuln/detail/CVE-2026-19552) | `python-3.13` | `3.13.18_git20261115-r1` | — |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
 | :black_circle: unknown | [`GO-2026-5932`](https://go.dev/issue/44226) | `golang.org/x/crypto` | `v0.58.0` | `0.58.1-0.20261009181718-2f1f834330b2` |
