@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 106 | 54 | 8 | 250 |
+| 4 | 106 | 55 | 8 | 250 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -179,6 +179,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`GO-2026-6599`](https://go.dev/cl/839866) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`GO-2026-6600`](https://go.dev/cl/840925) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`GO-2026-6809`](https://go.dev/cl/851047) | `stdlib` | `go1.25.12` | `1.26.10, 1.27.3` |
+| :yellow_circle: medium | [`GO-2026-6859`](https://go.dev/cl/862185) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
 | :white_circle: low | [`GHSA-8wmf-6v46-5gfg`](https://github.com/advisories/GHSA-8wmf-6v46-5gfg) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
 | :white_circle: low | [`CVE-2026-16241`](https://images.chainguard.dev/security/CVE-2026-16241) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :white_circle: low | [`CVE-2026-6469`](https://images.chainguard.dev/security/CVE-2026-6469) | `libpq-17` | `17.10-r1` | `17.11-r0` |
@@ -264,4 +265,3 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :black_circle: unknown | [`GHSA-v5vg-62mg-4ccv`](https://images.chainguard.dev/security/GHSA-v5vg-62mg-4ccv) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :black_circle: unknown | [`GHSA-v76f-gmv6-95jw`](https://images.chainguard.dev/security/GHSA-v76f-gmv6-95jw) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
 | :black_circle: unknown | [`GHSA-xxfm-85xf-vx5m`](https://images.chainguard.dev/security/GHSA-xxfm-85xf-vx5m) | `postgresql-17-client-base` | `17.10-r1` | `17.11-r0` |
-| :black_circle: unknown | [`GO-2026-6859`](https://go.dev/cl/862185) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |

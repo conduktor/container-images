@@ -3,8 +3,8 @@
   "Trivy": {
     "Version": "0.70.0"
   },
-  "ArtifactID": "sha256:f3d8ade605837b18f2de46bc8ecac23f56e867bfcc254081dc07da60767f1806",
-  "ArtifactName": "ghcr.io/conduktor/base-os@sha256:4ec718e5935a18d0c84d317572272afdaaf96a9837421a595daba5f0ba88ad7a",
+  "ArtifactID": "sha256:07534e21eaf4814ddc28cb52f8d47c97dfa5b148df4501168afffe3ac72be8a9",
+  "ArtifactName": "ghcr.io/conduktor/base-os@sha256:9e77bf7db26df25d695b70be8955e7e4d7d7de32c6f9dfec59bafe5b929f14da",
   "ArtifactType": "container_image",
   "Metadata": {
     "Size": 10695680,
@@ -12,22 +12,22 @@
       "Family": "wolfi",
       "Name": "20230201"
     },
-    "ImageID": "sha256:e25053088b0460b4b86afbff430dc09e66fa82cdaeb5cc6e9a3e8e9c6fa643f5",
+    "ImageID": "sha256:15da4389302372436276091483f0dacc9f713fd2e4a16d54b987887275ff5e8c",
     "DiffIDs": [
-      "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+      "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
     ],
     "RepoDigests": [
-      "ghcr.io/conduktor/base-os@sha256:4ec718e5935a18d0c84d317572272afdaaf96a9837421a595daba5f0ba88ad7a"
+      "ghcr.io/conduktor/base-os@sha256:9e77bf7db26df25d695b70be8955e7e4d7d7de32c6f9dfec59bafe5b929f14da"
     ],
-    "Reference": "ghcr.io/conduktor/base-os@sha256:4ec718e5935a18d0c84d317572272afdaaf96a9837421a595daba5f0ba88ad7a",
+    "Reference": "ghcr.io/conduktor/base-os@sha256:9e77bf7db26df25d695b70be8955e7e4d7d7de32c6f9dfec59bafe5b929f14da",
     "ImageConfig": {
       "architecture": "amd64",
       "author": "github.com/chainguard-dev/apko",
-      "created": "2026-11-15T22:10:17Z",
+      "created": "2026-11-17T04:13:10Z",
       "history": [
         {
           "author": "apko",
-          "created": "2026-11-15T22:10:17Z",
+          "created": "2026-11-17T04:13:10Z",
           "created_by": "apko",
           "comment": "Conduktor OS base image (Wolfi/apko) by Conduktor"
         }
@@ -36,7 +36,7 @@
       "rootfs": {
         "type": "layers",
         "diff_ids": [
-          "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+          "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
         ]
       },
       "config": {
@@ -51,7 +51,7 @@
         ],
         "Labels": {
           "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-          "org.opencontainers.image.created": "2026-11-15T22:10:17Z",
+          "org.opencontainers.image.created": "2026-11-17T04:13:10Z",
           "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with the conduktor-platform account. No JVM, no package manager.",
           "org.opencontainers.image.licenses": "Apache-2.0",
           "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -63,14 +63,14 @@
     "Layers": [
       {
         "Size": 10695680,
-        "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-        "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+        "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+        "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
       }
     ]
   },
   "Results": [
     {
-      "Target": "ghcr.io/conduktor/base-os@sha256:4ec718e5935a18d0c84d317572272afdaaf96a9837421a595daba5f0ba88ad7a (wolfi 20230201)",
+      "Target": "ghcr.io/conduktor/base-os@sha256:9e77bf7db26df25d695b70be8955e7e4d7d7de32c6f9dfec59bafe5b929f14da (wolfi 20230201)",
       "Class": "os-pkgs",
       "Type": "wolfi",
       "Packages": [
@@ -79,7 +79,7 @@
           "Name": "busybox",
           "Identifier": {
             "PURL": "pkg:apk/wolfi/busybox@1.38.0-r3?arch=x86_64&distro=20230201",
-            "UID": "3ca36a5a5897bdf0"
+            "UID": "8932ec310ab9aac9"
           },
           "Version": "1.38.0-r3",
           "Arch": "x86_64",
@@ -90,14 +90,14 @@
           ],
           "Maintainer": "wolfi",
           "DependsOn": [
-            "glibc-2.44@2.44-r20",
-            "ld-linux-2.44@2.44-r20",
-            "libcrypt1-2.44@2.44-r20",
+            "glibc-2.44@2.44-r21",
+            "ld-linux-2.44@2.44-r21",
+            "libcrypt1-2.44@2.44-r21",
             "wolfi-baselayout@20230201-r31"
           ],
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
           "Digest": "sha1:9c9d1134f60a13fea9f7ed5681da82d650342673",
           "InstalledFiles": [
@@ -128,8 +128,8 @@
             "wolfi-baselayout@20230201-r31"
           ],
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
           "Digest": "sha1:f4fedfcc1f78e4fb91690127ce0f676a9891cca1",
           "InstalledFiles": [
@@ -142,31 +142,31 @@
           "AnalyzedBy": "apk"
         },
         {
-          "ID": "glibc-2.44@2.44-r20",
+          "ID": "glibc-2.44@2.44-r21",
           "Name": "glibc-2.44",
           "Identifier": {
-            "PURL": "pkg:apk/wolfi/glibc-2.44@2.44-r20?arch=x86_64&distro=20230201",
-            "UID": "665c738295012059"
+            "PURL": "pkg:apk/wolfi/glibc-2.44@2.44-r21?arch=x86_64&distro=20230201",
+            "UID": "9b1b0203835e81c5"
           },
-          "Version": "2.44-r20",
+          "Version": "2.44-r21",
           "Arch": "x86_64",
           "SrcName": "glibc-2.44",
-          "SrcVersion": "2.44-r20",
+          "SrcVersion": "2.44-r21",
           "Licenses": [
             "LGPL-2.1-or-later"
           ],
           "Maintainer": "wolfi",
           "DependsOn": [
-            "glibc-2.44-locale-posix@2.44-r20",
-            "ld-linux-2.44@2.44-r20",
+            "glibc-2.44-locale-posix@2.44-r21",
+            "ld-linux-2.44@2.44-r21",
             "libgcc@16.2.0-r4",
             "wolfi-baselayout@20230201-r31"
           ],
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
-          "Digest": "sha1:2ffa08786a5def57038b4cfd6b24fabb5b1f4c6b",
+          "Digest": "sha1:75a0dd7f6959dbf773d04e2de105ea03b9740108",
           "InstalledFiles": [
             "etc/rpc",
             "etc/apk/commit_hooks.d/ldconfig-commit.sh",
@@ -189,21 +189,21 @@
             "usr/lib/librt.so.1",
             "usr/lib/libthread_db.so.1",
             "usr/lib/libutil.so.1",
-            "var/lib/db/sbom/glibc-2.44-2.44-r20.spdx.json"
+            "var/lib/db/sbom/glibc-2.44-2.44-r21.spdx.json"
           ],
           "AnalyzedBy": "apk"
         },
         {
-          "ID": "glibc-2.44-locale-posix@2.44-r20",
+          "ID": "glibc-2.44-locale-posix@2.44-r21",
           "Name": "glibc-2.44-locale-posix",
           "Identifier": {
-            "PURL": "pkg:apk/wolfi/glibc-2.44-locale-posix@2.44-r20?arch=x86_64&distro=20230201",
-            "UID": "4e3006dbd0f8a4e6"
+            "PURL": "pkg:apk/wolfi/glibc-2.44-locale-posix@2.44-r21?arch=x86_64&distro=20230201",
+            "UID": "729f7c515f1f3836"
           },
-          "Version": "2.44-r20",
+          "Version": "2.44-r21",
           "Arch": "x86_64",
           "SrcName": "glibc-2.44",
-          "SrcVersion": "2.44-r20",
+          "SrcVersion": "2.44-r21",
           "Licenses": [
             "LGPL-2.1-or-later"
           ],
@@ -212,10 +212,10 @@
             "wolfi-baselayout@20230201-r31"
           ],
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
-          "Digest": "sha1:42bcba75ed083b289805fc7920725f378c5aaafc",
+          "Digest": "sha1:d0016efc8b7e2b7461ebe9461f8e6c6ea25ba49f",
           "InstalledFiles": [
             "usr/lib/locale/C.utf8/LC_ADDRESS",
             "usr/lib/locale/C.utf8/LC_COLLATE",
@@ -229,69 +229,69 @@
             "usr/lib/locale/C.utf8/LC_TELEPHONE",
             "usr/lib/locale/C.utf8/LC_TIME",
             "usr/lib/locale/C.utf8/LC_MESSAGES/SYS_LC_MESSAGES",
-            "var/lib/db/sbom/glibc-2.44-locale-posix-2.44-r20.spdx.json"
+            "var/lib/db/sbom/glibc-2.44-locale-posix-2.44-r21.spdx.json"
           ],
           "AnalyzedBy": "apk"
         },
         {
-          "ID": "ld-linux-2.44@2.44-r20",
+          "ID": "ld-linux-2.44@2.44-r21",
           "Name": "ld-linux-2.44",
           "Identifier": {
-            "PURL": "pkg:apk/wolfi/ld-linux-2.44@2.44-r20?arch=x86_64&distro=20230201",
-            "UID": "3ed41c1809292372"
+            "PURL": "pkg:apk/wolfi/ld-linux-2.44@2.44-r21?arch=x86_64&distro=20230201",
+            "UID": "e3b96a313dcb3000"
           },
-          "Version": "2.44-r20",
+          "Version": "2.44-r21",
           "Arch": "x86_64",
           "SrcName": "glibc-2.44",
-          "SrcVersion": "2.44-r20",
+          "SrcVersion": "2.44-r21",
           "Licenses": [
             "LGPL-2.1-or-later"
           ],
           "Maintainer": "wolfi",
           "DependsOn": [
-            "glibc-2.44@2.44-r20",
+            "glibc-2.44@2.44-r21",
             "wolfi-baselayout@20230201-r31"
           ],
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
-          "Digest": "sha1:daa2604795f299a0f43376f1f86296a71977f779",
+          "Digest": "sha1:a63f09d642217e930138f7b6c0c20176f6f7ddeb",
           "InstalledFiles": [
             "etc/ld.so.conf",
             "etc/ld.so.conf.d/libc.conf",
             "usr/lib/ld-linux-x86-64.so.2",
-            "var/lib/db/sbom/ld-linux-2.44-2.44-r20.spdx.json"
+            "var/lib/db/sbom/ld-linux-2.44-2.44-r21.spdx.json"
           ],
           "AnalyzedBy": "apk"
         },
         {
-          "ID": "libcrypt1-2.44@2.44-r20",
+          "ID": "libcrypt1-2.44@2.44-r21",
           "Name": "libcrypt1-2.44",
           "Identifier": {
-            "PURL": "pkg:apk/wolfi/libcrypt1-2.44@2.44-r20?arch=x86_64&distro=20230201",
-            "UID": "8bcfe66362b3cc5d"
+            "PURL": "pkg:apk/wolfi/libcrypt1-2.44@2.44-r21?arch=x86_64&distro=20230201",
+            "UID": "f0f7f6b559b8d80a"
           },
-          "Version": "2.44-r20",
+          "Version": "2.44-r21",
           "Arch": "x86_64",
           "SrcName": "glibc-2.44",
-          "SrcVersion": "2.44-r20",
+          "SrcVersion": "2.44-r21",
           "Licenses": [
             "LGPL-2.1-or-later"
           ],
           "Maintainer": "wolfi",
           "DependsOn": [
-            "glibc-2.44@2.44-r20",
+            "glibc-2.44@2.44-r21",
             "libxcrypt@4.5.2-r8",
             "wolfi-baselayout@20230201-r31"
           ],
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
-          "Digest": "sha1:47c675e43b55dd9095bf4cbdbde1637425d49e8a",
+          "Digest": "sha1:4325d92c9a438b32580f27cdf3a4a1eebc5f89fe",
           "InstalledFiles": [
-            "var/lib/db/sbom/libcrypt1-2.44-2.44-r20.spdx.json"
+            "var/lib/db/sbom/libcrypt1-2.44-2.44-r21.spdx.json"
           ],
           "AnalyzedBy": "apk"
         },
@@ -300,7 +300,7 @@
           "Name": "libgcc",
           "Identifier": {
             "PURL": "pkg:apk/wolfi/libgcc@16.2.0-r4?arch=x86_64&distro=20230201",
-            "UID": "48a0a125210ad904"
+            "UID": "db91db1f0024799b"
           },
           "Version": "16.2.0-r4",
           "Arch": "x86_64",
@@ -311,12 +311,12 @@
           ],
           "Maintainer": "wolfi",
           "DependsOn": [
-            "glibc-2.44@2.44-r20",
-            "ld-linux-2.44@2.44-r20"
+            "glibc-2.44@2.44-r21",
+            "ld-linux-2.44@2.44-r21"
           ],
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
           "Digest": "sha1:b9ff7755e4598b932a7a3dca1304477ea75d186e",
           "InstalledFiles": [
@@ -343,8 +343,8 @@
           ],
           "Maintainer": "wolfi",
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
           "Digest": "sha1:fbc2ecc11a9fc780baa9bf0d9ce7f08632923567",
           "InstalledFiles": [
@@ -370,8 +370,8 @@
           ],
           "Maintainer": "wolfi",
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
           "Digest": "sha1:58c691fa41b20b2f54e98f5564062c92fbd5bde1",
           "InstalledFiles": [
@@ -1599,8 +1599,8 @@
             "ca-certificates-bundle@20261020-r0"
           ],
           "Layer": {
-            "Digest": "sha256:924f7d8aec93ef5a8916707559b64015c943ddcec8e9a6b65d35521f59ce7e6b",
-            "DiffID": "sha256:967e54a2126a8b49798bfce6c6bb82e8abeb3805a7656ea90aabd147bf2fd1a5"
+            "Digest": "sha256:3f4720f611e0a0cfdebd835b616152f89d3ec2ec98a49b12e97e37eaec1e3cf6",
+            "DiffID": "sha256:f287b0f3a47c9ff6017569976f07094bb7de878cf5f95bbbbe494d2e8debb2c6"
           },
           "Digest": "sha1:5b87dfefc8736ed0e7e89f492514706e32a6291e",
           "InstalledFiles": [
