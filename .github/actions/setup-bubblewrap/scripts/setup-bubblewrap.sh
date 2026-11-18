@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
-# Install bubblewrap, melange's default Linux runner, which the runner image does
-# not ship. Adapted from chainguard-dev/actions/setup-melange, minus the Go
+# Make bubblewrap, melange's default Linux runner, usable on a GitHub-hosted
+# Ubuntu runner. Adapted from chainguard-dev/actions/setup-melange, minus the Go
 # toolchain, qemu and the unverified melange download — see the README.
 set -euo pipefail
+
+bwrap_works() { bwrap --unshare-user --bind / / true; }
 
 # Only refresh the index if the image's apt lists turn out to be too stale: that
 # update is the mirror round trip that has stalled this job for 20+ minutes.
 sudo apt-get install --assume-yes bubblewrap \
   || { sudo apt-get update && sudo apt-get install --assume-yes bubblewrap; }
 
+# Ubuntu 24.04 only; drop once no runner label resolves to it. 26.04 ships its own
+# bwrap profile, and adding this one on top breaks it (chainguard-dev/actions#1130).
 # https://github.com/chainguard-dev/melange/issues/1508
-sudo tee /etc/apparmor.d/local-bwrap >/dev/null <<"EOF"
+if ! bwrap_works 2>/dev/null; then
+  sudo tee /etc/apparmor.d/local-bwrap >/dev/null <<"EOF"
 abi <abi/4.0>,
 include <tunables/global>
 
@@ -20,10 +25,10 @@ profile local-bwrap /usr/bin/bwrap flags=(unconfined) {
   include if exists <local/bwrap>
 }
 EOF
+  sudo systemctl reload apparmor
+fi
 
-sudo systemctl reload apparmor
-
-if ! bwrap --unshare-user --bind / / true; then
+if ! bwrap_works; then
   echo "::error::failed to verify 'bwrap --unshare-user'"
   command -v bwrap || :
   ls /proc/self/ns || echo "no /proc/self/ns"
