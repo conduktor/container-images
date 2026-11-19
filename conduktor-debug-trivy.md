@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 80 | 55 | 9 | 144 |
+| 0 | 80 | 56 | 9 | 145 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -150,6 +150,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-94448`](https://avd.aquasec.com/nvd/cve-2026-94448) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-97030`](https://avd.aquasec.com/nvd/cve-2026-97030) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-97032`](https://avd.aquasec.com/nvd/cve-2026-97032) | `stdlib` | `v1.25.12` | `1.26.9, 1.27.2` |
+| :yellow_circle: medium | [`CVE-2026-97054`](https://avd.aquasec.com/nvd/cve-2026-97054) | `stdlib` | `v1.25.12` | `1.26.11, 1.27.4` |
 | :white_circle: low | [`CVE-2026-106449`](https://avd.aquasec.com/nvd/cve-2026-106449) | `at.yawk.lz4:lz4-java` | `1.10.2` | `1.11.4` |
 | :white_circle: low | [`CVE-2026-81870`](https://avd.aquasec.com/nvd/cve-2026-81870) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
 | :white_circle: low | [`CVE-2026-16241`](https://avd.aquasec.com/nvd/cve-2026-16241) | `libpq-17` | `17.10-r1` | `17.11-r0` |
