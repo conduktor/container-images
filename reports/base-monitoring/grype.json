@@ -82,7 +82,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -298,160 +298,6 @@
         }
       ],
       "artifact": {
-        "id": "3e52565133b67567",
-        "name": "golang.org/x/net",
-        "version": "v0.61.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
-            "accessPath": "/opt/monitoring/prometheus/prometheus",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
-        ],
-        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GO-2026-6860",
-        "dataSource": "https://go.dev/cl/849365",
-        "namespace": "govulndb:language:go",
-        "severity": "High",
-        "urls": [
-          "https://go.dev/issue/82224",
-          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
-        ],
-        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-78661",
-            "epss": 0.00409,
-            "percentile": 0.35815,
-            "date": "2026-11-18"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-78661",
-            "cwe": "CWE-407",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "0.62.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "0.62.0",
-              "date": "2026-10-27",
-              "kind": "release"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.30674999999999997
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-78661",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
-          "namespace": "nvd:cpe",
-          "severity": "High",
-          "urls": [
-            "https://go.dev/cl/849365",
-            "https://go.dev/issue/82224",
-            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
-            "https://pkg.go.dev/vuln/GO-2026-6860"
-          ],
-          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-          "cvss": [
-            {
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-              "metrics": {
-                "baseScore": 7.5,
-                "exploitabilityScore": 3.9,
-                "impactScore": 3.6
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-78661",
-              "epss": 0.00409,
-              "percentile": 0.35815,
-              "date": "2026-11-18"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-78661",
-              "cwe": "CWE-407",
-              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "govulndb:language:go",
-            "package": {
-              "name": "golang.org/x/net",
-              "version": "v0.61.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GO-2026-6860",
-            "versionConstraint": "<0.62.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "0.62.0"
-          }
-        }
-      ],
-      "artifact": {
         "id": "fb64896702246c55",
         "name": "golang.org/x/net",
         "version": "v0.61.0",
@@ -459,7 +305,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -612,8 +458,162 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:golang:networking:v0.61.0:*:*:*:*:go:*:*"
+        ],
+        "purl": "pkg:golang/golang.org/x/net@v0.61.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
+          "mainModule": "github.com/prometheus/prometheus"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GO-2026-6860",
+        "dataSource": "https://go.dev/cl/849365",
+        "namespace": "govulndb:language:go",
+        "severity": "High",
+        "urls": [
+          "https://go.dev/issue/82224",
+          "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs"
+        ],
+        "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies.\n\nAccumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-78661",
+            "epss": 0.00409,
+            "percentile": 0.35815,
+            "date": "2026-11-18"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-78661",
+            "cwe": "CWE-407",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "0.62.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "0.62.0",
+              "date": "2026-10-27",
+              "kind": "release"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.30674999999999997
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-78661",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-78661",
+          "namespace": "nvd:cpe",
+          "severity": "High",
+          "urls": [
+            "https://go.dev/cl/849365",
+            "https://go.dev/issue/82224",
+            "https://groups.google.com/g/golang-announce/c/sqrs2vTx_Xs",
+            "https://pkg.go.dev/vuln/GO-2026-6860"
+          ],
+          "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
+          "cvss": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "metrics": {
+                "baseScore": 7.5,
+                "exploitabilityScore": 3.9,
+                "impactScore": 3.6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-78661",
+              "epss": 0.00409,
+              "percentile": 0.35815,
+              "date": "2026-11-18"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-78661",
+              "cwe": "CWE-407",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "govulndb:language:go",
+            "package": {
+              "name": "golang.org/x/net",
+              "version": "v0.61.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GO-2026-6860",
+            "versionConstraint": "<0.62.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "0.62.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "3e52565133b67567",
+        "name": "golang.org/x/net",
+        "version": "v0.61.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
             }
@@ -717,7 +717,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -948,175 +948,6 @@
         }
       ],
       "artifact": {
-        "id": "4cc793b374432f77",
-        "name": "go.opentelemetry.io/otel/sdk",
-        "version": "v1.45.0",
-        "type": "go-module",
-        "locations": [
-          {
-            "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
-            "accessPath": "/opt/monitoring/prometheus/prometheus",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "go",
-        "licenses": [],
-        "cpes": [
-          "cpe:2.3:a:otel:sdk:v1.45.0:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:golang/go.opentelemetry.io/otel/sdk@v1.45.0",
-        "upstreams": [],
-        "metadataType": "GolangBinMetadata",
-        "metadata": {
-          "goCompiledVersion": "go1.26.11",
-          "architecture": "amd64",
-          "h1Digest": "h1:4VVSMgQ83dUgW2aoX5f6JgLvHwIvzcuLnF9lUdCSpCw=",
-          "mainModule": "github.com/prometheus/prometheus"
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "GHSA-q7gw-24fr-5p69",
-        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
-        "namespace": "github:language:go",
-        "severity": "Medium",
-        "urls": [
-          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
-          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
-          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
-          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
-          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
-        ],
-        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
-        "cvss": [
-          {
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-            "metrics": {
-              "baseScore": 5.3,
-              "exploitabilityScore": 3.9,
-              "impactScore": 1.5
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-128085",
-            "epss": 0.00469,
-            "percentile": 0.41232,
-            "date": "2026-11-18"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-128085",
-            "cwe": "CWE-135",
-            "source": "security-advisories@github.com",
-            "type": "Secondary"
-          },
-          {
-            "cve": "CVE-2026-128085",
-            "cwe": "CWE-770",
-            "source": "security-advisories@github.com",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [
-            "1.47.0"
-          ],
-          "state": "fixed",
-          "available": [
-            {
-              "version": "1.47.0",
-              "date": "2026-11-14",
-              "kind": "first-observed"
-            }
-          ]
-        },
-        "advisories": [],
-        "risk": 0.241535
-      },
-      "relatedVulnerabilities": [
-        {
-          "id": "CVE-2026-128085",
-          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
-          "namespace": "nvd:cpe",
-          "severity": "Medium",
-          "urls": [
-            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
-            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
-            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
-            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
-            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
-          ],
-          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
-          "cvss": [
-            {
-              "source": "security-advisories@github.com",
-              "type": "Secondary",
-              "version": "3.1",
-              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-              "metrics": {
-                "baseScore": 5.3,
-                "exploitabilityScore": 3.9,
-                "impactScore": 1.5
-              },
-              "vendorMetadata": {}
-            }
-          ],
-          "epss": [
-            {
-              "cve": "CVE-2026-128085",
-              "epss": 0.00469,
-              "percentile": 0.41232,
-              "date": "2026-11-18"
-            }
-          ],
-          "cwes": [
-            {
-              "cve": "CVE-2026-128085",
-              "cwe": "CWE-135",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            },
-            {
-              "cve": "CVE-2026-128085",
-              "cwe": "CWE-770",
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        }
-      ],
-      "matchDetails": [
-        {
-          "type": "exact-direct-match",
-          "matcher": "go-module-matcher",
-          "searchedBy": {
-            "language": "go",
-            "namespace": "github:language:go",
-            "package": {
-              "name": "go.opentelemetry.io/otel/sdk",
-              "version": "v1.45.0"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
-            "versionConstraint": ">=1.33.0,<1.47.0 (go)"
-          },
-          "fix": {
-            "suggestedVersion": "1.47.0"
-          }
-        }
-      ],
-      "artifact": {
         "id": "77ac17c501e35dd7",
         "name": "go.opentelemetry.io/otel/sdk",
         "version": "v1.45.0",
@@ -1124,7 +955,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -1271,13 +1102,13 @@
             "language": "go",
             "namespace": "github:language:go",
             "package": {
-              "name": "go.opentelemetry.io/otel/trace",
+              "name": "go.opentelemetry.io/otel/sdk",
               "version": "v1.45.0"
             }
           },
           "found": {
             "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
-            "versionConstraint": ">=1.35.0,<1.47.0 (go)"
+            "versionConstraint": ">=1.33.0,<1.47.0 (go)"
           },
           "fix": {
             "suggestedVersion": "1.47.0"
@@ -1285,15 +1116,15 @@
         }
       ],
       "artifact": {
-        "id": "966875bf3af59a2e",
-        "name": "go.opentelemetry.io/otel/trace",
+        "id": "4cc793b374432f77",
+        "name": "go.opentelemetry.io/otel/sdk",
         "version": "v1.45.0",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "path": "/opt/monitoring/prometheus/prometheus",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
             }
@@ -1302,15 +1133,15 @@
         "language": "go",
         "licenses": [],
         "cpes": [
-          "cpe:2.3:a:otel:trace:v1.45.0:*:*:*:*:*:*:*"
+          "cpe:2.3:a:otel:sdk:v1.45.0:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:golang/go.opentelemetry.io/otel/trace@v1.45.0",
+        "purl": "pkg:golang/go.opentelemetry.io/otel/sdk@v1.45.0",
         "upstreams": [],
         "metadataType": "GolangBinMetadata",
         "metadata": {
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
-          "h1Digest": "h1:l/mP6Uv7oNO7/TblbhpbgMidxhq1uO/rPsikOyVhxag=",
+          "h1Digest": "h1:4VVSMgQ83dUgW2aoX5f6JgLvHwIvzcuLnF9lUdCSpCw=",
           "mainModule": "github.com/prometheus/prometheus"
         }
       }
@@ -1461,7 +1292,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -1630,7 +1461,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -1649,6 +1480,175 @@
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
           "mainModule": "github.com/cortexproject/cortex"
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "GHSA-q7gw-24fr-5p69",
+        "dataSource": "https://github.com/advisories/GHSA-q7gw-24fr-5p69",
+        "namespace": "github:language:go",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69",
+          "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+          "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0"
+        ],
+        "description": "opentelemetry-go: AttributeValueLengthLimit is fully bypassed by attribute values composed of valid U+FFFD runes",
+        "cvss": [
+          {
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 5.3,
+              "exploitabilityScore": 3.9,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-128085",
+            "epss": 0.00469,
+            "percentile": 0.41232,
+            "date": "2026-11-18"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-135",
+            "source": "security-advisories@github.com",
+            "type": "Secondary"
+          },
+          {
+            "cve": "CVE-2026-128085",
+            "cwe": "CWE-770",
+            "source": "security-advisories@github.com",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [
+            "1.47.0"
+          ],
+          "state": "fixed",
+          "available": [
+            {
+              "version": "1.47.0",
+              "date": "2026-11-14",
+              "kind": "first-observed"
+            }
+          ]
+        },
+        "advisories": [],
+        "risk": 0.241535
+      },
+      "relatedVulnerabilities": [
+        {
+          "id": "CVE-2026-128085",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-128085",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/open-telemetry/opentelemetry-go/commit/017b08c7f1018b619991aaf6b2299d4beb9da1d3",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/log/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/sdk/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/releases/tag/trace/v1.47.0",
+            "https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-q7gw-24fr-5p69"
+          ],
+          "description": "OpenTelemetry-Go is the Go implementation of OpenTelemetry. From SDK version 1.33.0, SDK log version 0.9.0, and trace version 1.35.0 until version 1.47.0, the AttributeValueLengthLimit and WithAttributeValueLengthLimit truncation paths in sdk/internal/attrnorm, sdk/log/internal/attrnorm, and trace/auto.go do not count valid U+FFFD replacement characters. This is a distinct incomplete-fix defect in the replacement truncation code introduced by the remediation for CVE-2026-81869. Values composed of or dominated by those characters can therefore exceed the configured character and memory bound in span, log-record, and auto-instrumentation trace attributes. Attacker-controlled telemetry attributes can increase retained memory and pipeline pressure, while confidentiality and integrity are not affected. This issue is fixed in version 1.47.0.",
+          "cvss": [
+            {
+              "source": "security-advisories@github.com",
+              "type": "Secondary",
+              "version": "3.1",
+              "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+              "metrics": {
+                "baseScore": 5.3,
+                "exploitabilityScore": 3.9,
+                "impactScore": 1.5
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-128085",
+              "epss": 0.00469,
+              "percentile": 0.41232,
+              "date": "2026-11-18"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-135",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            },
+            {
+              "cve": "CVE-2026-128085",
+              "cwe": "CWE-770",
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        }
+      ],
+      "matchDetails": [
+        {
+          "type": "exact-direct-match",
+          "matcher": "go-module-matcher",
+          "searchedBy": {
+            "language": "go",
+            "namespace": "github:language:go",
+            "package": {
+              "name": "go.opentelemetry.io/otel/trace",
+              "version": "v1.45.0"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "GHSA-q7gw-24fr-5p69",
+            "versionConstraint": ">=1.35.0,<1.47.0 (go)"
+          },
+          "fix": {
+            "suggestedVersion": "1.47.0"
+          }
+        }
+      ],
+      "artifact": {
+        "id": "966875bf3af59a2e",
+        "name": "go.opentelemetry.io/otel/trace",
+        "version": "v1.45.0",
+        "type": "go-module",
+        "locations": [
+          {
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "go",
+        "licenses": [],
+        "cpes": [
+          "cpe:2.3:a:otel:trace:v1.45.0:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:golang/go.opentelemetry.io/otel/trace@v1.45.0",
+        "upstreams": [],
+        "metadataType": "GolangBinMetadata",
+        "metadata": {
+          "goCompiledVersion": "go1.26.11",
+          "architecture": "amd64",
+          "h1Digest": "h1:l/mP6Uv7oNO7/TblbhpbgMidxhq1uO/rPsikOyVhxag=",
+          "mainModule": "github.com/prometheus/prometheus"
         }
       }
     },
@@ -1734,7 +1734,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1927,7 +1927,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2092,7 +2092,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2288,7 +2288,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2453,7 +2453,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2669,15 +2669,15 @@
         }
       ],
       "artifact": {
-        "id": "d3d8a33d2e9ce5e3",
+        "id": "fb64896702246c55",
         "name": "golang.org/x/net",
         "version": "v0.61.0",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
             }
@@ -2694,8 +2694,7 @@
         "metadata": {
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
-          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
-          "mainModule": "github.com/prometheus/prometheus"
+          "mainModule": "github.com/cortexproject/cortex"
         }
       }
     },
@@ -2830,7 +2829,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -2977,15 +2976,15 @@
         }
       ],
       "artifact": {
-        "id": "fb64896702246c55",
+        "id": "d3d8a33d2e9ce5e3",
         "name": "golang.org/x/net",
         "version": "v0.61.0",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
-            "accessPath": "/opt/monitoring/cortex/cortex",
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
             }
@@ -3002,7 +3001,8 @@
         "metadata": {
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
+          "h1Digest": "h1:RR+6j/BTBCrggOLugxa+66R8FvoN6MHlzDlZIbN9YFw=",
+          "mainModule": "github.com/prometheus/prometheus"
         }
       }
     },
@@ -3108,7 +3108,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3186,6 +3186,453 @@
             },
             {
               "path": "/var/lib/db/sbom/python-3.13-3.13.18_git20261115-r1.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-115819",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-115819",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34989",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0027"
+        ],
+        "description": "Calling the wide scanf family of functions (swscanf, fwscanf, wscanf, vswscanf, vfwscanf and vwscanf) with a %s or %[ conversion without the 'l' length modifier in the GNU C Library version 2.2 to version 2.44 writes an extra null byte one past the end of the destination array when the converted multibyte string and its terminating null byte exactly fill that array.\n\nThese conversions store each wide input character into the caller's char array as a multibyte sequence.  The conversion ends with the sequence that returns to the initial shift state, which also stores the terminating null byte, and the functions then append a second null byte.  A destination sized for the converted string and one terminator, as the C standard requires the caller to provide, is therefore written one byte past its end.  The out-of-bounds byte is always a null byte, which may corrupt adjacent data or crash the process.  An attacker who supplies the input can trigger the overflow with a string whose converted length exactly fills the destination.\n\nThe narrow scanf functions, the %ls and %l[ conversions into a wchar_t array, and the 'a' and 'm' allocation modifiers are not affected, and storing a wide scanf conversion into a narrow char array is uncommon.  This issue affects all architectures and ABIs supported by the GNU C Library.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
+            "metrics": {
+              "baseScore": 4.8,
+              "exploitabilityScore": 2.3,
+              "impactScore": 2.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-115819",
+            "epss": 0.00263,
+            "percentile": 0.18286,
+            "date": "2026-11-18"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-115819",
+            "cwe": "CWE-193",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.12887
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r24"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-115819",
+            "versionConstraint": ">= 2.2, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "b9e05f82b33a0e8d",
+        "name": "glibc-2.44",
+        "version": "2.44-r24",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r24:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r24?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r24.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-100290",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-100290",
+        "namespace": "nvd:cpe",
+        "severity": "Low",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=31935",
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34991",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0028"
+        ],
+        "description": "The regcomp and regexec functions in the GNU C Library version 2.3 to version 2.44 may read freed memory and free the same heap block twice when a memory allocation fails while a regular expression is compiled or matched.  The re_dfa_add_node (the NFA node table) and build_range_exp (bracket ranges) grow several arrays with consecutive realloc calls and store the new pointers only after all of them succeed.  When a later call fails, the pattern buffer keeps pointers to blocks that were already freed, and the error cleanup frees them again.  In regexec, the back-reference cache (match_ctx_add_entry) frees its array when a realloc fails but keeps the pointer, which is freed again on the error path.\n\nAn attacker does not need to supply a crafted regular expression: patterns large enough to grow these arrays are common.  The failure has to hit a specific allocation, though, so the issue can only be reached when the system is already under memory pressure.  An attacker who supplies the pattern or the subject string has little control over which allocation fails, so the expected impact is a crash of the process.  This issue affects all architectures and ABIs supported by the GNU C Library.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 3.7,
+              "exploitabilityScore": 2.3,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-100290",
+            "epss": 0.00336,
+            "percentile": 0.27455,
+            "date": "2026-11-18"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-100290",
+            "cwe": "CWE-415",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.11255999999999998
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r24"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-100290",
+            "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "b9e05f82b33a0e8d",
+        "name": "glibc-2.44",
+        "version": "2.44-r24",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r24:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r24:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r24?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r24.spdx.json"
             }
           ]
         }
@@ -3291,7 +3738,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3475,7 +3922,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3659,7 +4106,190 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "PSF-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:python-software-foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software-foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_software:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python-3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python-3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python_3.13:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python_3.13:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*",
+          "cpe:2.3:a:python:python:3.13.18_git20261115-r1:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/python-3.13@3.13.18_git20261115-r1?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "python-3.13"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/pydoc3"
+            },
+            {
+              "path": "/usr/bin/python"
+            },
+            {
+              "path": "/usr/bin/python3"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/python3.13"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/python-3.13-3.13.18_git20261115-r1.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-16052",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-16052",
+        "namespace": "nvd:cpe",
+        "severity": "Low",
+        "urls": [
+          "https://github.com/python/cpython/issues/161707",
+          "https://github.com/python/cpython/pull/161711",
+          "https://mail.python.org/archives/list/security-announce@python.org/thread/IZL4QUFV7PKGT2JYSU2DCBMLTWYJDGKZ/"
+        ],
+        "description": "The http.cookies.Morsel class allows separator semicolons in attribute\nvalues\nand includes them verbatim in all output formats. An attacker who can\ncontrol\nthese values could use this to relax the cookie's Domain or SameSite\nrestrictions.",
+        "cvss": [
+          {
+            "source": "cna@python.org",
+            "type": "Secondary",
+            "version": "4.0",
+            "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "metrics": {
+              "baseScore": 2.3
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-16052",
+            "epss": 0.00305,
+            "percentile": 0.23612,
+            "date": "2026-11-18"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-16052",
+            "cwe": "CWE-74",
+            "source": "cna@python.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.08082500000000001
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-16052",
+            "versionConstraint": "< 3.16.0 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        },
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:3.13.18_git20261115:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "python-3.13",
+              "version": "3.13.18_git20261115-r1"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-16052",
+            "versionConstraint": "< 3.16.0 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:python_software_foundation:python:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "a471f3688313bf27",
+        "name": "python-3.13",
+        "version": "3.13.18_git20261115-r1",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3884,7 +4514,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
@@ -4010,7 +4640,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -4143,15 +4773,15 @@
         }
       ],
       "artifact": {
-        "id": "433b3e9ade01f138",
+        "id": "d62eb0a8f5b8ec01",
         "name": "golang.org/x/crypto",
         "version": "v0.58.0",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/prometheus/promtool",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
-            "accessPath": "/opt/monitoring/prometheus/promtool",
+            "path": "/opt/monitoring/cortex/cortex",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/opt/monitoring/cortex/cortex",
             "annotations": {
               "evidence": "primary"
             }
@@ -4168,8 +4798,7 @@
         "metadata": {
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
-          "h1Digest": "h1:COkYLr4k7nDI4r6QtMML2AfzeIswWHAJthLS6K/M/54=",
-          "mainModule": "github.com/prometheus/prometheus"
+          "mainModule": "github.com/cortexproject/cortex"
         }
       }
     },
@@ -4230,7 +4859,7 @@
         "locations": [
           {
             "path": "/opt/monitoring/prometheus/prometheus",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
             "accessPath": "/opt/monitoring/prometheus/prometheus",
             "annotations": {
               "evidence": "primary"
@@ -4303,15 +4932,15 @@
         }
       ],
       "artifact": {
-        "id": "d62eb0a8f5b8ec01",
+        "id": "433b3e9ade01f138",
         "name": "golang.org/x/crypto",
         "version": "v0.58.0",
         "type": "go-module",
         "locations": [
           {
-            "path": "/opt/monitoring/cortex/cortex",
-            "layerID": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
-            "accessPath": "/opt/monitoring/cortex/cortex",
+            "path": "/opt/monitoring/prometheus/promtool",
+            "layerID": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+            "accessPath": "/opt/monitoring/prometheus/promtool",
             "annotations": {
               "evidence": "primary"
             }
@@ -4328,7 +4957,8 @@
         "metadata": {
           "goCompiledVersion": "go1.26.11",
           "architecture": "amd64",
-          "mainModule": "github.com/cortexproject/cortex"
+          "h1Digest": "h1:COkYLr4k7nDI4r6QtMML2AfzeIswWHAJthLS6K/M/54=",
+          "mainModule": "github.com/prometheus/prometheus"
         }
       }
     }
@@ -4336,29 +4966,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:68ab74f9a17bebdd84579f61ff4dd48c590fba84a0ecfbdcfb7ed9352e664226",
-      "imageID": "sha256:3c17c4fa9158353d7fee15c6ea4dca582ac4492780fbc372e9e8b779d0ef669e",
-      "manifestDigest": "sha256:7cad63185a01f28183a76736a9fb6319569bf9ae91ede4880f3e8cbd3eb049b8",
+      "userInput": "ghcr.io/conduktor/base-monitoring@sha256:1e9d255e2acaf198e9af187ce9fcfa2ec6a87b81863d0376ba6a035e19ffead7",
+      "imageID": "sha256:0782332475d35c62ab25bd64e6af4603bf74ab1af5672bf2308ea8074b4654ba",
+      "manifestDigest": "sha256:adddc8054c14c2873c9aec4d0a6af2f8aa020365350a41e48ed70db38bde04d8",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 581093129,
+      "imageSize": 581093285,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:486b33d672384afaf9064b4230933ee4f97873c3c7be23de415f832cb0f8f9d8",
-          "size": 581093129
+          "digest": "sha256:491862ebadf3dce9bca601e89246b91954b041c38f367bdc83af3d36046827d3",
+          "size": 581093285
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6M2MxN2M0ZmE5MTU4MzUzZDdmZWUxNWM2ZWE0ZGNhNTgyYWM0NDkyNzgwZmJjMzcyZTllOGI3NzlkMGVmNjY5ZSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoyMTUzNTU1OTgsImRpZ2VzdCI6InNoYTI1Njo0ODZiMzNkNjcyMzg0YWZhZjkwNjRiNDIzMDkzM2VlNGY5Nzg3M2MzYzdiZTIzZGU0MTVmODMyY2IwZjhmOWQ4In1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTE5VDAwOjA2OjIzWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0xOVQwMDowNjoyM1oiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1Njo0ODZiMzNkNjcyMzg0YWZhZjkwNjRiNDIzMDkzM2VlNGY5Nzg3M2MzYzdiZTIzZGU0MTVmODMyY2IwZjhmOWQ4Il19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0xOVQwMDowNjoyM1oiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTczLCJkaWdlc3QiOiJzaGEyNTY6MDc4MjMzMjQ3NWQzNWM2MmFiMjViZDY0ZTZhZjQ2MDNiZjc0YWIxYWY1NjcyYmYyMzA4ZWE4MDc0YjQ2NTRiYSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoyMTUzODQ3MDYsImRpZ2VzdCI6InNoYTI1Njo0OTE4NjJlYmFkZjNkY2U5YmNhNjAxZTg5MjQ2YjkxOTU0YjA0MWMzOGYzNjdiZGM4M2FmM2QzNjA0NjgyN2QzIn1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTE5VDEwOjU5OjA1WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0xOVQxMDo1OTowNVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSBieSBDb25kdWt0b3IifV0sIm9zIjoibGludXgiLCJyb290ZnMiOnsidHlwZSI6ImxheWVycyIsImRpZmZfaWRzIjpbInNoYTI1Njo0OTE4NjJlYmFkZjNkY2U5YmNhNjAxZTg5MjQ2YjkxOTU0YjA0MWMzOGYzNjdiZGM4M2FmM2QzNjA0NjgyN2QzIl19LCJjb25maWciOnsiQ21kIjpbIi9iaW4vYmFzaCJdLCJFbnYiOlsiTEFORz1DLlVURi04IiwiTUlHUkFUSU9OU19ESVI9L29wdC9tb25pdG9yaW5nL2NvcnRleC9taWdyYXRpb25zIiwiUEFUSD0vb3B0L21vbml0b3JpbmcvcHJvbWV0aGV1czovb3B0L21vbml0b3JpbmcvY29ydGV4Oi91c3Ivc2Jpbjovc2JpbjovdXNyL2JpbjovYmluIiwiU1NMX0NFUlRfRklMRT0vZXRjL3NzbC9jZXJ0cy9jYS1jZXJ0aWZpY2F0ZXMuY3J0IiwiVFo9VVRDIl0sIkxhYmVscyI6eyJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuYXV0aG9ycyI6IkNvbmR1a3RvciBcdTAwM2NzdXBwb3J0QGNvbmR1a3Rvci5pb1x1MDAzZSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNi0xMS0xOVQxMDo1OTowNVoiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UuZGVzY3JpcHRpb24iOiJNaW5pbWFsIGdsaWJjL1dvbGZpIGJhc2UgaW1hZ2Ugd2l0aCBDb25kdWt0b3IncyBQcm9tZXRoZXVzIGFuZCBDb3J0ZXggYnVpbGRzIHBsdXMgc3VwZXJ2aXNvcmQuIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmxpY2Vuc2VzIjoiQXBhY2hlLTIuMCIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5zb3VyY2UiOiJodHRwczovL2dpdGh1Yi5jb20vY29uZHVrdG9yL2NvbnRhaW5lci1pbWFnZXMiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudGl0bGUiOiJDb25kdWt0b3IgbW9uaXRvcmluZyBiYXNlIGltYWdlIChXb2xmaS9hcGtvKSIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS52ZW5kb3IiOiJDb25kdWt0b3IifX19",
       "repoDigests": [
-        "ghcr.io/conduktor/base-monitoring@sha256:68ab74f9a17bebdd84579f61ff4dd48c590fba84a0ecfbdcfb7ed9352e664226"
+        "ghcr.io/conduktor/base-monitoring@sha256:1e9d255e2acaf198e9af187ce9fcfa2ec6a87b81863d0376ba6a035e19ffead7"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-11-19T00:06:23Z",
+        "org.opencontainers.image.created": "2026-11-19T10:59:05Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with Conduktor's Prometheus and Cortex builds plus supervisord.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -4379,7 +5009,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-5FYGQV/output",
+      "file": "/tmp/grype-Iq6EDF/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

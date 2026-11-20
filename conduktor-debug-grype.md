@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 110 | 56 | 8 | 255 |
+| 4 | 118 | 58 | 9 | 266 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -115,6 +115,14 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-94447`](https://nvd.nist.gov/vuln/detail/CVE-2026-94447) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :orange_circle: high | [`CVE-2026-97031`](https://nvd.nist.gov/vuln/detail/CVE-2026-97031) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :orange_circle: high | [`CVE-2026-97032`](https://nvd.nist.gov/vuln/detail/CVE-2026-97032) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :orange_circle: high | [`CVE-2026-97033`](https://nvd.nist.gov/vuln/detail/CVE-2026-97033) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
+| :orange_circle: high | [`CVE-2026-97034`](https://nvd.nist.gov/vuln/detail/CVE-2026-97034) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
+| :orange_circle: high | [`CVE-2026-97035`](https://nvd.nist.gov/vuln/detail/CVE-2026-97035) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
+| :orange_circle: high | [`CVE-2026-97036`](https://nvd.nist.gov/vuln/detail/CVE-2026-97036) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
+| :orange_circle: high | [`CVE-2026-97037`](https://nvd.nist.gov/vuln/detail/CVE-2026-97037) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
+| :orange_circle: high | [`CVE-2026-97038`](https://nvd.nist.gov/vuln/detail/CVE-2026-97038) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
+| :orange_circle: high | [`CVE-2026-97039`](https://nvd.nist.gov/vuln/detail/CVE-2026-97039) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
+| :orange_circle: high | [`CVE-2026-97043`](https://nvd.nist.gov/vuln/detail/CVE-2026-97043) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
 | :orange_circle: high | [`GO-2026-5026`](https://go.dev/cl/767220) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-5972`](https://go.dev/issue/80405) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :orange_circle: high | [`GO-2026-6088`](https://go.dev/issue/80481) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
@@ -134,6 +142,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r6` | — |
 | :yellow_circle: medium | [`GHSA-4w3g-jfj2-cw2q`](https://github.com/advisories/GHSA-4w3g-jfj2-cw2q) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
 | :yellow_circle: medium | [`GHSA-vvm8-gf78-28g4`](https://github.com/advisories/GHSA-vvm8-gf78-28g4) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.5` |
+| :yellow_circle: medium | [`CVE-2026-115819`](https://nvd.nist.gov/vuln/detail/CVE-2026-115819) | `glibc-2.44` | `2.44-r24` | — |
 | :yellow_circle: medium | [`GO-2026-5158`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-5wrp-cwcj-q835) | `go.opentelemetry.io/otel` | `v1.43.0` | `1.42.0, 1.44.0` |
 | :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.47.0` |
 | :yellow_circle: medium | [`GHSA-q7gw-24fr-5p69`](https://github.com/advisories/GHSA-q7gw-24fr-5p69) | `go.opentelemetry.io/otel/trace` | `v1.43.0` | `1.47.0` |
@@ -179,12 +188,14 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`CVE-2026-56860`](https://nvd.nist.gov/vuln/detail/CVE-2026-56860) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`CVE-2026-94448`](https://nvd.nist.gov/vuln/detail/CVE-2026-94448) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`CVE-2026-97030`](https://nvd.nist.gov/vuln/detail/CVE-2026-97030) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
+| :yellow_circle: medium | [`CVE-2026-97054`](https://nvd.nist.gov/vuln/detail/CVE-2026-97054) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
 | :yellow_circle: medium | [`GO-2026-6091`](https://go.dev/issue/80435) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`GO-2026-6218`](https://go.dev/cl/803681) | `stdlib` | `go1.25.12` | `1.25.13, 1.26.6, 1.27.0-rc.3` |
 | :yellow_circle: medium | [`GO-2026-6599`](https://go.dev/cl/839866) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`GO-2026-6600`](https://go.dev/cl/840925) | `stdlib` | `go1.25.12` | `1.26.9, 1.27.2` |
 | :yellow_circle: medium | [`GO-2026-6809`](https://go.dev/cl/851047) | `stdlib` | `go1.25.12` | `1.26.10, 1.27.3` |
 | :yellow_circle: medium | [`GO-2026-6859`](https://go.dev/cl/862185) | `stdlib` | `go1.25.12` | `1.26.11, 1.27.4` |
+| :white_circle: low | [`CVE-2026-100290`](https://nvd.nist.gov/vuln/detail/CVE-2026-100290) | `glibc-2.44` | `2.44-r24` | — |
 | :white_circle: low | [`GHSA-8wmf-6v46-5gfg`](https://github.com/advisories/GHSA-8wmf-6v46-5gfg) | `go.opentelemetry.io/otel/sdk` | `v1.43.0` | `1.45.0` |
 | :white_circle: low | [`CVE-2026-16241`](https://images.chainguard.dev/security/CVE-2026-16241) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :white_circle: low | [`CVE-2026-6469`](https://images.chainguard.dev/security/CVE-2026-6469) | `libpq-17` | `17.10-r1` | `17.11-r0` |
