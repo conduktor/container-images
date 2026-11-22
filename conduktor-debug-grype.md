@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 4 | 118 | 58 | 9 | 266 |
+| 4 | 123 | 61 | 9 | 274 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -59,7 +59,12 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-6464`](https://images.chainguard.dev/security/CVE-2026-6464) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`CVE-2026-6471`](https://images.chainguard.dev/security/CVE-2026-6471) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`GHSA-mcr4-qmvw-px4g`](https://github.com/advisories/GHSA-mcr4-qmvw-px4g) | `lz4-java` | `1.10.2` | `1.11.4` |
+| :orange_circle: high | [`CVE-2026-107493`](https://nvd.nist.gov/vuln/detail/CVE-2026-107493) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-107494`](https://nvd.nist.gov/vuln/detail/CVE-2026-107494) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-107496`](https://nvd.nist.gov/vuln/detail/CVE-2026-107496) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-121482`](https://nvd.nist.gov/vuln/detail/CVE-2026-121482) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-124709`](https://nvd.nist.gov/vuln/detail/CVE-2026-124709) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-84786`](https://nvd.nist.gov/vuln/detail/CVE-2026-84786) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-88823`](https://nvd.nist.gov/vuln/detail/CVE-2026-88823) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-95691`](https://nvd.nist.gov/vuln/detail/CVE-2026-95691) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-95692`](https://nvd.nist.gov/vuln/detail/CVE-2026-95692) | `openssl-4.0` | `4.0.3-r8` | — |
@@ -167,7 +172,10 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :yellow_circle: medium | [`GHSA-gm45-99xc-r7wv`](https://github.com/advisories/GHSA-gm45-99xc-r7wv) | `lz4-java` | `1.10.2` | `1.11.4` |
 | :yellow_circle: medium | [`GHSA-xx22-p4ch-683r`](https://github.com/advisories/GHSA-xx22-p4ch-683r) | `lz4-java` | `1.10.2` | `1.11.1` |
 | :yellow_circle: medium | [`CVE-2026-58058`](https://images.chainguard.dev/security/CVE-2026-58058) | `nmap` | `7.94-r3` | `7.991-r0` |
+| :yellow_circle: medium | [`CVE-2026-121481`](https://nvd.nist.gov/vuln/detail/CVE-2026-121481) | `openssl-4.0` | `4.0.3-r8` | — |
+| :yellow_circle: medium | [`CVE-2026-35190`](https://nvd.nist.gov/vuln/detail/CVE-2026-35190) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`CVE-2026-88822`](https://nvd.nist.gov/vuln/detail/CVE-2026-88822) | `openssl-4.0` | `4.0.3-r8` | — |
+| :yellow_circle: medium | [`CVE-2026-95690`](https://nvd.nist.gov/vuln/detail/CVE-2026-95690) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`CVE-2026-14663`](https://images.chainguard.dev/security/CVE-2026-14663) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
 | :yellow_circle: medium | [`CVE-2026-14666`](https://images.chainguard.dev/security/CVE-2026-14666) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |
 | :yellow_circle: medium | [`CVE-2026-14672`](https://images.chainguard.dev/security/CVE-2026-14672) | `postgresql-17-client` | `17.10-r1` | `17.11-r0` |

@@ -11,11 +11,16 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-jre-25/t
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 4 | 5 | 1 | 10 |
+| 0 | 9 | 8 | 1 | 18 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
+| :orange_circle: high | [`CVE-2026-107493`](https://nvd.nist.gov/vuln/detail/CVE-2026-107493) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-107494`](https://nvd.nist.gov/vuln/detail/CVE-2026-107494) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-107496`](https://nvd.nist.gov/vuln/detail/CVE-2026-107496) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-121482`](https://nvd.nist.gov/vuln/detail/CVE-2026-121482) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-124709`](https://nvd.nist.gov/vuln/detail/CVE-2026-124709) | `openssl-4.0` | `4.0.3-r8` | — |
+| :orange_circle: high | [`CVE-2026-84786`](https://nvd.nist.gov/vuln/detail/CVE-2026-84786) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-88823`](https://nvd.nist.gov/vuln/detail/CVE-2026-88823) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-95691`](https://nvd.nist.gov/vuln/detail/CVE-2026-95691) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-95692`](https://nvd.nist.gov/vuln/detail/CVE-2026-95692) | `openssl-4.0` | `4.0.3-r8` | — |
@@ -23,5 +28,8 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-jre-25/t
 | :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r6` | — |
 | :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r6` | — |
 | :yellow_circle: medium | [`CVE-2026-115819`](https://nvd.nist.gov/vuln/detail/CVE-2026-115819) | `glibc-2.44` | `2.44-r24` | — |
+| :yellow_circle: medium | [`CVE-2026-121481`](https://nvd.nist.gov/vuln/detail/CVE-2026-121481) | `openssl-4.0` | `4.0.3-r8` | — |
+| :yellow_circle: medium | [`CVE-2026-35190`](https://nvd.nist.gov/vuln/detail/CVE-2026-35190) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`CVE-2026-88822`](https://nvd.nist.gov/vuln/detail/CVE-2026-88822) | `openssl-4.0` | `4.0.3-r8` | — |
+| :yellow_circle: medium | [`CVE-2026-95690`](https://nvd.nist.gov/vuln/detail/CVE-2026-95690) | `openssl-4.0` | `4.0.3-r8` | — |
 | :white_circle: low | [`CVE-2026-100290`](https://nvd.nist.gov/vuln/detail/CVE-2026-100290) | `glibc-2.44` | `2.44-r24` | — |
