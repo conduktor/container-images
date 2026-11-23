@@ -157,7 +157,7 @@ jobs:
       # (scripts/melange-index.sh). It cannot be skipped here — melange-build-pkg
       # adds `--keyring-append <key>.pub` for every config after the first.
       - name: Generate a temporary melange signing key
-        uses: chainguard-dev/actions/melange-keygen@a25ce483d875a46f4c837e85e32e0fda602693f5 # v1.8.1
+        uses: chainguard-dev/actions/melange-keygen@d496b2ab65497cac13d77ccd5038b8aae7e8c43b # v1.8.2
         with:
           # Absolute paths so the key and the packages land where apko.yaml's
           # `@local ./packages` and `./melange.rsa.pub` resolve from the image dir.
