@@ -31,8 +31,8 @@
           {
             "cve": "CVE-2026-124709",
             "epss": 0.00674,
-            "percentile": 0.53089,
-            "date": "2026-11-22"
+            "percentile": 0.53093,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -82,7 +82,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -205,8 +205,8 @@
           {
             "cve": "CVE-2026-95692",
             "epss": 0.00449,
-            "percentile": 0.39821,
-            "date": "2026-11-22"
+            "percentile": 0.39803,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -256,7 +256,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -379,8 +379,8 @@
           {
             "cve": "CVE-2026-107496",
             "epss": 0.00399,
-            "percentile": 0.34924,
-            "date": "2026-11-22"
+            "percentile": 0.34912,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -430,7 +430,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -550,8 +550,8 @@
           {
             "cve": "CVE-2026-107494",
             "epss": 0.00388,
-            "percentile": 0.33645,
-            "date": "2026-11-22"
+            "percentile": 0.33629,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -601,7 +601,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -721,8 +721,8 @@
           {
             "cve": "CVE-2026-121482",
             "epss": 0.00359,
-            "percentile": 0.30308,
-            "date": "2026-11-22"
+            "percentile": 0.30296,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -772,7 +772,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -893,8 +893,8 @@
           {
             "cve": "CVE-2026-121481",
             "epss": 0.00462,
-            "percentile": 0.40817,
-            "date": "2026-11-22"
+            "percentile": 0.408,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -944,7 +944,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1038,6 +1038,452 @@
     },
     {
       "vulnerability": {
+        "id": "CVE-2026-121758",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-121758",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34774",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-00230"
+        ],
+        "description": "Converting crafted ISO-2022-CN-EXT input to UTF-8 character encoding, in the GNU C Library version 2.2 through 2.44 may result in the converter reading past the end of the input buffer, causing the calling application to crash.\n\nWhen the ISO-2022-CN-EXT decoder encounters an invalid input byte sequence like '\\x0e' it ends up advancing the pointer tracking the read buffer position twice.  If this sequence is at the end of the input buffer, the decoder may then end up reading past the bounds of the input buffer.  To exploit this, the input and encoding needs to be attacker controlled.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.9,
+              "exploitabilityScore": 2.3,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-121758",
+            "epss": 0.00455,
+            "percentile": 0.40268,
+            "date": "2026-11-23"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-121758",
+            "cwe": "CWE-126",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.24797500000000003
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r25"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-121758",
+            "versionConstraint": ">= 2.2, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "f03a9ff55e0820c1",
+        "name": "glibc-2.44",
+        "version": "2.44-r25",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r25:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r25?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r25.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-124024",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-124024",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34914",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-00231"
+        ],
+        "description": "Converting crafted input from UCS-4 to IBM1390 or IBM1399 character encoding, in the GNU C Library version 2.3.3 and later may result in the converter reading past the end of the input buffer, causing the calling application to crash.\n\nWhen converting from UCS-4, these encoders may encounter a combining base such as U+00E6 and jump ahead by 4 bytes to check the next UCS-4 code point.  The check for end of buffer however does not account for this, which may result in a buffer overread if the following code point has less than 4 bytes remaining.  Exploitation of this bug not only requires attacker control of input and encoding, but also strict control over layout of the input in memory.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.9,
+              "exploitabilityScore": 2.3,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-124024",
+            "epss": 0.00454,
+            "percentile": 0.4022,
+            "date": "2026-11-23"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-124024",
+            "cwe": "CWE-126",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.24743
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r25"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-124024",
+            "versionConstraint": ">= 2.3.3, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "f03a9ff55e0820c1",
+        "name": "glibc-2.44",
+        "version": "2.44-r25",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r25:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r25?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r25.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
         "id": "CVE-2026-95691",
         "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-95691",
         "namespace": "nvd:cpe",
@@ -1067,8 +1513,8 @@
           {
             "cve": "CVE-2026-95691",
             "epss": 0.00285,
-            "percentile": 0.21348,
-            "date": "2026-11-22"
+            "percentile": 0.21329,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -1118,7 +1564,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1241,8 +1687,8 @@
           {
             "cve": "CVE-2026-88823",
             "epss": 0.00267,
-            "percentile": 0.19005,
-            "date": "2026-11-22"
+            "percentile": 0.18981,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -1292,7 +1738,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1412,8 +1858,8 @@
           {
             "cve": "CVE-2026-84786",
             "epss": 0.0023,
-            "percentile": 0.13909,
-            "date": "2026-11-22"
+            "percentile": 0.13891,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -1469,7 +1915,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1592,8 +2038,8 @@
           {
             "cve": "CVE-2026-88822",
             "epss": 0.0026,
-            "percentile": 0.17901,
-            "date": "2026-11-22"
+            "percentile": 0.17878,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -1643,7 +2089,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1764,8 +2210,8 @@
           {
             "cve": "CVE-2026-95690",
             "epss": 0.00273,
-            "percentile": 0.19958,
-            "date": "2026-11-22"
+            "percentile": 0.19934,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -1821,7 +2267,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1942,8 +2388,8 @@
           {
             "cve": "CVE-2026-115819",
             "epss": 0.00263,
-            "percentile": 0.18276,
-            "date": "2026-11-22"
+            "percentile": 0.18251,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -1973,7 +2419,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r24"
+              "version": "2.44-r25"
             }
           },
           "found": {
@@ -1986,14 +2432,14 @@
         }
       ],
       "artifact": {
-        "id": "b9e05f82b33a0e8d",
+        "id": "f03a9ff55e0820c1",
         "name": "glibc-2.44",
-        "version": "2.44-r24",
+        "version": "2.44-r25",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2005,20 +2451,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r24:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r25:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r24?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r25?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -2130,7 +2576,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r24.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r25.spdx.json"
             }
           ]
         }
@@ -2167,8 +2613,8 @@
           {
             "cve": "CVE-2026-35190",
             "epss": 0.00235,
-            "percentile": 0.14475,
-            "date": "2026-11-22"
+            "percentile": 0.14458,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -2218,7 +2664,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2341,8 +2787,8 @@
           {
             "cve": "CVE-2026-107493",
             "epss": 0.0015,
-            "percentile": 0.04161,
-            "date": "2026-11-22"
+            "percentile": 0.04151,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -2392,7 +2838,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2514,8 +2960,8 @@
           {
             "cve": "CVE-2026-100290",
             "epss": 0.00336,
-            "percentile": 0.27526,
-            "date": "2026-11-22"
+            "percentile": 0.27508,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -2545,7 +2991,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r24"
+              "version": "2.44-r25"
             }
           },
           "found": {
@@ -2558,14 +3004,14 @@
         }
       ],
       "artifact": {
-        "id": "b9e05f82b33a0e8d",
+        "id": "f03a9ff55e0820c1",
         "name": "glibc-2.44",
-        "version": "2.44-r24",
+        "version": "2.44-r25",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2577,20 +3023,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r24:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r24:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r25:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r25:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r24?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r25?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -2702,7 +3148,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r24.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r25.spdx.json"
             }
           ]
         }
@@ -2750,8 +3196,8 @@
           {
             "cve": "CVE-2026-90781",
             "epss": 0.00179,
-            "percentile": 0.07514,
-            "date": "2026-11-22"
+            "percentile": 0.0748,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -2801,7 +3247,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3168,8 +3614,8 @@
           {
             "cve": "CVE-2026-96674",
             "epss": 0.00115,
-            "percentile": 0.01578,
-            "date": "2026-11-22"
+            "percentile": 0.01576,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -3219,7 +3665,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3584,8 +4030,8 @@
           {
             "cve": "CVE-2026-96675",
             "epss": 0.00111,
-            "percentile": 0.01318,
-            "date": "2026-11-22"
+            "percentile": 0.01317,
+            "date": "2026-11-23"
           }
         ],
         "cwes": [
@@ -3635,7 +4081,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
+            "layerID": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3963,29 +4409,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-jre-25@sha256:e0af712f31812fc4c621bd5f7b6103acc73ef3c5f3ebc49c8e1a565acf53face",
-      "imageID": "sha256:a4eee6bfe6cdd6197fc58982abf2aa4cd01fd6dc5caf2cfa6c971e1ba57a82e6",
-      "manifestDigest": "sha256:8dae539eba989e386c1e424902608bd517563de4e7355b5f10be2f90b70e58bc",
+      "userInput": "ghcr.io/conduktor/base-jre-25@sha256:f265dc7c7c8ac8110efe0b820176f88eb173a0d32b53016e04f47c3bede0efa0",
+      "imageID": "sha256:1fda8d6afe25a20c328dc2da9c0704f868ac6a0020742c22570198c81a439f0a",
+      "manifestDigest": "sha256:064f5742f73b94e65f23222f16a787c51358624e2b96e03a67b19428aa3f7443",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 282513152,
+      "imageSize": 282525816,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:63c9f8251e049901c87570e3158cea425a895bd945ce24d8e6cf19b7c763a4fd",
-          "size": 282513152
+          "digest": "sha256:4b0c3bd7efe8a8f46d6722754a545aabb974ba862f8df5bfe7804c7d2b81bc32",
+          "size": 282525816
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTI5LCJkaWdlc3QiOiJzaGEyNTY6YTRlZWU2YmZlNmNkZDYxOTdmYzU4OTgyYWJmMmFhNGNkMDFmZDZkYzVjYWYyY2ZhNmM5NzFlMWJhNTdhODJlNiJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDEyMTU2ODgsImRpZ2VzdCI6InNoYTI1Njo2M2M5ZjgyNTFlMDQ5OTAxYzg3NTcwZTMxNThjZWE0MjVhODk1YmQ5NDVjZTI0ZDhlNmNmMTliN2M3NjNhNGZkIn1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTIzVDE0OjI4OjE1WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0yM1QxNDoyODoxNVoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgSlJFLTI1IGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIGJ5IENvbmR1a3RvciJ9XSwib3MiOiJsaW51eCIsInJvb3RmcyI6eyJ0eXBlIjoibGF5ZXJzIiwiZGlmZl9pZHMiOlsic2hhMjU2OjYzYzlmODI1MWUwNDk5MDFjODc1NzBlMzE1OGNlYTQyNWE4OTViZDk0NWNlMjRkOGU2Y2YxOWI3Yzc2M2E0ZmQiXX0sImNvbmZpZyI6eyJDbWQiOlsiL2Jpbi9iYXNoIl0sIkVudiI6WyJKQVZBX0hPTUU9L3Vzci9saWIvanZtL2phdmEtMjUtb3BlbmpkayIsIkxBTkc9Qy5VVEYtOCIsIlBBVEg9L3Vzci9saWIvanZtL2phdmEtMjUtb3Blbmpkay9iaW46L3Vzci9zYmluOi9zYmluOi91c3IvYmluOi9iaW4iLCJTU0xfQ0VSVF9GSUxFPS9ldGMvc3NsL2NlcnRzL2NhLWNlcnRpZmljYXRlcy5jcnQiLCJUWj1VVEMiXSwiTGFiZWxzIjp7Im9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5hdXRob3JzIjoiQ29uZHVrdG9yIFx1MDAzY3N1cHBvcnRAY29uZHVrdG9yLmlvXHUwMDNlIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmNyZWF0ZWQiOiIyMDI2LTExLTIzVDE0OjI4OjE1WiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5kZXNjcmlwdGlvbiI6Ik1pbmltYWwgZ2xpYmMvV29sZmkgYmFzZSBpbWFnZSB3aXRoIE9wZW5KREsgMjUgSlJFIGZvciBDb25kdWt0b3IgQ29uc29sZSBhbmQgR2F0ZXdheS4iLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UubGljZW5zZXMiOiJBcGFjaGUtMi4wIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnNvdXJjZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9jb25kdWt0b3IvY29udGFpbmVyLWltYWdlcyIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS50aXRsZSI6IkNvbmR1a3RvciBKUkUtMjUgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudmVuZG9yIjoiQ29uZHVrdG9yIn19fQ==",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTI5LCJkaWdlc3QiOiJzaGEyNTY6MWZkYThkNmFmZTI1YTIwYzMyOGRjMmRhOWMwNzA0Zjg2OGFjNmEwMDIwNzQyYzIyNTcwMTk4YzgxYTQzOWYwYSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDEyMzE1NDUsImRpZ2VzdCI6InNoYTI1Njo0YjBjM2JkN2VmZThhOGY0NmQ2NzIyNzU0YTU0NWFhYmI5NzRiYTg2MmY4ZGY1YmZlNzgwNGM3ZDJiODFiYzMyIn1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTI0VDA0OjU4OjAzWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0yNFQwNDo1ODowM1oiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgSlJFLTI1IGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIGJ5IENvbmR1a3RvciJ9XSwib3MiOiJsaW51eCIsInJvb3RmcyI6eyJ0eXBlIjoibGF5ZXJzIiwiZGlmZl9pZHMiOlsic2hhMjU2OjRiMGMzYmQ3ZWZlOGE4ZjQ2ZDY3MjI3NTRhNTQ1YWFiYjk3NGJhODYyZjhkZjViZmU3ODA0YzdkMmI4MWJjMzIiXX0sImNvbmZpZyI6eyJDbWQiOlsiL2Jpbi9iYXNoIl0sIkVudiI6WyJKQVZBX0hPTUU9L3Vzci9saWIvanZtL2phdmEtMjUtb3BlbmpkayIsIkxBTkc9Qy5VVEYtOCIsIlBBVEg9L3Vzci9saWIvanZtL2phdmEtMjUtb3Blbmpkay9iaW46L3Vzci9zYmluOi9zYmluOi91c3IvYmluOi9iaW4iLCJTU0xfQ0VSVF9GSUxFPS9ldGMvc3NsL2NlcnRzL2NhLWNlcnRpZmljYXRlcy5jcnQiLCJUWj1VVEMiXSwiTGFiZWxzIjp7Im9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5hdXRob3JzIjoiQ29uZHVrdG9yIFx1MDAzY3N1cHBvcnRAY29uZHVrdG9yLmlvXHUwMDNlIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmNyZWF0ZWQiOiIyMDI2LTExLTI0VDA0OjU4OjAzWiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5kZXNjcmlwdGlvbiI6Ik1pbmltYWwgZ2xpYmMvV29sZmkgYmFzZSBpbWFnZSB3aXRoIE9wZW5KREsgMjUgSlJFIGZvciBDb25kdWt0b3IgQ29uc29sZSBhbmQgR2F0ZXdheS4iLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UubGljZW5zZXMiOiJBcGFjaGUtMi4wIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnNvdXJjZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9jb25kdWt0b3IvY29udGFpbmVyLWltYWdlcyIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS50aXRsZSI6IkNvbmR1a3RvciBKUkUtMjUgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudmVuZG9yIjoiQ29uZHVrdG9yIn19fQ==",
       "repoDigests": [
-        "ghcr.io/conduktor/base-jre-25@sha256:e0af712f31812fc4c621bd5f7b6103acc73ef3c5f3ebc49c8e1a565acf53face"
+        "ghcr.io/conduktor/base-jre-25@sha256:f265dc7c7c8ac8110efe0b820176f88eb173a0d32b53016e04f47c3bede0efa0"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-11-23T14:28:15Z",
+        "org.opencontainers.image.created": "2026-11-24T04:58:03Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with OpenJDK 25 JRE for Conduktor Console and Gateway.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -4006,7 +4452,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-5yCTfV/output",
+      "file": "/tmp/grype-PhFv28/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

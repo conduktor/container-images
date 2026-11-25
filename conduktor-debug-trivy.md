@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 80 | 56 | 9 | 145 |
+| 0 | 82 | 56 | 9 | 147 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -23,6 +23,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-91777`](https://avd.aquasec.com/nvd/cve-2026-91777) | `com.fasterxml.jackson.core:jackson-databind` | `2.21.5` | `2.21.7, 2.18.11, 2.22.3` |
 | :orange_circle: high | [`CVE-2026-116587`](https://avd.aquasec.com/nvd/cve-2026-116587) | `github.com/go-jose/go-jose/v4` | `v4.1.4` | `4.1.6` |
 | :orange_circle: high | [`CVE-2026-56854`](https://avd.aquasec.com/nvd/cve-2026-56854) | `golang.org/x/crypto` | `v0.52.0` | `0.55.0` |
+| :orange_circle: high | [`CVE-2026-39821`](https://avd.aquasec.com/nvd/cve-2026-39821) | `golang.org/x/net` | `v0.55.0` | `0.57.0` |
 | :orange_circle: high | [`CVE-2026-46600`](https://avd.aquasec.com/nvd/cve-2026-46600) | `golang.org/x/net` | `v0.55.0` | `0.56.0` |
 | :orange_circle: high | [`CVE-2026-78661`](https://avd.aquasec.com/nvd/cve-2026-78661) | `golang.org/x/net` | `v0.55.0` | `0.62.0` |
 | :orange_circle: high | [`CVE-2026-78669`](https://avd.aquasec.com/nvd/cve-2026-78669) | `golang.org/x/net` | `v0.55.0` | `0.60.0` |
@@ -48,6 +49,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/conduktor-deb
 | :orange_circle: high | [`CVE-2026-6471`](https://avd.aquasec.com/nvd/cve-2026-6471) | `libpq-17` | `17.10-r1` | `17.11-r0` |
 | :orange_circle: high | [`CVE-2026-10050`](https://avd.aquasec.com/nvd/cve-2026-10050) | `org.eclipse.jetty:jetty-security` | `12.0.34` | `9.4.63, 10.0.31, 11.0.31, 12.0.36, 12.1.10` |
 | :orange_circle: high | [`CVE-2026-77422`](https://avd.aquasec.com/nvd/cve-2026-77422) | `org.jline:jline-builtins` | `3.30.4` | `4.3.1, 3.30.15` |
+| :orange_circle: high | [`CVE-2026-77423`](https://avd.aquasec.com/nvd/cve-2026-77423) | `org.jline:jline-builtins` | `3.30.4` | `3.30.15, 4.3.1` |
 | :orange_circle: high | [`CVE-2026-56740`](https://avd.aquasec.com/nvd/cve-2026-56740) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
 | :orange_circle: high | [`CVE-2026-56741`](https://avd.aquasec.com/nvd/cve-2026-56741) | `org.jline:jline-remote-telnet` | `3.30.4` | `4.2.1, 4.0.16, 3.30.14` |
 | :orange_circle: high | [`CVE-2026-108106`](https://avd.aquasec.com/nvd/cve-2026-108106) | `org.xerial.snappy:snappy-java` | `1.1.10.7` | `1.1.10.9` |

@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-jre-25/t
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 9 | 8 | 1 | 18 |
+| 0 | 9 | 10 | 1 | 20 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -27,9 +27,11 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-jre-25/t
 | :yellow_circle: medium | [`CVE-2026-90781`](https://nvd.nist.gov/vuln/detail/CVE-2026-90781) | `alsa-lib` | `1.2.16.1-r6` | — |
 | :yellow_circle: medium | [`CVE-2026-96674`](https://nvd.nist.gov/vuln/detail/CVE-2026-96674) | `alsa-lib` | `1.2.16.1-r6` | — |
 | :yellow_circle: medium | [`CVE-2026-96675`](https://nvd.nist.gov/vuln/detail/CVE-2026-96675) | `alsa-lib` | `1.2.16.1-r6` | — |
-| :yellow_circle: medium | [`CVE-2026-115819`](https://nvd.nist.gov/vuln/detail/CVE-2026-115819) | `glibc-2.44` | `2.44-r24` | — |
+| :yellow_circle: medium | [`CVE-2026-115819`](https://nvd.nist.gov/vuln/detail/CVE-2026-115819) | `glibc-2.44` | `2.44-r25` | — |
+| :yellow_circle: medium | [`CVE-2026-121758`](https://nvd.nist.gov/vuln/detail/CVE-2026-121758) | `glibc-2.44` | `2.44-r25` | — |
+| :yellow_circle: medium | [`CVE-2026-124024`](https://nvd.nist.gov/vuln/detail/CVE-2026-124024) | `glibc-2.44` | `2.44-r25` | — |
 | :yellow_circle: medium | [`CVE-2026-121481`](https://nvd.nist.gov/vuln/detail/CVE-2026-121481) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`CVE-2026-35190`](https://nvd.nist.gov/vuln/detail/CVE-2026-35190) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`CVE-2026-88822`](https://nvd.nist.gov/vuln/detail/CVE-2026-88822) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`CVE-2026-95690`](https://nvd.nist.gov/vuln/detail/CVE-2026-95690) | `openssl-4.0` | `4.0.3-r8` | — |
-| :white_circle: low | [`CVE-2026-100290`](https://nvd.nist.gov/vuln/detail/CVE-2026-100290) | `glibc-2.44` | `2.44-r24` | — |
+| :white_circle: low | [`CVE-2026-100290`](https://nvd.nist.gov/vuln/detail/CVE-2026-100290) | `glibc-2.44` | `2.44-r25` | — |
