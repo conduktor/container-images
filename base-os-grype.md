@@ -15,7 +15,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-os/trivy
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
-| :yellow_circle: medium | [`CVE-2026-115819`](https://nvd.nist.gov/vuln/detail/CVE-2026-115819) | `glibc-2.44` | `2.44-r25` | — |
-| :yellow_circle: medium | [`CVE-2026-121758`](https://nvd.nist.gov/vuln/detail/CVE-2026-121758) | `glibc-2.44` | `2.44-r25` | — |
-| :yellow_circle: medium | [`CVE-2026-124024`](https://nvd.nist.gov/vuln/detail/CVE-2026-124024) | `glibc-2.44` | `2.44-r25` | — |
-| :white_circle: low | [`CVE-2026-100290`](https://nvd.nist.gov/vuln/detail/CVE-2026-100290) | `glibc-2.44` | `2.44-r25` | — |
+| :yellow_circle: medium | [`CVE-2026-115819`](https://nvd.nist.gov/vuln/detail/CVE-2026-115819) | `glibc-2.44` | `2.44-r27` | — |
+| :yellow_circle: medium | [`CVE-2026-121758`](https://nvd.nist.gov/vuln/detail/CVE-2026-121758) | `glibc-2.44` | `2.44-r27` | — |
+| :yellow_circle: medium | [`CVE-2026-124024`](https://nvd.nist.gov/vuln/detail/CVE-2026-124024) | `glibc-2.44` | `2.44-r27` | — |
+| :white_circle: low | [`CVE-2026-100290`](https://nvd.nist.gov/vuln/detail/CVE-2026-100290) | `glibc-2.44` | `2.44-r27` | — |
