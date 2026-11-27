@@ -30,9 +30,9 @@
         "epss": [
           {
             "cve": "CVE-2026-124709",
-            "epss": 0.00674,
-            "percentile": 0.52884,
-            "date": "2026-11-24"
+            "epss": 0.00778,
+            "percentile": 0.52294,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -48,7 +48,7 @@
           "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.5055000000000001
+        "risk": 0.5835
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -82,7 +82,541 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-107494",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-107494",
+        "namespace": "nvd:cpe",
+        "severity": "High",
+        "urls": [
+          "https://github.com/openssl/openssl/commit/734c6cd7444bdbf589bfec917e47598c1b21ddd3",
+          "https://github.com/openssl/openssl/commit/c94e74a0d6273109ac86ad98ce42354c60499d1d",
+          "https://github.com/openssl/openssl/commit/dec00b87a89e8f81cef0e50cbbecdfad4d377849",
+          "https://openssl-library.org/news/secadv/20261124.txt"
+        ],
+        "description": "Issue summary: The QUIC stack queues a RETIRE_CONNECTION_ID frame also for\nretransmitted NEW_CONNECTION_ID frames. This allows a remote malicious\nQUIC stack to queue an unlimited number of RETIRE_CONNECTION_ID frames.\n\nImpact summary: A malicious remote QUIC peer can trigger an out-of-memory\ncondition causing a Denial of Service.\n\nCWE: CWE-770: Allocation of Resources Without Limits or Throttling\n\nDescription: The earlier fix for CVE-2026-84784 was not complete. It\nfailed to ignore retransmissions of the NEW_CONNECTION_ID frame. The QUIC\nimplementation created and inserted a RETIRE_CONNECTION_ID frame for every\nretransmitted NEW_CONNECTION_ID frame it received and there was no limit\non how many RETIRE_CONNECTION_ID frames were queued.\n\nThis issue allows a malicious remote QUIC stack to trigger an unbounded\nallocation of memory and eventually an out-of-memory (OOM) condition.\n\nFIPS impact: no\nThe FIPS module is not affected as the QUIC implementation is outside the\nOpenSSL FIPS module boundary.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-107494",
+            "epss": 0.00778,
+            "percentile": 0.52293,
+            "date": "2026-11-25"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-107494",
+            "cwe": "CWE-770",
+            "source": "openssl-security@openssl.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.5835
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-107494",
+            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-121482",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-121482",
+        "namespace": "nvd:cpe",
+        "severity": "High",
+        "urls": [
+          "https://github.com/openssl/openssl/commit/14a9f9ad6e8a17437fb75545f33e4fc56e9d41f6",
+          "https://github.com/openssl/openssl/commit/468c287cf451a834b370b69ab321b8ffdfac23aa",
+          "https://github.com/openssl/openssl/commit/c37874e29c43e86f5ed94d02275f1c31cf68afb3",
+          "https://openssl-library.org/news/secadv/20261124.txt"
+        ],
+        "description": "Issue summary: Verifying a maliciously crafted CMS or PKCS#7 SignedData\nmessage with CRL checking enabled may consume excessive CPU time, growing with\nthe square of the message size.\n\nImpact summary: An attacker who can submit a CMS or PKCS#7 SignedData message\nto an application that verifies it with CRL checking enabled can occupy a CPU\ncore for seconds to minutes, causing Denial of Service. Applications that\nleave CRL checking disabled are not affected.\n\nCWE: CWE-407: Inefficient Algorithmic Complexity\n\nDescription: With CRL checking enabled, OpenSSL compares each CRL distribution\npoint of a certificate against the issuing distribution point of every\ncandidate CRL. For a nameRelativeToCRLIssuer distribution point, the full name\nis the CRL issuer name with the relative name appended. Since the change that\ndeferred this computation, crl_crldp_check() rebuilds that full name for each\ncandidate CRL and frees it again.\n\nCMS_verify() and PKCS7_verify() take both the distribution points and the\ncandidate CRLs from the message, and this scoring runs before any signature is\nchecked. An application is exposed only if it sets X509_V_FLAG_CRL_CHECK on\nthe store and does not pass CMS_NOCRL or PKCS7_NOCRL; CRL checking is off by\ndefault. In TLS the CRLs come from the local store, so a peer controls only\nthe distribution point count.\n\nThe cost grows with the product of the distribution point count, the CRL count\nand the issuer name length, all chosen by the message author; a few hundred\nkilobytes can occupy a CPU core for tens of seconds. Verification still fails\nas it should, with no crash, no incorrect result and no memory growth.\nRequiring CRL checking is what limits the severity.\n\nFIPS impact: no\nThe affected code is outside the FIPS module boundary.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-121482",
+            "epss": 0.00493,
+            "percentile": 0.35157,
+            "date": "2026-11-25"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-121482",
+            "cwe": "CWE-407",
+            "source": "openssl-security@openssl.org",
+            "type": "Secondary"
+          },
+          {
+            "cve": "CVE-2026-121482",
+            "cwe": "CWE-400",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.36975
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-121482",
+            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-84786",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-84786",
+        "namespace": "nvd:cpe",
+        "severity": "High",
+        "urls": [
+          "https://github.com/openssl/openssl/commit/1ad851363d5b8588b0d40edcc045fd633e93f0c2",
+          "https://github.com/openssl/openssl/commit/a7e57082ccb27330a42f5f116a4e125b13bdcfef",
+          "https://github.com/openssl/openssl/commit/fecc9ee387f3be48afdaced3aeef243dc1566aab",
+          "https://openssl-library.org/news/secadv/20261124.txt"
+        ],
+        "description": "Issue summary: A DANE-enabled TLS client may crash by dereferencing a NULL\npointer when processing an unusual combination of certificate and TLSA\nrecords.\n\nImpact summary: The impact is limited to a client crash (potential Denial\nof Service).\n\nCWE: CWE-476: NULL Pointer Dereference\n\nDescription: A DANE-enabled TLS client that supports TLSA records with at\nleast one of the PKIX-TA(0) or PKIX-EE(1) usages alongside the DANE-TA(2)\nusage may crash by dereferencing a NULL pointer if the server claims a trusted\nCA's certificate to be its end-entity certificate and has an unusual mix of\nassociated TLSA records.\n\nDANE SMTP clients should not be affected since only the\nDANE-TA(2) and DANE-EE(3) TLSA record usages are specified applicable\nin SMTP.  For example, the Postfix MTA is not affected, while the Exim\nMTA does not at present use OpenSSL's DANE implementation.\n\nUse of DANE in validation of RFC7250 raw public keys (RPKs) is also\nunaffected, as these only use DANE-EE(3) TLSA records.\n\nOnly applications that support combining the DANE PKI with a traditional PKI\nare potentially affected.  A DANE-enabled browser or similar, that uses\nOpenSSL's DANE API could be affected.\n\nFIPS impact: no\nThe DANE API is outside the FIPS module boundary.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 7.5,
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-84786",
+            "epss": 0.00493,
+            "percentile": 0.35157,
+            "date": "2026-11-25"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-84786",
+            "cwe": "CWE-476",
+            "source": "openssl-security@openssl.org",
+            "type": "Secondary"
+          },
+          {
+            "cve": "CVE-2026-84786",
+            "cwe": "CWE-476",
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.36975
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-84786",
+            "versionConstraint": ">= 1.1.1, < 1.1.1zk,>= 3.0.0, < 3.0.24,>= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -205,8 +739,8 @@
           {
             "cve": "CVE-2026-95692",
             "epss": 0.00449,
-            "percentile": 0.39524,
-            "date": "2026-11-24"
+            "percentile": 0.30911,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -256,7 +790,181 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-121481",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-121481",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/openssl/openssl/pull/33652",
+          "http://www.openwall.com/lists/oss-security/2026/11/24/18",
+          "http://www.openwall.com/lists/oss-security/2026/11/25/3",
+          "https://news.ycombinator.com/item?id=50569226"
+        ],
+        "description": "Issue summary: Calling EVP_EncodeBlock() with an input length close to INT_MAX\nmay overflow the calculation of the encoded output size and write past the end\nof the caller-supplied output buffer.\n\nImpact summary: No path by which an attacker can trigger this has been\nidentified. An application that passes an input length near INT_MAX to\nEVP_EncodeBlock() could suffer a heap buffer overflow, crashing or corrupting\nits own memory, but it must itself supply such a length.\n\nCWE: CWE-190: Integer Overflow or Wraparound\n\nDescription: EVP_EncodeBlock() base64-encodes a buffer of a caller-supplied\nlength into an output buffer that the caller allocates. The caller is expected\nto reserve 4*((len+2)/3)+1 bytes. For input lengths close to INT_MAX, the\narithmetic that computes the encoded length overflows a signed integer, so the\nfunction writes more data than the documented output size. The result is a\nheap buffer overflow in the calling process.\n\nReaching this requires an application to pass an input length near INT_MAX to\nEVP_EncodeBlock(). OpenSSL's TLS, QUIC and CMS implementations never encode\nbuffers of that size, and the command line tools cannot practically be made to\ndo so: the limits on reading a proxy password from a file and on bignum sizes\nprevent it. An application that accepts an attacker-controlled length and\nforwards it to EVP_EncodeBlock() without its own bound check is exposed.\n\nThe severity is Low because no attacker-controlled path to the overflow is\nknown. The caller must already hold a buffer of about two gigabytes before the\ndefect can be reached.\n\nFIPS impact: no\nThe affected code is outside the FIPS module boundary.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "metrics": {
+              "baseScore": 5.9,
+              "exploitabilityScore": 2.3,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-121481",
+            "epss": 0.00569,
+            "percentile": 0.40899,
+            "date": "2026-11-25"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-121481",
+            "cwe": "CWE-190",
+            "source": "openssl-security@openssl.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.310105
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-121481",
+            "versionConstraint": ">= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -379,8 +1087,8 @@
           {
             "cve": "CVE-2026-107496",
             "epss": 0.00399,
-            "percentile": 0.34647,
-            "date": "2026-11-24"
+            "percentile": 0.25704,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -430,534 +1138,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "Apache-2.0"
-        ],
-        "cpes": [
-          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "openssl-4.0"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/ssl"
-            },
-            {
-              "path": "/etc/ssl/certs"
-            },
-            {
-              "path": "/etc/ssl/misc"
-            },
-            {
-              "path": "/etc/ssl/misc/CA.pl"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget.pl"
-            },
-            {
-              "path": "/etc/ssl/private"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/openssl"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/ossl-modules"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "CVE-2026-107494",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-107494",
-        "namespace": "nvd:cpe",
-        "severity": "High",
-        "urls": [
-          "https://github.com/openssl/openssl/commit/734c6cd7444bdbf589bfec917e47598c1b21ddd3",
-          "https://github.com/openssl/openssl/commit/c94e74a0d6273109ac86ad98ce42354c60499d1d",
-          "https://github.com/openssl/openssl/commit/dec00b87a89e8f81cef0e50cbbecdfad4d377849",
-          "https://openssl-library.org/news/secadv/20261124.txt"
-        ],
-        "description": "Issue summary: The QUIC stack queues a RETIRE_CONNECTION_ID frame also for\nretransmitted NEW_CONNECTION_ID frames. This allows a remote malicious\nQUIC stack to queue an unlimited number of RETIRE_CONNECTION_ID frames.\n\nImpact summary: A malicious remote QUIC peer can trigger an out-of-memory\ncondition causing a Denial of Service.\n\nCWE: CWE-770: Allocation of Resources Without Limits or Throttling\n\nDescription: The earlier fix for CVE-2026-84784 was not complete. It\nfailed to ignore retransmissions of the NEW_CONNECTION_ID frame. The QUIC\nimplementation created and inserted a RETIRE_CONNECTION_ID frame for every\nretransmitted NEW_CONNECTION_ID frame it received and there was no limit\non how many RETIRE_CONNECTION_ID frames were queued.\n\nThis issue allows a malicious remote QUIC stack to trigger an unbounded\nallocation of memory and eventually an out-of-memory (OOM) condition.\n\nFIPS impact: no\nThe FIPS module is not affected as the QUIC implementation is outside the\nOpenSSL FIPS module boundary.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-107494",
-            "epss": 0.00388,
-            "percentile": 0.3337,
-            "date": "2026-11-24"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-107494",
-            "cwe": "CWE-770",
-            "source": "openssl-security@openssl.org",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.29100000000000004
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "openssl-4.0",
-              "version": "4.0.3-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-107494",
-            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "328c5e883714853d",
-        "name": "openssl-4.0",
-        "version": "4.0.3-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "Apache-2.0"
-        ],
-        "cpes": [
-          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "openssl-4.0"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/ssl"
-            },
-            {
-              "path": "/etc/ssl/certs"
-            },
-            {
-              "path": "/etc/ssl/misc"
-            },
-            {
-              "path": "/etc/ssl/misc/CA.pl"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget.pl"
-            },
-            {
-              "path": "/etc/ssl/private"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/openssl"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/ossl-modules"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "CVE-2026-121482",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-121482",
-        "namespace": "nvd:cpe",
-        "severity": "High",
-        "urls": [
-          "https://github.com/openssl/openssl/commit/14a9f9ad6e8a17437fb75545f33e4fc56e9d41f6",
-          "https://github.com/openssl/openssl/commit/468c287cf451a834b370b69ab321b8ffdfac23aa",
-          "https://github.com/openssl/openssl/commit/c37874e29c43e86f5ed94d02275f1c31cf68afb3",
-          "https://openssl-library.org/news/secadv/20261124.txt"
-        ],
-        "description": "Issue summary: Verifying a maliciously crafted CMS or PKCS#7 SignedData\nmessage with CRL checking enabled may consume excessive CPU time, growing with\nthe square of the message size.\n\nImpact summary: An attacker who can submit a CMS or PKCS#7 SignedData message\nto an application that verifies it with CRL checking enabled can occupy a CPU\ncore for seconds to minutes, causing Denial of Service. Applications that\nleave CRL checking disabled are not affected.\n\nCWE: CWE-407: Inefficient Algorithmic Complexity\n\nDescription: With CRL checking enabled, OpenSSL compares each CRL distribution\npoint of a certificate against the issuing distribution point of every\ncandidate CRL. For a nameRelativeToCRLIssuer distribution point, the full name\nis the CRL issuer name with the relative name appended. Since the change that\ndeferred this computation, crl_crldp_check() rebuilds that full name for each\ncandidate CRL and frees it again.\n\nCMS_verify() and PKCS7_verify() take both the distribution points and the\ncandidate CRLs from the message, and this scoring runs before any signature is\nchecked. An application is exposed only if it sets X509_V_FLAG_CRL_CHECK on\nthe store and does not pass CMS_NOCRL or PKCS7_NOCRL; CRL checking is off by\ndefault. In TLS the CRLs come from the local store, so a peer controls only\nthe distribution point count.\n\nThe cost grows with the product of the distribution point count, the CRL count\nand the issuer name length, all chosen by the message author; a few hundred\nkilobytes can occupy a CPU core for tens of seconds. Verification still fails\nas it should, with no crash, no incorrect result and no memory growth.\nRequiring CRL checking is what limits the severity.\n\nFIPS impact: no\nThe affected code is outside the FIPS module boundary.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-121482",
-            "epss": 0.00359,
-            "percentile": 0.30057,
-            "date": "2026-11-24"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-121482",
-            "cwe": "CWE-407",
-            "source": "openssl-security@openssl.org",
-            "type": "Secondary"
-          },
-          {
-            "cve": "CVE-2026-121482",
-            "cwe": "CWE-400",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.26925
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "openssl-4.0",
-              "version": "4.0.3-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-121482",
-            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "328c5e883714853d",
-        "name": "openssl-4.0",
-        "version": "4.0.3-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "Apache-2.0"
-        ],
-        "cpes": [
-          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "openssl-4.0"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/ssl"
-            },
-            {
-              "path": "/etc/ssl/certs"
-            },
-            {
-              "path": "/etc/ssl/misc"
-            },
-            {
-              "path": "/etc/ssl/misc/CA.pl"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget.pl"
-            },
-            {
-              "path": "/etc/ssl/private"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/openssl"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/ossl-modules"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "CVE-2026-121481",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-121481",
-        "namespace": "nvd:cpe",
-        "severity": "Medium",
-        "urls": [
-          "https://github.com/openssl/openssl/pull/33652",
-          "http://www.openwall.com/lists/oss-security/2026/11/24/18",
-          "https://news.ycombinator.com/item?id=50569226"
-        ],
-        "description": "Issue summary: Calling EVP_EncodeBlock() with an input length close to INT_MAX\nmay overflow the calculation of the encoded output size and write past the end\nof the caller-supplied output buffer.\n\nImpact summary: No path by which an attacker can trigger this has been\nidentified. An application that passes an input length near INT_MAX to\nEVP_EncodeBlock() could suffer a heap buffer overflow, crashing or corrupting\nits own memory, but it must itself supply such a length.\n\nCWE: CWE-190: Integer Overflow or Wraparound\n\nDescription: EVP_EncodeBlock() base64-encodes a buffer of a caller-supplied\nlength into an output buffer that the caller allocates. The caller is expected\nto reserve 4*((len+2)/3)+1 bytes. For input lengths close to INT_MAX, the\narithmetic that computes the encoded length overflows a signed integer, so the\nfunction writes more data than the documented output size. The result is a\nheap buffer overflow in the calling process.\n\nReaching this requires an application to pass an input length near INT_MAX to\nEVP_EncodeBlock(). OpenSSL's TLS, QUIC and CMS implementations never encode\nbuffers of that size, and the command line tools cannot practically be made to\ndo so: the limits on reading a proxy password from a file and on bignum sizes\nprevent it. An application that accepts an attacker-controlled length and\nforwards it to EVP_EncodeBlock() without its own bound check is exposed.\n\nThe severity is Low because no attacker-controlled path to the overflow is\nknown. The caller must already hold a buffer of about two gigabytes before the\ndefect can be reached.\n\nFIPS impact: no\nThe affected code is outside the FIPS module boundary.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 5.9,
-              "exploitabilityScore": 2.3,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-121481",
-            "epss": 0.00462,
-            "percentile": 0.40517,
-            "date": "2026-11-24"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-121481",
-            "cwe": "CWE-190",
-            "source": "openssl-security@openssl.org",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.25179
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "openssl-4.0",
-              "version": "4.0.3-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-121481",
-            "versionConstraint": ">= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "328c5e883714853d",
-        "name": "openssl-4.0",
-        "version": "4.0.3-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1077,9 +1258,9 @@
         "epss": [
           {
             "cve": "CVE-2026-121758",
-            "epss": 0.00455,
-            "percentile": 0.39986,
-            "date": "2026-11-24"
+            "epss": 0.00412,
+            "percentile": 0.27063,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -1095,7 +1276,7 @@
           "state": ""
         },
         "advisories": [],
-        "risk": 0.24797500000000003
+        "risk": 0.22454000000000002
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -1109,7 +1290,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r27"
+              "version": "2.44-r29"
             }
           },
           "found": {
@@ -1122,14 +1303,14 @@
         }
       ],
       "artifact": {
-        "id": "bb7f3cfdb7849c45",
+        "id": "0f073114bd9c2cf1",
         "name": "glibc-2.44",
-        "version": "2.44-r27",
+        "version": "2.44-r29",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1141,20 +1322,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r27:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r27?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -1266,7 +1447,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r27.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
             }
           ]
         }
@@ -1300,9 +1481,9 @@
         "epss": [
           {
             "cve": "CVE-2026-124024",
-            "epss": 0.00454,
-            "percentile": 0.39939,
-            "date": "2026-11-24"
+            "epss": 0.00412,
+            "percentile": 0.27063,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -1318,7 +1499,7 @@
           "state": ""
         },
         "advisories": [],
-        "risk": 0.24743
+        "risk": 0.22454000000000002
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -1332,7 +1513,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r27"
+              "version": "2.44-r29"
             }
           },
           "found": {
@@ -1345,14 +1526,14 @@
         }
       ],
       "artifact": {
-        "id": "bb7f3cfdb7849c45",
+        "id": "0f073114bd9c2cf1",
         "name": "glibc-2.44",
-        "version": "2.44-r27",
+        "version": "2.44-r29",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1364,20 +1545,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r27:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r27?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -1489,7 +1670,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r27.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
             }
           ]
         }
@@ -1526,8 +1707,8 @@
           {
             "cve": "CVE-2026-95691",
             "epss": 0.00285,
-            "percentile": 0.21134,
-            "date": "2026-11-24"
+            "percentile": 0.13734,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -1577,7 +1758,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1700,8 +1881,8 @@
           {
             "cve": "CVE-2026-88823",
             "epss": 0.00267,
-            "percentile": 0.18814,
-            "date": "2026-11-24"
+            "percentile": 0.1176,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -1751,361 +1932,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "Apache-2.0"
-        ],
-        "cpes": [
-          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "openssl-4.0"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/ssl"
-            },
-            {
-              "path": "/etc/ssl/certs"
-            },
-            {
-              "path": "/etc/ssl/misc"
-            },
-            {
-              "path": "/etc/ssl/misc/CA.pl"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget.pl"
-            },
-            {
-              "path": "/etc/ssl/private"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/openssl"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/ossl-modules"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "CVE-2026-84786",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-84786",
-        "namespace": "nvd:cpe",
-        "severity": "High",
-        "urls": [
-          "https://github.com/openssl/openssl/commit/1ad851363d5b8588b0d40edcc045fd633e93f0c2",
-          "https://github.com/openssl/openssl/commit/a7e57082ccb27330a42f5f116a4e125b13bdcfef",
-          "https://github.com/openssl/openssl/commit/fecc9ee387f3be48afdaced3aeef243dc1566aab",
-          "https://openssl-library.org/news/secadv/20261124.txt"
-        ],
-        "description": "Issue summary: A DANE-enabled TLS client may crash by dereferencing a NULL\npointer when processing an unusual combination of certificate and TLSA\nrecords.\n\nImpact summary: The impact is limited to a client crash (potential Denial\nof Service).\n\nCWE: CWE-476: NULL Pointer Dereference\n\nDescription: A DANE-enabled TLS client that supports TLSA records with at\nleast one of the PKIX-TA(0) or PKIX-EE(1) usages alongside the DANE-TA(2)\nusage may crash by dereferencing a NULL pointer if the server claims a trusted\nCA's certificate to be its end-entity certificate and has an unusual mix of\nassociated TLSA records.\n\nDANE SMTP clients should not be affected since only the\nDANE-TA(2) and DANE-EE(3) TLSA record usages are specified applicable\nin SMTP.  For example, the Postfix MTA is not affected, while the Exim\nMTA does not at present use OpenSSL's DANE implementation.\n\nUse of DANE in validation of RFC7250 raw public keys (RPKs) is also\nunaffected, as these only use DANE-EE(3) TLSA records.\n\nOnly applications that support combining the DANE PKI with a traditional PKI\nare potentially affected.  A DANE-enabled browser or similar, that uses\nOpenSSL's DANE API could be affected.\n\nFIPS impact: no\nThe DANE API is outside the FIPS module boundary.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-            "metrics": {
-              "baseScore": 7.5,
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-84786",
-            "epss": 0.0023,
-            "percentile": 0.13756,
-            "date": "2026-11-24"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-84786",
-            "cwe": "CWE-476",
-            "source": "openssl-security@openssl.org",
-            "type": "Secondary"
-          },
-          {
-            "cve": "CVE-2026-84786",
-            "cwe": "CWE-476",
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.1725
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "openssl-4.0",
-              "version": "4.0.3-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-84786",
-            "versionConstraint": ">= 1.1.1, < 1.1.1zk,>= 3.0.0, < 3.0.24,>= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "328c5e883714853d",
-        "name": "openssl-4.0",
-        "version": "4.0.3-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "Apache-2.0"
-        ],
-        "cpes": [
-          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
-          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "openssl-4.0"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/ssl"
-            },
-            {
-              "path": "/etc/ssl/certs"
-            },
-            {
-              "path": "/etc/ssl/misc"
-            },
-            {
-              "path": "/etc/ssl/misc/CA.pl"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget"
-            },
-            {
-              "path": "/etc/ssl/misc/tsget.pl"
-            },
-            {
-              "path": "/etc/ssl/private"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/openssl"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/ossl-modules"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
-        "id": "CVE-2026-88822",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-88822",
-        "namespace": "nvd:cpe",
-        "severity": "Medium",
-        "urls": [
-          "https://github.com/openssl/openssl/commit/1a73dc590cbad62d6f0329ea4779eadaa8d8fd75",
-          "https://github.com/openssl/openssl/commit/7b4f5344aa0401e7b777640050b5257ed2a70e88",
-          "https://github.com/openssl/openssl/commit/911eee8eb7550b95a206f1ad8cbdb986098982f3",
-          "https://openssl-library.org/news/secadv/20261110.txt"
-        ],
-        "description": "Issue summary: QUIC, when performing automated peer detection, may allow\nuninitialized stack data to leak into the received address which is then used\nas the destination for outgoing packets.\n\nImpact summary: Applications using QUIC's automated peer detection mechanism\nmay receive an invalid address, leading to connection loss and disclosure of\nuninitialized stack data to an attacker observing the outgoing network traffic.\n\nCWE: CWE-457 (Use of Uninitialized Variable)\n\nDescription: The OpenSSL QUIC stack contains a feature in which, when using an\nalready connected socket, it will auto-detect the peer address during the SSL\nhandshake.  This feature uses the getpeername() function, passing a buffer of\nsufficient length to hold any supported address family, but passes a buffer\nlength that is only sized such that larger addresses, such as IPv6, cannot be\nretrieved. The getpeername() function however, still returns the full address\nlength, which is accepted as the valid input buffer length, leading to the\naddress buffer containing uninitialized stack data instead of the actual peer\naddress. The invalid peer address is then used as destination for the outgoing\npackets which leads to a connectivity breakage and a leakage of the\nuninitialized stack data to passive network observers.\n\nFIPS impact: no\nThe FIPS modules in 4.0, 3.6, 3.5, 3.4, and 3.0 are not affected by this CVE as\nthe affected protocol is not implemented in the FIPS module.",
-        "cvss": [
-          {
-            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-            "metrics": {
-              "baseScore": 6.5,
-              "exploitabilityScore": 2.9,
-              "impactScore": 3.6
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-88822",
-            "epss": 0.0026,
-            "percentile": 0.17716,
-            "date": "2026-11-24"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-88822",
-            "cwe": "CWE-457",
-            "source": "openssl-security@openssl.org",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": "unknown"
-        },
-        "advisories": [],
-        "risk": 0.14949999999999997
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "openssl-4.0",
-              "version": "4.0.3-r8"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-88822",
-            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "328c5e883714853d",
-        "name": "openssl-4.0",
-        "version": "4.0.3-r8",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2225,9 +2052,9 @@
         "epss": [
           {
             "cve": "CVE-2026-95690",
-            "epss": 0.00273,
-            "percentile": 0.19758,
-            "date": "2026-11-24"
+            "epss": 0.00322,
+            "percentile": 0.17723,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -2249,7 +2076,7 @@
           "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.140595
+        "risk": 0.16583
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -2283,7 +2110,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2403,9 +2230,9 @@
         "epss": [
           {
             "cve": "CVE-2026-115819",
-            "epss": 0.00263,
-            "percentile": 0.18087,
-            "date": "2026-11-24"
+            "epss": 0.00308,
+            "percentile": 0.16121,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -2421,7 +2248,7 @@
           "state": ""
         },
         "advisories": [],
-        "risk": 0.12887
+        "risk": 0.15091999999999997
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -2435,7 +2262,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r27"
+              "version": "2.44-r29"
             }
           },
           "found": {
@@ -2448,14 +2275,14 @@
         }
       ],
       "artifact": {
-        "id": "bb7f3cfdb7849c45",
+        "id": "0f073114bd9c2cf1",
         "name": "glibc-2.44",
-        "version": "2.44-r27",
+        "version": "2.44-r29",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2467,20 +2294,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r27:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r27?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -2592,7 +2419,630 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r27.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-88822",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-88822",
+        "namespace": "nvd:cpe",
+        "severity": "Medium",
+        "urls": [
+          "https://github.com/openssl/openssl/commit/1a73dc590cbad62d6f0329ea4779eadaa8d8fd75",
+          "https://github.com/openssl/openssl/commit/7b4f5344aa0401e7b777640050b5257ed2a70e88",
+          "https://github.com/openssl/openssl/commit/911eee8eb7550b95a206f1ad8cbdb986098982f3",
+          "https://openssl-library.org/news/secadv/20261110.txt"
+        ],
+        "description": "Issue summary: QUIC, when performing automated peer detection, may allow\nuninitialized stack data to leak into the received address which is then used\nas the destination for outgoing packets.\n\nImpact summary: Applications using QUIC's automated peer detection mechanism\nmay receive an invalid address, leading to connection loss and disclosure of\nuninitialized stack data to an attacker observing the outgoing network traffic.\n\nCWE: CWE-457 (Use of Uninitialized Variable)\n\nDescription: The OpenSSL QUIC stack contains a feature in which, when using an\nalready connected socket, it will auto-detect the peer address during the SSL\nhandshake.  This feature uses the getpeername() function, passing a buffer of\nsufficient length to hold any supported address family, but passes a buffer\nlength that is only sized such that larger addresses, such as IPv6, cannot be\nretrieved. The getpeername() function however, still returns the full address\nlength, which is accepted as the valid input buffer length, leading to the\naddress buffer containing uninitialized stack data instead of the actual peer\naddress. The invalid peer address is then used as destination for the outgoing\npackets which leads to a connectivity breakage and a leakage of the\nuninitialized stack data to passive network observers.\n\nFIPS impact: no\nThe FIPS modules in 4.0, 3.6, 3.5, 3.4, and 3.0 are not affected by this CVE as\nthe affected protocol is not implemented in the FIPS module.",
+        "cvss": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "metrics": {
+              "baseScore": 6.5,
+              "exploitabilityScore": 2.9,
+              "impactScore": 3.6
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-88822",
+            "epss": 0.0026,
+            "percentile": 0.10901,
+            "date": "2026-11-25"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-88822",
+            "cwe": "CWE-457",
+            "source": "openssl-security@openssl.org",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": "unknown"
+        },
+        "advisories": [],
+        "risk": 0.14949999999999997
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:4.0.3:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "openssl-4.0",
+              "version": "4.0.3-r8"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-88822",
+            "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "328c5e883714853d",
+        "name": "openssl-4.0",
+        "version": "4.0.3-r8",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "cpes": [
+          "cpe:2.3:a:openssl-4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl-4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl-4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl_4.0:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl_4.0:openssl:4.0.3-r8:*:*:*:*:*:*:*",
+          "cpe:2.3:a:openssl:openssl:4.0.3-r8:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/openssl-4.0@4.0.3-r8?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "openssl-4.0"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/ssl"
+            },
+            {
+              "path": "/etc/ssl/certs"
+            },
+            {
+              "path": "/etc/ssl/misc"
+            },
+            {
+              "path": "/etc/ssl/misc/CA.pl"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget"
+            },
+            {
+              "path": "/etc/ssl/misc/tsget.pl"
+            },
+            {
+              "path": "/etc/ssl/private"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/openssl"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/ossl-modules"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/openssl-4.0-4.0.3-r8.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-126765",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-126765",
+        "namespace": "nvd:cpe",
+        "severity": "Low",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34993",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0032",
+          "https://sourceware.org/pipermail/libc-alpha/2026-November/182067.html",
+          "http://www.openwall.com/lists/oss-security/2026/11/19/9"
+        ],
+        "description": "The glob functions in the GNU C Library versions 2.44 and earlier may free the same heap block twice when a memory allocation fails while glob prepends the directory name to the names it matched.  The names already rewritten are freed, but their pointers stay in the result vector, and the error path frees them again with globfree.\n\nThe allocation must fail after at least one name has been rewritten, so the issue can only be reached when the process is already close to its memory limit, for example under an address space limit (RLIMIT_AS) or on a 32-bit system.  The attacker needs control to make the result large enough to make the program or service run out of memory, either by controlling the glob pattern and having knowledge of the filesystem layout or through other means.  This issue affects all architectures and ABIs supported by the GNU C Library.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 3.7,
+              "exploitabilityScore": 2.3,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-126765",
+            "epss": 0.00443,
+            "percentile": 0.30391,
+            "date": "2026-11-25"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-126765",
+            "cwe": "CWE-415",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.14840499999999998
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r29"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-126765",
+            "versionConstraint": "<= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f073114bd9c2cf1",
+        "name": "glibc-2.44",
+        "version": "2.44-r29",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "vulnerability": {
+        "id": "CVE-2026-100290",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-100290",
+        "namespace": "nvd:cpe",
+        "severity": "Low",
+        "urls": [
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=31935",
+          "https://sourceware.org/bugzilla/show_bug.cgi?id=34991",
+          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0028"
+        ],
+        "description": "The regcomp and regexec functions in the GNU C Library version 2.3 to version 2.44 may read freed memory and free the same heap block twice when a memory allocation fails while a regular expression is compiled or matched.  The re_dfa_add_node (the NFA node table) and build_range_exp (bracket ranges) grow several arrays with consecutive realloc calls and store the new pointers only after all of them succeed.  When a later call fails, the pattern buffer keeps pointers to blocks that were already freed, and the error cleanup frees them again.  In regexec, the back-reference cache (match_ctx_add_entry) frees its array when a realloc fails but keeps the pointer, which is freed again on the error path.\n\nAn attacker does not need to supply a crafted regular expression: patterns large enough to grow these arrays are common.  The failure has to hit a specific allocation, though, so the issue can only be reached when the system is already under memory pressure.  An attacker who supplies the pattern or the subject string has little control over which allocation fails, so the expected impact is a crash of the process.  This issue affects all architectures and ABIs supported by the GNU C Library.",
+        "cvss": [
+          {
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "metrics": {
+              "baseScore": 3.7,
+              "exploitabilityScore": 2.3,
+              "impactScore": 1.5
+            },
+            "vendorMetadata": {}
+          }
+        ],
+        "epss": [
+          {
+            "cve": "CVE-2026-100290",
+            "epss": 0.00429,
+            "percentile": 0.28844,
+            "date": "2026-11-25"
+          }
+        ],
+        "cwes": [
+          {
+            "cve": "CVE-2026-100290",
+            "cwe": "CWE-415",
+            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
+            "type": "Secondary"
+          }
+        ],
+        "fix": {
+          "versions": [],
+          "state": ""
+        },
+        "advisories": [],
+        "risk": 0.14371499999999998
+      },
+      "relatedVulnerabilities": [],
+      "matchDetails": [
+        {
+          "type": "cpe-match",
+          "matcher": "apk-matcher",
+          "searchedBy": {
+            "namespace": "nvd:cpe",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
+            ],
+            "package": {
+              "name": "glibc-2.44",
+              "version": "2.44-r29"
+            }
+          },
+          "found": {
+            "vulnerabilityID": "CVE-2026-100290",
+            "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
+            "cpes": [
+              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
+            ]
+          }
+        }
+      ],
+      "artifact": {
+        "id": "0f073114bd9c2cf1",
+        "name": "glibc-2.44",
+        "version": "2.44-r29",
+        "type": "apk",
+        "locations": [
+          {
+            "path": "/usr/lib/apk/db/installed",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "accessPath": "/usr/lib/apk/db/installed",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "language": "",
+        "licenses": [
+          "LGPL-2.1-or-later"
+        ],
+        "cpes": [
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
+        ],
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
+        "upstreams": [
+          {
+            "name": "glibc-2.44"
+          }
+        ],
+        "metadataType": "ApkMetadata",
+        "metadata": {
+          "files": [
+            {
+              "path": "/etc"
+            },
+            {
+              "path": "/etc/rpc"
+            },
+            {
+              "path": "/etc/apk"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d"
+            },
+            {
+              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
+            },
+            {
+              "path": "/usr"
+            },
+            {
+              "path": "/usr/bin"
+            },
+            {
+              "path": "/usr/bin/ld.so"
+            },
+            {
+              "path": "/usr/bin/ldconfig"
+            },
+            {
+              "path": "/usr/lib"
+            },
+            {
+              "path": "/usr/lib/libBrokenLocale.so.1"
+            },
+            {
+              "path": "/usr/lib/libanl.so.1"
+            },
+            {
+              "path": "/usr/lib/libc.so.6"
+            },
+            {
+              "path": "/usr/lib/libc_malloc_debug.so.0"
+            },
+            {
+              "path": "/usr/lib/libdl.so.2"
+            },
+            {
+              "path": "/usr/lib/libm.so.6"
+            },
+            {
+              "path": "/usr/lib/libmemusage.so"
+            },
+            {
+              "path": "/usr/lib/libmvec.so.1"
+            },
+            {
+              "path": "/usr/lib/libnsl.so.1"
+            },
+            {
+              "path": "/usr/lib/libnss_compat.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_dns.so.2"
+            },
+            {
+              "path": "/usr/lib/libnss_files.so.2"
+            },
+            {
+              "path": "/usr/lib/libpthread.so.0"
+            },
+            {
+              "path": "/usr/lib/libresolv.so.2"
+            },
+            {
+              "path": "/usr/lib/librt.so.1"
+            },
+            {
+              "path": "/usr/lib/libthread_db.so.1"
+            },
+            {
+              "path": "/usr/lib/libutil.so.1"
+            },
+            {
+              "path": "/usr/lib/audit"
+            },
+            {
+              "path": "/usr/lib/locale"
+            },
+            {
+              "path": "/usr/share"
+            },
+            {
+              "path": "/var"
+            },
+            {
+              "path": "/var/lib"
+            },
+            {
+              "path": "/var/lib/db"
+            },
+            {
+              "path": "/var/lib/db/sbom"
+            },
+            {
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
             }
           ]
         }
@@ -2628,9 +3078,9 @@
         "epss": [
           {
             "cve": "CVE-2026-35190",
-            "epss": 0.00235,
-            "percentile": 0.14316,
-            "date": "2026-11-24"
+            "epss": 0.00265,
+            "percentile": 0.1145,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -2646,7 +3096,7 @@
           "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.12102500000000002
+        "risk": 0.136475
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -2680,7 +3130,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2802,9 +3252,9 @@
         "epss": [
           {
             "cve": "CVE-2026-107493",
-            "epss": 0.0015,
-            "percentile": 0.04123,
-            "date": "2026-11-24"
+            "epss": 0.00148,
+            "percentile": 0.02018,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -2820,7 +3270,7 @@
           "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.11399999999999999
+        "risk": 0.11248
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -2854,7 +3304,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2948,230 +3398,6 @@
     },
     {
       "vulnerability": {
-        "id": "CVE-2026-100290",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-100290",
-        "namespace": "nvd:cpe",
-        "severity": "Low",
-        "urls": [
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=31935",
-          "https://sourceware.org/bugzilla/show_bug.cgi?id=34991",
-          "https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=advisories/GLIBC-SA-2026-0028"
-        ],
-        "description": "The regcomp and regexec functions in the GNU C Library version 2.3 to version 2.44 may read freed memory and free the same heap block twice when a memory allocation fails while a regular expression is compiled or matched.  The re_dfa_add_node (the NFA node table) and build_range_exp (bracket ranges) grow several arrays with consecutive realloc calls and store the new pointers only after all of them succeed.  When a later call fails, the pattern buffer keeps pointers to blocks that were already freed, and the error cleanup frees them again.  In regexec, the back-reference cache (match_ctx_add_entry) frees its array when a realloc fails but keeps the pointer, which is freed again on the error path.\n\nAn attacker does not need to supply a crafted regular expression: patterns large enough to grow these arrays are common.  The failure has to hit a specific allocation, though, so the issue can only be reached when the system is already under memory pressure.  An attacker who supplies the pattern or the subject string has little control over which allocation fails, so the expected impact is a crash of the process.  This issue affects all architectures and ABIs supported by the GNU C Library.",
-        "cvss": [
-          {
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary",
-            "version": "3.1",
-            "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-            "metrics": {
-              "baseScore": 3.7,
-              "exploitabilityScore": 2.3,
-              "impactScore": 1.5
-            },
-            "vendorMetadata": {}
-          }
-        ],
-        "epss": [
-          {
-            "cve": "CVE-2026-100290",
-            "epss": 0.00336,
-            "percentile": 0.27273,
-            "date": "2026-11-24"
-          }
-        ],
-        "cwes": [
-          {
-            "cve": "CVE-2026-100290",
-            "cwe": "CWE-415",
-            "source": "3ff69d7a-14f2-4f67-a097-88dee7810d18",
-            "type": "Secondary"
-          }
-        ],
-        "fix": {
-          "versions": [],
-          "state": ""
-        },
-        "advisories": [],
-        "risk": 0.11255999999999998
-      },
-      "relatedVulnerabilities": [],
-      "matchDetails": [
-        {
-          "type": "cpe-match",
-          "matcher": "apk-matcher",
-          "searchedBy": {
-            "namespace": "nvd:cpe",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:2.44:*:*:*:*:*:*:*"
-            ],
-            "package": {
-              "name": "glibc-2.44",
-              "version": "2.44-r27"
-            }
-          },
-          "found": {
-            "vulnerabilityID": "CVE-2026-100290",
-            "versionConstraint": ">= 2.3, <= 2.44 (unknown)",
-            "cpes": [
-              "cpe:2.3:a:gnu:glibc:*:*:*:*:*:*:*:*"
-            ]
-          }
-        }
-      ],
-      "artifact": {
-        "id": "bb7f3cfdb7849c45",
-        "name": "glibc-2.44",
-        "version": "2.44-r27",
-        "type": "apk",
-        "locations": [
-          {
-            "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
-            "accessPath": "/usr/lib/apk/db/installed",
-            "annotations": {
-              "evidence": "primary"
-            }
-          }
-        ],
-        "language": "",
-        "licenses": [
-          "LGPL-2.1-or-later"
-        ],
-        "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r27:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r27:*:*:*:*:*:*:*"
-        ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r27?arch=x86_64&distro=wolfi-20230201",
-        "upstreams": [
-          {
-            "name": "glibc-2.44"
-          }
-        ],
-        "metadataType": "ApkMetadata",
-        "metadata": {
-          "files": [
-            {
-              "path": "/etc"
-            },
-            {
-              "path": "/etc/rpc"
-            },
-            {
-              "path": "/etc/apk"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d"
-            },
-            {
-              "path": "/etc/apk/commit_hooks.d/ldconfig-commit.sh"
-            },
-            {
-              "path": "/usr"
-            },
-            {
-              "path": "/usr/bin"
-            },
-            {
-              "path": "/usr/bin/ld.so"
-            },
-            {
-              "path": "/usr/bin/ldconfig"
-            },
-            {
-              "path": "/usr/lib"
-            },
-            {
-              "path": "/usr/lib/libBrokenLocale.so.1"
-            },
-            {
-              "path": "/usr/lib/libanl.so.1"
-            },
-            {
-              "path": "/usr/lib/libc.so.6"
-            },
-            {
-              "path": "/usr/lib/libc_malloc_debug.so.0"
-            },
-            {
-              "path": "/usr/lib/libdl.so.2"
-            },
-            {
-              "path": "/usr/lib/libm.so.6"
-            },
-            {
-              "path": "/usr/lib/libmemusage.so"
-            },
-            {
-              "path": "/usr/lib/libmvec.so.1"
-            },
-            {
-              "path": "/usr/lib/libnsl.so.1"
-            },
-            {
-              "path": "/usr/lib/libnss_compat.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_dns.so.2"
-            },
-            {
-              "path": "/usr/lib/libnss_files.so.2"
-            },
-            {
-              "path": "/usr/lib/libpthread.so.0"
-            },
-            {
-              "path": "/usr/lib/libresolv.so.2"
-            },
-            {
-              "path": "/usr/lib/librt.so.1"
-            },
-            {
-              "path": "/usr/lib/libthread_db.so.1"
-            },
-            {
-              "path": "/usr/lib/libutil.so.1"
-            },
-            {
-              "path": "/usr/lib/audit"
-            },
-            {
-              "path": "/usr/lib/locale"
-            },
-            {
-              "path": "/usr/share"
-            },
-            {
-              "path": "/var"
-            },
-            {
-              "path": "/var/lib"
-            },
-            {
-              "path": "/var/lib/db"
-            },
-            {
-              "path": "/var/lib/db/sbom"
-            },
-            {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r27.spdx.json"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "vulnerability": {
         "id": "CVE-2026-90781",
         "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-90781",
         "namespace": "nvd:cpe",
@@ -3211,9 +3437,9 @@
         "epss": [
           {
             "cve": "CVE-2026-90781",
-            "epss": 0.00179,
-            "percentile": 0.07401,
-            "date": "2026-11-24"
+            "epss": 0.0017,
+            "percentile": 0.03674,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -3229,7 +3455,7 @@
           "state": ""
         },
         "advisories": [],
-        "risk": 0.08592
+        "risk": 0.08159999999999999
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -3263,7 +3489,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3629,9 +3855,9 @@
         "epss": [
           {
             "cve": "CVE-2026-96674",
-            "epss": 0.00115,
-            "percentile": 0.01567,
-            "date": "2026-11-24"
+            "epss": 0.00166,
+            "percentile": 0.03314,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -3647,7 +3873,7 @@
           "state": ""
         },
         "advisories": [],
-        "risk": 0.0552
+        "risk": 0.07968
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -3681,7 +3907,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -4045,9 +4271,9 @@
         "epss": [
           {
             "cve": "CVE-2026-96675",
-            "epss": 0.00111,
-            "percentile": 0.01312,
-            "date": "2026-11-24"
+            "epss": 0.00158,
+            "percentile": 0.02542,
+            "date": "2026-11-25"
           }
         ],
         "cwes": [
@@ -4063,7 +4289,7 @@
           "state": ""
         },
         "advisories": [],
-        "risk": 0.05022750000000001
+        "risk": 0.071495
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -4097,7 +4323,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
+            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -4425,29 +4651,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-jre-25@sha256:354f991fb9b2bf29d478539264eda2f0dd0623b3545fe41cc938e681f75aa76c",
-      "imageID": "sha256:f702acf59a0bbc13ab3e0d21ff1a00220db9b0b11b752edc22722770238656ab",
-      "manifestDigest": "sha256:70f0610a04b0f8507af5fd771407f4122e42095a3662604e6d6d978ad254ea5b",
+      "userInput": "ghcr.io/conduktor/base-jre-25@sha256:38815086f0c6f933eb6d8b5820cf26b8d2d79a2ccdd4d5e952cc29865be721d7",
+      "imageID": "sha256:a0aef15b7c23f1834d4382190b536ce5e0ffa379fd305f0077267b85091b8109",
+      "manifestDigest": "sha256:4248d67c0cde61284a5fc6932c9e021741dc98fb511295edbdef0782573c23b0",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
-      "imageSize": 282532491,
+      "imageSize": 282532579,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:173ed149722e6e8ca254790d282b0dc320ecf5db70397deb766fedfb8132c39c",
-          "size": 282532491
+          "digest": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+          "size": 282532579
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTI5LCJkaWdlc3QiOiJzaGEyNTY6ZjcwMmFjZjU5YTBiYmMxM2FiM2UwZDIxZmYxYTAwMjIwZGI5YjBiMTFiNzUyZWRjMjI3MjI3NzAyMzg2NTZhYiJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDExNjU5NTksImRpZ2VzdCI6InNoYTI1NjoxNzNlZDE0OTcyMmU2ZThjYTI1NDc5MGQyODJiMGRjMzIwZWNmNWRiNzAzOTdkZWI3NjZmZWRmYjgxMzJjMzljIn1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTI1VDIwOjAwOjE3WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0yNVQyMDowMDoxN1oiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgSlJFLTI1IGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIGJ5IENvbmR1a3RvciJ9XSwib3MiOiJsaW51eCIsInJvb3RmcyI6eyJ0eXBlIjoibGF5ZXJzIiwiZGlmZl9pZHMiOlsic2hhMjU2OjE3M2VkMTQ5NzIyZTZlOGNhMjU0NzkwZDI4MmIwZGMzMjBlY2Y1ZGI3MDM5N2RlYjc2NmZlZGZiODEzMmMzOWMiXX0sImNvbmZpZyI6eyJDbWQiOlsiL2Jpbi9iYXNoIl0sIkVudiI6WyJKQVZBX0hPTUU9L3Vzci9saWIvanZtL2phdmEtMjUtb3BlbmpkayIsIkxBTkc9Qy5VVEYtOCIsIlBBVEg9L3Vzci9saWIvanZtL2phdmEtMjUtb3Blbmpkay9iaW46L3Vzci9zYmluOi9zYmluOi91c3IvYmluOi9iaW4iLCJTU0xfQ0VSVF9GSUxFPS9ldGMvc3NsL2NlcnRzL2NhLWNlcnRpZmljYXRlcy5jcnQiLCJUWj1VVEMiXSwiTGFiZWxzIjp7Im9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5hdXRob3JzIjoiQ29uZHVrdG9yIFx1MDAzY3N1cHBvcnRAY29uZHVrdG9yLmlvXHUwMDNlIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmNyZWF0ZWQiOiIyMDI2LTExLTI1VDIwOjAwOjE3WiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5kZXNjcmlwdGlvbiI6Ik1pbmltYWwgZ2xpYmMvV29sZmkgYmFzZSBpbWFnZSB3aXRoIE9wZW5KREsgMjUgSlJFIGZvciBDb25kdWt0b3IgQ29uc29sZSBhbmQgR2F0ZXdheS4iLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UubGljZW5zZXMiOiJBcGFjaGUtMi4wIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnNvdXJjZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9jb25kdWt0b3IvY29udGFpbmVyLWltYWdlcyIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS50aXRsZSI6IkNvbmR1a3RvciBKUkUtMjUgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudmVuZG9yIjoiQ29uZHVrdG9yIn19fQ==",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTI5LCJkaWdlc3QiOiJzaGEyNTY6YTBhZWYxNWI3YzIzZjE4MzRkNDM4MjE5MGI1MzZjZTVlMGZmYTM3OWZkMzA1ZjAwNzcyNjdiODUwOTFiODEwOSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDExNjgxNzEsImRpZ2VzdCI6InNoYTI1Njo0OGZmN2YyOTA1ZjZlODMwZjk4MjRmYmUwY2IzM2JkNzMyNjA5MjUxYWU4ODI2Y2U4NGJjZDAwNzMyNzFhMjkxIn1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTI2VDIxOjI4OjU4WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0yNlQyMToyODo1OFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgSlJFLTI1IGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIGJ5IENvbmR1a3RvciJ9XSwib3MiOiJsaW51eCIsInJvb3RmcyI6eyJ0eXBlIjoibGF5ZXJzIiwiZGlmZl9pZHMiOlsic2hhMjU2OjQ4ZmY3ZjI5MDVmNmU4MzBmOTgyNGZiZTBjYjMzYmQ3MzI2MDkyNTFhZTg4MjZjZTg0YmNkMDA3MzI3MWEyOTEiXX0sImNvbmZpZyI6eyJDbWQiOlsiL2Jpbi9iYXNoIl0sIkVudiI6WyJKQVZBX0hPTUU9L3Vzci9saWIvanZtL2phdmEtMjUtb3BlbmpkayIsIkxBTkc9Qy5VVEYtOCIsIlBBVEg9L3Vzci9saWIvanZtL2phdmEtMjUtb3Blbmpkay9iaW46L3Vzci9zYmluOi9zYmluOi91c3IvYmluOi9iaW4iLCJTU0xfQ0VSVF9GSUxFPS9ldGMvc3NsL2NlcnRzL2NhLWNlcnRpZmljYXRlcy5jcnQiLCJUWj1VVEMiXSwiTGFiZWxzIjp7Im9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5hdXRob3JzIjoiQ29uZHVrdG9yIFx1MDAzY3N1cHBvcnRAY29uZHVrdG9yLmlvXHUwMDNlIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmNyZWF0ZWQiOiIyMDI2LTExLTI2VDIxOjI4OjU4WiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5kZXNjcmlwdGlvbiI6Ik1pbmltYWwgZ2xpYmMvV29sZmkgYmFzZSBpbWFnZSB3aXRoIE9wZW5KREsgMjUgSlJFIGZvciBDb25kdWt0b3IgQ29uc29sZSBhbmQgR2F0ZXdheS4iLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UubGljZW5zZXMiOiJBcGFjaGUtMi4wIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnNvdXJjZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9jb25kdWt0b3IvY29udGFpbmVyLWltYWdlcyIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS50aXRsZSI6IkNvbmR1a3RvciBKUkUtMjUgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudmVuZG9yIjoiQ29uZHVrdG9yIn19fQ==",
       "repoDigests": [
-        "ghcr.io/conduktor/base-jre-25@sha256:354f991fb9b2bf29d478539264eda2f0dd0623b3545fe41cc938e681f75aa76c"
+        "ghcr.io/conduktor/base-jre-25@sha256:38815086f0c6f933eb6d8b5820cf26b8d2d79a2ccdd4d5e952cc29865be721d7"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-11-25T20:00:17Z",
+        "org.opencontainers.image.created": "2026-11-26T21:28:58Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with OpenJDK 25 JRE for Conduktor Console and Gateway.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -4468,7 +4694,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-LmO0HC/output",
+      "file": "/tmp/grype-MUx26j/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,

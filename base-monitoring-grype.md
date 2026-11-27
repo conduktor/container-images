@@ -11,7 +11,7 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 
 | Critical | High | Medium | Low | Total |
 |---------:|-----:|-------:|----:|------:|
-| 0 | 12 | 24 | 3 | 43 |
+| 0 | 12 | 24 | 4 | 44 |
 
 | Severity | ID | Package | Installed | Fixed in |
 |----------|----|---------|-----------|----------|
@@ -28,9 +28,9 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | :orange_circle: high | [`CVE-2026-95691`](https://nvd.nist.gov/vuln/detail/CVE-2026-95691) | `openssl-4.0` | `4.0.3-r8` | — |
 | :orange_circle: high | [`CVE-2026-95692`](https://nvd.nist.gov/vuln/detail/CVE-2026-95692) | `openssl-4.0` | `4.0.3-r8` | — |
 | :yellow_circle: medium | [`GHSA-j6qf-3m9c-vwj3`](https://github.com/advisories/GHSA-j6qf-3m9c-vwj3) | `github.com/go-chi/chi/v5` | `v5.3.0` | `5.4.0` |
-| :yellow_circle: medium | [`CVE-2026-115819`](https://nvd.nist.gov/vuln/detail/CVE-2026-115819) | `glibc-2.44` | `2.44-r27` | — |
-| :yellow_circle: medium | [`CVE-2026-121758`](https://nvd.nist.gov/vuln/detail/CVE-2026-121758) | `glibc-2.44` | `2.44-r27` | — |
-| :yellow_circle: medium | [`CVE-2026-124024`](https://nvd.nist.gov/vuln/detail/CVE-2026-124024) | `glibc-2.44` | `2.44-r27` | — |
+| :yellow_circle: medium | [`CVE-2026-115819`](https://nvd.nist.gov/vuln/detail/CVE-2026-115819) | `glibc-2.44` | `2.44-r29` | — |
+| :yellow_circle: medium | [`CVE-2026-121758`](https://nvd.nist.gov/vuln/detail/CVE-2026-121758) | `glibc-2.44` | `2.44-r29` | — |
+| :yellow_circle: medium | [`CVE-2026-124024`](https://nvd.nist.gov/vuln/detail/CVE-2026-124024) | `glibc-2.44` | `2.44-r29` | — |
 | :yellow_circle: medium | [`GO-2026-6975`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-rrfc-gjm9-cgrj) | `go.opentelemetry.io/otel` | `v1.45.0` | `1.47.0` |
 | :yellow_circle: medium | [`GO-2026-6975`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-rrfc-gjm9-cgrj) | `go.opentelemetry.io/otel` | `v1.45.0` | `1.47.0` |
 | :yellow_circle: medium | [`GO-2026-6975`](https://github.com/open-telemetry/opentelemetry-go/security/advisories/GHSA-rrfc-gjm9-cgrj) | `go.opentelemetry.io/otel` | `v1.45.0` | `1.47.0` |
@@ -51,7 +51,8 @@ Same run, raw and at paths that never change: [Trivy JSON](reports/base-monitori
 | :yellow_circle: medium | [`CVE-2026-115791`](https://nvd.nist.gov/vuln/detail/CVE-2026-115791) | `python-3.13` | `3.13.18_git20261122-r0` | — |
 | :yellow_circle: medium | [`CVE-2026-116566`](https://nvd.nist.gov/vuln/detail/CVE-2026-116566) | `python-3.13` | `3.13.18_git20261122-r0` | — |
 | :yellow_circle: medium | [`CVE-2026-124249`](https://nvd.nist.gov/vuln/detail/CVE-2026-124249) | `python-3.13` | `3.13.18_git20261122-r0` | — |
-| :white_circle: low | [`CVE-2026-100290`](https://nvd.nist.gov/vuln/detail/CVE-2026-100290) | `glibc-2.44` | `2.44-r27` | — |
+| :white_circle: low | [`CVE-2026-100290`](https://nvd.nist.gov/vuln/detail/CVE-2026-100290) | `glibc-2.44` | `2.44-r29` | — |
+| :white_circle: low | [`CVE-2026-126765`](https://nvd.nist.gov/vuln/detail/CVE-2026-126765) | `glibc-2.44` | `2.44-r29` | — |
 | :white_circle: low | [`CVE-2026-103995`](https://nvd.nist.gov/vuln/detail/CVE-2026-103995) | `python-3.13` | `3.13.18_git20261122-r0` | — |
 | :white_circle: low | [`CVE-2026-16052`](https://nvd.nist.gov/vuln/detail/CVE-2026-16052) | `python-3.13` | `3.13.18_git20261122-r0` | — |
 | :black_circle: negligible | [`CVE-2026-19552`](https://nvd.nist.gov/vuln/detail/CVE-2026-19552) | `python-3.13` | `3.13.18_git20261122-r0` | — |
