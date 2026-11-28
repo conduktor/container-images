@@ -2,17 +2,17 @@
   "matches": [
     {
       "vulnerability": {
-        "id": "CVE-2026-124709",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-124709",
+        "id": "CVE-2026-107494",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-107494",
         "namespace": "nvd:cpe",
         "severity": "High",
         "urls": [
-          "https://github.com/openssl/openssl/commit/22291a6af12f158fbb13bfbd572a33dbdbf290d2",
-          "https://github.com/openssl/openssl/commit/ead311df1037e7994a6d86c7e862d71ad59c52c7",
-          "https://github.com/openssl/openssl/commit/f3acb0a3328046741479482c51cec815839e1b05",
-          "https://openssl-library.org/news/secadv/20261117.txt"
+          "https://github.com/openssl/openssl/commit/734c6cd7444bdbf589bfec917e47598c1b21ddd3",
+          "https://github.com/openssl/openssl/commit/c94e74a0d6273109ac86ad98ce42354c60499d1d",
+          "https://github.com/openssl/openssl/commit/dec00b87a89e8f81cef0e50cbbecdfad4d377849",
+          "https://openssl-library.org/news/secadv/20261124.txt"
         ],
-        "description": "Issue summary: A QUIC server that rejects a stream opened by the peer may\nretain that stream's state for the lifetime of the connection if the peer\nresets the stream before the rejection is signalled, even though the peer's\nstream credit is returned.\n\nImpact summary: A remote client that completes a QUIC handshake can repeatedly\nopen and reset streams, causing server memory to grow without bound until the\nprocess runs out of memory and every connection on it is lost. This is a\nDenial of Service.\n\nCWE: CWE-401: Missing Release of Memory after Effective Lifetime\n\nDescription: QUIC servers track each stream the peer opens. When the incoming\nstream policy rejects a stream, OpenSSL schedules a STOP_SENDING frame, marks\nthe stream deleted and returns the peer's stream credit. A deleted stream is\ncollected only once its receive part is fully drained, which for a rejected\nstream means the STOP_SENDING has been acknowledged. If the peer sends\nRESET_STREAM first, the reset cancels the pending STOP_SENDING, so it is never\nsent or acknowledged and the stream is never collected.\n\nThe default configuration reaches this path. Once a connection has a default\nstream, meaning the application has read from or written to the connection as\nthe tutorial server does, the effective incoming stream policy rejects streams\nthe application does not accept. Applications that set the REJECT policy\nexplicitly are affected too.\n\nEach retained stream costs about 300 bytes, and the peer's stream credit\nwindow paces how quickly they accumulate. A client that keeps the connection\nopen and keeps opening and resetting streams grows server memory without\nbound. The severity is Low because growth is slow, needs a long-lived\nconnection, and causes no memory corruption or disclosure.\n\nFIPS impact: no\nThe affected code is outside the FIPS module boundary.",
+        "description": "Issue summary: The QUIC stack queues a RETIRE_CONNECTION_ID frame also for\nretransmitted NEW_CONNECTION_ID frames. This allows a remote malicious\nQUIC stack to queue an unlimited number of RETIRE_CONNECTION_ID frames.\n\nImpact summary: A malicious remote QUIC peer can trigger an out-of-memory\ncondition causing a Denial of Service.\n\nCWE: CWE-770: Allocation of Resources Without Limits or Throttling\n\nDescription: The earlier fix for CVE-2026-84784 was not complete. It\nfailed to ignore retransmissions of the NEW_CONNECTION_ID frame. The QUIC\nimplementation created and inserted a RETIRE_CONNECTION_ID frame for every\nretransmitted NEW_CONNECTION_ID frame it received and there was no limit\non how many RETIRE_CONNECTION_ID frames were queued.\n\nThis issue allows a malicious remote QUIC stack to trigger an unbounded\nallocation of memory and eventually an out-of-memory (OOM) condition.\n\nFIPS impact: no\nThe FIPS module is not affected as the QUIC implementation is outside the\nOpenSSL FIPS module boundary.",
         "cvss": [
           {
             "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
@@ -29,16 +29,16 @@
         ],
         "epss": [
           {
-            "cve": "CVE-2026-124709",
+            "cve": "CVE-2026-107494",
             "epss": 0.00778,
-            "percentile": 0.52294,
-            "date": "2026-11-25"
+            "percentile": 0.52317,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-124709",
-            "cwe": "CWE-401",
+            "cve": "CVE-2026-107494",
+            "cwe": "CWE-770",
             "source": "openssl-security@openssl.org",
             "type": "Secondary"
           }
@@ -66,7 +66,7 @@
             }
           },
           "found": {
-            "vulnerabilityID": "CVE-2026-124709",
+            "vulnerabilityID": "CVE-2026-107494",
             "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
             "cpes": [
               "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
@@ -82,7 +82,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -176,17 +176,17 @@
     },
     {
       "vulnerability": {
-        "id": "CVE-2026-107494",
-        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-107494",
+        "id": "CVE-2026-124709",
+        "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-124709",
         "namespace": "nvd:cpe",
         "severity": "High",
         "urls": [
-          "https://github.com/openssl/openssl/commit/734c6cd7444bdbf589bfec917e47598c1b21ddd3",
-          "https://github.com/openssl/openssl/commit/c94e74a0d6273109ac86ad98ce42354c60499d1d",
-          "https://github.com/openssl/openssl/commit/dec00b87a89e8f81cef0e50cbbecdfad4d377849",
-          "https://openssl-library.org/news/secadv/20261124.txt"
+          "https://github.com/openssl/openssl/commit/22291a6af12f158fbb13bfbd572a33dbdbf290d2",
+          "https://github.com/openssl/openssl/commit/ead311df1037e7994a6d86c7e862d71ad59c52c7",
+          "https://github.com/openssl/openssl/commit/f3acb0a3328046741479482c51cec815839e1b05",
+          "https://openssl-library.org/news/secadv/20261117.txt"
         ],
-        "description": "Issue summary: The QUIC stack queues a RETIRE_CONNECTION_ID frame also for\nretransmitted NEW_CONNECTION_ID frames. This allows a remote malicious\nQUIC stack to queue an unlimited number of RETIRE_CONNECTION_ID frames.\n\nImpact summary: A malicious remote QUIC peer can trigger an out-of-memory\ncondition causing a Denial of Service.\n\nCWE: CWE-770: Allocation of Resources Without Limits or Throttling\n\nDescription: The earlier fix for CVE-2026-84784 was not complete. It\nfailed to ignore retransmissions of the NEW_CONNECTION_ID frame. The QUIC\nimplementation created and inserted a RETIRE_CONNECTION_ID frame for every\nretransmitted NEW_CONNECTION_ID frame it received and there was no limit\non how many RETIRE_CONNECTION_ID frames were queued.\n\nThis issue allows a malicious remote QUIC stack to trigger an unbounded\nallocation of memory and eventually an out-of-memory (OOM) condition.\n\nFIPS impact: no\nThe FIPS module is not affected as the QUIC implementation is outside the\nOpenSSL FIPS module boundary.",
+        "description": "Issue summary: A QUIC server that rejects a stream opened by the peer may\nretain that stream's state for the lifetime of the connection if the peer\nresets the stream before the rejection is signalled, even though the peer's\nstream credit is returned.\n\nImpact summary: A remote client that completes a QUIC handshake can repeatedly\nopen and reset streams, causing server memory to grow without bound until the\nprocess runs out of memory and every connection on it is lost. This is a\nDenial of Service.\n\nCWE: CWE-401: Missing Release of Memory after Effective Lifetime\n\nDescription: QUIC servers track each stream the peer opens. When the incoming\nstream policy rejects a stream, OpenSSL schedules a STOP_SENDING frame, marks\nthe stream deleted and returns the peer's stream credit. A deleted stream is\ncollected only once its receive part is fully drained, which for a rejected\nstream means the STOP_SENDING has been acknowledged. If the peer sends\nRESET_STREAM first, the reset cancels the pending STOP_SENDING, so it is never\nsent or acknowledged and the stream is never collected.\n\nThe default configuration reaches this path. Once a connection has a default\nstream, meaning the application has read from or written to the connection as\nthe tutorial server does, the effective incoming stream policy rejects streams\nthe application does not accept. Applications that set the REJECT policy\nexplicitly are affected too.\n\nEach retained stream costs about 300 bytes, and the peer's stream credit\nwindow paces how quickly they accumulate. A client that keeps the connection\nopen and keeps opening and resetting streams grows server memory without\nbound. The severity is Low because growth is slow, needs a long-lived\nconnection, and causes no memory corruption or disclosure.\n\nFIPS impact: no\nThe affected code is outside the FIPS module boundary.",
         "cvss": [
           {
             "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
@@ -203,16 +203,16 @@
         ],
         "epss": [
           {
-            "cve": "CVE-2026-107494",
+            "cve": "CVE-2026-124709",
             "epss": 0.00778,
-            "percentile": 0.52293,
-            "date": "2026-11-25"
+            "percentile": 0.52316,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
           {
-            "cve": "CVE-2026-107494",
-            "cwe": "CWE-770",
+            "cve": "CVE-2026-124709",
+            "cwe": "CWE-401",
             "source": "openssl-security@openssl.org",
             "type": "Secondary"
           }
@@ -240,7 +240,7 @@
             }
           },
           "found": {
-            "vulnerabilityID": "CVE-2026-107494",
+            "vulnerabilityID": "CVE-2026-124709",
             "versionConstraint": ">= 3.5.0, < 3.5.10,>= 4.0.0, < 4.0.4,>= 4.1.0, < 4.1.1 (unknown)",
             "cpes": [
               "cpe:2.3:a:openssl:openssl:*:*:*:*:*:*:*:*"
@@ -256,7 +256,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -379,8 +379,8 @@
           {
             "cve": "CVE-2026-121482",
             "epss": 0.00493,
-            "percentile": 0.35157,
-            "date": "2026-11-25"
+            "percentile": 0.35164,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -436,7 +436,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -559,8 +559,8 @@
           {
             "cve": "CVE-2026-84786",
             "epss": 0.00493,
-            "percentile": 0.35157,
-            "date": "2026-11-25"
+            "percentile": 0.35164,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -616,7 +616,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -739,8 +739,8 @@
           {
             "cve": "CVE-2026-95692",
             "epss": 0.00449,
-            "percentile": 0.30911,
-            "date": "2026-11-25"
+            "percentile": 0.3091,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -790,7 +790,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -912,9 +912,9 @@
         "epss": [
           {
             "cve": "CVE-2026-121481",
-            "epss": 0.00569,
-            "percentile": 0.40899,
-            "date": "2026-11-25"
+            "epss": 0.00588,
+            "percentile": 0.42069,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -930,7 +930,7 @@
           "state": "unknown"
         },
         "advisories": [],
-        "risk": 0.310105
+        "risk": 0.32046
       },
       "relatedVulnerabilities": [],
       "matchDetails": [
@@ -964,7 +964,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1087,8 +1087,8 @@
           {
             "cve": "CVE-2026-107496",
             "epss": 0.00399,
-            "percentile": 0.25704,
-            "date": "2026-11-25"
+            "percentile": 0.2571,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -1138,7 +1138,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1259,8 +1259,8 @@
           {
             "cve": "CVE-2026-121758",
             "epss": 0.00412,
-            "percentile": 0.27063,
-            "date": "2026-11-25"
+            "percentile": 0.27071,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -1290,7 +1290,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r29"
+              "version": "2.44-r30"
             }
           },
           "found": {
@@ -1303,14 +1303,14 @@
         }
       ],
       "artifact": {
-        "id": "0f073114bd9c2cf1",
+        "id": "eb605282f1316e6e",
         "name": "glibc-2.44",
-        "version": "2.44-r29",
+        "version": "2.44-r30",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1322,20 +1322,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r30:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r30?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -1447,7 +1447,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r30.spdx.json"
             }
           ]
         }
@@ -1482,8 +1482,8 @@
           {
             "cve": "CVE-2026-124024",
             "epss": 0.00412,
-            "percentile": 0.27063,
-            "date": "2026-11-25"
+            "percentile": 0.27071,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -1513,7 +1513,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r29"
+              "version": "2.44-r30"
             }
           },
           "found": {
@@ -1526,14 +1526,14 @@
         }
       ],
       "artifact": {
-        "id": "0f073114bd9c2cf1",
+        "id": "eb605282f1316e6e",
         "name": "glibc-2.44",
-        "version": "2.44-r29",
+        "version": "2.44-r30",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1545,20 +1545,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r30:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r30?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -1670,7 +1670,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r30.spdx.json"
             }
           ]
         }
@@ -1707,8 +1707,8 @@
           {
             "cve": "CVE-2026-95691",
             "epss": 0.00285,
-            "percentile": 0.13734,
-            "date": "2026-11-25"
+            "percentile": 0.13721,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -1758,7 +1758,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -1881,8 +1881,8 @@
           {
             "cve": "CVE-2026-88823",
             "epss": 0.00267,
-            "percentile": 0.1176,
-            "date": "2026-11-25"
+            "percentile": 0.11748,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -1932,7 +1932,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2053,8 +2053,8 @@
           {
             "cve": "CVE-2026-95690",
             "epss": 0.00322,
-            "percentile": 0.17723,
-            "date": "2026-11-25"
+            "percentile": 0.17718,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -2110,7 +2110,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2231,8 +2231,8 @@
           {
             "cve": "CVE-2026-115819",
             "epss": 0.00308,
-            "percentile": 0.16121,
-            "date": "2026-11-25"
+            "percentile": 0.16117,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -2262,7 +2262,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r29"
+              "version": "2.44-r30"
             }
           },
           "found": {
@@ -2275,14 +2275,14 @@
         }
       ],
       "artifact": {
-        "id": "0f073114bd9c2cf1",
+        "id": "eb605282f1316e6e",
         "name": "glibc-2.44",
-        "version": "2.44-r29",
+        "version": "2.44-r30",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2294,20 +2294,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r30:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r30?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -2419,7 +2419,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r30.spdx.json"
             }
           ]
         }
@@ -2456,8 +2456,8 @@
           {
             "cve": "CVE-2026-88822",
             "epss": 0.0026,
-            "percentile": 0.10901,
-            "date": "2026-11-25"
+            "percentile": 0.10883,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -2507,7 +2507,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2631,7 +2631,7 @@
             "cve": "CVE-2026-126765",
             "epss": 0.00443,
             "percentile": 0.30391,
-            "date": "2026-11-25"
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -2661,7 +2661,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r29"
+              "version": "2.44-r30"
             }
           },
           "found": {
@@ -2674,14 +2674,14 @@
         }
       ],
       "artifact": {
-        "id": "0f073114bd9c2cf1",
+        "id": "eb605282f1316e6e",
         "name": "glibc-2.44",
-        "version": "2.44-r29",
+        "version": "2.44-r30",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2693,20 +2693,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r30:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r30?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -2818,7 +2818,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r30.spdx.json"
             }
           ]
         }
@@ -2855,7 +2855,7 @@
             "cve": "CVE-2026-100290",
             "epss": 0.00429,
             "percentile": 0.28844,
-            "date": "2026-11-25"
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -2885,7 +2885,7 @@
             ],
             "package": {
               "name": "glibc-2.44",
-              "version": "2.44-r29"
+              "version": "2.44-r30"
             }
           },
           "found": {
@@ -2898,14 +2898,14 @@
         }
       ],
       "artifact": {
-        "id": "0f073114bd9c2cf1",
+        "id": "eb605282f1316e6e",
         "name": "glibc-2.44",
-        "version": "2.44-r29",
+        "version": "2.44-r30",
         "type": "apk",
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -2917,20 +2917,20 @@
           "LGPL-2.1-or-later"
         ],
         "cpes": [
-          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc-2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc_2.44:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc-2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc_2.44:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:glibc:glibc:2.44-r29:*:*:*:*:*:*:*",
-          "cpe:2.3:a:gnu:glibc:2.44-r29:*:*:*:*:*:*:*"
+          "cpe:2.3:a:glibc-2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc-2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc_2.44:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc-2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc_2.44:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:glibc:glibc:2.44-r30:*:*:*:*:*:*:*",
+          "cpe:2.3:a:gnu:glibc:2.44-r30:*:*:*:*:*:*:*"
         ],
-        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r29?arch=x86_64&distro=wolfi-20230201",
+        "purl": "pkg:apk/wolfi/glibc-2.44@2.44-r30?arch=x86_64&distro=wolfi-20230201",
         "upstreams": [
           {
             "name": "glibc-2.44"
@@ -3042,7 +3042,7 @@
               "path": "/var/lib/db/sbom"
             },
             {
-              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r29.spdx.json"
+              "path": "/var/lib/db/sbom/glibc-2.44-2.44-r30.spdx.json"
             }
           ]
         }
@@ -3079,8 +3079,8 @@
           {
             "cve": "CVE-2026-35190",
             "epss": 0.00265,
-            "percentile": 0.1145,
-            "date": "2026-11-25"
+            "percentile": 0.1144,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -3130,7 +3130,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3253,8 +3253,8 @@
           {
             "cve": "CVE-2026-107493",
             "epss": 0.00148,
-            "percentile": 0.02018,
-            "date": "2026-11-25"
+            "percentile": 0.02015,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -3304,7 +3304,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3438,8 +3438,8 @@
           {
             "cve": "CVE-2026-90781",
             "epss": 0.0017,
-            "percentile": 0.03674,
-            "date": "2026-11-25"
+            "percentile": 0.03676,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -3489,7 +3489,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -3856,8 +3856,8 @@
           {
             "cve": "CVE-2026-96674",
             "epss": 0.00166,
-            "percentile": 0.03314,
-            "date": "2026-11-25"
+            "percentile": 0.03312,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -3907,7 +3907,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -4272,8 +4272,8 @@
           {
             "cve": "CVE-2026-96675",
             "epss": 0.00158,
-            "percentile": 0.02542,
-            "date": "2026-11-25"
+            "percentile": 0.0254,
+            "date": "2026-11-26"
           }
         ],
         "cwes": [
@@ -4323,7 +4323,7 @@
         "locations": [
           {
             "path": "/usr/lib/apk/db/installed",
-            "layerID": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+            "layerID": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
             "accessPath": "/usr/lib/apk/db/installed",
             "annotations": {
               "evidence": "primary"
@@ -4651,29 +4651,29 @@
   "source": {
     "type": "image",
     "target": {
-      "userInput": "ghcr.io/conduktor/base-jre-25@sha256:38815086f0c6f933eb6d8b5820cf26b8d2d79a2ccdd4d5e952cc29865be721d7",
-      "imageID": "sha256:a0aef15b7c23f1834d4382190b536ce5e0ffa379fd305f0077267b85091b8109",
-      "manifestDigest": "sha256:4248d67c0cde61284a5fc6932c9e021741dc98fb511295edbdef0782573c23b0",
+      "userInput": "ghcr.io/conduktor/base-jre-25@sha256:11bb4d4553634cbbed8e28ce35cb3cce9e001377f11517e6afaf5b77697a0fb9",
+      "imageID": "sha256:ba27f7c5fdd20172ca9fa861b5610df5ed8682639cc5d2bf1479a894b36dedb7",
+      "manifestDigest": "sha256:e2f259fd8628bf1ac6a173da2727ec5984995d57fa70577b3ca1e4c113520a71",
       "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
       "tags": [],
       "imageSize": 282532579,
       "layers": [
         {
           "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
-          "digest": "sha256:48ff7f2905f6e830f9824fbe0cb33bd732609251ae8826ce84bcd0073271a291",
+          "digest": "sha256:c3424768907b9743e4a7080c6903b42c0ced47d46e43070567403feb3467c228",
           "size": 282532579
         }
       ],
-      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTI5LCJkaWdlc3QiOiJzaGEyNTY6YTBhZWYxNWI3YzIzZjE4MzRkNDM4MjE5MGI1MzZjZTVlMGZmYTM3OWZkMzA1ZjAwNzcyNjdiODUwOTFiODEwOSJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDExNjgxNzEsImRpZ2VzdCI6InNoYTI1Njo0OGZmN2YyOTA1ZjZlODMwZjk4MjRmYmUwY2IzM2JkNzMyNjA5MjUxYWU4ODI2Y2U4NGJjZDAwNzMyNzFhMjkxIn1dfQ==",
-      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTI2VDIxOjI4OjU4WiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0yNlQyMToyODo1OFoiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgSlJFLTI1IGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIGJ5IENvbmR1a3RvciJ9XSwib3MiOiJsaW51eCIsInJvb3RmcyI6eyJ0eXBlIjoibGF5ZXJzIiwiZGlmZl9pZHMiOlsic2hhMjU2OjQ4ZmY3ZjI5MDVmNmU4MzBmOTgyNGZiZTBjYjMzYmQ3MzI2MDkyNTFhZTg4MjZjZTg0YmNkMDA3MzI3MWEyOTEiXX0sImNvbmZpZyI6eyJDbWQiOlsiL2Jpbi9iYXNoIl0sIkVudiI6WyJKQVZBX0hPTUU9L3Vzci9saWIvanZtL2phdmEtMjUtb3BlbmpkayIsIkxBTkc9Qy5VVEYtOCIsIlBBVEg9L3Vzci9saWIvanZtL2phdmEtMjUtb3Blbmpkay9iaW46L3Vzci9zYmluOi9zYmluOi91c3IvYmluOi9iaW4iLCJTU0xfQ0VSVF9GSUxFPS9ldGMvc3NsL2NlcnRzL2NhLWNlcnRpZmljYXRlcy5jcnQiLCJUWj1VVEMiXSwiTGFiZWxzIjp7Im9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5hdXRob3JzIjoiQ29uZHVrdG9yIFx1MDAzY3N1cHBvcnRAY29uZHVrdG9yLmlvXHUwMDNlIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmNyZWF0ZWQiOiIyMDI2LTExLTI2VDIxOjI4OjU4WiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5kZXNjcmlwdGlvbiI6Ik1pbmltYWwgZ2xpYmMvV29sZmkgYmFzZSBpbWFnZSB3aXRoIE9wZW5KREsgMjUgSlJFIGZvciBDb25kdWt0b3IgQ29uc29sZSBhbmQgR2F0ZXdheS4iLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UubGljZW5zZXMiOiJBcGFjaGUtMi4wIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnNvdXJjZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9jb25kdWt0b3IvY29udGFpbmVyLWltYWdlcyIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS50aXRsZSI6IkNvbmR1a3RvciBKUkUtMjUgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudmVuZG9yIjoiQ29uZHVrdG9yIn19fQ==",
+      "manifest": "eyJzY2hlbWFWZXJzaW9uIjoyLCJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQuZG9ja2VyLmRpc3RyaWJ1dGlvbi5tYW5pZmVzdC52Mitqc29uIiwiY29uZmlnIjp7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuY29udGFpbmVyLmltYWdlLnYxK2pzb24iLCJzaXplIjoxMTI5LCJkaWdlc3QiOiJzaGEyNTY6YmEyN2Y3YzVmZGQyMDE3MmNhOWZhODYxYjU2MTBkZjVlZDg2ODI2MzljYzVkMmJmMTQ3OWE4OTRiMzZkZWRiNyJ9LCJsYXllcnMiOlt7Im1lZGlhVHlwZSI6ImFwcGxpY2F0aW9uL3ZuZC5kb2NrZXIuaW1hZ2Uucm9vdGZzLmRpZmYudGFyLmd6aXAiLCJzaXplIjoxMDExNjgxODksImRpZ2VzdCI6InNoYTI1NjpjMzQyNDc2ODkwN2I5NzQzZTRhNzA4MGM2OTAzYjQyYzBjZWQ0N2Q0NmU0MzA3MDU2NzQwM2ZlYjM0NjdjMjI4In1dfQ==",
+      "config": "eyJhcmNoaXRlY3R1cmUiOiJhbWQ2NCIsImF1dGhvciI6ImdpdGh1Yi5jb20vY2hhaW5ndWFyZC1kZXYvYXBrbyIsImNyZWF0ZWQiOiIyMDI2LTExLTI3VDIzOjI4OjIzWiIsImhpc3RvcnkiOlt7ImF1dGhvciI6ImFwa28iLCJjcmVhdGVkIjoiMjAyNi0xMS0yN1QyMzoyODoyM1oiLCJjcmVhdGVkX2J5IjoiYXBrbyIsImNvbW1lbnQiOiJDb25kdWt0b3IgSlJFLTI1IGJhc2UgaW1hZ2UgKFdvbGZpL2Fwa28pIGJ5IENvbmR1a3RvciJ9XSwib3MiOiJsaW51eCIsInJvb3RmcyI6eyJ0eXBlIjoibGF5ZXJzIiwiZGlmZl9pZHMiOlsic2hhMjU2OmMzNDI0NzY4OTA3Yjk3NDNlNGE3MDgwYzY5MDNiNDJjMGNlZDQ3ZDQ2ZTQzMDcwNTY3NDAzZmViMzQ2N2MyMjgiXX0sImNvbmZpZyI6eyJDbWQiOlsiL2Jpbi9iYXNoIl0sIkVudiI6WyJKQVZBX0hPTUU9L3Vzci9saWIvanZtL2phdmEtMjUtb3BlbmpkayIsIkxBTkc9Qy5VVEYtOCIsIlBBVEg9L3Vzci9saWIvanZtL2phdmEtMjUtb3Blbmpkay9iaW46L3Vzci9zYmluOi9zYmluOi91c3IvYmluOi9iaW4iLCJTU0xfQ0VSVF9GSUxFPS9ldGMvc3NsL2NlcnRzL2NhLWNlcnRpZmljYXRlcy5jcnQiLCJUWj1VVEMiXSwiTGFiZWxzIjp7Im9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5hdXRob3JzIjoiQ29uZHVrdG9yIFx1MDAzY3N1cHBvcnRAY29uZHVrdG9yLmlvXHUwMDNlIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLmNyZWF0ZWQiOiIyMDI2LTExLTI3VDIzOjI4OjIzWiIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5kZXNjcmlwdGlvbiI6Ik1pbmltYWwgZ2xpYmMvV29sZmkgYmFzZSBpbWFnZSB3aXRoIE9wZW5KREsgMjUgSlJFIGZvciBDb25kdWt0b3IgQ29uc29sZSBhbmQgR2F0ZXdheS4iLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UubGljZW5zZXMiOiJBcGFjaGUtMi4wIiwib3JnLm9wZW5jb250YWluZXJzLmltYWdlLnNvdXJjZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9jb25kdWt0b3IvY29udGFpbmVyLWltYWdlcyIsIm9yZy5vcGVuY29udGFpbmVycy5pbWFnZS50aXRsZSI6IkNvbmR1a3RvciBKUkUtMjUgYmFzZSBpbWFnZSAoV29sZmkvYXBrbykiLCJvcmcub3BlbmNvbnRhaW5lcnMuaW1hZ2UudmVuZG9yIjoiQ29uZHVrdG9yIn19fQ==",
       "repoDigests": [
-        "ghcr.io/conduktor/base-jre-25@sha256:38815086f0c6f933eb6d8b5820cf26b8d2d79a2ccdd4d5e952cc29865be721d7"
+        "ghcr.io/conduktor/base-jre-25@sha256:11bb4d4553634cbbed8e28ce35cb3cce9e001377f11517e6afaf5b77697a0fb9"
       ],
       "architecture": "amd64",
       "os": "linux",
       "labels": {
         "org.opencontainers.image.authors": "Conduktor <support@conduktor.io>",
-        "org.opencontainers.image.created": "2026-11-26T21:28:58Z",
+        "org.opencontainers.image.created": "2026-11-27T23:28:23Z",
         "org.opencontainers.image.description": "Minimal glibc/Wolfi base image with OpenJDK 25 JRE for Conduktor Console and Gateway.",
         "org.opencontainers.image.licenses": "Apache-2.0",
         "org.opencontainers.image.source": "https://github.com/conduktor/container-images",
@@ -4694,7 +4694,7 @@
       "output": [
         "json"
       ],
-      "file": "/tmp/grype-MUx26j/output",
+      "file": "/tmp/grype-ISvJB9/output",
       "pretty": false,
       "distro": "",
       "add-cpes-if-none": false,
